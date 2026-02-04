@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rex & Bimba • Massy</title>
+  <link rel="stylesheet" href="css/css2.css" />
+  <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+
+<!-- CODICE COOKIE BANNER IUBENDA -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/4f6eaee0-29a9-4ef4-a5ba-57f90d4b1cdc.js"></script>
+  <!-- FINE CODICE COOKIE BANNER IUBENDA -->
+  
+  <!-- INIZIO CODICE GOOGLE ANALYTICS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-6X5LB7S2VT');
+  </script>
+  <!-- FINE CODICE GOOGLE ANALYTICS -->
+  
+</head>
+<body>
+
+  <!-- INTRODUZIONE -->
+  <header class="header">
+    <h1>Rex & Bimba</h1>
+    <p>— Due anime, un solo respiro</p>
+    <!-- ICONA MENU A SCOMPARSA -->
+    <button id="menu-toggle" class="menu-toggle">☰ MENU'</button>
+  </header>
+
+  <!-- DUE COLONNE: BIMBA | REX -->
+  <div class="rex-bimba-container">
+    
+    <!-- COLONNA BIMBA -->
+    <div class="bimba-section">
+      <div class="bimba-video">
+        <video autoplay muted loop playsinline>
+          <source src="immagini/bimba.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="bimba-desc">
+        <h2>Bimba • Holly</h2>
+        <p>
+          La luce negli occhi quel muso furbo e sbarazzino.<br>
+          Senza di lei, il mondo sarebbe troppo serio. Testarda, un pò <br>
+		  permalosa, guai a contraddirla non ti rivolgerà uno sguardo <br>
+		  per tutto il giorno e a volte anche di più.<br><br>
+          <span class="song-excerpt">
+            "Son piccolina ma crescerò,<br>
+            datemi tempo e vi stupirò,
+			 e ci è riuscita in pieno."
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <!-- COLONNA REX -->
+    <div class="rex-section">
+      <div class="rex-video">
+        <video autoplay muted loop playsinline>
+          <source src="immagini/rex.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="rex-desc">
+        <h2>Rex • Ciuccio</h2>
+        <p>
+          Il guardiano silenzioso. Osserva, ascolta, protegge.
+		  Guai a chi tocca la sua sorellina Holly o la sua 
+		  inseparabile amica pietra. Mai fermo con quell'andatura
+		  che sembra sempre inciampare nelle sue zampe, è il matto
+		  di casa. Nessuna via di mezzo o si gioca o si gioca. <br><br>
+          <span class="song-excerpt">
+            "Io sono stato fortunato, ho trovato una famiglia che mi ha salvato.<br>
+            amato e coccolato. Quello che sono diventato lo devo a loro."
+          </span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="disclaimer">
+    <p>Questo consiglio non esiste nel mondo fisico — ma il nostro gruppo è reale.</p>
+  </footer>
+
+    <!-- MENU A SCOMPARSA -->
+  <nav id="mobile-menu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="canzoni.html">Canzoni</a>
+    <a href="rex-bimba.html">Rex & Bimba</a>
+    <a href="dj-ling.html">Dj Ling 灵</a>
+    <a href="dj-luna.html">Dj Luna</a>
+    <a href="gruppo.html">Il Nostro Gruppo</a>
+    <a href="storia.html">La Nostra Storia</a>
+    <a href="contatti.html">Contatti</a>
+  </nav>
+  <!-- FOOTER CON LINK IUBENDA -->
+<footer>
+    <a href="https://www.iubenda.com/privacy-policy/51313845" class="iubenda-white iubenda-noiframe iubenda-embed" title="Privacy Policy ">Privacy Policy</a>
+    <a href="https://www.iubenda.com/privacy-policy/51313845/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed" title="Cookie Policy ">Cookie Policy</a>
+    <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+</footer>
+<!-- FINE FOOTER CON LINK IUBENDA -->
+
+  <!-- SCRIPT PER IL MENU A SCOMPARSA -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+
+    if (toggleBtn && menu) {
+      toggleBtn.addEventListener('click', () => {
+        menu.classList.toggle('active');
+      });
+    }
+  </script>
+
+</body>
+</html>
