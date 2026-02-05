@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti • Massy</title>
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/stile.css">
+  
+  <!-- CODICE COOKIE BANNER IUBENDA -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/4f6eaee0-29a9-4ef4-a5ba-57f90d4b1cdc.js"></script>
+  <!-- FINE CODICE COOKIE BANNER IUBENDA -->
+  
+   <!-- iubenda Cookie Solution - OBBLIGATORIO -->
+<script type="text/javascript">
+  var _iub = _iub || [];
+  _iub.csConfiguration = {
+    lang: "it",
+    siteId: 51313845,
+    cookiePolicyId: 51313845,
+    cookie: {
+      domain: ".github.io",   // ← fondamentale per GitHub Pages
+      path: "/",
+      secure: true,
+      sameSite: "Lax"
+    },
+    banner: {
+      position: "bottom"
+    }
+  };
+</script>
+<script type="text/javascript" src="https://cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+  
+  <!-- INIZIO CODICE GOOGLE ANALYTICS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-6X5LB7S2VT');
+  </script>
+  <!-- FINE CODICE GOOGLE ANALYTICS -->
+  
+  <style>
+    /* --- RESET DEL LAYOUT --- */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+      background: var(--blu-notte);
+    }
+
+    /* --- VIDEO DI SFOUNDO --- */
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* --- CONTENUTO CENTRATO --- */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--oro);
+      text-shadow: 0 0 15px rgba(248, 213, 158, 0.7);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+      font-size: 2.8rem;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      max-width: 500px;
+    }
+
+    .link-item {
+      color: var(--oro);
+      text-decoration: none;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 8px rgba(248, 213, 158, 0.5);
+    }
+
+    .link-item:hover {
+      color: var(--oro-hover);
+      text-shadow: 0 0 15px rgba(255, 235, 59, 0.8);
+      transform: translateX(5px);
+    }
+
+    .signature {
+      margin-top: 60px;
+      font-style: italic;
+      opacity: 0.8;
+      color: var(--oro);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- VIDEO DI SFOUNDO -->
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="immagini/contatti-video.mp4" type="video/mp4">
+  </video>
+
+  <!-- CONTENUTO CENTRATO -->
+  <div class="content">
+    <h1>Contatti</h1>
+
+    <div class="links">
+      <a href="https://www.youtube.com/@[IL_TUO_CANALE]" target="_blank" class="link-item">
+        ▶️ YouTube — Le nostre canzoni
+      </a>
+      <a href="mailto:tua@email.com" class="link-item">
+        ✉️ Scrivici una mail
+      </a>
+      <a href="https://instagram.com/[IL_TUO_PROFILo_1]" target="_blank" class="link-item">
+        📸 Instagram — Momenti
+      </a>
+      <a href="https://instagram.com/[IL_TUO_PROFILo_2]" target="_blank" class="link-item">
+        📸 Instagram — Canzoni
+      </a>
+      <a href="https://instagram.com/[IL_TUO_PROFILo_3]" target="_blank" class="link-item">
+        📸 Instagram — Rex & Bimba
+      </a>
+      <a href="https://tiktok.com/@[IL_TUO_TIKTOK]" target="_blank" class="link-item">
+        🎵 TikTok — Breve magia
+      </a>
+    </div>
+
+    <p class="signature">
+      — Con amore, da Rex, Bimba, Dj Ling 灵 e Dj Luna
+    </p>
+  </div>
+
+  <!-- MENU A LANTERNA (IN BASSO A DESTRA) -->
+  <!-- MENU A LANTERNA -->
+<div class="lanterna-menu">
+  <a href="index.html" class="lanterna">Home</a>
+  <a href="canzoni.html" class="lanterna">Canzoni</a>
+  <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+  <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+  <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+  <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+  <a href="storia.html" class="lanterna">La Nostra Storia</a>
+  <a href="contatti.html" class="lanterna">Contatti</a>
+</div>
+
+<!-- FOOTER CON LINK IUBENDA -->
+<footer>
+    <a href="https://www.iubenda.com/privacy-policy/51313845" class="iubenda-white iubenda-noiframe iubenda-embed" title="Privacy Policy ">Privacy Policy</a>
+    <a href="https://www.iubenda.com/privacy-policy/51313845/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed" title="Cookie Policy ">Cookie Policy</a>
+    <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+</footer>
+<!-- FINE FOOTER CON LINK IUBENDA -->
+
+</body>
+</html>
