@@ -1,0 +1,56 @@
+/* ========================================
+   STILE PER "STANZA DEL RELAX"
+   - Titolo fluttuante del brano corrente
+   - Pulsante "Passa alla prossima" in basso
+======================================== */
+
+/* --- TITOLO FLUTTUANTE DEL BRANO --- */
+.brano-fluttuante {
+  position: fixed;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: rgba(248, 213, 158, 0.7);
+  pointer-events: none;
+  z-index: 10;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 12px rgba(10, 12, 20, 0.8);
+  animation: fluttua-brano 18s infinite ease-in-out;
+}
+
+@keyframes fluttua-brano {
+  0% { 
+    transform: translate(calc(-50% + 0vw), calc(-50% + 0vh)) rotate(0deg); 
+    opacity: 0; 
+  }
+  20% { opacity: 0.6; }
+  50% { 
+    transform: translate(calc(-50% + 12vw), calc(-50% + 8vh)) rotate(3deg); 
+    opacity: 0.8; 
+  }
+  80% { opacity: 0.5; }
+  100% { 
+    transform: translate(calc(-50% + 24vw), calc(-50% + 16vh)) rotate(6deg);
+    opacity: 0; 
+  }
+}
+
+/* --- PULSANTE "PASSA ALLA PROSSIMA" --- */
+#next-track-bottom {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(10, 12, 20, 0.85);
+  border: 1px solid rgba(248, 213, 158, 0.3);
+  padding: 12px 32px;
+  border-radius: 30px;
+  color: #ffeb3b;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: none;
+}

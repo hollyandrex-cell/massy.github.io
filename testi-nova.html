@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testi • Dj Nova ⭐</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: 
+        url('immagini/holly.jpg') no-repeat center center / cover,
+        #0a0c14;
+      background-attachment: fixed;
+      color: #a0ff06;
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: #f8d59e;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(248, 213, 158, 0.7);
+    }
+
+    .dedica {
+      text-align: center;
+      font-style: italic;
+      opacity: 0.85;
+      margin-top: -20px;
+      font-size: 1.61rem;
+    }
+
+    .testo {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      white-space: pre-line;
+      background: rgba(10, 12, 20, 0.4);
+      padding: 30px;
+      border-radius: 15px;
+      border-left: 4px solid #d35400;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #06f8e4;
+      text-decoration: underline;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1;
+      display: flex;
+      gap: 20px;
+    }
+
+    footer a {
+      color: #74fc06;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+  .container {
+    padding-bottom: 60px; /* spazio per il footer */
+  }
+  footer {
+    bottom: 10px !important;
+    left: 10px !important;
+    font-size: 0.8rem !important;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="content">
+
+    <!-- CANZONE 1: HOLLY BAU -->
+    <div id="holly-bau" class="testo-canzone">
+      <h2>✨ Holly Bau</h2>
+      <p class="dedica">Scritta da Holly</p>
+      <div class="testo">
+Eccomi qui,  sono arrivata, 
+sono piccina e un pò spaventata,
+per me è tutto nuovo è quasi un mistero,
+ma con loro sto bene, lo dico davvero....
+
+Salto e rincorro, qualsiasi cosa,
+gioco con tutti, chi mai si riposa,
+tu non mi scappi lucertola verde,
+non credo però...
+che lei si diverteee.
+
+Mi chiamo HOLLY,
+per tutti HOLLY  bau,
+a volte son BIMBA,
+a volte son bau,
+son piccolina ma crescerò,
+datemi tempo e vi stupirò.
+
+Con la mia mamma cammino per strada,
+sempre con lei ovunque vada,
+non serve il guinzaglio neanche il collare,
+son proprio una BIMBA da incorniciare.
+alla mia mamma stò sempre vicino,
+e non dò confidenza neanche al vicino.
+
+Mi chiamo HOLLY,
+per tutti HOLLY bau,
+a volte son BIMBA,
+a volte son bau,
+son piccolina ma crescerò,
+datemi tempo e vi stupirò.
+
+Con i miei amici ci divertiamo
+insieme nel bosco ci rincorriamo
+piccoli e grandi di tutti i colori
+tutti felici con le lingue di fuori.
+
+Ho un nuovo amico, quasi un figlio
+ve lo presento il mio amico  NIGLIO,
+da qualche giorno c'è un tipo strano,
+salta, abbaia e lecca la mano,
+si chiama REX ma lo chiamano CIUCCIO,
+anche se matto è proprio caruccio.
+
+Ora son stanca vi devo lasciare......
+ma fra cinque minuti son pronta a tornare
+
+Mi chiamo HOLLY,
+per tutti HOLLY bau,
+a volte son BIMBA,
+a volte son bau,
+son piccolina ma crescerò,
+datemi tempo e vi stupirò....stupirò...
+
+Mi chiamo HOLLY,
+per tutti HOLLY bau,
+a volte son BIMBA,
+a volte son bau,
+son piccolina ma crescerò,
+datemi tempo e vi stupirò....stupirò...
+
+Holly and Rex love forever
+Holly and Rex love forever
+      </div>
+      <a href="canzoni-nova.html" class="back">← Torna alle canzoni di Holly</a>
+    </div>
+
+      </div> <!-- fine .content -->
+
+  <footer>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER COOKIE + GOOGLE ANALYTICS (solo su consenso) -->
+  <script>
+    function loadGA() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6X5LB7S2VT');
+    }
+
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+      loadGA();
+    } else if (!localStorage.getItem('cookiesAccepted')) {
+      const banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      banner.innerHTML = `
+        <div style="
+          position: fixed; bottom: 20px; right: 20px;
+          background: rgba(10,12,20,0.95); color: #f8d59e;
+          padding: 16px 24px; border-radius: 12px;
+          max-width: 350px; z-index: 1000;
+          font-family: 'Cormorant Garamond', serif;
+          border: 1px solid rgba(248,213,158,0.3);
+        ">
+          <p>Questo sito usa i cookie per analizzare il traffico. 
+          <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
+          <div style="margin-top:10px;">
+            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif;">Accetta</button>
+            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif;">Rifiuta</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(banner);
+    }
+
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookie-banner').remove();
+      loadGA();
+    }
+
+    function rejectCookies() {
+      localStorage.setItem('cookiesAccepted', 'false');
+      document.getElementById('cookie-banner').remove();
+    }
+  </script>
+</body>
+</html>

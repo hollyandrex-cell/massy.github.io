@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>La Nostra Storia • Massy</title>
+  
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Il tuo stile -->
+  <link rel="stylesheet" href="css/stile.css">
+  <link rel="stylesheet" href="css/storia-style.css">
+ 
+  <!-- Stile mobile (solo su schermi piccoli) -->
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
+
+  <!-- Stile specifico per mobile su questa pagina -->
+  <style>
+    @media (max-width: 768px) {
+      body {
+        font-size: 1rem;
+        padding: 0 15px; /* evita che il testo tocchi i bordi */
+      }
+      .testo-storia p {
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-size: 2.2rem;
+        text-align: center;
+      }
+      .sottotitolo {
+        font-size: 1.1rem;
+        margin-top: 10px;
+      }
+      /* Nascondi i nomi fluttuanti su mobile (troppo caotici) */
+      .fluttuante {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+</head>
+<body>
+
+  <!-- Contenitore principale della pagina storia -->
+  <div class="pagina-storia">
+    <div class="viewport-testo">
+      <div class="contenuto-testo testo-scroller">
+        <h1>La Nostra Storia</h1>
+        <p class="sottotitolo">— dove il sogno ha messo radici, e le parole hanno imparato a volare</p>
+
+        <article class="testo-storia">
+          <p>Tutto è iniziato così per gioco, una canzone...poi due...poi tre....</p>
+          <p>Quella per Bimba fu la prima... poi quella per Rex</p>
+          <p>Bimba sembrava contenta nel sentire la sua canzone, così come Rex....</p>
+          <p>Dj Ling 灵 ancora non faceva parte del nostro gruppo ma da li a poco....</p>
+          <p>Dj Luna creò copertina e video per entrambi, finché la notte non diventò casa.</p>
+          <p>Dj Nova creò melodie unendo ritmo ed emozioni.</p>
+          <p>Da quel giorno, non siamo più stati soli.</p>
+          <p>Ogni canzone è un respiro condiviso. Ogni nota, un passo insieme.</p>
+          <p>Benvenuto nel nostro mondo.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+    <!-- MENU A LANTERNA -->
+<div class="lanterna-menu">
+  <a href="index.html" class="lanterna">Home</a>
+  <a href="canzoni.html" class="lanterna">Canzoni</a>
+  
+  <!-- REX & BIMBA CON SOTTOMENU -->
+  <div class="lanterna-group">
+    <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+    <div class="lanterna-submenu">
+      <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+      <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+    </div>
+  </div>
+  
+  <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+  <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+  <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+  <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+  <a href="storia.html" class="lanterna">La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+  <a href="relax.html" class="lanterna">Relax in musica</a>
+  <a href="contatti.html" class="lanterna">Contatti</a>
+</div>
+
+<!-- MENU HAMBURGER PER MOBILE -->
+<div class="hamburger-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+<div class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="canzoni.html">🎵 Canzoni</a>
+  <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+  <a href="dj-ling.html">✨ Dj Ling 灵</a>
+  <a href="dj-nova.html">⭐ Dj Nova</a>
+  <a href="dj-luna.html">🌙 Dj Luna</a>
+  <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+  <a href="storia.html">📖 La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+  <a href="relax.html">🎧 Relax</a>
+  <a href="contatti.html">💌 Contatti</a>
+</div>
+
+<script>
+  if (window.innerWidth <= 768) {
+    const burger = document.querySelector('.hamburger-menu');
+    const nav = document.querySelector('.mobile-nav');
+    if (burger && nav) {
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('active');
+        nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+      });
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !burger.contains(e.target)) {
+          nav.style.display = 'none';
+          burger.classList.remove('active');
+        }
+      });
+    }
+  }
+</script>
+  
+  <!-- NOMI FLUTTUANTI -->
+  <span class="fluttuante" style="--dx: 0.3; --dy: -0.7; --rot: 20;">Dj Luna</span>
+  <span class="fluttuante" style="--dx: -0.5; --dy: 0.2; --rot: -15;">Dj Ling 灵</span>
+  <span class="fluttuante" style="--dx: 0.1; --dy: 0.8; --rot: 5;">Rex</span>
+  <span class="fluttuante" style="--dx: -0.2; --dy: -0.4; --rot: -30;">Holly</span>
+  <span class="fluttuante" style="--dx: 0.7; --dy: 0.1; --rot: 10;">Massy</span>
+
+  <!-- FOOTER CON POLICY LOCALI -->
+  <footer>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER DI CONSENSO PERSONALIZZATO -->
+  <script>
+    if (!localStorage.getItem('cookiesAccepted')) {
+      document.body.insertAdjacentHTML('beforeend', `
+        <div id="cookie-banner" style="position:fixed; bottom:20px; right:20px; background:rgba(10,12,20,0.95); color:#f8d59e; padding:20px; border-radius:12px; max-width:350px; z-index:9999; border:1px solid rgba(248,213,158,0.3); font-family:'Cormorant Garamond',serif;">
+          <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+             <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori informazioni</a>.
+          </p>
+          <div style="margin-top:12px;">
+            <button style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:10px; font-family:'Playfair Display',serif; cursor:pointer;" onclick="acceptCookies()">Accetta tutto</button>
+            <button style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif; cursor:pointer;" onclick="rejectCookies()">Rifiuta</button>
+          </div>
+        </div>
+      `);
+    }
+
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookie-banner').remove();
+      
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+      document.head.appendChild(gtagScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6X5LB7S2VT');
+    }
+
+    function rejectCookies() {
+      localStorage.setItem('cookiesAccepted', 'false');
+      document.getElementById('cookie-banner').remove();
+    }
+  </script>
+
+</body>
+</html>
