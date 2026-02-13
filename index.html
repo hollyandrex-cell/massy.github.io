@@ -183,25 +183,27 @@
   </div>
 
   <script>
-    // Solo su mobile
+  document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth <= 768) {
-      document.querySelector('.hamburger-menu').addEventListener('click', function() {
-        this.classList.toggle('active');
-        const nav = document.querySelector('.mobile-nav');
-        nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-      });
+      const burger = document.querySelector('.hamburger-menu');
+      const nav = document.querySelector('.mobile-nav');
+      
+      if (burger && nav) {
+        burger.addEventListener('click', () => {
+          burger.classList.toggle('active');
+          nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
 
-      // Chiudi menu se clicchi fuori
-      document.addEventListener('click', function(e) {
-        const menu = document.querySelector('.mobile-nav');
-        const burger = document.querySelector('.hamburger-menu');
-        if (!menu.contains(e.target) && !burger.contains(e.target)) {
-          menu.style.display = 'none';
-          burger.classList.remove('active');
-        }
-      });
+        document.addEventListener('click', (e) => {
+          if (!nav.contains(e.target) && !burger.contains(e.target)) {
+            nav.style.display = 'none';
+            burger.classList.remove('active');
+          }
+        });
+      }
     }
-  </script>
+  });
+</script>
 
   <!-- FOOTER CON POLICY LOCALI -->
   <footer>
@@ -250,6 +252,7 @@
 
 </body>
 </html>
+
 
 
 
