@@ -1,0 +1,211 @@
+/* ========================================
+   MOBILE & TABLET STYLES (max-width: 768px)
+   ======================================== */
+
+   @media (max-width: 768px) {
+    /* --- BODY E CONTENITORI PRINCIPALI --- */
+    body {
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  
+    .rex-bimba-container {
+      flex-direction: column;
+      flex-grow: 1;
+      padding-bottom: 20px;
+      gap: 0;
+    }
+  
+    .bimba-section,
+    .rex-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      margin-bottom: 20px;
+      justify-content: flex-start;
+    }
+  
+    /* --- HEADER COMUNE --- */
+    .header {
+      padding: 20px 15px;
+      padding-top: 50px;
+    }
+  
+    .header h1 {
+      font-size: 2.5rem;
+    }
+  
+    .header p {
+      font-size: 1rem;
+      padding: 0 10px;
+    }
+  
+    /* --- PULSANTE MENU IN HEADER --- */
+    .menu-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      margin-top: 0;
+      font-size: 1rem;
+    }
+  
+    /* --- VIDEO BIMBA & REX (Mobile - Con display: block forzato) --- */
+    .bimba-video,
+    .rex-video {
+      display: block; /* FORZA display: block - QUESTO È CRUCIALE! */
+      width: 100%;
+      height: 0; /* Altezza 0 per consentire al padding-top di definire l'altezza */
+      padding-top: 56.25%; /* Rapporto 16:9 (9 / 16 * 100). Regola se i tuoi video hanno un'altra proporzione. */
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+  
+    .bimba-video video,
+    .rex-video video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  
+    /* --- DESCRIZIONI --- */
+    .bimba-desc,
+    .rex-desc {
+      padding: 15px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      min-height: auto;
+      margin-top: 0;
+      position: relative;
+      z-index: 2;
+      background: rgba(10, 12, 20, 0.85);
+      border-radius: 0;
+      backdrop-filter: blur(8px);
+      flex-shrink: 0;
+    }
+  
+    h2 {
+      font-size: 1.4rem;
+      margin: 10px 0;
+    }
+  
+    /* --- LINK ALLE CANZONI --- */
+    .song-links-container {
+      margin: 30px auto;
+      padding: 10px;
+      max-width: 90%;
+    }
+    .song-links-container p {
+      font-size: 0.9rem;
+    }
+    .song-links-container .song-link-item {
+      font-size: 0.95rem;
+      margin: 0 8px;
+      padding: 5px 10px;
+      color:#d35400;
+      font-weight:bold;
+      text-decoration:none;
+    }
+    
+    /* --- FOTO DEI MEMBRI DEL GRUPPO (MOBILE) --- */
+    .member-photo {
+      padding-top: 100%; /* Rende il contenitore quadrato sul mobile */
+      /* Se le tue immagini sono più alte che larghe, puoi provare 120% o 130% */
+    }
+  
+    .member-photo img {
+      object-fit: contain; /* Assicura che l'immagine sia interamente visibile */
+    }
+  
+    /* --- TESTO DEI MEMBRI (MOBILE) --- */
+    .group-title { font-size: 2.5rem; }
+    .group-subtitle { font-size: 1.3rem; }
+    .member-name { font-size: 1.5rem; }
+    .member-role { font-size: 1.1rem; }
+    .member-desc { font-size: 1rem; padding: 0 15px 20px; } /* Regolazione padding e font */
+  
+    /* --- FOOTER DISCLAIMER (Mobile) --- */
+    .disclaimer {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      margin-top: 30px;
+      font-size: 0.9rem;
+      padding: 10px 15px;
+      background: rgba(10, 12, 20, 0.8);
+      border-radius: 12px;
+    }
+  
+    /* --- FOOTER POLICY (Mobile) --- */
+    .policy-footer { /* Usa la classe aggiunta in html */
+      position: relative;
+      bottom: auto;
+      left: auto;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.8rem;
+      margin-top: 20px;
+      gap: 10px;
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    .policy-footer a {
+      color: var(--crema);
+    }
+  
+    /* --- BANNER COOKIE (Mobile) --- */
+    #cookie-banner {
+      max-width: 90%;
+      left: 5%;
+      right: 5%;
+      padding: 15px;
+      font-size: 0.85rem;
+      bottom: 15px;
+    }
+    #cookie-banner p {
+      color:#f8d59e;
+    }
+    #cookie-banner .cookie-link {
+      color:#d35400;
+      text-decoration:underline;
+    }
+    #cookie-banner .cookie-buttons {
+      margin-top:12px;
+    }
+    #cookie-banner .cookie-accept-btn {
+      background:#d35400;
+      color:white;
+      border:none;
+      padding:6px 12px;
+      border-radius:6px;
+      margin-right:10px;
+      font-family:'Playfair Display',serif;
+      cursor:pointer;
+    }
+    #cookie-banner .cookie-reject-btn {
+      background:transparent;
+      color:#f8d59e;
+      border:1px solid rgba(248,213,158,0.5);
+      padding:6px 12px;
+      border-radius:6px;
+      font-family:'Playfair Display',serif;
+      cursor:pointer;
+    }
+  
+    /* --- NASCONDI IMMAGINI EXTRA (es. ciucci volanti) --- */
+    /* Aggiungi questa classe alle immagini dei ciucci in HTML */
+    .ciucci-volanti {
+      display: none;
+    }
+  }
