@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Contatti • Massy</title>
+  
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Il tuo stile generale -->
+  <link rel="stylesheet" href="css/stile.css">
+  <!-- Stile mobile (solo su schermi piccoli) -->
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
+
+  
+  <!-- STILI SPECIFICI PER contatti.html (bloccano il video, posizionano gli elementi, correggono menu mobile) -->
+  <style>
+    /* --- STILI GLOBALI PER LA PAGINA (CONTATTI.HTML) --- */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Blocca lo scroll del body */
+      height: 100vh; /* Fa sì che il body occupi tutta l'altezza della viewport */
+      position: relative; /* Necessario per posizionare il video di sfondo e altri elementi */
+      background: var(--blu-notte); /* Colore di fallback o di sfondo per il body */
+    }
+    body.no-scroll { /* Classe aggiunta via JS per bloccare lo scroll quando il menu mobile è aperto */
+      overflow: hidden;
+    }
+
+    /* --- VIDEO DI SFONDO --- */
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Assicura che il video copra tutta l'area senza distorcere */
+      z-index: -1; /* Manda il video dietro tutti gli altri contenuti */
+    }
+
+    /* --- CONTENUTO CENTRATO --- */
+    .content {
+      position: relative; /* Per posizionare sopra il video di sfondo */
+      z-index: 1;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      height: 100vh; /* Il contenuto occupa tutta l'altezza della viewport */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Centra verticalmente */
+      align-items: center; /* Centra orizzontalmente */
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--oro);
+      text-shadow: 0 0 15px rgba(248, 213, 158, 0.7);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+      font-size: 2.8rem;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      max-width: 500px;
+      width: 100%; /* Occupa tutta la larghezza disponibile all'interno del content */
+    }
+
+    .link-item {
+      color: var(--oro);
+      text-decoration: none;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 8px rgba(248, 213, 158, 0.5);
+    }
+
+    .link-item:hover {
+      color: var(--oro-hover);
+      text-shadow: 0 0 15px rgba(255, 235, 59, 0.8);
+      transform: translateX(5px);
+    }
+
+    .signature {
+      margin-top: 60px;
+      font-style: italic;
+      font-size: 1.3rem;
+      opacity: 0.8;
+      color: var(--oro);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* --- FOOTER SPECIFICO PER CONTATTI (posizionamento e stile) --- */
+    .contacts-footer {
+      position: fixed; /* Lo rendiamo fisso alla viewport */
+      bottom: 20px;
+      left: 20px;
+      z-index: 99; /* Alto z-index per essere visibile sopra il video */
+      display: flex;
+      gap: 20px;
+      background: rgba(10, 12, 20, 0.5); /* Sfondo semi-trasparente */
+      padding: 8px 15px;
+      border-radius: 8px;
+    }
+
+    .contacts-footer a {
+      color: var(--oro-hover); /* Colore brillante per i link */
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+    
+    /* --- COOKIE BANNER SPECIFICO PER CONTATTI (posizionamento e stile) --- */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(10, 12, 20, 0.95);
+      color: var(--oro);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 350px;
+      z-index: 100; /* Ancora più alto di z-index del footer per essere sempre visibile */
+      border: 1px solid rgba(248, 213, 158, 0.3);
+      font-family: 'Cormorant Garamond', serif;
+      /* display: none; sarà gestito via JS e ripristinato a block solo se serve */
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px;
+      color: var(--oro);
+    }
+
+    #cookie-banner a {
+      color: var(--oro-hover);
+      text-decoration: underline;
+    }
+
+    .cookie-btns {
+      margin-top: 12px;
+    }
+
+    .cookie-btn {
+      background: #d35400; /* Arancione per Accept */
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-right: 10px;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+    }
+
+    .cookie-btn.reject-btn {
+      background: transparent;
+      color: var(--oro);
+      border: 1px solid rgba(248, 213, 158, 0.5);
+    }
+
+    /* --- REGOLE PER MOBILE (SPECIFICHE PER contatti.html) --- */
+    @media (max-width: 768px) {
+        .content {
+            padding-bottom: 80px; /* Spazio per il footer su mobile */
+            padding-top: 20px; /* Un po' di padding in alto per non stare troppo attaccati */
+            height: auto; /* L'altezza si adatta al contenuto, non più 100vh */
+            min-height: 100vh; /* Garantisce che ci sia abbastanza spazio anche su schermi più corti */
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .link-item {
+            font-size: 1.1rem;
+            /* gap: 15px; questa proprietà va sul contenitore flex (.links), non sui singoli elementi */
+        }
+        .signature {
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        .contacts-footer {
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8rem;
+            gap: 10px;
+            padding: 6px 10px;
+        }
+        #cookie-banner {
+            bottom: 10px;
+            right: 10px;
+            max-width: 90%;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+        #cookie-banner .cookie-btn {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- CORREZIONE CRUCIALE: VISIBILITÀ E POSIZIONAMENTO DELL'HAMBURGER MENU SU MOBILE --- */
+        .hamburger-menu {
+            display: flex !important; /* Forza la visualizzazione dell'hamburger-menu su mobile */
+            position: fixed !important; /* Lo fissa in posizione */
+            top: 20px !important;
+            left: 20px !important;
+            right: auto !important; /* Rimuove potenziali conflitti con 'right' */
+            z-index: 1001 !important; /* Assicura che sia sopra il resto */
+        }
+        
+        /* --- COMPATTAMENTO DEL MENU MOBILE PER EVITARE SCROLL --- */
+        .mobile-nav a {
+            font-size: 1.2rem !important; /* Riduci la dimensione del font dei link */
+            padding: 8px 0 !important; /* Riduci il padding verticale dei link */
+            margin: 5px 0 !important; /* Riduci il margine verticale tra i link */
+        }
+
+        .mobile-nav {
+            padding-top: 50px !important; /* Riduci il padding in alto del menu */
+        }
+    }
+
+    /* --- NASCONDE L'HAMBURGER MENU SU DESKTOP --- */
+    @media (min-width: 769px) {
+        .hamburger-menu {
+            display: none !important;
+        }
+    }
+  </style>
+</head>
+<body class="pagina-contatti">
+
+  <!-- VIDEO DI SFONDO -->
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="immagini/contatti-video.mp4" type="video/mp4">
+  </video>
+
+  <!-- CONTENUTO CENTRATO -->
+  <div class="content">
+    <h1>Contatti</h1>
+
+    <div class="links">
+      <a href="https://www.youtube.com/@Holly-Rex" target="_blank" class="link-item">
+        ▶️ YouTube — Le nostre canzoni
+      </a>
+      <a href="mailto:hollyandrex@gmail.com" class="link-item">
+        ✉️ Scrivici una mail
+      </a>
+      <a href="https://www.instagram.com/bauholly/" target="_blank" class="link-item">
+        📸 Instagram — La regina della casa
+      </a>
+      <a href="https://www.instagram.com/hollybau2019/" target="_blank" class="link-item">
+        📸 Instagram — il gruppo
+      </a>
+      <a href="https://www.instagram.com/hollybau/" target="_blank" class="link-item">
+        📸 Instagram — Rex & Bimba
+      </a>
+      <a href="https://tiktok.com/@holly_and_rex2025" target="_blank" class="link-item">
+        🎵 TikTok — Breve magia
+      </a>
+      <a href="https://www.youtube.com/@Holly-Rex/community" target="_blank" class="link-item">
+        💬 Lascia un sussurro nella nostra Community
+      </a>
+    </div>
+
+    <p class="signature">
+      — Con amore, da Rex, Bimba, Dj Ling 灵 e Dj Luna Dj Nova ⭐ -
+    </p>
+  </div>
+
+  <!-- MENU A LANTERNA (Solo per desktop - lo stile è in stile.css) -->
+  <div class="lanterna-menu"> 
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    
+    <!-- REX & BIMBA CON SOTTOMENU -->
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- MENU HAMBURGER PER MOBILE (Lo stile è in mobile.css) -->
+  <div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </div>
+
+  <!-- FOOTER CON POLICY (POSIZIONAMENTO FISSO) -->
+  <footer class="contacts-footer">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- SCRIPT PER IL MENU MOBILE E COOKIE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // MENU HAMBURGER PER MOBILE
+      const burger = document.querySelector('.hamburger-menu');
+      const nav = document.querySelector('.mobile-nav');
+      const body = document.body;
+
+      // Questo check assicura che il codice si attivi solo se i menu esistono sulla pagina
+      if (burger && nav) {
+        // CORREZIONE CRUCIALE: Il menu nav DEVE essere gestito via CSS per lo scorrimento iniziale.
+        // NON usare nav.style.display = 'none'; qui, perché rompe la transizione CSS.
+        // Il CSS dovrebbe impostare left: -100%; di default.
+
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          nav.classList.toggle('active'); // toggle della classe 'active' per far scorrere il menu
+          body.classList.toggle('no-scroll');
+        });
+        
+        document.addEventListener('click', (e) => {
+          if (nav.classList.contains('active') && !nav.contains(e.target) && !burger.contains(e.target)) {
+            nav.classList.remove('active');
+            burger.classList.remove('active');
+            body.classList.remove('no-scroll');
+          }
+        });
+      }
+
+      // BANNER DI CONSENSO COOKIE
+      const cookieBanner = document.getElementById('cookie-banner');
+      if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
+        cookieBanner.style.display = 'block'; 
+      } else if (cookieBanner) {
+        cookieBanner.style.display = 'none'; 
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      }
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      }
+    });
+  </script>
+
+  <!-- BANNER DI CONSENSO PERSONALIZZATO -->
+  <div id="cookie-banner">
+    <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+</body>
+</html>

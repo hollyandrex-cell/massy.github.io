@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Massy • I testi delle nostre canzoni</title>
+
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+          <!-- Il tuo stile principale (desktop) -->
+          <link rel="stylesheet" href="css/stile.css">
+          <!-- Il tuo stile desktop aggiuntivo (css2) -->
+          <link rel="stylesheet" href="css/css2.css">
+          <!-- Stile mobile/tablet -->
+          <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
+          <!-- NUOVO STILE MOBILE ESCLUSIVO PER INDEX E RELAX -->
+          <link rel="stylesheet" href="css/index-relax-mobile.css" media="(max-width: 768px)"> 
+  <style>
+    /* --- SFONDO CON IMMAGINE (queste regole possono stare qui o in stile.css) --- */
+   .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background: url('immagini/sfondo-home.jpg') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      padding-top: 40px;
+    }
+
+   .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(10, 12, 20, 0.4), rgba(10, 12, 20, 0.8));
+      z-index: 1;
+    }
+
+   .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 20px;
+      max-width: 800px;
+    }
+
+   .hero-content .subtitle { 
+      font-size: 2.2rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--oro);
+      opacity: 0.95;
+      text-shadow: 0 0 20px rgba(248, 213, 158, 0.7);
+      letter-spacing: 2px;
+    }
+
+   .hero-content .signature { 
+      margin-top: 30px;
+      font-size: 1.3rem;
+      font-style: italic;
+      opacity: 0.8;
+      letter-spacing: 2px;
+      color: var(--oro);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 768px) {
+     .hero { 
+        padding-top: 150px; /* VALORE CONFERMATO PER LE SCRITTE MOBILE OK */
+      }
+     .hero-content .subtitle { font-size: 1.6rem; }
+     .hero-content .signature { font-size: 1.0rem; margin-top: 20px; }
+    }
+
+    /* BANNER PERSONALIZZATO */
+    #cookie-banner {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(10, 12, 20, 0.95);
+      color: #f8d59e;
+      padding: 10px 12px;
+      border-radius: 12px;
+      max-width: 280px;
+      z-index: 9999;
+      border: 1px solid rgba(248, 213, 158, 0.3);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    #cookie-banner a {
+      color: #d35400;
+      text-decoration: underline;
+    }
+
+   .cookie-btns {
+      margin-top: 6px;
+      margin-top: 6px; /* MODIFICATO: Ridotto il margine superiore dei pulsanti */
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+
+   .cookie-btn {
+      display: inline-block;
+      padding: 4px 8px;
+      margin-right: 0px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.8rem; 
+    }
+
+   .accept-btn {
+      background: #d35400;
+      color: white;
+    }
+
+   .reject-btn {
+      background: transparent;
+      color: #f8d59e;
+      border: 1px solid rgba(248, 213, 158, 0.5);
+    }
+
+   .accept-btn:hover {
+      background: #e67e22;
+    }
+
+   .reject-btn:hover {
+      background: rgba(211, 84, 0, 0.2);
+    }
+
+    /* Stili per il cagnolino video */
+    #cagnolino-video-container {
+        position: fixed;
+        bottom: 20px; /* Distanza dal fondo */
+        left: 0;
+        z-index: 1000; /* Assicurati che sia sopra altri elementi ma sotto il banner cookie */
+        display: none; /* Inizialmente nascosto */
+        align-items: flex-end;
+        pointer-events: none; /* Permette di cliccare attraverso se non visualizzato */
+    }
+
+    #cagnolino-video-container.active {
+        display: flex; /* Mostra il contenitore */
+        pointer-events: auto; /* Abilita interazione quando attivo */
+    }
+
+    #cagnolino-video {
+        width: 150px; /* Regola la dimensione del video */
+        height: auto;
+        transform: translateX(-100%); /* Inizialmente fuori dallo schermo a sinistra */
+    }
+
+    #cagnolino-messaggio {
+        background-color: rgba(0, 0, 0, 0.7); /* Sfondo semi-trasparente */
+        color: var(--oro);
+        padding: 1px 10px;
+        border-radius: 8px;
+        margin-left: 9px; /* Spazio tra video e messaggio */
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        display: none; /* Inizialmente nascosto */
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        white-space: nowrap;
+    }
+
+    #cagnolino-messaggio p {
+        margin: 0 0 1px 0;
+        font-weight: bold;
+    }
+
+    #cagnolino-messaggio .pulsante-vai-dietro {
+        display: inline-block;
+        background-color: var(--oro);
+        color: var(--blu-notte); /* Testo blu notte sul pulsante oro */
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    #cagnolino-messaggio .pulsante-vai-dietro:hover {
+        background-color: var(--oro-hover);
+    }
+
+    /* Animazione per il cagnolino */
+    @keyframes cagnolino-walk-in {
+        0% { transform: translateX(-100%); } /* Inizia completamente fuori a sinistra */
+        100% { transform: translateX(20px); } /* Si ferma un po' a sinistra dello schermo */
+    }
+    /* NUOVE REGOLE SOLO PER MOBILE: Ridimensioniamo il cagnolino e il messaggio */
+    @media (max-width: 768px) {
+        #cagnolino-video {
+            width: 100px; /* RIDOTTO: Dimensione più piccola per mobile */
+        }
+        #cagnolino-messaggio {
+            font-size: 0.9rem; /* RIDOTTO: Dimensione font più piccola per mobile */
+            padding: 8px 10px; /* RIDOTTO: Padding più piccolo */
+            margin-left: 8px; /* RIDOTTO: Margine più piccolo */
+        }
+        #cagnolino-messaggio p {
+            margin: 0 0 3px 0; /* RIDOTTO: Margine tra testo e pulsante */
+        }
+        #cagnolino-messaggio .pulsante-vai-dietro {
+            font-size: 0.8rem; /* RIDOTTO: Dimensione font del pulsante */
+            padding: 4px 8px; /* RIDOTTO: Padding del pulsante */
+        }
+      }
+  </style>
+</head>
+<body>
+
+  <!-- PULSANTE MENU UNIVERSALE PER MOBILE -->
+  <!-- POSIZIONATO SUBITO DOPO IL BODY per essere un elemento top-level gestito dai CSS fixed -->
+  <button id="menu-toggle" class="menu-toggle">☰</button> 
+
+  <!-- MENU MOBILE UNIVERSALE -->
+  <!-- Questo è il div che contiene i link del menu mobile -->
+  <!-- POSIZIONATO SUBITO DOPO IL BODY per essere un elemento top-level -->
+  <nav id="mobile-menu" class="mobile-menu">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </nav>
+
+   <!-- SFONDO CON TESTO -->
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="subtitle">Holly And Rex Group</p>
+      <p class="signature" style="color:#ffeb3b;">— con Rex, Bimba, Dj Ling 灵, Dj Luna 🌙 e Dj Nova ⭐ —</p>
+    </div>
+  </div>
+
+  <!-- MENU A LANTERNA (desktop) -->
+  <div class="lanterna-menu">
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    
+    <!-- REX & BIMBA CON SOTTOMENU -->
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- Contenitore per il video del cagnolino e il messaggio -->
+  <div id="cagnolino-video-container">
+    <video id="cagnolino-video" src="immagini/cagnolino-che-cammina.mp4" autoplay loop muted playsinline></video>
+    <div id="cagnolino-messaggio">
+      <p>Vuoi vedere cosa succede dietro le quinte?</p>
+      <a href="dietro-le-quinte.html" class="pulsante-vai-dietro">Scopri di più!</a>
+    </div>
+  </div>
+
+  <!-- FOOTER UNICO: DISCLAIMER E POLICY SULLA STESSA RIGA -->
+  <!-- Footer Policy -->
+  <footer style="position: fixed; bottom: 20px; left: 900px; z-index: 10; display: flex; gap: 20px;">
+    <a href="privacy-policy.html" style="color:#79f406; text-decoration:underline; font-size:0.9rem;">Privacy Policy</a>
+    <a href="cookie-policy.html" style="color:#79f406; text-decoration:underline; font-size:0.9rem;">Cookie Policy</a>
+  </footer>
+
+  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER (JavaScript unificato e corretto) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // MENU MOBILE UNIVERSALE (ora con chiusura anche al click su link e fuori)
+      const toggleButton = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const body = document.body; 
+
+      if (toggleButton && mobileMenu) {
+        // Gestisce la visibilità del pulsante MENU su desktop/mobile
+        const mediaQuery = window.matchMedia('(min-width: 769px)');
+        function handleMediaQuery(e) {
+          if (e.matches) { // Se è desktop
+            toggleButton.style.display = 'none'; // Nasconde il pulsante
+            mobileMenu.classList.remove('active'); // Assicurati che il menu sia chiuso
+            body.classList.remove('no-scroll');
+          } else { // Se è mobile
+            toggleButton.style.display = 'block'; // Mostra il pulsante
+          }
+        }
+        mediaQuery.addListener(handleMediaQuery); // Ascolta i cambiamenti di dimensione
+        handleMediaQuery(mediaQuery); // Applica la regola all'avvio
+
+        toggleButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('active');
+          body.classList.toggle('no-scroll'); 
+        });
+        
+        // Aggiungo la chiusura al click su un link all'interno del menu
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+        // Aggiungo la chiusura al click fuori dal menu
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !toggleButton.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+      }
+
+      // BANNER DI CONSENSO COOKIE E ANIMAZIONE CAGNOLINO
+      const cookieBanner = document.getElementById('cookie-banner');
+      const cagnolinoVideoContainer = document.getElementById('cagnolino-video-container');
+      const cagnolinoVideo = document.getElementById('cagnolino-video');
+      const cagnolinoMessaggio = document.getElementById('cagnolino-messaggio');
+
+      function showCagnolinoAnimation() {
+          if (cagnolinoVideoContainer && cagnolinoVideo && cagnolinoMessaggio) {
+              cagnolinoVideoContainer.classList.add('active'); // Rende visibile il contenitore
+              cagnolinoVideo.style.animation = 'cagnolino-walk-in 3s forwards'; // Applica l'animazione
+
+              // Dopo che il cagnolino si è mosso, mostra il messaggio
+              cagnolinoVideo.onanimationend = () => { // Evento quando l'animazione CSS è finita
+                  cagnolinoMessaggio.style.display = 'flex'; // Usiamo flex per centrare il contenuto
+                  cagnolinoMessaggio.style.opacity = '1';
+                  cagnolinoMessaggio.style.alignItems = 'center'; // Centra verticalmente il contenuto del messaggio
+                  cagnolinoMessaggio.style.justifyContent = 'center'; // Centra orizzontalmente
+                  cagnolinoMessaggio.style.flexDirection = 'column'; // Impila verticalmente
+              };
+          }
+      }
+
+      // Controlla lo stato dei cookie all'inizio
+      if (cookieBanner) {
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            cookieBanner.style.display = 'none';
+            showCagnolinoAnimation(); // Mostra il cagnolino subito se i cookie sono già accettati
+        } else {
+            cookieBanner.style.display = 'block'; // Mostra il banner se non accettato
+        }
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        // Carica Google Analytics solo se accettato
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+
+        showCagnolinoAnimation(); // Mostra il cagnolino dopo l'accettazione
+      }
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        // Se vuoi mostrare il cagnolino anche se i cookie sono rifiutati, abilita qui sotto
+        // showCagnolinoAnimation();
+      }
+    });
+  </script>
+  <!-- INSERISCI QUI IL BANNER DEI COOKIE -->
+  <div id="cookie-banner">
+    <p>Utilizziamo i cookie per offrirti la migliore esperienza di navigazione. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+  <!-- FINE BANNER COOKIE -->
+</body>
+</html>

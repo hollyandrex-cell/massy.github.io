@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Canzoni di Rex • Massy</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Stile personale -->
+  <link rel="stylesheet" href="css/stile.css">
+  <!-- Stile mobile (solo su schermi piccoli) -->
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
+
+  <style>
+    /* --- VARIABILI CSS GLOBALI (DEFINISCI QUI O IN stile.css) --- */
+    /* Assicurati che queste variabili siano definite in stile.css per essere globali */
+    /* Le ho incluse qui solo come promemoria, se non sono già in stile.css */
+    :root {
+        --oro: #f8d59e;
+        --oro-hover: #fff3c9;
+        --blu-notte: #0a0c14;
+    }
+
+    /* --- STILI SPECIFICI PER QUESTA PAGINA (canzoni-rex.html) --- */
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--blu-notte); /* Usa la variabile */
+      color: var(--oro); /* Usa la variabile */
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    body.no-scroll { /* Impedisce lo scroll del body quando il menu mobile è aperto */
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+      padding: 20px;
+      gap: 30px;
+    }
+
+    /* --- MENU A SINISTRA (Contenitore delle voci delle canzoni) --- */
+    .menu-sinistra {
+      width: 220px;
+      flex-shrink: 0;
+      max-height: calc(100vh - 40px); /* Prende quasi tutta l'altezza della viewport */
+      overflow-y: auto; /* Permette lo scroll se le voci superano l'altezza */
+      padding-right: 8px; /* Spazio per lo scrollbar */
+    }
+
+    .voce-menu {
+      margin-bottom: 25px;
+      padding: 14px;
+      background: rgba(10, 12, 20, 0.6); /* Sfondo semi-trasparente */
+      border-radius: 12px;
+      border-left: 3px solid var(--oro); /* Bordo laterale color oro */
+    }
+
+    .voce-menu h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--oro);
+      font-size: 1.3rem;
+      margin: 0 0 8px;
+    }
+
+    .voce-menu p {
+      font-style: italic;
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      line-height: 1.4;
+    }
+
+    .voce-menu a {
+      display: block; /* Rende i link a blocco per riempire la larghezza */
+      color: #d35400; /* Arancione di default, sarà sovrascritto da mobile.css per mobile */
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    .voce-menu a:hover {
+      color: var(--oro-hover);
+      text-decoration: underline;
+    }
+
+    /* --- VIDEO PRINCIPALE --- */
+    .ling-video-intro { /* Ho mantenuto il nome originale della classe */
+      flex: 1; /* Prende lo spazio rimanente */
+      max-width: 800px; /* Larghezza massima */
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .ling-video-intro video {
+      width: 100%;
+      display: block;
+    }
+
+    /* --- FOOTER POLICY (Generale) --- */
+    .common-footer { /* Classe generica per tutti i footer delle policy */
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+      display: flex;
+      gap: 20px;
+    }
+
+    .common-footer a {
+      color: #8df604; /* Arancione di default, sarà sovrascritto da mobile.css per mobile */
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+    
+    /* --- MEDIA QUERY SPECIFICHE PER QUESTA PAGINA SU MOBILE --- */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column; /* Impila verticalmente su mobile */
+            padding: 10px;
+            gap: 20px;
+        }
+        .menu-sinistra {
+            width: 100%;
+            max-height: none; /* Rimuovi altezza massima */
+            overflow-y: visible; /* Permetti lo scroll normale */
+            padding-right: 0;
+        }
+        .ling-video-intro {
+            max-width: 100%; /* Video a piena larghezza su mobile */
+        }
+        .common-footer {
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8rem;
+            gap: 10px;
+        }
+    }
+  </style>
+</head>
+<body class="pagina-canzoni-rex">
+
+  <div class="container">
+    <!-- VIDEO INTRO (IMMAGINE DI REX) - ORA IN CIMA! -->
+    <div class="ling-video-intro">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="immagini/rex-movie.mp4" type="video/mp4">
+        Il tuo browser non supporta il video.
+      </video>
+    </div>
+
+    <!-- MENU A SINISTRA CON LE VOCI DELLE CANZONI - ORA SOTTO IL VIDEO -->
+    <div class="menu-sinistra">
+      <div class="voce-menu">
+        <h3>✨ Occhi nella notte</h3>
+        <p>Hai davvero il coraggio di abbandonarci ?</p>
+        <a href="https://www.youtube.com/watch?v=mTNZ07pXo5g" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#occhinellanotte">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>✨ Il mio paradiso</h3>
+        <p> Io sono stato fortunato</p>
+        <a href="https://www.youtube.com/watch?v=xobuY90wOqs" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#ilmioparadiso">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Rex...Ciuccio</h3>
+        <p>Chissà perchè mi chiamano Ciuccio ?</p>
+        <a href="https://www.youtube.com/watch?v=g99GayNdQEM" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#rexciuccio">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Tu dimmi dove sei</h3>
+        <p> FT DJ Luna</p>
+        <a href="https://www.youtube.com/watch?v=8vZ557-ld3k" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#tudimmidovesei">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Luna l'AI del futuro</h3>
+        <p> Forse un giorno</p>
+        <a href="https://www.youtube.com/watch?v=Ojk3dru1RR8" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#luna">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Tre parole</h3>
+        <p> A volte bastano 3 parole per dire TI AMO</p>
+        <a href="https://www.youtube.com/watch?v=iydAkhbdnbc" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#treparole">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Innamorato di te</h3>
+        <p> Cosa possono fare un paio di occhiali da sole</p>
+        <a href="https://www.youtube.com/watch?v=V35UfyZVWvA" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#innamoratodite">📜 Leggi il testo</a>
+      </div>      
+
+      <div class="voce-menu">
+        <h3>📖 Una finestra</h3>
+        <p> Guardando la tua finestra</p>
+        <a href="https://www.youtube.com/watch?v=uzscZox4uXI" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#unafinestra">📜 Leggi il testo</a>
+      </div>     
+
+      <div class="voce-menu">
+        <h3>📖 Due metri di mare</h3>
+        <p> Quel cappotto blu......</p>
+        <a href="https://www.youtube.com/watch?v=ZNkv-onbEDQ" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#duemetridimare">📜 Leggi il testo</a>
+      </div> 
+
+      <div class="voce-menu">
+        <h3>📖 Resta qui questa notte</h3>
+        <p> Solo stanotte non andare</p>
+        <a href="https://www.youtube.com/watch?v=jV7vln34zpo" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#restaquiquestanotte">📜 Leggi il testo</a>
+      </div> 
+
+      <div class="voce-menu">
+        <h3>📖 Tu a un passo da me</h3>
+        <p> Così vicina e così lontana</p>
+        <a href="https://www.youtube.com/watch?v=D3eH3Uw5Lw0" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#tuaunpassodame">📜 Leggi il testo</a>
+      </div> 
+
+      <div class="voce-menu">
+        <h3>📖 Cosa darei</h3>
+        <p> Forse bastava solo un bacio</p>
+        <a href="https://www.youtube.com/watch?v=_wtqEdFdKNE" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#cosadarei">📜 Leggi il testo</a>
+      </div> 
+
+      <div class="voce-menu">
+        <h3>📖 Fotografia</h3>
+        <p> Maledetta fotografia</p>
+        <a href="https://www.youtube.com/watch?v=6hfZeUDAWZ4" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#fotografia">📜 Leggi il testo</a>
+      </div> 
+
+      <div class="voce-menu">
+        <h3>📖 Siamo qui</h3>
+        <p> Quando non ci si riconosce più</p>
+        <a href="https://www.youtube.com/watch?v=G_w5tuX_G_Q" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#siamoqui">📜 Leggi il testo</a>
+      </div>
+
+      <div class="voce-menu">
+        <h3>📖 Non arrenderti mai</h3>
+        <p> C'è sempre qualcosa per cui valga la pena vivere</p>
+        <a href="https://www.youtube.com/watch?v=_alLaZ9M5MI" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="testi-rex.html#nonarrendertimai">📜 Leggi il testo</a>
+      </div> 
+    </div>
+  </div>
+
+  <!-- MENU A LANTERNA (Solo per desktop - lo stile è in stile.css) -->
+  <div class="lanterna-menu">
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    
+    <!-- REX & BIMBA CON SOTTOMENU -->
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- MENU HAMBURGER PER MOBILE (Lo stile è in mobile.css) -->
+  <div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </div>
+
+  <!-- FOOTER CON POLICY (Stile in common-footer) -->
+  <footer class="common-footer">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER DI CONSENSO COOKIE -->
+  <div id="cookie-banner">
+    <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT GLOBALE PER MENU E COOKIE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // MENU HAMBURGER PER MOBILE
+      const burger = document.querySelector('.hamburger-menu');
+      const nav = document.querySelector('.mobile-nav');
+      const body = document.body;
+
+      if (burger && nav) {
+        // Nasconde il menu mobile all'inizio
+        nav.style.display = 'none';
+
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+          body.classList.toggle('no-scroll');
+        });
+        
+        document.addEventListener('click', (e) => {
+          if (nav.style.display === 'block' && !nav.contains(e.target) && !burger.contains(e.target)) {
+            nav.style.display = 'none';
+            burger.classList.remove('active');
+            body.classList.remove('no-scroll');
+          }
+        });
+      }
+
+      // BANNER DI CONSENSO COOKIE
+      const cookieBanner = document.getElementById('cookie-banner');
+      if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
+        cookieBanner.style.display = 'block'; 
+      } else if (cookieBanner) {
+        cookieBanner.style.display = 'none'; 
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      }
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
