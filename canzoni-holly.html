@@ -257,61 +257,7 @@
   </div>
 
   <!-- SCRIPT GLOBALE PER MENU E COOKIE -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // MENU HAMBURGER PER MOBILE
-      const burger = document.querySelector('.hamburger-menu');
-      const nav = document.querySelector('.mobile-nav');
-      const body = document.body;
-
-      if (burger && nav) {
-        // Nasconde il menu mobile all'inizio
-        nav.style.display = 'none';
-
-        burger.addEventListener('click', (event) => {
-          event.stopPropagation(); 
-          burger.classList.toggle('active');
-          nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-          body.classList.toggle('no-scroll');
-        });
-        
-        document.addEventListener('click', (e) => {
-          if (nav.style.display === 'block' && !nav.contains(e.target) && !burger.contains(e.target)) {
-            nav.style.display = 'none';
-            burger.classList.remove('active');
-            body.classList.remove('no-scroll');
-          }
-        });
-      }
-
-      // BANNER DI CONSENSO COOKIE
-      const cookieBanner = document.getElementById('cookie-banner');
-      if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
-        cookieBanner.style.display = 'block'; 
-      } else if (cookieBanner) {
-        cookieBanner.style.display = 'none'; 
-      }
-
-      window.acceptCookies = function() {
-        localStorage.setItem('cookiesAccepted', 'true');
-        if (cookieBanner) cookieBanner.style.display = 'none';
-        
-        const gtagScript = document.createElement('script');
-        gtagScript.async = true;
-        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
-        document.head.appendChild(gtagScript);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-6X5LB7S2VT');
-      }
-
-      window.rejectCookies = function() {
-        localStorage.setItem('cookiesAccepted', 'false');
-        if (cookieBanner) cookieBanner.style.display = 'none';
-      }
-    });
-  </script>
+ 
 </body>
+
 </html>
