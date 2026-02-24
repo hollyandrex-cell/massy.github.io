@@ -1,0 +1,280 @@
+/* --- mobile.css --- */
+
+/* Nasconde il menu desktop (lanterna) su mobile per tutti i display < 769px */
+@media (max-width: 768px) {
+  .lanterna-menu {
+     display: none!important; 
+   }
+ }
+ 
+ /* Stili specifici per schermi <= 768px (Mobile) */
+ @media (max-width: 768px) {
+   /* Header generale */
+  .header h1 {
+     font-size: 2.5rem;
+   }
+  .header p {
+     font-size: 1rem;
+   }
+ 
+   /* --- STILI GLOBALI PER HAMBURGER-MENU E MOBILE-NAV --- */
+ 
+   /* HAMBURGER-MENU: Posizionamento di default a SINISTRA */
+  .hamburger-menu {
+     display: flex; /* Lo rende visibile di default su mobile */
+     position: fixed;
+     top: 20px;
+     left: 20px; /* Di default a sinistra */
+     right: auto; /* Assicura che non ci siano conflitti con 'right' */
+     z-index: 1001;
+     width: 30px;
+     height: 24px;
+     flex-direction: column;
+     justify-content: space-between;
+     cursor: pointer;
+     padding: 5px;
+     background: rgba(10, 12, 20, 0.7); /* Sfondo semi-trasparente scuro */
+     border-radius: 5px;
+   }
+ 
+   /* Stili per le barrette dell'hamburger */
+  .hamburger-menu span {
+     display: block;
+     height: 3px;
+     width: 100%;
+     background-color: var(--oro); /* Colore oro */
+     border-radius: 5px;
+     transition: all 0.3s ease;
+   }
+ 
+   /* Animazione dell'hamburger quando è attivo */
+  .hamburger-menu.active span:nth-child(1) {
+     transform: translateY(10px) rotate(45deg);
+   }
+  .hamburger-menu.active span:nth-child(2) {
+     opacity: 0;
+   }
+  .hamburger-menu.active span:nth-child(3) {
+     transform: translateY(-10px) rotate(-45deg);
+   }
+ 
+   /* MOBILE-NAV: Stili generali */
+  .mobile-nav {
+     display: flex; /* CAMBIATO: Ora è sempre 'flex' per permettere la transizione */
+     position: fixed;
+     top: 0;
+     left: -100%; /* Inizialmente fuori schermo */
+     width: 100%;
+     height: 100vh; /* Prende tutta l'altezza della viewport */
+     background-color: rgba(10, 12, 20, 0.98); /* Sfondo scuro quasi opaco */
+     flex-direction: column; /* Link uno sotto l'altro */
+     justify-content: flex-start; /* Allinea gli elementi in alto */
+     align-items: center;
+     z-index: 1000;
+     padding: 0;
+     text-align: center;
+     transition: left 0.3s ease-in-out;
+     padding-top: 80px; /* Spazio dall'alto per non coprire l'hamburger */
+     overflow-y: auto; /* Permette lo scroll verticale */
+     -webkit-overflow-scrolling: touch; /* Migliora lo scroll su iOS */
+   }
+ 
+   /* Stili per i link all'interno del menu mobile */
+  .mobile-nav a {
+     color: var(--oro); /* Colore oro per il testo dei link */
+     text-decoration: none;
+     font-family: 'Playfair Display', serif; /* Font elegante */
+     font-size: 1.5rem; /* Dimensione grande per facilitare il tap */
+     margin: 5px 0; /* Spazio verticale tra i link */
+     transition: color 0.3s ease;
+     white-space: nowrap; /* Impedisce al testo di andare a capo */
+     padding: 5px 10px; /* Aggiunge area cliccabile */
+     display: block; /* Ogni link occupa la sua riga */
+   }
+ 
+   /* Effetto hover sui link del menu mobile */
+  .mobile-nav a:hover {
+     color: var(--oro-hover); /* Cambia colore al passaggio del mouse/tap */
+   }
+ 
+   /* Quando il menu mobile è attivo */
+  .mobile-nav.active {
+     left: 0; /* Porta il menu sullo schermo quando è attivo */
+   }
+ 
+   /* Assicurati che il corpo della pagina non scorra quando il menu è aperto */
+   body.no-scroll {
+     overflow: hidden;
+   }
+ 
+   /* --- REGOLE PER ESCLUDERE L'HAMBURGER-MENU SU PAGINE SPECIFICHE (con menu-toggle) --- */
+   /* Nasconde l'hamburger-menu sulle pagine che hanno un loro menu-toggle specifico */
+   body.pagina-gruppo.hamburger-menu,
+   body.pagina-dj-nova.hamburger-menu,
+   body.pagina-dj-luna.hamburger-menu,
+   body.pagina-dj-ling.hamburger-menu {
+     display: none!important; /* Forza la scomparsa dell'hamburger-menu su queste pagine */
+   }
+ 
+   /* --- REGOLE PER POSIZIONARE L'HAMBURGER-MENU A DESTRA SU PAGINE SPECIFICHE --- */
+   /* Aggiungi qui le classi body delle pagine dove vuoi l'hamburger-menu a DESTRA */
+  .pagina-canzoni-rex.hamburger-menu,
+  .pagina-contatti.hamburger-menu,
+  .pagina-canzoni-nova.hamburger-menu, 
+  .pagina-canzoni-luna.hamburger-menu, 
+  .pagina-canzoni-ling.hamburger-menu, 
+  .pagina-canzoni-holly.hamburger-menu { 
+       left: auto!important;
+       right: 20px!important;
+   }
+   /* --- STILI SPECIFICI PER I FOOTER SU MOBILE (Leggibilità) --- */
+   /* Rendere le policy più leggibili su mobile per tutti i footer */
+  .common-footer a, footer a { 
+       color: var (--verde); 
+       text-shadow: 0 0 5px rgba(255, 235, 59, 0.5); 
+   }
+ 
+   /* Cookie Banner su mobile (per essere coerente con i nuovi colori) */
+   #cookie-banner {
+       color: var(--oro)!important;
+   }
+   #cookie-banner p a {
+       color: var(--oro-hover)!important;
+   }
+   #cookie-banner.cookie-btn.reject-btn {
+       color: var(--oro)!important;
+       border: 1px solid rgba(248, 213, 158, 0.5)!important;
+   }
+ 
+   /* --- IL TUO RESTANTE CODICE mobile.css ORIGINALE (dal tuo ultimo messaggio) --- */
+ 
+   /* Spazio per il contenuto principale */
+   main,.team-grid,.song-links-container {
+     margin-left: 0; 
+   }
+ 
+   /* Rex & Bimba container */
+  .rex-bimba-container {
+     flex-direction: column; 
+   }
+  .bimba-section,
+  .rex-section {
+     width: 100%;
+     margin-bottom: 20px;
+   }
+  /* Video Rex & Bimba (dimensioni su mobile) */
+  .bimba-video, .rex-video {
+   position: relative; /* CRUCIALE: Rende questo il contenitore di riferimento per il video assoluto */
+        min-height: auto;
+        height: 0; /* Altezza zero, l'altezza è data dal padding-top */
+        padding-top: 160%; /* Rapporto d'aspetto 16:9 (Altezza = 9 / 16 * Larghezza) */
+        overflow: hidden; /* Nasconde eventuali sformati */
+    }
+    .bimba-video video, .rex-video video {
+        position: absolute; /* CRUCIALE: Posiziona il video all'interno del suo contenitore */
+        top: 0; /* Allinea in alto */
+        left: 0; /* Allinea a sinistra */
+        width: 100%; /* Il video occupa tutta la larghezza del contenitore */
+        height: 100%; /* Il video occupa tutta l'altezza del contenitore */
+        object-fit: cover; /* Assicura che il video riempia il contenitore mantenendo le proporzioni */
+    }
+    /* Descrizioni */
+    .bimba-desc, .rex-desc {
+        font-size: 1rem;
+        line-height: 1.3;
+        padding: 15px;
+        text-align: center; /* Centra il testo per una migliore leggibilità su mobile */
+    }
+    /* Centra il contenitore dei link delle canzoni su mobile */
+    .song-links-container {
+        flex-direction: column; /* Impila i link verticalmente */
+        align-items: center; /* Centra i link */
+        padding: 15px;
+    }
+    .song-links-container p {
+        margin-bottom: 10px;
+    }
+    .song-link-item {
+        margin: 5px 0; /* Spazio verticale tra i link */
+        font-size: 1.1rem;
+    }
+ 
+   /* Griglia del gruppo */
+  .team-grid {
+     grid-template-columns: 1fr; 
+     padding: 20px;
+     gap: 20px;
+   }
+ 
+  .team-member {
+     border-radius: 10px;
+   }
+ 
+  .member-photo {
+     padding-top: 100%; 
+   }
+  .member-role {
+     font-size: 1.1rem;
+     margin-top: 15px;
+   }
+  .member-name {
+     font-size: 1.5rem;
+     margin-bottom: 10px;
+   }
+  .member-desc {
+     font-size: 1.1rem;
+     padding: 10px 15px 15px;
+     line-height: 1.5;
+   }
+ 
+   /* Song links container */
+  .song-links-container {
+     max-width: 90%;
+     margin: 20px auto;
+     padding: 10px;
+   }
+  .song-links-container p {
+     font-size: 0.9rem;
+     margin-bottom: 8px;
+   }
+  .song-links-container.song-link-item {
+     font-size: 0.9rem;
+     margin: 0 8px;
+   }
+ 
+   /* Footer combinato */
+  .combined-footer {
+     position: relative; 
+     padding: 10px 15px;
+     font-size: 0.8rem;
+   }
+  .combined-footer a {
+     margin-left: 5px; 
+   }
+ 
+   /* Cookie Banner */
+   #cookie-banner {
+     bottom: 10px;
+     right: 10px;
+     max-width: 90%;
+     padding: 15px;
+     font-size: 0.9rem;
+   }
+   #cookie-banner.cookie-btn {
+     padding: 5px 10px;
+     font-size: 0.9rem;
+   }
+   /* Adattamenti specifici per il pulsante MENU su mobile */
+  .menu-toggle {
+     bottom: 20px; 
+     padding: 8px 15px;
+     font-size: 1rem;
+   }
+ }
+ 
+ /* Nasconde l'hamburger-menu e mobile-nav su schermi grandi (desktop) */
+ @media (min-width: 769px) {
+    .hamburger-menu,.mobile-nav {
+         display: none!important; 
+     }
+ }
