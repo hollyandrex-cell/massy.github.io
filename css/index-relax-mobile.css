@@ -1,0 +1,100 @@
+/* css/index-relax-mobile.css */
+
+/* Regole specifiche per il pulsante menu-toggle su index e relax (Fuori dalla media query, per desktop e come base) */
+.menu-toggle {
+    /* Sovrascriviamo il posizionamento di css2.css per metterlo in alto a sinistra */
+    position: fixed; /* Deve essere fixed per stare sempre in alto */
+    top: 20px;
+    left: 20px;
+    bottom: auto; /* Rimuoviamo il bottom di css2.css */
+    transform: none; /* Rimuoviamo il transform di css2.css */
+    z-index: 1001; /* Assicuriamo che sia sopra il cagnolino */
+    background-color: rgba(10, 12, 20, 0.7); /* Manteniamo lo sfondo scuro semi-trasparente */
+    border: 1px solid var(--oro); /* Manteniamo il bordo */
+    color: var(--oro); /* Colore del testo */
+    padding: 10px 15px; /* Adattiamo un po' il padding */
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: none; /* Inizialmente nascosto su tutti i display, mostrato solo su mobile via media query */
+}
+
+.hero {
+    /* Rimuovi il padding-top dal calcolo dell'altezza per evitare overflow */
+    padding-top: 0 !important; /* Forza il padding a zero per il calcolo dell'altezza */
+    height: calc(100vh - 30px) !important; /* Imposta l'altezza per lasciare spazio al footer */
+    /* 30px è circa l'altezza compatta del footer */
+    /* Puoi aggiustare i 30px in base all'altezza effettiva del footer se serve */
+    /* o se il footer cresce un po' su desktop per più testo */
+}
+
+/* Regole per il mobile-menu (pannello che si apre) su index e relax (Fuori dalla media query, per desktop e come base) */
+.mobile-menu {
+    /* Assicuriamo che sia in primo piano e ben posizionato */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 88vh; /* Prende tutta l'altezza della viewport */
+    background-color: var(--blu-notte);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra i link verticalmente */
+    align-items: center;
+    z-index: 1000; /* Leggermente sotto il pulsante, ma sopra tutto il resto */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto; /* Permette lo scroll se il contenuto è troppo lungo */
+    padding: 80px 0; /* Spazio sopra e sotto per i link */
+}
+
+.mobile-menu.active {
+    transform: translateX(0); /* Rende il menu visibile */
+}
+
+.mobile-menu a {
+    color: var(--oro);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    text-decoration: none;
+    padding: 10px 0;
+    display: block;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.mobile-menu a:hover {
+    color: var(--oro-hover);
+}
+
+/* === INIZIO: BLOCCO UNIFICATO PER MOBILE (max-width: 768px) === */
+@media (max-width: 768px) {
+
+    /* Regola per mostrare il menu-toggle solo su schermi mobile */
+    .menu-toggle {
+        display: block; /* Mostra il pulsante su mobile, override del display: none; precedente */
+    }
+
+    /* Regola per abbassare la riga delle firme su mobile */
+    .hero-content p.signature {
+        margin-top: 120px; /* ABBASSA QUESTA PARTE! Regola il valore (es. 40px, 50px, 60px) finché non ti piace */
+    }
+
+    /* Media query per il footer, se serve ulteriore compressione solo su schermi molto piccoli */
+    /* Spostata qui dentro dal blocco esterno */
+    @media (max-width: 480px) { /* Schermi molto piccoli */
+        .combined-footer-index {
+            padding: 2px 5px !important; /* Padding minimo */
+            min-height: 25px !important; /* Altezza minima ancora più ridotta */
+        }
+        .combined-footer-index p,
+        .combined-footer-index a {
+            font-size: 0.65rem !important; /* Font ancora più piccolo per schermi minuscoli */
+        }
+    }
+
+}
+/* === FINE: BLOCCO UNIFICATO PER MOBILE (max-width: 768px) === */
