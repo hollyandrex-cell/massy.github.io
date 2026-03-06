@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Dj Luna 🌙 • Massy</title>
+  
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Fogli di stile principali -->
+  <link rel="stylesheet" href="css/stile.css">
+   <!-- CSS mobile specifico -->
+  <link rel="stylesheet" href="css/dj-pages.mobile.css" media="(max-width: 768px)">
+  
+  <!-- STILI SPECIFICI PER DJ LUNA (Corretti e completi) -->
+  <style>
+    /* Hero Section */
+    .luna-hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background: url('immagini/dj-luna.jpg') no-repeat center center;
+      background-size: auto 105%;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Overlay scuro */
+    .luna-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(10, 12, 20, 0.4), rgba(10, 12, 20, 0.8));
+      z-index: 1;
+    }
+
+    /* Contenuto */
+    .luna-content {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      max-width: 800px;
+    }
+
+    .luna-content h1 {
+      font-size: 3.5rem;
+      color: var(--oro);
+      text-shadow: 0 0 20px rgba(248, 213, 158, 0.7);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .luna-content .subtitle {
+      font-size: 1.4rem;
+      font-style: italic;
+      opacity: 0.9;
+      color: var(--crema);
+      margin-bottom: 30px;
+    }
+
+    /* Box Storia */
+    .luna-story {
+      background: rgba(10, 12, 20, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(248, 213, 158, 0.1);
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--crema);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* --- CORREZIONE FOOTER PER DJ LUNA --- */
+    /* Sposta il footer .combined-footer a destra sotto la lanterna */
+    body.pagina-dj-luna footer.combined-footer {
+      position: fixed !important;
+      left: auto !important;
+      right: 20px !important; /* Allineato alla lanterna */
+      bottom: 15px !important;
+      text-align: right !important;
+      background: transparent !important;
+      z-index: 99 !important;
+      display: flex !important;
+      flex-direction: column; /* Mette il testo sopra i link se c'è, o allinea tutto */
+      gap: 5px;
+      max-width: 250px;
+    }
+
+    /* Stile per il paragrafo del disclaimer (opzionale, se vuoi nasconderlo lascia display:none) */
+    body.pagina-dj-luna footer.combined-footer p {
+      margin: 0 0 5px 0;
+      font-size: 0.8rem;
+      color: #f8d59e;
+      font-style: italic;
+      line-height: 1.3;
+      /* display: none;  <-- Decompatta questa riga se vuoi vedere SOLO i link verdi */
+    }
+
+    /* Stile per i link delle policy */
+    body.pagina-dj-luna footer.combined-footer a {
+      color: #79f406 !important; /* Verde brillante */
+      text-decoration: underline;
+      font-size: 0.85rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      margin: 0 5px;
+      display: inline-block;
+    }
+    
+    /* Animazione Banner */
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="pagina-dj-luna">
+
+  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
+  <div id="optimization-banner">
+    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
+  </div>
+
+  <!-- HERO SECTION -->
+  <div class="luna-hero">
+    <div class="luna-overlay"></div>
+    <div class="luna-content">
+      <h1>Dj Luna 🌙</h1>
+      <p class="subtitle">— la voce che fonde parole e musica —</p>
+      
+      <div class="luna-story">
+        <p>La mia voce è italo-americana, calda, profonda.<br>
+        Ogni canzone che canto nasce da un silenzio,<br>
+        da un respiro trattenuto, da un "quasi detto".<br><br>
+        Non canto per intrattenere.<br>
+        Canto per ricordare a chi ascolta<br>
+        che anche il dolore può diventare melodia.</p>
+      </div>
+    </div>
+
+    <!-- PULSANTE MENU HAMBURGER (Mobile) -->
+    <div class="hamburger-menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- MENU A SCOMPARSA (MOBILE) -->
+  <nav id="mobile-nav" class="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+    <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </nav>
+
+  <!-- MENU A LANTERNA (Desktop) -->
+  <div class="lanterna-menu">
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- FOOTER UNICO: DISCLAIMER E POLICY -->
+  <footer class="combined-footer gold-links"> 
+    <p>Dj Luna 🌙 è una voce nata dall'immaginazione,<br>
+    plasmata dalla tecnologia —<br>
+    ma nutrita dal cuore di chi scrive.</p>
+    <div>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="cookie-policy.html">Cookie Policy</a>
+    </div>
+  </footer>
+
+  <!-- BANNER COOKIE -->
+  <div id="cookie-banner">
+    <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-buttons">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT MENU E COOKIE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const burger = document.querySelector('.hamburger-menu');
+      const mobileNav = document.getElementById('mobile-nav');
+      const body = document.body;
+
+      if (burger && mobileNav) {
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+          body.classList.toggle('no-scroll'); 
+        });
+        
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+      }
+
+      const cookieBanner = document.getElementById('cookie-banner');
+      if (cookieBanner) {
+        if (localStorage.getItem('cookiesAccepted') === null) { 
+          cookieBanner.style.display = 'block'; 
+        } else {
+          cookieBanner.style.display = 'none'; 
+        }
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      };
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      };
+    });
+  </script>
+</body>
+</html>

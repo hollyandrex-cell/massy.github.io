@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Massy • I testi delle nostre canzoni</title>
+
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Il tuo stile principale (desktop) -->
+  <link rel="stylesheet" href="css/stile.css">
+  <!-- Stile mobile esclusivo per la home page (index) -->
+  <link rel="stylesheet" href="css/index.mobile.css" media="(max-width: 768px)"> 
+</head>
+<body class="pagina-index">
+
+  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
+  <div id="optimization-banner">
+    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
+  </div>
+  <style>
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+  </style>
+
+  <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+  <div class="hamburger-menu">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- MENU MOBILE UNIVERSALE -->
+  <nav id="mobile-nav" class="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+    <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </nav>
+
+   <!-- SFONDO CON TESTO -->
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="subtitle">Holly And Rex Group</p>
+      <p class="signature">— con Rex, Bimba, Dj Ling 灵, Dj Luna 🌙 e Dj Nova ⭐ —</p>
+    </div>
+  </div>
+
+  <!-- MENU A LANTERNA (desktop) -->
+  <div class="lanterna-menu">
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    
+    <!-- REX & BIMBA CON SOTTOMENU -->
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- Contenitore per il video del cagnolino e il messaggio -->
+  <div id="cagnolino-video-container">
+    <video id="cagnolino-video" src="immagini/cagnolino-che-cammina.mp4" autoplay loop muted playsinline></video>
+    <div id="cagnolino-messaggio">
+      <p>Vuoi vedere cosa succede dietro le quinte?</p>
+      <a href="dietro-le-quinte.html" class="pulsante-vai-dietro">Scopri di più!</a>
+    </div>
+  </div>
+
+  <!-- FOOTER UNICO: DISCLAIMER E POLICY SULLA STESSA RIGA -->
+  <footer>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER DI CONSENSO COOKIE -->
+  <div id="cookie-banner">
+    <p>Utilizziamo i cookie per offrirti la migliore esperienza di navigazione. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER (MODIFICATO PER IL CAGNOLINO FELICE) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // --- GESTIONE MENU MOBILE ---
+      const burger = document.querySelector('.hamburger-menu');
+      const mobileNav = document.getElementById('mobile-nav');
+      const body = document.body; 
+
+      if (burger && mobileNav) {
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+          body.classList.toggle('no-scroll'); 
+        });
+        
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+      }
+
+      // --- GESTIONE CAGNOLINO E COOKIE ---
+      const cookieBanner = document.getElementById('cookie-banner');
+      const cagnolinoVideoContainer = document.getElementById('cagnolino-video-container');
+      const cagnolinoVideo = document.getElementById('cagnolino-video');
+      const cagnolinoMessaggio = document.getElementById('cagnolino-messaggio');
+
+      // Funzione per far apparire il cagnolino
+      function showCagnolinoAnimation() {
+          if (cagnolinoVideoContainer && cagnolinoVideo && cagnolinoMessaggio) {
+              // Aggiunge la classe CSS che fa salire il cagnolino
+              cagnolinoVideoContainer.classList.add('active'); 
+              
+              // Applica l'animazione al video
+              cagnolinoVideo.style.animation = 'cagnolino-walk-in 3s forwards'; 
+
+              // Quando l'animazione finisce, mostra il messaggio
+              cagnolinoVideo.onanimationend = () => { 
+                  cagnolinoMessaggio.style.display = 'flex';
+                  cagnolinoMessaggio.style.opacity = '1';
+                  cagnolinoMessaggio.style.alignItems = 'center';
+                  cagnolinoMessaggio.style.justifyContent = 'center';
+                  cagnolinoMessaggio.style.flexDirection = 'column';
+              };
+          }
+      }
+
+      // 1. Gestione visiva del banner (mostra/nascondi in base alla scelta precedente)
+      if (cookieBanner) {
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            cookieBanner.style.display = 'none';
+        } else {
+            cookieBanner.style.display = 'block'; 
+        }
+      }
+
+      // 2. IL CAGNOLINO APPARE SEMPRE DOPO 1.5 SECONDI! (Per tutti, accettanti o meno)
+      setTimeout(() => {
+          showCagnolinoAnimation();
+      }, 1500);
+
+      // Funzioni per i pulsanti del banner
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        // Carica Google Analytics solo se accettato
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      };
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        // Il cagnolino è già apparso grazie al setTimeout sopra, quindi non serve fare nulla qui!
+      };
+    });
+  </script>
+</body>
+</html>

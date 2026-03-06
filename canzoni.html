@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Canzoni • L’emozione in Musica</title>
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Il tuo stile personale (globale, desktop) -->
+  <link rel="stylesheet" href="css/stile.css"> 
+  
+  <!-- Stile mobile specifico -->
+  <link rel="stylesheet" href="css/canzoni.mobile.css" media="(max-width: 768px)">
+  
+  <!-- STILI SPECIFICI PER LA PAGINA CANZONI -->
+  <style>
+    /* --- GLOBALI --- */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0c14;
+      color: #f8d59e;
+      font-family: 'Cormorant Garamond', serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body.no-scroll { overflow: hidden; }
+
+    /* --- VIDEO DI SFONDO (JUKEBOX) --- */
+    .bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; /* Copre tutto lo schermo */
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(10, 12, 20, 0.3), rgba(10, 12, 20, 0.85));
+      z-index: -1; /* Scuro per leggere bene i testi sopra il video */
+    }
+
+    /* --- CONTENUTO CENTRALE --- */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Pulsanti degli artisti in alto */
+    .pulsanti-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px; /* Più spazio sotto i pulsanti */
+      width: 100%;
+    }
+
+    .pulsante-top {
+      background-color: rgba(10, 12, 20, 0.7);
+      border: 1px solid var(--oro);
+      color: var(--oro);
+      padding: 12px 25px;
+      border-radius: 30px; /* Bordi più arrotondati */
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .pulsante-top:hover {
+      background-color: var(--oro);
+      color: var(--blu-notte);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(248, 213, 158, 0.4);
+    }
+
+    .titolo {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; /* Titolo grande ed elegante */
+      color: var(--oro);
+      text-shadow: 0 0 20px rgba(248, 213, 158, 0.7);
+      letter-spacing: 2px;
+      margin: 20px 0 10px;
+    }
+
+    .sottotitolo {
+      font-size: 1.4rem;
+      font-style: italic;
+      opacity: 0.9;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    /* --- FOOTER POLICY --- */
+    footer {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+      display: flex;
+      gap: 20px;
+      background: transparent; /* Trasparente per non disturbare */
+      padding: 0;
+    }
+    footer a {
+      color: #79f406;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    /* Animazione Banner */
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
+  <div id="optimization-banner">
+    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
+  </div>
+
+  <!-- VIDEO DI SFONDO (JUKEBOX) -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <!-- Assicurati che il file jukebox.mp4 esista nella cartella immagini! -->
+    <source src="immagini/jukebox.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="content">
+    
+<!-- NUOVO BANNER ANNUNCI -->
+<a href="artists-announce.html" style="
+display: inline-block;
+margin-bottom: 20px;
+padding: 8px 20px;
+background: rgba(211, 84, 0, 0.8);
+color: #fff;
+text-decoration: none;
+border-radius: 20px;
+font-family: 'Playfair Display', serif;
+font-size: 0.9rem;
+border: 1px solid var(--oro);
+transition: all 0.3s ease;
+" onmouseover="this.style.background='var(--oro)'; this.style.color='#000'" onmouseout="this.style.background='rgba(211, 84, 0, 0.8)'; this.style.color='#fff'">
+✨ Scopri le ultime novità del gruppo!
+</a>
+<!-- FINE BANNER -->
+
+    <!-- PULSANTI DEGLI ARTISTI (UNICA NAVIGAZIONE) -->
+    <div class="pulsanti-top">
+      <a href="canzoni-holly.html" class="pulsante-top">🐾 Holly</a>
+      <a href="canzoni-rex.html" class="pulsante-top">🐕 Rex</a>
+      <a href="canzoni-ling.html" class="pulsante-top">✨ Ling</a>
+      <a href="canzoni-luna.html" class="pulsante-top">🌙 Luna</a>
+      <a href="canzoni-nova.html" class="pulsante-top">✨ Nova</a>
+    </div>
+
+    <!-- TITOLO E SOTTOTITOLO -->
+    <h1 class="titolo">Le Nostre Canzoni</h1>
+    <p class="sottotitolo">— ogni nota è un respiro condiviso —</p>
+
+    <!-- PULSANTE MENU HAMBURGER (Mobile) -->
+    <div class="hamburger-menu">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- MENU MOBILE -->
+    <nav id="mobile-nav" class="mobile-nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="canzoni.html">🎵 Canzoni</a>
+      <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+      <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+      <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+      <a href="dj-ling.html">✨ Dj Ling 灵</a>
+      <a href="dj-nova.html">⭐ Dj Nova</a>
+      <a href="dj-luna.html">🌙 Dj Luna</a>
+      <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+      <a href="storia.html">📖 La Nostra Storia</a>
+      <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+      <a href="relax.html">🎧 Relax</a>
+      <a href="contatti.html">💌 Contatti</a>
+    </nav>
+
+    <!-- MENU A LANTERNA (Desktop) -->
+    <div class="lanterna-menu">
+      <a href="index.html" class="lanterna">Home</a>
+      <a href="canzoni.html" class="lanterna">Canzoni</a>
+      <div class="lanterna-group">
+        <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+        <div class="lanterna-submenu">
+          <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+          <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+        </div>
+      </div>
+      <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+      <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+      <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+      <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+      <a href="storia.html" class="lanterna">La Nostra Storia</a>
+      <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+      <a href="relax.html" class="lanterna">Relax in musica</a>
+      <a href="contatti.html" class="lanterna">Contatti</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER POLICY -->
+  <footer>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER COOKIE -->
+  <div id="cookie-banner">
+    <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-buttons">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT MENU E COOKIE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const burger = document.querySelector('.hamburger-menu');
+      const mobileNav = document.getElementById('mobile-nav');
+      const body = document.body;
+
+      if (burger && mobileNav) {
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+          body.classList.toggle('no-scroll'); 
+        });
+        
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+      }
+
+      const cookieBanner = document.getElementById('cookie-banner');
+      if (cookieBanner) {
+        if (localStorage.getItem('cookiesAccepted') === null) { 
+          cookieBanner.style.display = 'block'; 
+        } else {
+          cookieBanner.style.display = 'none'; 
+        }
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      };
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      };
+    });
+  </script>
+</body>
+</html>

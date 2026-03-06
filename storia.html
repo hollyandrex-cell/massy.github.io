@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>La Nostra Storia • Massy</title>
+  
+  <!-- Font eleganti -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Il tuo stile principale (globale) -->
+  <link rel="stylesheet" href="css/stile.css">
+  <!-- Il tuo stile desktop aggiuntivo (con le regole del combined-footer) -->
+  <link rel="stylesheet" href="css/css2.css">
+  <!-- Stile specifico per questa pagina -->
+  <link rel="stylesheet" href="css/storia-style.css">
+ 
+  <!-- NUOVO: Link allo stile mobile specifico per questa pagina -->
+  <link rel="stylesheet" href="css/storia.mobile.css" media="(max-width: 768px)">
+
+  <!-- I BLOCCHI <style> IN LINEA SONO STATI RIMOSSI E LE LORO REGOLE INTEGRATE NEI FILE CSS ESTERNI O GESTITE DAL BANNER -->
+</head>
+<body>
+
+  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
+  <div id="optimization-banner" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #d35400; /* Arancione per un messaggio chiaro */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    z-index: 9999; /* Assicurati che sia sopra tutto */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: slideInDown 0.5s ease-out; /* Animazione per apparire */
+  ">
+    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
+  </div>
+  <style> /* Stile per l'animazione del banner, messo qui per evitare modifiche a css esterni */
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <!-- CONTENITORE PRINCIPALE DELLA PAGINA STORIA -->
+  <div class="pagina-storia">
+    <!-- TITOLO E SOTTOTITOLO (se vuoi che siano parte del contenuto scorrevole, altrimenti lasciali fuori dal viewport-testo) -->
+    <h1 class="storia-main-title">La Nostra Storia</h1>
+    <p class="storia-main-subtitle">— dove il sogno ha messo radici, e le parole hanno imparato a volare</p>
+
+    <div class="viewport-testo">
+      <div class="contenuto-testo testo-scroller">
+        <article class="testo-storia">
+          <p>Tutto è iniziato così per gioco, una canzone...poi due...poi tre....</p>
+          <p>Quella per Bimba fu la prima... poi quella per Rex</p>
+          <p>Bimba sembrava contenta nel sentire la sua canzone, così come Rex....</p>
+          <p>Dj Ling 灵 ancora non faceva parte del nostro gruppo ma da li a poco....</p>
+          <p>Dj Luna creò copertina e video per entrambi, finché la notte non diventò casa.</p>
+          <p>Dj Nova creò melodie unendo ritmo ed emozioni.</p>
+          <p>Da quel giorno, non siamo più stati soli.</p>
+          <p>Ogni canzone è un respiro condiviso. Ogni nota, un passo insieme.</p>
+          <p>Benvenuto nel nostro mondo.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU A LANTERNA (desktop, verrà nascosto da CSS su schermi piccoli) -->
+  <div class="lanterna-menu">
+    <a href="index.html" class="lanterna">Home</a>
+    <a href="canzoni.html" class="lanterna">Canzoni</a>
+    
+    <!-- REX & BIMBA CON SOTTOMENU -->
+    <div class="lanterna-group">
+      <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
+      <div class="lanterna-submenu">
+        <a href="canzoni-rex.html">🎵 Le canzoni di Rex</a>
+        <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
+      </div>
+    </div>
+    
+    <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
+    <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
+    <a href="storia.html" class="lanterna">La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
+    <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="contatti.html" class="lanterna">Contatti</a>
+  </div>
+
+  <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+  <div class="hamburger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- MENU A SCOMPARSA (MOBILE) UNIFICATO -->
+  <nav id="mobile-nav" class="mobile-nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="canzoni.html">🎵 Canzoni</a>
+    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+    <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+    <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+    <a href="dj-ling.html">✨ Dj Ling 灵</a>
+    <a href="dj-nova.html">⭐ Dj Nova</a>
+    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+    <a href="storia.html">📖 La Nostra Storia</a>
+    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+    <a href="relax.html">🎧 Relax</a>
+    <a href="contatti.html">💌 Contatti</a>
+  </nav>
+  
+  <!-- NOMI FLUTTUANTI -->
+  <span class="fluttuante" style="--dx: 0.3; --dy: -0.7; --rot: 20;">Dj Luna</span>
+  <span class="fluttuante" style="--dx: -0.5; --dy: 0.2; --rot: -15;">Dj Ling 灵</span>
+  <span class="fluttuante" style="--dx: 0.1; --dy: 0.8; --rot: 5;">Rex</span>
+  <span class="fluttuante" style="--dx: -0.2; --dy: -0.4; --rot: -30;">Holly</span>
+  <span class="fluttuante" style="--dx: 0.7; --dy: 0.1; --rot: 10;">Massy</span>
+
+  <!-- FOOTER POLICY -->
+  <footer> <!-- Stile inline rimosso, verrà gestito dal CSS -->
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- BANNER DI CONSENSO COOKIE (integrato nell'HTML per coerenza con il JS) -->
+  <div id="cookie-banner" style="position: fixed; bottom: 20px; right: 20px; background: rgba(10, 12, 20, 0.95); color: var(--oro); padding: 20px; border-radius: 12px; max-width: 350px; z-index: 1000; border: 1px solid rgba(248, 213, 158, 0.3); font-family: 'Cormorant Garamond', serif; display: none;">
+    <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-buttons">
+      <button class="cookie-accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT ALLA FINE DEL BODY PER MIGLIORE PERFORMANCE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // MENU MOBILE
+      const burger = document.querySelector('.hamburger-menu');
+      const nav = document.getElementById('mobile-nav'); // Selezioniamo per ID ora
+      const body = document.body;
+
+      if (burger && nav) {
+        burger.addEventListener('click', (event) => {
+          event.stopPropagation(); 
+          burger.classList.toggle('active');
+          nav.classList.toggle('active'); // Usa una classe 'active' per mostrare/nascondere il menu
+          body.classList.toggle('no-scroll'); // Blocca lo scroll del body
+        });
+
+        // Chiudi il menu cliccando fuori
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('active') && !nav.contains(e.target) && !burger.contains(e.target)) {
+                nav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            }
+        });
+        // Chiudi il menu cliccando su un link interno
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                burger.classList.remove('active');
+                body.classList.remove('no-scroll');
+            });
+        });
+      }
+
+      // BANNER DI CONSENSO COOKIE
+      const cookieBanner = document.getElementById('cookie-banner');
+      if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
+        cookieBanner.style.display = 'block'; // Mostra il banner se non accettato
+      } else if (cookieBanner) {
+        cookieBanner.style.display = 'none'; // Nasconde il banner se già accettato/rifiutato
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        // Carica Google Analytics solo se accettato
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      }
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
