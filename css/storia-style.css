@@ -1,0 +1,146 @@
+/* ========================================
+   STILE PER "LA NOSTRA STORIA"
+   - Sfondo poetico
+   - Testo scorrevole
+   - Compatibile con stile.css
+======================================== */
+
+/* --- CONTENITORE PRINCIPALE --- */
+.pagina-storia {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: url('../immagini/storia-bg.jpg') no-repeat center top / cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  overflow-x: hidden; /* Aggiunto per evitare scroll orizzontale */
+  /* padding-bottom: 80px;  Aggiungiamo un po' di spazio dal basso per il footer */
+  /* Potrebbe essere gestito meglio da body { display: flex; flex-direction: column; min-height: 100vh; } */
+  /* e impostando il footer con margin-top: auto; */
+}
+
+/* --- TITOLO E SOTTOTITOLO --- */
+.pagina-storia h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  color: #fff; /* BIANCO PURO */
+  margin-bottom: 15px;
+  text-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 1),
+    0 0 25px rgba(0, 0, 0, 1),
+    0 0 15px rgba(248, 213, 158, 0.3); /* Leggero oro per eleganza */
+  letter-spacing: 1px;
+  z-index: 6; /* Sopra a tutto */
+  position: relative;
+  font-weight: 700; /* Più spesso */
+}
+
+.storia-main-subtitle  {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.35rem; /* Leggermente più grande */
+  color: #fff8e7 !important; /* CREMA CALDO */
+  opacity: 1; /* Opacità massima */
+  margin-bottom: 30px;
+  max-width: 700px;
+  text-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 1), /* Ombra NERA molto forte */
+    0 0 20px rgba(0, 0, 0, 1), /* Alone nero marcato */
+    0 0 30px rgba(0, 0, 0, 0.8); /* Alone esterno */
+  z-index: 6; /* Sopra al viewport */
+  position: relative;
+  font-weight: 600; /* Più spesso */
+}
+
+/* --- VIEWPORT FISSO PER LO SCORRIMENTO --- */
+.viewport-testo {
+  height: 50vh;
+  width: 100%;
+  max-width: 700px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 10px;
+  z-index: 3; /* ← ABBASSALO! Era 4 */
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  border-radius: 15px;
+}
+
+/* --- TESTO SCORREVOLE --- */
+.testo-scroller {
+  animation: scorri-su 90s linear infinite; /* Rallentato a 90s (da 60s) e reso infinito */
+  display: block;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 100%; /* Inizia completamente sotto il viewport */
+  min-height: 100%;
+  box-sizing: border-box;
+  color: var(--crema);
+}
+
+.testo-storia p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; /* Leggermente più grande */
+  line-height: 1.8; /* Più spazio tra le righe */
+  color: #fff8e7; /* Crema invece di oro */
+  margin-bottom: 20px;
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.95), /* Ombra molto scura e vicina */
+    0 0 15px rgba(0, 0, 0, 0.9), /* Alone nero marcato */
+    0 0 30px rgba(0, 0, 0, 0.7); /* Alone esterno */
+  font-weight: 500; /* Leggermente più spesso */
+}
+
+/* --- ANIMAZIONE PER LO SCORRIMENTO DEL TESTO --- */
+@keyframes scorri-su {
+  0% {
+    transform: translateY(0); /* Inizio: L'elemento si trova esattamente dove dovrebbe essere */
+  }
+  100% {
+    transform: translateY(-200%); /* Ho raddoppiato il valore per assicurare che esca completamente e rientri fluidamente per il loop */
+  }
+}
+
+/* --- NOMI FLUTTUANTI --- */
+.fluttuante {
+  position: fixed;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #fff8e7;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 10; /* ← PORTALO SOPRA! Era 2 */
+  animation: fluttua 25s infinite ease-in-out;
+  left: 50%; 
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- ANIMAZIONE PER I NOMI FLUTTUANTI --- */
+@keyframes fluttua {
+  0% { 
+    transform: translate(calc(-50% + var(--dx, 0) * 0vw), calc(-50% + var(--dy, 0) * 0vh)) rotate(0deg); 
+    opacity: 0; 
+  }
+  10% { opacity: 0.7; }
+  50% { 
+    transform: translate(calc(-50% + var(--dx, 0) * 30vw), calc(-50% + var(--dy, 0) * 30vh)) rotate(calc(var(--rot, 0) * 0.5deg)); 
+    opacity: 0.6; 
+  }
+  90% { opacity: 0.5; }
+  100% { 
+    transform: translate(calc(-50% + var(--dx, 0) * 60vw), calc(-50% + var(--dy, 0) * 60vh)) rotate(calc(var(--rot, 0) * 1deg));
+    opacity: 0; 
+  }
+}

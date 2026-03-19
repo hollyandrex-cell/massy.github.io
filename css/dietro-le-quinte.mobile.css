@@ -1,0 +1,186 @@
+/* --- dietro-le-quinte.mobile.css --- */
+/* Stili specifici per mobile (max-width: 768px) per la pagina dietro-le-quinte.html */
+
+@media (max-width: 768px) {
+
+  /* --- HAMBURGER MENU ICON (LE TRE LINEETTE) --- */
+  .hamburger-menu {
+    display: flex!important;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: auto;
+    z-index: 1001;
+    width: 30px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px;
+    background: rgba(10, 12, 20, 0.7);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--oro);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  /* MOBILE-NAV */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 12, 20, 0.98);
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1000;
+    padding: 80px 0 20px;
+    text-align: center;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-nav a {
+    color: var(--oro);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 8px 0;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    padding: 5px 10px;
+    display: block;
+  }
+
+  .mobile-nav a:hover {
+    color: var(--oro-hover);
+  }
+
+  .mobile-nav.active {
+    left: 0;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+
+  /* Nasconde la lanterna su mobile */
+  .lanterna-menu {
+    display: none!important;
+  }
+
+  /* Footer Mobile */
+  footer {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 10px;
+    font-size: 0.8rem;
+    background: rgba(10, 12, 20, 0.85);
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 100; /* ✨ AUMENTATO da 10 a 100 */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  footer a {
+    font-size: 0.75rem;
+    color: #79f406;
+  }
+
+  /* === ✨ FIX: Stili specifici pagina Dietro le Quinte === */
+  body {
+    background-color: var(--blu-notte);
+    background-image: none;
+    padding-top: 60px;
+    padding-bottom: 180px !important; /* ✨ AGGIUNTO: spazio per footer fisso */
+  }
+  
+  .hero-section {
+    padding-top: 20px;
+  }
+  
+  .header-content h1 {
+    font-size: 2.2rem;
+  }
+  
+  .header-content p.slogan {
+    font-size: 1rem;
+  }
+  
+  .main-content-overlay {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .main-content-overlay h2 {
+    font-size: 1.8rem;
+  }
+  
+  .main-content-overlay h3 {
+    font-size: 1.5rem;
+  }
+  
+  .main-content-overlay p {
+    font-size: 1rem;
+  }
+  
+  .bacheca-container {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    height: 150px;
+    margin-bottom: 60px; /* ✨ AGGIUNTO: spazio extra sotto miniature */
+  }
+  
+  .bacheca-item img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .bacheca-item p {
+    font-size: 0.9em;
+  }
+  
+  .main-content-policy-links {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
+  }
+  
+  .main-content-policy-links a {
+    font-size: 0.9rem;
+  }
+}
+
+/* Desktop: nascondi elementi mobile */
+@media (min-width: 769px) {
+  .hamburger-menu,
+  .mobile-nav {
+    display: none!important;
+  }
+}

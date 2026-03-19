@@ -1,0 +1,118 @@
+
+/* ========================================
+   STILE MOBILE PER LA BACHECA
+   ======================================== */
+
+/* --- CORREZIONE SFONDO MOBILE --- */
+body {
+  background-size: contain !important; /* L'immagine si vede tutta */
+  background-position: center top !important; /* Centrata in alto */
+  background-attachment: scroll !important; /* Scorre con la pagina (no fisso) */
+  padding-top: 80px !important; /* Spazio per il titolo e il pulsante Home */
+  min-height: 100vh;
+}
+
+/* Header */
+.bacheca-header h1 {
+    font-size: 2.2rem !important;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+    margin-bottom: 10px;
+}
+ 
+  .bacheca-header p {
+    font-size: 1.1rem !important;
+  }
+  
+  /* Contenuto principale */
+  .bacheca-content {
+    padding: 20px 15px !important;
+    margin: 20px auto !important;
+  }
+  
+  /* Bacheca scorrevole - più compatta su mobile */
+  .bacheca-container {
+    height: 350px !important; /* Un po' più bassa */
+    margin-top: 40px !important;
+    max-width: 95% !important;
+  }
+  
+  .bacheca-item {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 15px !important;
+    min-height: 180px !important; /* Più alta per il testo su più righe */
+    margin-bottom: 12px !important;
+  }
+  
+  .bacheca-item img {
+    width: 70px !important;
+    height: 70px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .bacheca-item-content {
+    text-align: center !important;
+    width: 100% !important;
+  }
+  
+  .bacheca-item p {
+    font-size: 1rem !important;
+    text-align: center !important;
+    line-height: 1.5 !important;
+  }
+  
+  .bacheca-item-autore {
+    font-size: 1.1rem !important;
+    text-align: center !important;
+  }
+  
+  .bacheca-item-data {
+    font-size: 0.85rem !important;
+    text-align: center !important;
+  }
+  
+  /* Sezione "Scrivi un messaggio" - TESTO PIÙ GRANDE */
+  .scrivi-container {
+    padding: 20px 18px !important;
+    margin: 30px 15px !important;
+    max-width: 95% !important;
+    background: rgba(10, 12, 20, 0.7) !important; /* Più scuro per contrasto */
+  }
+  
+  .scrivi-container h3 {
+    font-size: 1.4rem !important; /* PIÙ GRANDE */
+    color: rgb(255, 255, 255) !important; /* BIANCO per contrasto */
+    font-weight: bold !important;
+    text-shadow: 0 0 10px rgba(248, 213, 158, 0.5) !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .scrivi-container p {
+    font-size: 1.05rem !important;
+    color: #fff !important;
+    line-height: 1.6 !important;
+    margin-bottom: 18px !important;
+  }
+  
+  /* Pulsante - più grande su mobile */
+  .btn-scrivi {
+    font-size: 1.1rem !important; /* PIÙ GRANDE */
+    padding: 14px 30px !important;
+    display: block !important; /* A tutta larghezza */
+    margin: 0 auto !important;
+    font-weight: bold !important;
+    box-shadow: 0 6px 20px rgba(211, 84, 0, 0.5) !important;
+  }
+  
+  .btn-scrivi:hover {
+    transform: scale(1.05) !important;
+  }
+  
+  /* Footer su mobile */
+  footer {
+    position: static !important;
+    margin-top: 40px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+  }

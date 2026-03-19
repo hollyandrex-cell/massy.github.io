@@ -1,0 +1,186 @@
+/* --- gruppo.mobile.css --- */
+/* Stili specifici per mobile (max-width: 768px) per la pagina gruppo.html */
+
+@media (max-width: 768px) {
+
+  /* === FIX GENERALE: Evita scroll orizzontale indesiderato === */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* === NASCONDI LANTERNA === */
+  .lanterna-menu {
+    display: none !important;
+  }
+
+  /* === HAMBURGER MENU (Se non già gestito globalmente) === */
+  .hamburger-menu {
+    display: flex !important;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    width: 30px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px;
+    background: rgba(10, 12, 20, 0.7);
+    border-radius: 5px;
+  }
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--oro, #f8d59e);
+    border-radius: 5px;
+  }
+  .hamburger-menu.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+  .hamburger-menu.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+  /* === MOBILE NAV === */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 12, 20, 0.98);
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1000;
+    padding: 80px 0 20px;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+  }
+  .mobile-nav.active { left: 0; }
+  .mobile-nav a {
+    color: var(--oro, #f8d59e);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 8px 0;
+    display: block;
+  }
+  body.no-scroll { overflow: hidden; }
+
+  /* === FIX CRUCIALE: Spazio per il footer fisso === */
+  /* Aggiunge spazio in fondo alla pagina così il footer non copre il testo */
+  .pagina-gruppo, main, .container, body {
+    padding-bottom: 120px !important;
+  }
+
+  /* === HEADER PAGINA === */
+  .group-header {
+    padding-top: 100px; /* Più spazio per l'hamburger */
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+  }
+  .group-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .group-subtitle {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.9;
+  }
+
+  /* === GRIGLIA CARD (Il cuore del fix) === */
+  .team-grid {
+    display: flex !important;
+    flex-direction: column !important; /* Una sotto l'altra */
+    width: 100%;
+    padding: 20px;
+    gap: 40px; /* Più spazio tra le card */
+    box-sizing: border-box;
+  }
+
+  /* === SINGOLA CARD MEMBRO === */
+  .team-member, .card, .member-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* === IMMAGINI RESPONSIVE === */
+  .team-member img, .card img, .member-card img {
+    width: 100% !important;
+    max-width: 300px; /* Limite larghezza immagine */
+    height: auto !important;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+  }
+
+  /* === TESTI CARD === */
+  .member-role {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    opacity: 0.8;
+  }
+  .member-name {
+    font-size: 2rem;
+    color: var(--oro, #f8d59e);
+    margin: 10px 0;
+    font-family: 'Playfair Display', serif;
+  }
+  .member-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 0 10px;
+  }
+
+  /* Sostituisci la sezione footer con questa */
+footer, .combined-footer {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(10, 12, 20, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  text-align: center;
+  z-index: 100;
+  display: flex;
+  flex-direction: row !important;  /* CAMBIA DA column A row */
+  flex-wrap: wrap;                  /* Permette di andare a capo se lo schermo è stretto */
+  justify-content: center;          /* Centra gli elementi */
+  align-items: center;              /* Allinea verticalmente */
+  gap: 10px 15px;                   /* Spazio: 10px verticale, 15px orizzontale */
+  backdrop-filter: blur(5px);
+}
+
+/* Assicurati che i link siano inline */
+footer a, .combined-footer a {
+  display: inline-block;
+  color: #aef604;
+  text-decoration: none;
+  margin: 0 5px;
+  white-space: nowrap;
+}
+}
+
+/* === DESKTOP: Nascondi elementi mobile === */
+@media (min-width: 769px) {
+  .hamburger-menu,
+  .mobile-nav {
+    display: none !important;
+  }
+}

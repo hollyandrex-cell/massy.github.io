@@ -1,0 +1,291 @@
+/* --- dj-testi.mobile.css --- */
+/* Stili specifici per mobile (max-width: 768px) */
+
+@media (max-width: 768px) {
+
+  /* --- HAMBURGER MENU --- */
+  .hamburger-menu {
+    display: flex !important;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    width: 30px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px;
+    background: rgba(10, 12, 20, 0.7);
+    border-radius: 5px;
+  }
+
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--oro);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  /* --- MOBILE NAV --- */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 12, 20, 0.98);
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1000;
+    padding: 80px 0 20px;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+  }
+
+  .mobile-nav a {
+    color: var(--oro);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 8px 0;
+  }
+
+  .mobile-nav.active {
+    left: 0;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+
+  .lanterna-menu {
+    display: none !important;
+  }
+
+  /* --- COLORI SPECIFICI DJ --- */
+  body.pagina-dj-nova { color: #a0ff06 !important; }
+  body.pagina-dj-luna { color: #f8d59e !important; }
+  body.pagina-dj-ling { color: #c9ffee !important; }
+  body.pagina-canzoni-holly { color: #a0ff06 !important; }
+
+  /* --- SFONDI IMMAGINI DJ --- */
+  
+  /* DJ NOVA CON IMMAGINE DI SFONDO */
+  body.pagina-dj-nova {
+    background-image: url('../immagini/dj-nova.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #0a0c14 !important;
+    padding-top: 60px;
+  }
+
+  /* DJ LUNA CON IMMAGINE DI SFONDO */
+  body.pagina-dj-luna {
+    background-image: url('../immagini/dj-luna-3d.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #0a0c14 !important;
+    padding-top: 60px;
+  }
+
+  /* DJ LING CON IMMAGINE DI SFONDO */
+  body.pagina-dj-ling {
+    background-image: url('../immagini/dj-ling.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #0a0c14 !important;
+    padding-top: 60px;
+  }
+
+  /* CANZONI HOLLY CON IMMAGINE DI SFONDO */
+  body.pagina-canzoni-holly {
+    background-image: url('../immagini/holly.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #0a0c14 !important;
+    padding-top: 60px;
+  }
+
+  /* TESTI REX CON IMMAGINE DI SFONDO */
+  body.pagina-testi-rex {
+    background-image: url('../immagini/rex.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-color: #0a0c14 !important;
+    padding-top: 60px;
+  }
+
+  /* Testo verde per Rex */
+  body.pagina-testi-rex .content,
+  body.pagina-testi-rex .testo,
+  body.pagina-testi-rex p {
+    color: #69ec11 !important;
+  }
+
+  /* Titolo ORO per Rex */
+  body.pagina-testi-rex h2 {
+    color: #f8d59e !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+  }
+
+  /* DEDICA BIANCA per Rex */
+  body.pagina-testi-rex .dedica {
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1) !important;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* Link BACK arancione */
+  body.pagina-testi-rex .back {
+    color: #d35400 !important;
+  }
+
+  /* Footer link verdi */
+  body.pagina-testi-rex footer a {
+    color: #82f903 !important;
+  }
+
+  /* --- TESTI NOVA SENZA SFONDO (CON IMMAGINE INGRANDITA) --- */
+  body.pagina-testi-nova-senza-sfondo {
+    background-color: #0a0c14 !important;
+    color: #a0ff06 !important;
+    padding-top: 60px;
+  }
+
+  /* Immagine Nova come pseudo-elemento */
+  body.pagina-testi-nova-senza-sfondo::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../immagini/dj-nova.jpg');
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+  /* Titolo ORO per Nova */
+  body.pagina-testi-nova-senza-sfondo h2 {
+    color: #f8d59e !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+  }
+
+  /* DEDICA per Nova */
+  body.pagina-testi-nova-senza-sfondo .dedica {
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1) !important;
+  }
+
+  /* Link BACK per Nova */
+  body.pagina-testi-nova-senza-sfondo .back {
+    color: #06f8e4 !important;
+  }
+
+  /* Footer link per Nova */
+  body.pagina-testi-nova-senza-sfondo footer a {
+    color: #aff806 !important;
+  }
+
+  /* --- CONTENUTO --- */
+  .content {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .testo {
+    font-size: 1rem;
+    padding: 20px;
+    line-height: 1.6;
+  }
+
+  .back {
+    font-size: 0.9rem;
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 10px;
+    font-size: 0.8rem;
+    background: rgba(10, 12, 20, 0.85);
+    padding: 8px;
+    border-radius: 8px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+  }
+
+  footer a {
+    font-size: 0.75rem;
+  }
+
+  /* --- COOKIE BANNER --- */
+  #cookie-banner {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: unset;
+    width: calc(100% - 20px);
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  #cookie-banner .cookie-btn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+
+  #optimization-banner {
+    padding-top: 40px;
+  }
+
+} /* FINE @media (max-width: 768px) */
+
+/* --- DESKTOP --- */
+@media (min-width: 769px) {
+  .hamburger-menu,
+  .mobile-nav {
+    display: none !important;
+  }
+}
