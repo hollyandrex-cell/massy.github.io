@@ -20,34 +20,6 @@
 </head>
 <body class="pagina-artists-announce">
 
-  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
-  <div id="optimization-banner" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #d35400; /* Arancione per un messaggio chiaro */
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 1.1rem;
-    font-family: 'Playfair Display', serif;
-    z-index: 9999; /* Assicurati che sia sopra tutto */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    animation: slideInDown 0.5s ease-out; /* Animazione per apparire */
-  ">
-    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
-  </div>
-  <style> /* Stile per l'animazione del banner, messo qui per evitare modifiche a css esterni */
-    @keyframes slideInDown {
-      from {
-        transform: translateY(-100%);
-      }
-      to {
-        transform: translateY(0);
-      }
-    }
-  </style>
 
   <!-- VIDEO DI SFONDO -->
   <video autoplay muted playsinline class="background-video">
@@ -92,9 +64,10 @@
       <div class="social-links">
         <a href="https://www.youtube.com/@Holly-Rex" target="_blank" class="social-button youtube">YouTube</a>
         <a href="https://tiktok.com/@holly_and_rex2025" target="_blank" class="social-button tiktok">TikTok</a>
-        <a href="https://www.instagram.com/tuo_profilo_djnova/" target="_blank" class="social-button instagram">Instagram (Dj Nova)</a>
-        <a href="https://www.instagram.com/hollybau/" target="_blank" class="social-button instagram">Instagram (Rex & Bimba)</a>
-        <!-- Aggiungi qui gli altri link Instagram o altri social -->
+        <a href="https://www.instagram.com/bauholly/" target="_blank" class="social-button instagram">Instagram Hollybau2019</a>
+        <a href="https://www.instagram.com/hollybau2019/" target="_blank" class="social-button instagram">Instagram Hollybau</a>
+        <a href="https://www.instagram.com/hollybau/" target="_blank" class="social-button instagram">Instagram Bau Holly</a>
+    
       </div>
     </section>
 
@@ -121,7 +94,9 @@
     <a href="storia.html" class="lanterna">La Nostra Storia</a>
     <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
     <a href="relax.html" class="lanterna">Relax in musica</a>
+    <a href="dietro-le-quinte.html" class="lanterna">🎬 Dietro le quinte</a>
     <a href="contatti.html" class="lanterna">Contatti</a>
+    <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
 
   <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
@@ -145,7 +120,9 @@
     <a href="storia.html">📖 La Nostra Storia</a>
     <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
     <a href="relax.html">🎧 Relax</a>
+    <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
     <a href="contatti.html">💌 Contatti</a>
+    <a href="bacheca.html" >📖 Bacheca</a>
   </nav>
 
   <!-- FOOTER CON POLICY -->
@@ -199,6 +176,9 @@
         });
       }
 
+
+
+
       // --- GESTIONE DINAMICA DEGLI ANNUNCI ---
       const announcements = [
         // Annuncio 1: Dj Nova ⭐ & Rex - Il Tuo Capolavoro! (Esempio)
@@ -219,6 +199,7 @@
         },
        
       ];
+
 
       // Funzione per mostrare l'annuncio
       function displayAnnouncement(announcement) {
