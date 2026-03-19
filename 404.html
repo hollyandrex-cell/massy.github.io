@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- FAVICON (Stesse di sempre) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
+
+  <title>Ti sei perso? | Holly and Rex Group</title>
+  
+  <!-- Meta Description specifica per la 404 -->
+  <meta name="description" content="Sembra che tu abbia preso una strada senza uscita. Niente paura, Rex e Bimba ti aspettano a casa. Torna indietro e riprendi il viaggio musicale.">
+
+  <style>
+    /* Stile semplice ma emotivo */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Playfair Display', serif; /* O il font che usi solitamente */
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('immagini/sfondo-libreria.jpg'); /* Usa il tuo sfondo preferito */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #ffd700; /* Oro per dare calore */
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .mascotte {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .btn-home {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #ff6b6b; /* Un colore caldo */
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-home:hover {
+      transform: translateY(-3px);
+      background-color: #ff5252;
+    }
+
+    /* Mobile adjustment */
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+      .container { margin: 20px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Immagine di Rex e Bimba (o solo Rex) -->
+    <!-- Sostituisci 'immagini/rex-bimba-fav.png' con il percorso reale della tua immagine preferita -->
+    <img src="immagini/rex-ciuccio.png" alt="Rex col ciuccio" class="mascotte">
+    
+    <h1>Ops! Qualcuno ha preso il ciuccio sbagliato?</h1>
+
+<p>
+  Sembra che tu sia finito in un posto dove nemmeno Rex sapeva di dover andare!<br>
+  Niente paura, è solo un piccolo errore di percorso.<br>
+  <strong>Torna indietro, che la festa (e la musica) è appena iniziata!</strong>
+</p>
+
+<p style="font-style: italic; font-size: 0.9rem; opacity: 2.1;">
+  "Anche i grandi campioni a volte inciampano... specialmente se hanno un ciuccio in bocca!"
+</p>
+
+<a href="index.html" class="btn-home">🍼 Torna alla realtà (e alla musica)</a>
+  </div>
+
+</body>
+</html>
