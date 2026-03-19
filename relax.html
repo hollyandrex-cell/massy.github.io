@@ -12,8 +12,9 @@
   
   <link rel="stylesheet" href="css/relax.css">
   
-  <!-- Stile specifico per questa pagina (Relax) - Posizionato dopo gli altri CSS -->
-  <!-- I BLOCCHI <style> IN LINEA SONO STATI RIMOSSI O INTEGRATI NEI FILE CSS ESTERNI -->
+  <!-- Stile mobile specifico per la pagina Relax -->
+<link rel="stylesheet" href="css/relax.mobile.css" media="(max-width: 768px)">
+
 </head>
 <body class="pagina-relax">
 
@@ -32,36 +33,6 @@
   <source src="immagini/sottofondo.mp3" type="audio/mpeg">
 </audio>
   
-    <!-- BANNER DI AVVISO... (il resto del codice continua uguale) -->
-
-
-  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
-  <div id="optimization-banner" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: transparent; /* Arancione per un messaggio chiaro */
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 1.1rem;
-    font-family: 'Playfair Display', serif;
-    z-index: 9999; /* Assicurati che sia sopra tutto */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    animation: slideInDown 0.5s ease-out; /* Animazione per apparire */
-  ">
-    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
-  </div>
-  <style> /* Stile per l'animazione del banner, messo qui per evitare modifiche a css esterni */
-    @keyframes slideInDown {
-      from {
-        transform: translateY(-100%);
-      }
-      to {
-        transform: translateY(0);
-      }
-    }
   </style>
 
   <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
@@ -85,7 +56,9 @@
     <a href="storia.html">📖 La Nostra Storia</a>
     <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
     <a href="relax.html">🎧 Relax</a>
+    <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
     <a href="contatti.html">💌 Contatti</a>
+    <a href="bacheca.html" >📖 Bacheca</a>
   </nav>
 
   <div class="intro">
@@ -142,6 +115,7 @@
     <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
     <a href="relax.html" class="lanterna">Relax in musica</a>
     <a href="contatti.html" class="lanterna">Contatti</a>
+    <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
 
   <!-- FOOTER UNICO: DISCLAIMER E POLICY -->

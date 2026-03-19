@@ -8,98 +8,135 @@
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: 
-        url('immagini/holly.jpg') no-repeat center center / cover,
-        #0a0c14;
-      background-attachment: fixed;
-      color: #a0ff06;
-      font-family: 'Cormorant Garamond', serif;
-      line-height: 1.8;
-      min-height: 100vh;
-      position: relative;
-    }
 
-    .content {
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 2;
-    }
+<!-- Il tuo stile principale (desktop) -->
+<link rel="stylesheet" href="css/stile.css">
+<!-- Link allo stile mobile specifico per questa pagina -->
+<link rel="stylesheet" href="css/dj-testi.mobile.css" media="(max-width: 768px)"> 
+<body class="pagina-testi-holly"> <!-- HO AGGIUNTO LA CLASSE pagina-testi-rex QUI! -->
 
-    h2 {
-      font-family: 'Playfair Display', serif;
-      color: #f8d59e;
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px rgba(248, 213, 158, 0.7);
-    }
+  <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+<div class="hamburger-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
-    .dedica {
-      text-align: center;
-      font-style: italic;
-      opacity: 0.85;
-      margin-top: -20px;
-      font-size: 1.61rem;
-    }
+<!-- MENU MOBILE UNIVERSALE -->
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="canzoni.html">🎵 Canzoni</a>
+  <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+  <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+  <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+  <a href="dj-ling.html">✨ Dj Ling 灵</a>
+  <a href="dj-nova.html">⭐ Dj Nova</a>
+  <a href="dj-luna.html">🌙 Dj Luna</a>
+  <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+  <a href="storia.html">📖 La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+  <a href="relax.html">🎧 Relax</a>
+  <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
+  <a href="contatti.html">💌 Contatti</a>
+</nav>
 
-    .testo {
-      font-size: 1.15rem;
-      line-height: 1.75;
-      white-space: pre-line;
-      background: rgba(10, 12, 20, 0.4);
-      padding: 30px;
-      border-radius: 15px;
-      border-left: 4px solid #d35400;
-    }
-
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 30px;
-      color: #06f8e4;
-      text-decoration: underline;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 1;
-      display: flex;
-      gap: 20px;
-    }
-
-    footer a {
-      color: #74fc06;
-      text-decoration: underline;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-  .container {
-    padding-bottom: 60px; /* spazio per il footer */
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: 
+      url('immagini/holly.jpg') no-repeat center center / cover,
+      #0a0c14;
+    background-attachment: fixed;
+    color: #a0ff06;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.8;
+    min-height: 100vh;
+    position: relative;
   }
+
+  .content {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1; /* <--- ABBASSATO DA 2 A 1 (o togli proprio lo z-index) */
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    color: #fd9e05;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(248, 213, 158, 0.7);
+  }
+
+  .dedica {
+    text-align: center;
+    font-style: italic;
+    opacity: 0.85;
+    margin-top: -20px;
+    font-size: 1.61rem;
+  }
+
+  .testo {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    white-space: pre-line;
+    background: rgba(10, 12, 20, 0.4);
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 4px solid #d35400;
+  }
+
+  .back {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    color: #06f8e4;
+    text-decoration: underline;
+  }
+
   footer {
-    bottom: 10px !important;
-    left: 10px !important;
-    font-size: 0.8rem !important;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999 !important; /* <--- ALTISSIMO! SOPRA A TUTTO */
+    display: flex;
+    gap: 20px;
+    pointer-events: auto !important;
   }
-}
-  </style>
+
+  footer a {
+    color: #74fc06;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    z-index: 10000 !important;
+    position: relative;
+    pointer-events: auto !important;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding-bottom: 60px;
+    }
+    footer {
+      bottom: 10px !important;
+      left: 10px !important;
+      font-size: 0.8rem !important;
+      /* Lo z-index 9999 già definito sopra vince grazie a !important */
+    }
+  }
+</style>
 </head>
 <body>
 
-  <div class="content">
-
-    <!-- CANZONE 1: HOLLY BAU -->
-    <div id="holly-bau" class="testo-canzone">
+      <!-- CANZONE 1: HOLLY BAU -->
+    <div id="holly-bau" class="testo-canzone"></div>
+      <div class="content">
       <h2>✨ Holly Bau</h2>
+      <p style="text-align:center; font-style:italic; opacity:0.85; margin-top:-15px; font-size:1.1rem;">
       <p class="dedica">Scritta da Holly</p>
       <div class="testo">
 Eccomi qui,  sono arrivata, 
@@ -165,7 +202,7 @@ datemi tempo e vi stupirò....stupirò...
 
 Holly and Rex love forever
 Holly and Rex love forever
-      </div>
+</div>
       <a href="canzoni-holly.html" class="back">← Torna alle canzoni di Holly</a>
     </div>
 
@@ -485,63 +522,86 @@ HOLLY AND REX LOVE FOREVER
       <a href="canzoni-holly.html" class="back">← Torna alle canzoni di Holly</a>
     </div>
 
-
-  </div> <!-- fine .content -->
+  </div> 
 
   <footer>
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="cookie-policy.html">Cookie Policy</a>
   </footer>
 
-  <!-- BANNER COOKIE + GOOGLE ANALYTICS (solo su consenso) -->
-  <script>
+ <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // MENU MOBILE UNIVERSALE
+    const burger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    const body = document.body;
+
+    if (burger && mobileNav) {
+      burger.addEventListener('click', (event) => {
+        event.stopPropagation(); 
+        burger.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        body.classList.toggle('no-scroll'); 
+      });
+      
+      mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          });
+      });
+      
+      document.addEventListener('click', (e) => {
+          if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          }
+      });
+    }
+
+    // BANNER COOKIE
     function loadGA() {
       const script = document.createElement('script');
       script.async = true;
       script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
       document.head.appendChild(script);
-
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-6X5LB7S2VT');
     }
-
+  
     if (localStorage.getItem('cookiesAccepted') === 'true') {
       loadGA();
     } else if (!localStorage.getItem('cookiesAccepted')) {
       const banner = document.createElement('div');
       banner.id = 'cookie-banner';
       banner.innerHTML = `
-        <div style="
-          position: fixed; bottom: 20px; right: 20px;
-          background: rgba(10,12,20,0.95); color: #f8d59e;
-          padding: 16px 24px; border-radius: 12px;
-          max-width: 350px; z-index: 1000;
-          font-family: 'Cormorant Garamond', serif;
-          border: 1px solid rgba(248,213,158,0.3);
-        ">
-          <p>Questo sito usa i cookie per analizzare il traffico. 
-          <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
+        <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10,12,20,0.95); color: #f8d59e; padding: 16px 24px; border-radius: 12px; max-width: 350px; z-index: 1000; font-family: 'Cormorant Garamond', serif; border: 1px solid rgba(248,213,158,0.3);">
+          <p>Questo sito usa i cookie per analizzare il traffico. <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
           <div style="margin-top:10px;">
-            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif;">Accetta</button>
-            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif;">Rifiuta</button>
+            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif; cursor:pointer;">Accetta</button>
+            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif; cursor:pointer;">Rifiuta</button>
           </div>
         </div>
       `;
       document.body.appendChild(banner);
     }
-
-    function acceptCookies() {
+  
+    window.acceptCookies = function() {
       localStorage.setItem('cookiesAccepted', 'true');
-      document.getElementById('cookie-banner').remove();
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
       loadGA();
     }
-
-    function rejectCookies() {
+  
+    window.rejectCookies = function() {
       localStorage.setItem('cookiesAccepted', 'false');
-      document.getElementById('cookie-banner').remove();
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
     }
-  </script>
-</body>
-</html>
+  });
+</script>

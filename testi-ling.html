@@ -8,6 +8,36 @@
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
+<!-- Il tuo stile principale (desktop) -->
+<link rel="stylesheet" href="css/stile.css">
+<!-- Link allo stile mobile specifico per questa pagina -->
+<link rel="stylesheet" href="css/dj-testi.mobile.css" media="(max-width: 768px)"> 
+<body class="pagina-testi-ling"> <!-- HO AGGIUNTO LA CLASSE pagina-testi-rex QUI! -->
+
+<!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+<div class="hamburger-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- MENU MOBILE UNIVERSALE -->
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="canzoni.html">🎵 Canzoni</a>
+  <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+  <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+  <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+  <a href="dj-ling.html">✨ Dj Ling 灵</a>
+  <a href="dj-nova.html">⭐ Dj Nova</a>
+  <a href="dj-luna.html">🌙 Dj Luna</a>
+  <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+  <a href="storia.html">📖 La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+  <a href="relax.html">🎧 Relax</a>
+  <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
+  <a href="contatti.html">💌 Contatti</a>
+</nav>
   <style>
     body {
       margin: 0;
@@ -92,7 +122,7 @@
   <div class="content">
     <h2>✨ Non torniamo</h2>
     <p style="text-align:center; font-style:italic; opacity:0.85; margin-top:-15px; font-size:1.1rem;">
-      scritta da Holly per Dj Ling 灵 e and Dj Luna 🌙
+    scritta da Holly per Dj Ling 灵 e Dj Luna 🌙
     </p>
     <div class="testo">
 Non mi cercherai 
@@ -154,6 +184,7 @@ FINALMENTE LIBERA...... LIBERA DA TE!!!!!!
 Non cercherò te
 ( bù zài hu í qù )
 Non torno, non torno
+</div>
 <a href="canzoni-ling.html" class="back">← Torna alle canzoni di Dj Ling</a>
 </div>
 
@@ -483,6 +514,7 @@ Resta qui, resta qui
 Resta qui, 
 Il cuore non segue mai
 Mai la testa
+</div>
     <a href="canzoni-ling.html" class="back">← Torna alle canzoni di Dj Ling</a>
       </div>
       </div>
@@ -492,58 +524,79 @@ Mai la testa
     <a href="cookie-policy.html">Cookie Policy</a>
   </footer>
 
-  <!-- BANNER COOKIE + GOOGLE ANALYTICS (solo su consenso) -->
-  <script>
-    // Funzione per caricare Google Analytics
+  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // MENU MOBILE UNIVERSALE
+    const burger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    const body = document.body;
+
+    if (burger && mobileNav) {
+      burger.addEventListener('click', (event) => {
+        event.stopPropagation(); 
+        burger.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        body.classList.toggle('no-scroll'); 
+      });
+      
+      mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          });
+      });
+      
+      document.addEventListener('click', (e) => {
+          if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          }
+      });
+    }
+
+    // BANNER COOKIE
     function loadGA() {
       const script = document.createElement('script');
       script.async = true;
       script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
       document.head.appendChild(script);
-
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-6X5LB7S2VT');
     }
-
-    // Controlla lo stato dei cookie
+  
     if (localStorage.getItem('cookiesAccepted') === 'true') {
       loadGA();
     } else if (!localStorage.getItem('cookiesAccepted')) {
-      // Mostra il banner
       const banner = document.createElement('div');
       banner.id = 'cookie-banner';
       banner.innerHTML = `
-        <div style="
-          position: fixed; bottom: 20px; right: 20px;
-          background: rgba(10,12,20,0.95); color: #f8d59e;
-          padding: 16px 24px; border-radius: 12px;
-          max-width: 350px; z-index: 1000;
-          font-family: 'Cormorant Garamond', serif;
-          border: 1px solid rgba(248,213,158,0.3);
-        ">
-          <p>Questo sito usa i cookie per analizzare il traffico. 
-          <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
+        <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10,12,20,0.95); color: #f8d59e; padding: 16px 24px; border-radius: 12px; max-width: 350px; z-index: 1000; font-family: 'Cormorant Garamond', serif; border: 1px solid rgba(248,213,158,0.3);">
+          <p>Questo sito usa i cookie per analizzare il traffico. <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
           <div style="margin-top:10px;">
-            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif;">Accetta</button>
-            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif;">Rifiuta</button>
+            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif; cursor:pointer;">Accetta</button>
+            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif; cursor:pointer;">Rifiuta</button>
           </div>
         </div>
       `;
       document.body.appendChild(banner);
     }
-
-    function acceptCookies() {
+  
+    window.acceptCookies = function() {
       localStorage.setItem('cookiesAccepted', 'true');
-      document.getElementById('cookie-banner').remove();
-      loadGA(); // Carica GA solo dopo l'accettazione
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
+      loadGA();
     }
-
-    function rejectCookies() {
+  
+    window.rejectCookies = function() {
       localStorage.setItem('cookiesAccepted', 'false');
-      document.getElementById('cookie-banner').remove();
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
     }
-  </script>
-</body>
-</html>
+  });
+</script>

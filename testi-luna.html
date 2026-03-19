@@ -8,6 +8,11 @@
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
+  <!-- Stile principale (desktop) -->
+<link rel="stylesheet" href="css/stile.css">
+
+<!-- Stile mobile specifico per le pagine dei testi -->
+<link rel="stylesheet" href="css/dj-testi.mobile.css" media="(max-width: 768px)">
   <!-- STILE BASE (Solo per questa pagina, come nel backup che funziona) -->
   <style>
     body {
@@ -108,13 +113,32 @@
   </style>
 </head>
 <body class="pagina-testi-luna">
+  <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+<div class="hamburger-menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
-  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE (AGGIUNTO QUI) -->
-  <div id="optimization-banner">
-    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
-  </div>
+<!-- MENU MOBILE UNIVERSALE -->
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="canzoni.html">🎵 Canzoni</a>
+  <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+  <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+  <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+  <a href="dj-ling.html">✨ Dj Ling 灵</a>
+  <a href="dj-nova.html">⭐ Dj Nova</a>
+  <a href="dj-luna.html">🌙 Dj Luna</a>
+  <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+  <a href="storia.html">📖 La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+  <a href="relax.html">🎧 Relax</a>
+  <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
+  <a href="contatti.html">💌 Contatti</a>
+</nav>
 
-  <!-- CONTENUTO DELLE CANZONI -->
+    <!-- CONTENUTO DELLE CANZONI -->
   
   <!-- CANZONE 1 -->
   <div id="viadimezzo" class="testo-canzone"></div>
@@ -715,46 +739,81 @@ Dancing through the days that come our way
       <a href="cookie-policy.html">Cookie Policy</a>
     </footer>
 
-    <!-- SCRIPT COOKIE (Semplificato come nel backup) -->
-    <script>
-      function loadGA() {
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
-        document.head.appendChild(script);
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-6X5LB7S2VT');
-      }
-    
-      if (localStorage.getItem('cookiesAccepted') === 'true') {
-        loadGA();
-      } else if (!localStorage.getItem('cookiesAccepted')) {
-        const banner = document.createElement('div');
-        banner.id = 'cookie-banner';
-        banner.innerHTML = `
-          <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10,12,20,0.95); color: #f8d59e; padding: 16px 24px; border-radius: 12px; max-width: 350px; z-index: 1000; font-family: 'Cormorant Garamond', serif; border: 1px solid rgba(248,213,158,0.3);">
-            <p>Questo sito usa i cookie per analizzare il traffico. <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
-            <div style="margin-top:10px;">
-              <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif; cursor:pointer;">Accetta</button>
-              <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif; cursor:pointer;">Rifiuta</button>
-            </div>
+    <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // MENU MOBILE UNIVERSALE
+    const burger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    const body = document.body;
+
+    if (burger && mobileNav) {
+      burger.addEventListener('click', (event) => {
+        event.stopPropagation(); 
+        burger.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        body.classList.toggle('no-scroll'); 
+      });
+      
+      mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          });
+      });
+      
+      document.addEventListener('click', (e) => {
+          if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
+              mobileNav.classList.remove('active');
+              burger.classList.remove('active');
+              body.classList.remove('no-scroll');
+          }
+      });
+    }
+
+    // BANNER COOKIE
+    function loadGA() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6X5LB7S2VT');
+    }
+  
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+      loadGA();
+    } else if (!localStorage.getItem('cookiesAccepted')) {
+      const banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      banner.innerHTML = `
+        <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10,12,20,0.95); color: #f8d59e; padding: 16px 24px; border-radius: 12px; max-width: 350px; z-index: 1000; font-family: 'Cormorant Garamond', serif; border: 1px solid rgba(248,213,158,0.3);">
+          <p>Questo sito usa i cookie per analizzare il traffico. <a href="cookie-policy.html" style="color:#d35400; text-decoration:underline;">Maggiori info</a></p>
+          <div style="margin-top:10px;">
+            <button onclick="acceptCookies()" style="background:#d35400; color:white; border:none; padding:6px 12px; border-radius:6px; margin-right:8px; font-family:'Playfair Display',serif; cursor:pointer;">Accetta</button>
+            <button onclick="rejectCookies()" style="background:transparent; color:#f8d59e; border:1px solid rgba(248,213,158,0.5); padding:6px 12px; border-radius:6px; font-family:'Playfair Display',serif; cursor:pointer;">Rifiuta</button>
           </div>
-        `;
-        document.body.appendChild(banner);
-      }
-    
-      function acceptCookies() {
-        localStorage.setItem('cookiesAccepted', 'true');
-        document.getElementById('cookie-banner').remove();
-        loadGA();
-      }
-    
-      function rejectCookies() {
-        localStorage.setItem('cookiesAccepted', 'false');
-        document.getElementById('cookie-banner').remove();
-      }
-    </script>
+        </div>
+      `;
+      document.body.appendChild(banner);
+    }
+  
+    window.acceptCookies = function() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
+      loadGA();
+    }
+  
+    window.rejectCookies = function() {
+      localStorage.setItem('cookiesAccepted', 'false');
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.remove();
+    }
+  });
+</script>
 </body>
 </html>

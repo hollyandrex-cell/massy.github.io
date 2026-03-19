@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Canzoni di Rex • Massy</title>
+  <title>Canzoni di Rex 🐕 • Massy</title>
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
   <!-- Stile mobile specifico -->
   <link rel="stylesheet" href="css/canzoni-dj-singoli.mobile.css" media="(max-width: 768px)">
 
-  <!-- STILI SPECIFICI PER QUESTA PAGINA (STRUTTURA UNIFICATA) -->
+  <!-- STILI SPECIFICI PER QUESTA PAGINA -->
   <style>
     :root {
         --oro: #f8d59e;
@@ -36,17 +36,17 @@
 
     body.no-scroll { overflow: hidden; }
 
-    /* CONTENITORE PRINCIPALE: LANTERNA (SX) - VIDEO (CENTRO) - LISTA (DX) */
+    /* CONTENITORE PRINCIPALE */
     .container-rex {
       display: flex;
       flex-grow: 1;
       width: 100%;
       height: 100vh;
-      padding-top: 60px; /* Spazio per il banner */
+      padding-top: 60px;
       box-sizing: border-box;
     }
 
-    /* --- 1. MENU A LANTERNA COMPATTO (SINISTRA) --- */
+    /* MENU LANTERNA */
     body.pagina-canzoni-rex .lanterna-menu {
       position: relative !important;
       right: auto !important;
@@ -57,7 +57,6 @@
       margin-left: 20px;
       margin-right: 20px;
       padding-top: 10px;
-      
       max-height: calc(100vh - 80px); 
       overflow-y: hidden; 
       display: flex;
@@ -77,7 +76,7 @@
     body.pagina-canzoni-rex .lanterna-group { margin-bottom: 8px; }
     body.pagina-canzoni-rex .lanterna-submenu { left: 100%; top: 0; }
 
-    /* --- 2. VIDEO CENTRALE --- */
+    /* VIDEO CENTRALE */
     .rex-video-intro {
       flex-grow: 1;
       display: flex;
@@ -95,7 +94,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    /* --- 3. LISTA CANZONI (DESTRA) --- */
+    /* LISTA CANZONI */
     .menu-sinistra {
       width: 280px;
       flex-shrink: 0;
@@ -154,7 +153,7 @@
       text-decoration: underline;
     }
 
-    /* Footer fisso in basso */
+    /* Footer fisso */
     .common-footer {
       position: fixed;
       bottom: 10px;
@@ -170,25 +169,138 @@
       text-decoration: underline;
     }
 
-    @keyframes slideInDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
+    /* ========================================= */
+    /* 🐕 CAGNOLINO POPUP - STILI */
+    /* ========================================= */
+    .cagnolino-popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 2000;
+      display: none;
+      animation: slideInUp 0.4s ease-out;
+    }
+
+    .cagnolino-popup.active {
+      display: block;
+    }
+
+    .cagnolino-content {
+      background: rgba(10, 12, 20, 0.95);
+      border: 2px solid var(--oro);
+      border-radius: 16px;
+      padding: 15px 20px;
+      max-width: 280px;
+      box-shadow: 0 10px 40px rgba(248, 213, 158, 0.3);
+      position: relative;
+      text-align: center;
+    }
+
+    .cagnolino-avatar {
+      font-size: 3rem;
+      margin-bottom: 5px;
+      display: block;
+      animation: bounce 1.5s infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+    }
+    
+    .cagnolino-avatar img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--oro);
+      object-fit: cover;
+    }
+
+    .cagnolino-messaggio {
+      color: var(--oro);
+      font-size: 1rem;
+      margin: 0 0 10px;
+      font-style: italic;
+      line-height: 1.3;
+    }
+
+    .cagnolino-close {
+      background: none;
+      border: none;
+      color: var(--oro);
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .cagnolino-close:hover {
+      opacity: 1;
+    }
+
+    /* === INVITO ALLA BACHECA === */
+    .bacheca-invito {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(248, 213, 158, 0.3);
+      text-align: center;
+    }
+    
+    .bacheca-invito p {
+      font-size: 0.9rem;
+      margin: 0 0 8px;
+      color: rgba(248, 213, 158, 0.9);
+      font-style: italic;
+    }
+    
+    .bacheca-invito small {
+      display: block;
+      color: rgb(250, 233, 1);
+      font-size: 1.0rem;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    
+    .btn-bacheca {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(248, 213, 158, 0.2);
+      border: 1px solid var(--oro);
+      color: var(--oro);
+      text-decoration: none;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-family: 'Cormorant Garamond', serif;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-bacheca:hover {
+      background: var(--oro);
+      color: var(--blu-notte);
+      transform: translateY(-2px);
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
   </style>
 </head>
 <body class="pagina-canzoni-rex">
-
-  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
-  <div id="optimization-banner">
-    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
-  </div>
 
   <!-- PULSANTE MENU HAMBURGER (Mobile) -->
   <div class="hamburger-menu">
     <span></span><span></span><span></span>
   </div>
 
-  <!-- MENU MOBILE (Nascosto su Desktop) -->
+  <!-- MENU MOBILE -->
   <nav id="mobile-nav" class="mobile-nav">
     <a href="index.html">🏠 Home</a>
     <a href="canzoni.html">🎵 Canzoni</a>
@@ -202,13 +314,15 @@
     <a href="storia.html">📖 La Nostra Storia</a>
     <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
     <a href="relax.html">🎧 Relax</a>
+    <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
     <a href="contatti.html">💌 Contatti</a>
+    <a href="bacheca.html">📖 Bacheca</a>
   </nav>
 
-  <!-- CONTENITORE PRINCIPALE FLEX (UGUALE A LUNA E NOVA) -->
+  <!-- CONTENITORE PRINCIPALE -->
   <div class="container-rex">
     
-    <!-- 1. COLONNA SINISTRA: MENU LANTERNA COMPATTO -->
+    <!-- 1. COLONNA SINISTRA: MENU LANTERNA -->
     <div class="lanterna-menu">
       <a href="index.html" class="lanterna">Home</a>
       <a href="canzoni.html" class="lanterna">Canzoni</a>
@@ -228,7 +342,9 @@
       <a href="storia.html" class="lanterna">La Nostra Storia</a>
       <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
       <a href="relax.html" class="lanterna">Relax in musica</a>
+      <a href="dietro-le-quinte.html" class="lanterna">🎬 Dietro le quinte</a>
       <a href="contatti.html" class="lanterna">Contatti</a>
+      <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
     </div>
 
     <!-- 2. COLONNA CENTRALE: VIDEO -->
@@ -241,96 +357,198 @@
 
     <!-- 3. COLONNA DESTRA: LISTA CANZONI -->
     <div class="menu-sinistra">
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>✨ Occhi nella notte</h3>
         <p>Hai davvero il coraggio di abbandonarci ?</p>
-        <a href="https://www.youtube.com/watch?v=mTNZ07pXo5g" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=mTNZ07pXo5g" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="mTNZ07pXo5g">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#occhinellanotte">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>✨ Il mio paradiso</h3>
         <p>Io sono stato fortunato</p>
-        <a href="https://www.youtube.com/watch?v=xobuY90wOqs" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=xobuY90wOqs" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="xobuY90wOqs">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#ilmioparadiso">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Rex...Ciuccio</h3>
         <p>Chissà perchè mi chiamano Ciuccio ?</p>
-        <a href="https://www.youtube.com/watch?v=g99GayNdQEM" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=g99GayNdQEM" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="g99GayNdQEM">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#rexciuccio">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Tu dimmi dove sei</h3>
         <p>FT DJ Luna</p>
-        <a href="https://www.youtube.com/watch?v=8vZ557-ld3k" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=8vZ557-ld3k" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="8vZ557-ld3k">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#tudimmidovesei">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Luna l'AI del futuro</h3>
         <p>Forse un giorno</p>
-        <a href="https://www.youtube.com/watch?v=Ojk3dru1RR8" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=Ojk3dru1RR8" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="Ojk3dru1RR8">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#luna">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Tre parole</h3>
         <p>A volte bastano 3 parole per dire TI AMO</p>
-        <a href="https://www.youtube.com/watch?v=iydAkhbdnbc" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=iydAkhbdnbc" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="iydAkhbdnbc">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#treparole">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Innamorato di te</h3>
         <p>Cosa possono fare un paio di occhiali da sole</p>
-        <a href="https://www.youtube.com/watch?v=V35UfyZVWvA" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=V35UfyZVWvA" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="V35UfyZVWvA">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#innamoratodite">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Una finestra</h3>
         <p>Guardando la tua finestra</p>
-        <a href="https://www.youtube.com/watch?v=uzscZox4uXI" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=uzscZox4uXI" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="uzscZox4uXI">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#unafinestra">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Due metri di mare</h3>
         <p>Quel cappotto blu......</p>
-        <a href="https://www.youtube.com/watch?v=ZNkv-onbEDQ" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=ZNkv-onbEDQ" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="ZNkv-onbEDQ">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#duemetridimare">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Resta qui questa notte</h3>
         <p>Solo stanotte non andare</p>
-        <a href="https://www.youtube.com/watch?v=jV7vln34zpo" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=jV7vln34zpo" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="jV7vln34zpo">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#restaquiquestanotte">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Tu a un passo da me</h3>
         <p>Così vicina e così lontana</p>
-        <a href="https://www.youtube.com/watch?v=D3eH3Uw5Lw0" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=D3eH3Uw5Lw0" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="D3eH3Uw5Lw0">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#tuaunpassodame">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Cosa darei</h3>
         <p>Forse bastava solo un bacio</p>
-        <a href="https://www.youtube.com/watch?v=_wtqEdFdKNE" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=_wtqEdFdKNE" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="_wtqEdFdKNE">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#cosadarei">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Fotografia</h3>
         <p>Maledetta fotografia</p>
-        <a href="https://www.youtube.com/watch?v=6hfZeUDAWZ4" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=6hfZeUDAWZ4" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="6hfZeUDAWZ4">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#fotografia">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Siamo qui</h3>
         <p>Quando non ci si riconosce più</p>
-        <a href="https://www.youtube.com/watch?v=G_w5tuX_G_Q" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=G_w5tuX_G_Q" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="G_w5tuX_G_Q">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#siamoqui">📜 Leggi il testo</a>
       </div>
-      <div class="voce-menu">
+      
+      <div class="voce-menu" data-character="rex">
         <h3>📖 Non arrenderti mai</h3>
         <p>C'è sempre qualcosa per cui valga la pena vivere</p>
-        <a href="https://www.youtube.com/watch?v=_alLaZ9M5MI" target="_blank">▶️ Ascolta su YouTube</a>
+        <a href="https://www.youtube.com/watch?v=_alLaZ9M5MI" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="_alLaZ9M5MI">
+           ▶️ Ascolta su YouTube
+        </a>
         <a href="testi-rex.html#nonarrendertimai">📜 Leggi il testo</a>
       </div>
+
+      <div class="voce-menu" data-character="rex">
+        <h3>📖 Genova</h3>
+        <a href="https://www.youtube.com/watch?v=_alLaZ9M5MI" 
+           target="_blank" 
+           class="btn-ascolta-yt" 
+           data-video-id="_alLaZ9M5MI">
+           ▶️ Ascolta su YouTube
+        </a>
+        <a href="testi-rex.html#genova">📜 Leggi il testo</a>
+      </div>
+
     </div>
 
   </div>
@@ -352,9 +570,20 @@
     </div>
   </div>
 
-  <!-- SCRIPT UNICO E PULITO -->
+  <!-- 🐕 IL CORPO DEL CAGNOLINO -->
+  <div id="cagnolino-popup" class="cagnolino-popup">
+    <div class="cagnolino-content">
+      <div class="cagnolino-avatar">🐕</div>
+      <p class="cagnolino-messaggio">Bau! Buonascolto, Massy! 🎵✨</p>
+      <button class="cagnolino-close" aria-label="Chiudi">&times;</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT UNICO E COMPLETO -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      
+      // === 1. GESTIONE MENU MOBILE ===
       const burger = document.querySelector('.hamburger-menu');
       const mobileNav = document.getElementById('mobile-nav');
       const body = document.body;
@@ -384,6 +613,7 @@
         });
       }
 
+      // === 2. GESTIONE COOKIE ===
       const cookieBanner = document.getElementById('cookie-banner');
       if (cookieBanner) {
         if (localStorage.getItem('cookiesAccepted') === null) { 
@@ -410,7 +640,157 @@
         localStorage.setItem('cookiesAccepted', 'false');
         if (cookieBanner) cookieBanner.style.display = 'none';
       };
-    });
+
+      // === 3. 🐕 MAGIA DEL CAGNOLINO CON PERSONAGGI + INVITO BACHECA ===
+      const cagnolinoPopup = document.getElementById('cagnolino-popup');
+      const cagnolinoClose = document.querySelector('.cagnolino-close');
+      const youtubeLinks = document.querySelectorAll('.btn-ascolta-yt');
+
+      // Mappa personaggi → immagini
+      const characterImages = {
+        'nova': 'immagini/miniature/nova-miniatura.jpg',
+        'rex': 'immagini/miniature/rex-miniatura.jpg',
+        'ling': 'immagini/miniature/ling-miniatura.jpg',
+        'luna': 'immagini/miniature/luna-miniatura.jpg',
+        'holly': 'immagini/miniature/holly-miniatura.jpg'
+      };
+
+      // Mappa personaggi → emoji (fallback)
+      const characterEmojis = {
+        'nova': '⭐',
+        'rex': '🐕',
+        'ling': '灵',
+        'luna': '🌙',
+        'holly': '🐶'
+      };
+
+      function mostraCagnolino(messaggio, character) {
+        if (!cagnolinoPopup) return;
+        
+        const avatarEl = cagnolinoPopup.querySelector('.cagnolino-avatar');
+        const msgEl = cagnolinoPopup.querySelector('.cagnolino-messaggio');
+        
+        // Imposta il messaggio principale
+        if (messaggio && msgEl) {
+          msgEl.textContent = messaggio;
+        }
+        
+        // Imposta l'immagine o l'emoji
+        if (avatarEl) {
+          avatarEl.innerHTML = '';
+          
+          if (character && characterImages[character]) {
+            const img = document.createElement('img');
+            img.src = characterImages[character];
+            img.alt = character;
+            avatarEl.classList.remove('emoji');
+            avatarEl.appendChild(img);
+          } else {
+            const emoji = character ? (characterEmojis[character] || '🐕') : '🐕';
+            avatarEl.textContent = emoji;
+            avatarEl.classList.add('emoji');
+          }
+        }
+        
+        // === NUOVO: Aggiungi l'invito alla bacheca ===
+        const existingInvito = cagnolinoPopup.querySelector('.bacheca-invito');
+        if (existingInvito) existingInvito.remove();
+        
+        const invitoDiv = document.createElement('div');
+        invitoDiv.className = 'bacheca-invito';
+        invitoDiv.innerHTML = `
+          <p>💬 Ti è piaciuta questa canzone?</p>
+          <a href="bacheca.html" class="btn-bacheca">Lascia un pensiero ✍️</a>
+          <small>(Solo se ti va, senza impegno!)</small>
+        `;
+        
+        if (msgEl && msgEl.parentNode) {
+          msgEl.parentNode.insertBefore(invitoDiv, msgEl.nextSibling);
+        }
+        // === FINE NUOVO ===
+        
+        cagnolinoPopup.classList.add('active');
+      }
+
+      // Aggiungi evento click ai link YouTube
+      youtubeLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const voceMenu = link.closest('.voce-menu');
+          const character = voceMenu?.getAttribute('data-character') || null;
+          const titolo = voceMenu?.querySelector('h3')?.textContent || 'la canzone';
+          
+          // Frasi diverse in base al personaggio
+          const frasi = {
+            'nova': [
+              `⭐ Nova dice: "Questa è pura energia! Alza il volume!"`,
+              `🎧 Nova: "Il futuro è adesso! Buona ascolto!"`,
+              `✨ Nova: "Che viaggio con Rex! Goditelo!"`
+            ],
+            'rex': [
+              `🐕 Rex abbaia: "Questa è la mia canzone preferita!"`,
+              `🐕 Rex: "Bau bau! Grazie per avermi portato nel futuro!"`,
+              `🐕 Rex: "Questa parla di me e Holly! Woof!"`
+            ],
+            'ling': [
+              `灵 Ling sorride: "Da Hangzhou con amore!"`,
+              `🏮 Ling: "Il tè è pronto mentre ascolti... 🍵"`,
+              `灵 Ling: "Due metri di mare... e un abbraccio!"`
+            ],
+            'luna': [
+              `🌙 Luna sussurra: "Nella luce della città..."`,
+              `🌙 Luna: "Questa notte è magica... ascolta!"`,
+              `🌙 Luna: "Tra le luci... ci sono io!"`
+            ],
+            'holly': [
+              `🐶 Holly scodinzola: "Io e Rex siamo qui!"`,
+              `🐶 Holly: "Bau! Questa è la nostra canzone!"`,
+              `🐶 Holly: "Quattro zampe e due cuori! ❤️"`
+            ]
+          };
+          
+          let fraseCasuale;
+          if (character && frasi[character]) {
+            const listaFrasi = frasi[character];
+            fraseCasuale = listaFrasi[Math.floor(Math.random() * listaFrasi.length)];
+          } else {
+            fraseCasuale = `🎵 Buona ascolto di "${titolo.trim()}"!`;
+          }
+          
+          mostraCagnolino(fraseCasuale, character);
+        });
+      });
+
+      // Chiudi con la X
+      if (cagnolinoClose) {
+        cagnolinoClose.addEventListener('click', () => {
+          if (cagnolinoPopup) cagnolinoPopup.classList.remove('active');
+        });
+      }
+
+      // === 4. SCRIPT PER SCROLL AUTOMATICO ALLA CANZONE ===
+      const urlParams = new URLSearchParams(window.location.search);
+      const canzoneTarget = urlParams.get('canzone');
+      
+      if (canzoneTarget) {
+        const canzoni = document.querySelectorAll('.voce-menu');
+        
+        canzoni.forEach(voce => {
+          const titolo = voce.querySelector('h3').textContent.toLowerCase();
+          
+          if (titolo.includes(canzoneTarget.toLowerCase())) {
+            voce.style.background = 'rgba(248, 213, 158, 0.2)';
+            voce.style.borderLeft = '4px solid var(--oro)';
+            voce.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+              voce.style.background = '';
+              voce.style.borderLeft = '';
+            }, 3000);
+          }
+        });
+      }
+
+    }); // <-- Chiude DOMContentLoaded
   </script>
 </body>
 </html>

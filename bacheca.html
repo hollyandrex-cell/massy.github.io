@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📖 La Bacheca • Massy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/stile.css">
+  <link rel="stylesheet" href="css/bacheca.mobile.css" media="(max-width: 768px)">
+  <style>
+    
+    body {
+      min-height: 100vh;
+      background: url('immagini/bacheca-rex-bimba.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-color: rgba(10, 12, 20, 0.3);
+      background-blend-mode: multiply;
+      color: #f8d59e;
+      overflow-x: hidden;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+    }
+
+    /* HEADER TRASPARENTE */
+    .bacheca-header {
+      background: transparent;
+      padding-top: 40px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .bacheca-header h1 {
+      font-family: 'Playfair Display', serif;
+      color: #f8d59e;
+      font-size: 3rem;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+      margin: 0;
+    }
+
+    .bacheca-header p {
+      font-style: italic;
+      opacity: 0.9;
+      margin-top: 10px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* CONTENUTO PRINCIPALE */
+    .bacheca-content {
+      background-color: transparent;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 900px;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* BACHECA SCORREVOLE */
+    .bacheca-container {
+      margin-top: 50px;
+      max-width: 700px;
+      width: 100%;
+      height: 400px; /* ← Più alta per vedere più messaggi */
+      overflow: hidden;
+      position: relative;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .bacheca-items {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .bacheca-item {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      gap: 20px;
+      min-height: 120px;
+      box-sizing: border-box;
+      background: rgba(10, 12, 20, 0.4); /* ← Sfondo semi-trasparente per leggere */
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(248, 213, 158, 0.3);
+    }
+
+    .bacheca-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #f8d59e;
+      flex-shrink: 0;
+    }
+
+    .bacheca-item-content {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .bacheca-item p {
+      color: #f8d59e;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1em;
+      margin: 0 0 8px 0;
+      text-align: left;
+      font-style: italic;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      line-height: 1.5;
+    }
+
+    .bacheca-item-autore {
+      color: #d35400;
+      font-family: 'Playfair Display', serif;
+      font-weight: bold;
+      font-size: 1em;
+      text-align: left;
+      display: block;
+    }
+
+    .bacheca-item-data {
+      color: #f8d59e;
+      font-size: 0.85em;
+      opacity: 0.7;
+      text-align: left;
+      display: block;
+      margin-top: 5px;
+    }
+
+    /* PULSANTE SCRIVI */
+    .scrivi-container {
+      margin: 40px auto;
+      padding: 25px 30px;
+      background: rgba(10, 12, 20, 0.5);
+      border-radius: 20px;
+      border: 1px solid rgba(248, 213, 158, 0.3);
+      max-width: 650px;
+    }
+
+    .scrivi-container h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fd9e04;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      margin-bottom: 12px; /* ← RIDOTTO da 15px */
+    }
+
+    .scrivi-container p {
+  margin-bottom: 25px;
+  color: #fff;              /* ← BIANCO (più leggibile) */
+  font-size: 1.1rem;        /* ← PIÙ GRANDE */
+  font-style: italic;
+  font-weight: 400;         /* ← Leggermente più marcato */
+  line-height: 1.6;         /* ← Migliore leggibilità */
+  margin-bottom: 60px; /* ← RIDOTTO da 25px */
+}
+
+    .btn-scrivi {
+      display: inline-block;
+      padding: 14px 35px;
+      background: #d35400;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+    }
+
+    .btn-scrivi:hover {
+      background: #e67e22;
+      transform: scale(1.05);
+      color: white;
+    }
+
+    /* FOOTER */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      z-index: 1;
+      display: flex;
+      gap: 20px;
+      background: transparent;
+    }
+
+    footer a {
+      color: #79f406;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+
+     </style>
+
+</head>
+<body>
+
+<!-- PULSANTE HOME IN ALTO -->
+    <!-- PULSANTE HOME A DESTRA -->
+  <a href="index.html" style="
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  padding: 8px 20px;
+  background: rgba(10, 12, 20, 0.7);
+  color: #f8d59e;
+  border: 1px solid #f8d59e;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  z-index: 10;
+">🏠 Home</a>
+  </header>
+
+  <!-- CONTENUTO PRINCIPALE -->
+  <main class="bacheca-content">
+    
+    <!-- BACHECA SCORREVOLE -->
+    <div class="bacheca-container">
+      <div class="bacheca-items" id="bacheca-items">
+        
+        <!-- MESSAGGIO 1 -->
+        <div class="bacheca-item">
+          <img src="immagini/miniature/rex-miniatura.jpg" alt="Rex">
+          <div class="bacheca-item-content">
+            <p>Le vostre canzoni mi hanno accompagnato in momenti difficili. Grazie per aver condiviso la vostra arte con il mondo.</p>
+            <span class="bacheca-item-autore">— Giulia</span>
+            <span class="bacheca-item-data">10 Marzo 2026</span>
+          </div>
+        </div>
+
+        <!-- MESSAGGIO 2 -->
+        <div class="bacheca-item">
+          <img src="immagini/miniature/holly-miniatura.jpg" alt="Holly">
+          <div class="bacheca-item-content">
+            <p>Rex e Bimba sono meravigliosi. Questa bacheca è come una lettera d'amore aperta a tutti.</p>
+            <span class="bacheca-item-autore">— Marco</span>
+            <span class="bacheca-item-data">12 Marzo 2026</span>
+          </div>
+        </div>
+
+        <!-- MESSAGGIO 3 -->
+        <div class="bacheca-item">
+          <img src="immagini/miniature/luna-miniatura.jpg" alt="Luna">
+          <div class="bacheca-item-content">
+            <p>"Due metri di mare" mi ha fatto piangere. La musica vera arriva dritta al cuore.</p>
+            <span class="bacheca-item-autore">— Anna</span>
+            <span class="bacheca-item-data">13 Marzo 2026</span>
+          </div>
+        </div>
+
+        <!-- MESSAGGIO 4 -->
+        <div class="bacheca-item">
+          <img src="immagini/miniature/ling-miniatura.jpg" alt="Ling">
+          <div class="bacheca-item-content">
+            <p>Un progetto bellissimo. La musica e l'amore per gli animali si sentono in ogni nota.</p>
+            <span class="bacheca-item-autore">— Luca</span>
+            <span class="bacheca-item-data">14 Marzo 2026</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PULSANTE PER SCRIVERE -->
+    <div class="scrivi-container">
+      <h3>✍️ Vuoi lasciare anche tu un pensiero?</h3>
+      <p>Scrivi una dedica, un saluto o semplicemente un "ciao". I messaggi vengono approvati manualmente e pubblicati con amore.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjK02g5vEq188LfV21-uscGnfsi_1SeGE8PAmHPzpjuky0cg/viewform?usp=dialog" target="_blank" class="btn-scrivi">Scrivi un messaggio</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // SCRIPT PER LA BACHECA SCORREVOLE
+      const bachecaItemsContainer = document.getElementById('bacheca-items');
+      if (bachecaItemsContainer) {
+        const items = Array.from(bachecaItemsContainer.children);
+        let currentIndex = 0;
+        let itemHeight = 0;
+        
+        if (items.length > 0) {
+            itemHeight = items[0].offsetHeight; 
+        }
+        
+        const displayDuration = 4000; // 4 secondi per messaggio
+        const transitionDuration = 1000; // 1 secondo di transizione
+
+        // Duplica gli elementi per loop infinito
+        items.forEach(item => {
+          bachecaItemsContainer.appendChild(item.cloneNode(true));
+        });
+
+        function startScrolling() {
+          setInterval(() => {
+            currentIndex++;
+            const totalItems = items.length;
+            
+            bachecaItemsContainer.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
+            bachecaItemsContainer.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+
+            if (currentIndex >= totalItems) {
+              setTimeout(() => {
+                bachecaItemsContainer.style.transition = 'none';
+                bachecaItemsContainer.style.transform = 'translateY(0)';
+                currentIndex = 0;
+              }, transitionDuration);
+            }
+          }, displayDuration + transitionDuration);
+        }
+
+        if (itemHeight > 0) {
+            startScrolling();
+        } else {
+            window.addEventListener('load', () => {
+                itemHeight = items[0].offsetHeight;
+                if (itemHeight > 0) {
+                    startScrolling();
+                }
+            });
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>Canzoni • L’emozione in Musica</title>
+  <title>Canzoni • L'emozione in Musica</title>
   
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      object-fit: cover; /* Copre tutto lo schermo */
+      object-fit: cover;
       z-index: -2;
     }
 
@@ -48,7 +48,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: linear-gradient(to bottom, rgba(10, 12, 20, 0.3), rgba(10, 12, 20, 0.85));
-      z-index: -1; /* Scuro per leggere bene i testi sopra il video */
+      z-index: -1;
     }
 
     /* --- CONTENUTO CENTRALE --- */
@@ -71,7 +71,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 40px; /* Più spazio sotto i pulsanti */
+      margin-bottom: 40px;
       width: 100%;
     }
 
@@ -80,7 +80,7 @@
       border: 1px solid var(--oro);
       color: var(--oro);
       padding: 12px 25px;
-      border-radius: 30px; /* Bordi più arrotondati */
+      border-radius: 30px;
       text-decoration: none;
       font-family: 'Playfair Display', serif;
       font-size: 1.1rem;
@@ -99,7 +99,7 @@
 
     .titolo {
       font-family: 'Playfair Display', serif;
-      font-size: 4rem; /* Titolo grande ed elegante */
+      font-size: 4rem;
       color: var(--oro);
       text-shadow: 0 0 20px rgba(248, 213, 158, 0.7);
       letter-spacing: 2px;
@@ -114,6 +114,88 @@
       color: #fff;
     }
 
+    /* --- BARRA DI RICERCA --- */
+    .search-box-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 30px auto 40px;
+      z-index: 10;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      border: 2px solid var(--oro);
+      border-radius: 30px;
+      background: rgba(10, 12, 20, 0.8);
+      color: #f8d59e;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    #searchInput:focus {
+      background: rgba(10, 12, 20, 0.95);
+      box-shadow: 0 0 20px rgba(248, 213, 158, 0.3);
+      transform: scale(1.02);
+    }
+
+    #searchInput::placeholder {
+      color: rgba(248, 213, 158, 0.6);
+      font-style: italic;
+    }
+
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 12, 20, 0.95);
+      border: 1px solid var(--oro);
+      border-radius: 15px;
+      margin-top: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 20;
+    }
+
+    .search-item {
+      padding: 12px 20px;
+      color: #f8d59e;
+      text-decoration: none;
+      display: block;
+      border-bottom: 1px solid rgba(248, 213, 158, 0.1);
+      transition: background 0.2s;
+      font-size: 1rem;
+    }
+
+    .search-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-item:hover {
+      background: rgba(248, 213, 158, 0.1);
+      color: #fff;
+    }
+
+    .search-item strong {
+      color: #d35400;
+      font-weight: bold;
+    }
+
+    .no-results {
+      padding: 15px;
+      text-align: center;
+      color: rgba(248, 213, 158, 0.7);
+      font-style: italic;
+    }
+
     /* --- FOOTER POLICY --- */
     footer {
       position: fixed;
@@ -122,7 +204,7 @@
       z-index: 10;
       display: flex;
       gap: 20px;
-      background: transparent; /* Trasparente per non disturbare */
+      background: transparent;
       padding: 0;
     }
     footer a {
@@ -141,14 +223,8 @@
 </head>
 <body>
 
-  <!-- BANNER DI AVVISO OTTIMIZZAZIONE MOBILE -->
-  <div id="optimization-banner">
-    Stiamo ottimizzando il sito per la versione mobile. Grazie per la pazienza! 😊
-  </div>
-
   <!-- VIDEO DI SFONDO (JUKEBOX) -->
   <video class="bg-video" autoplay muted loop playsinline>
-    <!-- Assicurati che il file jukebox.mp4 esista nella cartella immagini! -->
     <source src="immagini/jukebox.mp4" type="video/mp4">
   </video>
 
@@ -156,25 +232,24 @@
 
   <div class="content">
     
-<!-- NUOVO BANNER ANNUNCI -->
-<a href="artists-announce.html" style="
-display: inline-block;
-margin-bottom: 20px;
-padding: 8px 20px;
-background: rgba(211, 84, 0, 0.8);
-color: #fff;
-text-decoration: none;
-border-radius: 20px;
-font-family: 'Playfair Display', serif;
-font-size: 0.9rem;
-border: 1px solid var(--oro);
-transition: all 0.3s ease;
-" onmouseover="this.style.background='var(--oro)'; this.style.color='#000'" onmouseout="this.style.background='rgba(211, 84, 0, 0.8)'; this.style.color='#fff'">
-✨ Scopri le ultime novità del gruppo!
-</a>
-<!-- FINE BANNER -->
+    <!-- BANNER ANNUNCI -->
+    <a href="artists-announce.html" style="
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 20px;
+      background: rgba(211, 84, 0, 0.8);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      border: 1px solid var(--oro);
+      transition: all 0.3s ease;
+    " onmouseover="this.style.background='var(--oro)'; this.style.color='#000'" onmouseout="this.style.background='rgba(211, 84, 0, 0.8)'; this.style.color='#fff'">
+      ✨ Scopri le ultime novità del gruppo!
+    </a>
 
-    <!-- PULSANTI DEGLI ARTISTI (UNICA NAVIGAZIONE) -->
+    <!-- PULSANTI DEGLI ARTISTI -->
     <div class="pulsanti-top">
       <a href="canzoni-holly.html" class="pulsante-top">🐾 Holly</a>
       <a href="canzoni-rex.html" class="pulsante-top">🐕 Rex</a>
@@ -186,6 +261,12 @@ transition: all 0.3s ease;
     <!-- TITOLO E SOTTOTITOLO -->
     <h1 class="titolo">Le Nostre Canzoni</h1>
     <p class="sottotitolo">— ogni nota è un respiro condiviso —</p>
+
+    <!-- BARRA DI RICERCA -->
+    <div class="search-box-container">
+      <input type="text" id="searchInput" placeholder="🔍 Cerca artista o canzone..." autocomplete="off">
+      <div id="searchResults" class="search-results"></div>
+    </div>
 
     <!-- PULSANTE MENU HAMBURGER (Mobile) -->
     <div class="hamburger-menu">
@@ -206,7 +287,9 @@ transition: all 0.3s ease;
       <a href="storia.html">📖 La Nostra Storia</a>
       <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
       <a href="relax.html">🎧 Relax</a>
+      <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
       <a href="contatti.html">💌 Contatti</a>
+      <a href="bacheca.html">📖 Bacheca</a>
     </nav>
 
     <!-- MENU A LANTERNA (Desktop) -->
@@ -227,7 +310,9 @@ transition: all 0.3s ease;
       <a href="storia.html" class="lanterna">La Nostra Storia</a>
       <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
       <a href="relax.html" class="lanterna">Relax in musica</a>
+      <a href="dietro-le-quinte.html" class="lanterna">🎬 Dietro le quinte</a>
       <a href="contatti.html" class="lanterna">Contatti</a>
+      <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
     </div>
 
   </div>
@@ -309,5 +394,98 @@ transition: all 0.3s ease;
       };
     });
   </script>
+
+  <!-- SCRIPT RICERCA CANZONI -->
+  <script>
+    // DATABASE DELLE CANZONI
+    const songsDB = [
+      // REX
+      { title: "Occhi nella notte", artist: "Rex", url: "canzoni-rex.html", search: "Occhi nella notte" },
+      { title: "Il mio paradiso", artist: "Rex", url: "canzoni-rex.html", search: "Il mio paradiso" },
+      { title: "Rex...Ciuccio", artist: "Rex", url: "canzoni-rex.html", search: "Rex...Ciuccio"},
+      { title: "Tu dimmi dove sei", artist: "Rex", url: "canzoni-rex.html", search: "Tu dimmi dove sei"},
+      { title: "Luna l'AI del futuro", artist: "Rex", url: "canzoni-rex.html", search: "Luna l'AI del futuro"},
+      { title: "Tre parole", artist: "Rex", url: "canzoni-rex.html", search: "Tre parole"},
+      { title: "Innamorato di te", artist: "Rex", url: "canzoni-rex.html", search: "Innamorato di te"},
+      { title: "Una finestra", artist: "Rex", url: "canzoni-rex.html", search: "Una finestra"},
+      { title: "Resta qui questa notte", artist: "Rex", url: "canzoni-rex.html", search: "Resta qui questa notte"},
+      { title: "Tu a un passo da me", artist: "Rex", url: "canzoni-rex.html", search: "Tu a un passo da me"},
+      { title: "Cosa darei", artist: "Rex", url: "canzoni-rex.html", search: "Cosa darei"},
+      { title: "Fotografia", artist: "Rex", url: "canzoni-rex.html", search: "Fotografia"},
+      { title: "Non arrenderti mai", artist: "Rex", url: "canzoni-rex.html", search: "Non arrenderti mai"},
+      { title: "Genova", artist: "Rex", url: "canzoni-rex.html", search: "Genova"},
+      { title: "Due metri di mare", artist: "Rex", url: "canzoni-rex.html", search: "due metri di mare" },
+      
+      // HOLLY
+      { title: "Holly Bau", artist: "Holly", url: "canzoni-holly.html", search: "Holly Bau" },
+      { title: "Holly al mare", artist: "Holly", url: "canzoni-holly.html", search: "Holly al mare" },
+      { title: "Ma che caldo fa", artist: "Holly", url: "canzoni-holly.html", search: "Ma che caldo fa" },
+      { title: "Ti guardo da lontano", artist: "Holly", url: "canzoni-holly.html", search: "Ti guardo da lontano" },
+      { title: "Tempo indietro", artist: "Holly", url: "canzoni-holly.html", search: "Tempo indietro" },
+      
+      // LING
+      { title: "Non torniamo", artist: "Ling", url: "canzoni-ling.html", search: "Non torniamo" },
+      { title: "Sogno e libertà", artist: "Ling", url: "canzoni-ling.html", search: "Sogno e libertà" },
+      { title: "Quando il cuore parla da solo", artist: "Ling", url: "canzoni-ling.html", search: "Quando il cuore parla da solo" },
+      { title: "Polvere di stelle", artist: "Ling", url: "canzoni-ling.html", search: "Polvere di stelle" },
+      { title: "Vai via", artist: "Ling", url: "canzoni-ling.html", search: "Vai via" },
+      
+      // LUNA
+      { title: "Via di mezzo", artist: "Luna", url: "canzoni-luna.html", search: "Via di mezzo" },
+      { title: "Solo stanotte", artist: "Luna", url: "canzoni-luna.html", search: "Solo stanotte" },
+      { title: "Insieme a te", artist: "Luna", url: "canzoni-luna.html", search: "Insieme a te" },
+      { title: "Ma cosa ne sai", artist: "Luna", url: "canzoni-luna.html", search: "Ma cosa ne sai" },
+      { title: "Heartbeat", artist: "Luna", url: "canzoni-luna.html", search: "Heartbeat" },
+      { title: "Fire on the beach", artist: "Luna", url: "canzoni-luna.html", search: "Fire on the beach" },
+      { title: "Oggi forse SI", artist: "Luna", url: "canzoni-luna.html", search: "Oggi forse SI" },
+      
+      // NOVA
+      { title: "Oltre il server (Un viaggio con Rex)", artist: "Nova", url: "canzoni-nova.html", search: "Oltre il server (Un viaggio con Rex)" },
+      
+    ];
+
+    const searchInput = document.getElementById('searchInput');
+    const resultsBox = document.getElementById('searchResults');
+
+    if (searchInput && resultsBox) {
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        resultsBox.innerHTML = '';
+
+        if (query.length < 2) {
+          resultsBox.style.display = 'none';
+          return;
+        }
+
+        const matches = songsDB.filter(song => 
+          song.title.toLowerCase().includes(query) || 
+          song.artist.toLowerCase().includes(query)
+        );
+
+        if (matches.length > 0) {
+          matches.forEach(song => {
+            const link = document.createElement('a');
+            // Aggiungi il parametro ?canzone= al link
+            link.href = `${song.url}?canzone=${encodeURIComponent(song.search)}`;
+            link.className = 'search-item';
+            link.innerHTML = `<strong>${song.title}</strong> - ${song.artist}`;
+            resultsBox.appendChild(link);
+          });
+          resultsBox.style.display = 'block';
+        } else {
+          resultsBox.innerHTML = '<div class="no-results">Nessuna canzone trovata 😢</div>';
+          resultsBox.style.display = 'block';
+        }
+      });
+
+      // Chiudi risultati se clicchi fuori
+      document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+          resultsBox.style.display = 'none';
+        }
+      });
+    }
+  </script>
+  
 </body>
 </html>
