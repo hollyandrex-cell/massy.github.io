@@ -3,36 +3,132 @@
 
 @media (max-width: 768px) {
 
-  /* --- HAMBURGER MENU ICON (LE TRE LINEETTE) --- */
+  /* =========================================
+     1. RESET COMPLETO DEGLI STILI DESKTOP (CAGNOLINO)
+     Questa sezione disattiva qualsiasi regola proveniente da stile.css
+     ========================================= */
+  
+  body.pagina-index #cagnolino-video-container {
+    all: unset !important;
+    position: fixed !important;
+    bottom: 70px !important;
+    left: 15px !important;
+    width: 280px !important;
+    z-index: 999 !important;
+    
+    display: flex !important;
+    flex-direction: row !important; /* Cane a SX, Testo a DX */
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important; /* Spazio tra cane e blocco testo */
+    
+    background: rgba(10, 12, 20, 0.95) !important;
+    border: 1px solid var(--oro) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.7) !important;
+    overflow: visible !important;
+  }
+
+  body.pagina-index #cagnolino-video,
+  body.pagina-index #cagnolino-video-container video,
+  body.pagina-index #cagnolino-video-container img {
+    all: unset !important;
+    
+    height: 50px !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+    
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  body.pagina-index #cagnolino-messaggio {
+    all: unset !important;
+    display: flex !important;
+    flex-direction: column !important; /* Testo sopra, bottone sotto */
+    justify-content: center !important;
+    align-items: flex-start !important; /* Allinea tutto a sinistra */
+    
+    /* QUI GESTIAMO LO SPAZIO TRA TESTO E BOTTONE */
+    gap: 0 !important; /* Il gap lo mettiamo direttamente sul margine del testo */
+    
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 25px !important; /* Leggero spazio dal cane */
+    flex-grow: 1 !important;
+    min-width: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: transparent !important;
+  }
+
+  body.pagina-index #cagnolino-messaggio p {
+    display: none !important; 
+  }
+
+  body.pagina-index #cagnolino-messaggio::after {
+    content: "Guarda dietro le quinte!" !important;
+    display: block;
+    color: var(--oro) !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 0.9rem !important;
+    font-weight: bold !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    
+    /* QUESTO È IL SEGRETO: Margine inferiore per spingere giù il bottone */
+    margin-bottom: 10px !important; 
+  }
+
+  body.pagina-index #cagnolino-messaggio .pulsante-vai-dietro {
+    all: unset !important;
+    display: inline-block !important;
+    background-color: var(--oro) !important;
+    color: var(--blu-notte) !important;
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+    font-family: 'Cormorant Garamond', serif !important;
+    align-self: flex-start !important;
+    margin: 0 !important;
+  }
+
+  /* =========================================
+     2. HAMBURGER MENU & NAVIGAZIONE
+     ========================================= */
+  
   .hamburger-menu {
-    display: flex !important; /* Lo rende visibile di default su mobile */
+    display: flex !important;
     position: fixed;
     top: 20px;
-    left: 20px; /* Di default a sinistra */
-    right: auto; /* Assicura che non ci siano conflitti con 'right' */
-    z-index: 1001; /* Alto per essere sopra tutto */
+    left: 20px;
+    right: auto;
+    z-index: 1001;
     width: 30px;
     height: 24px;
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
     padding: 5px;
-    background: rgba(10, 12, 20, 0.7); /* Sfondo semi-trasparente scuro */
-    border-radius: 5px;
-    transition: all 0.3s ease; /* Animazione delle barrette */
-  }
-
-  /* Stili per le barrette dell'hamburger */
-  .hamburger-menu span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: var(--oro); /* Colore oro */
+    background: rgba(10, 12, 20, 0.7);
     border-radius: 5px;
     transition: all 0.3s ease;
   }
 
-  /* Animazione dell'hamburger quando è attivo (diventa una 'X') */
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--oro);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
   .hamburger-menu.active span:nth-child(1) {
     transform: translateY(10px) rotate(45deg);
   }
@@ -43,115 +139,108 @@
     transform: translateY(-10px) rotate(-45deg);
   }
 
-  /* MOBILE-NAV: Stili generali del pannello a scomparsa */
   .mobile-nav {
-    display: flex; /* Ora è sempre 'flex' per permettere la transizione e il layout interno */
+    display: flex;
     position: fixed;
     top: 0;
-    left: -100%; /* Inizialmente fuori schermo (nascosto) */
+    left: -100%;
     width: 100%;
-    height: 100vh; /* Piena altezza della viewport */
-    background-color: rgba(10, 12, 20, 0.98); /* Sfondo scuro quasi opaco */
-    flex-direction: column; /* Link uno sotto l'altro */
-    justify-content: space-evenly; /* Distribuisce i link uniformemente */
+    height: 100vh;
+    background-color: rgba(10, 12, 20, 0.98);
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    z-index: 1000; /* Sotto l'hamburger ma sopra il contenuto della pagina */
-    padding: 80px 0 20px; /* Spazio dall'alto per non coprire l'hamburger e dal basso. Regola a piacere. */
+    z-index: 1000;
+    padding: 80px 0 20px;
     text-align: center;
     transition: left 0.3s ease-in-out;
-    overflow-y: auto; /* Permette lo scroll verticale se i link sono troppi */
-    -webkit-overflow-scrolling: touch; /* Migliora lo scroll su iOS */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Stili per i link all'interno del menu mobile */
   .mobile-nav a {
-    color: var(--oro); /* Colore oro per il testo dei link */
+    color: var(--oro);
     text-decoration: none;
-    font-family: 'Playfair Display', serif; /* Font elegante */
-    font-size: 1.5rem; /* Dimensione grande per facilitare il tap */
-    margin: 8px 0; /* Spazio verticale tra i link, regola a piacere */
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 8px 0;
     transition: color 0.3s ease;
-    white-space: nowrap; /* Impedisce al testo di andare a capo */
-    padding: 5px 10px; /* Aggiunge area cliccabile */
-    display: block; /* Ogni link occupa la sua riga */
+    white-space: nowrap;
+    padding: 5px 10px;
+    display: block;
   }
 
-  /* Effetto hover sui link del menu mobile */
   .mobile-nav a:hover {
-    color: var(--oro-hover); /* Cambia colore al passaggio del mouse/tap */
+    color: var(--oro-hover);
   }
 
-  /* Quando il menu mobile è attivo */
   .mobile-nav.active {
-    left: 0; /* Porta il menu sullo schermo quando è attivo */
+    left: 0;
   }
 
-  /* Assicurati che il corpo della pagina non scorra quando il menu è aperto */
   body.no-scroll {
     overflow: hidden;
   }
 
-  /* Nasconde il lanterna-menu su mobile */
   .lanterna-menu {
     display: none !important;
   }
 
-  /* --- STILI SPECIFICI PER INDEX.HTML SU MOBILE --- */
+  /* =========================================
+     3. HERO SECTION & FOOTER
+     ========================================= */
+  
   body.pagina-index .hero {
-    padding-top: 150px; /* VALORE CONFERMATO PER LE SCRITTE MOBILE OK */
-    height: 100vh; /* Torna a 100vh per il mobile */
+    padding-top: 150px;
+    height: 100vh;
   }
   body.pagina-index .hero-content .subtitle {
     font-size: 1.6rem;
   }
   body.pagina-index .hero-content .signature {
     font-size: 1.0rem;
-    margin-top: 20px; /* Regola questo valore per la firma */
+    margin-top: 20px;
   }
 
-  /* --- FOOTER UNICO: DISCLAIMER E POLICY (MOBILE) --- */
   footer {
-    position: fixed; /* Ritorna fisso su mobile */
-    bottom: 10px;
-    left: 10px;
-    right: 10px; /* Occupa più larghezza */
+    position: fixed !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
     gap: 10px;
     font-size: 0.8rem;
-    background: rgba(10, 12, 20, 0.85); /* Sfondo semi-trasparente */
+    background: rgba(10, 12, 20, 0.85);
     padding: 8px;
     border-radius: 8px;
-    z-index: 10;
+    z-index: 10 !important;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
+  
   footer a {
     font-size: 0.75rem;
-    color: var(--verde-link); /* Colore verde per i link */
+    color: var(--verde-link);
   }
 
-  /* --- CAGNOLINO VIDEO E MESSAGGIO SU MOBILE (NASCOSTO) --- */
-  #cagnolino-video-container {
-      display: none !important; /* Nascondi il cagnolino video su mobile */
-  }
-
-  /* --- BANNER COOKIE (MOBILE) --- */
   #cookie-banner {
-    bottom: 10px;
-    right: 10px;
-    left: 10px; /* Occupa più larghezza su mobile */
-    max-width: unset; /* Rimuovi max-width */
-    width: calc(100% - 20px); /* Occupa quasi tutta la larghezza */
-    padding: 15px;
-    font-size: 0.9rem;
+    bottom: 10px !important;
+    right: 10px !important;
+    left: 10px !important;
+    max-width: unset !important;
+    width: calc(100% - 20px) !important;
+    padding: 15px !important;
+    font-size: 0.9rem !important;
+    z-index: 9 !important;
   }
+  
   #cookie-banner .cookie-btn {
-    padding: 5px 10px;
-    font-size: 0.9rem;
+    padding: 5px 10px !important;
+    font-size: 0.9rem !important;
   }
 }
 
-/* Nasconde l'hamburger-menu e mobile-nav su schermi grandi (desktop) */
+/* Desktop: nascondi menu mobile */
 @media (min-width: 769px) {
   .hamburger-menu,
   .mobile-nav {
