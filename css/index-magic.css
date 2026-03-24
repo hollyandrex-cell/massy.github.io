@@ -1,0 +1,30 @@
+/* index-magic.css - Effetto Scia Magica per la Home */
+
+/* Assicura che il corpo della pagina non abbia scrollbar orizzontali se la scia tocca i bordi */
+body {
+    overflow-x: hidden;
+}
+
+/* Lo stile della particella magica */
+.magic-particle {
+    position: fixed; /* Fisso rispetto alla finestra */
+    pointer-events: none; /* Importante: permette di cliccare "attraverso" le particelle */
+    background: radial-gradient(circle, #f8d59e 0%, transparent 70%); /* Colore oro sfumato */
+    border-radius: 50%;
+    z-index: 9999; /* Sopra a tutto */
+    opacity: 0; /* Inizia invisibile */
+    transform: translate(-50%, -50%); /* Centra la particella sul cursore */
+    animation: fadeAndFall 1s linear forwards; /* Anima la scomparsa */
+}
+
+/* L'animazione: appare, cade leggermente e svanisce */
+@keyframes fadeAndFall {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 20px) scale(0); /* Si sposta in basso di 20px mentre rimpicciolisce */
+    }
+}
