@@ -220,6 +220,95 @@
    .reject-btn:hover {
       background: rgba(211, 84, 0, 0.2);
     }
+
+/* --- STILE SPECIFICO PER IL BOX BLOG (Solo in Dietro le Quinte) --- */
+.blog-dq-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(10, 12, 20, 0.95);
+    border: 2px solid var(--oro);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    max-width: 320px;
+    transition: transform 0.3s ease;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.blog-dq-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(248, 213, 158, 0.3);
+}
+
+.blog-dq-box img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--oro);
+    object-fit: cover;
+    background: #000;
+}
+
+.blog-dq-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.blog-dq-text p {
+    color: var(--oro);
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-shadow: none;
+}
+
+.blog-dq-btn {
+    background: var(--oro);
+    color: var(--blu-notte);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s;
+    display: inline-block;
+    width: fit-content;
+}
+
+.blog-dq-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Adattamento Mobile */
+@media (max-width: 768px) {
+    .blog-dq-box {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        max-width: none;
+        justify-content: center;
+        text-align: center;
+    }
+    .blog-dq-text {
+        align-items: center;
+    }
+}
+
   </style>
 </head>
 <body>
@@ -461,6 +550,19 @@
     <a href="contatti.html" class="lanterna">Contatti</a>
     <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
+
+<!-- BOX PROMOZIONALE BLOG (Solo per questa pagina) -->
+<div class="blog-dq-box">
+  <!-- SOSTITUISCI 'immagini/cane-che-cammina.gif' CON IL PERCORSO REALE DELLA TUA IMMAGINE/GIF -->
+  <!-- Se non hai una gif specifica, puoi usare una foto statica come 'immagini/rex.jpg' -->
+  <img src="immagini/miniature/blog.jpg" alt="Rex Blog">
+  
+  <div class="blog-dq-text">
+      <p>I nostri DJ si confidano...<br><i>Vuoi leggere il diario segreto?</i></p>
+      <!-- SOSTITUISCI L'HREF CON IL LINK DEL TUO BLOG BLOGGER QUANDO LO CREI -->
+      <a href="https://storie-pazze-hollyrex.blogspot.com/" target="_blank" class="blog-dq-btn">Leggi il Blog!</a>
+  </div>
+</div>
 
 </body>
 </html>

@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
  
   <!-- FAVICON REX & BIMBA -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="manifest" href="favicons/site.webmanifest">
-<link rel="shortcut icon" href="favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
 
   <title>Holly and Rex Group</title>
     
@@ -22,6 +22,8 @@
 
   <!-- Il tuo stile principale (desktop) -->
   <link rel="stylesheet" href="css/stile.css">
+  <!-- EFFETTO SCIA MAGICA (Solo per la Home) -->
+<link rel="stylesheet" href="css/index-magic.css">
   <!-- Stile mobile esclusivo per la home page (index) -->
   <link rel="stylesheet" href="css/index.mobile.css" media="(max-width: 768px)"> 
 </head>
@@ -31,6 +33,31 @@
     @keyframes slideInDown {
       from { transform: translateY(-100%); }
       to { transform: translateY(0); }
+    }
+    /* Stile specifico per il Motto nella Hero */
+    .motto-text {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        color: #f8d59e; /* Colore oro del sito */
+        font-size: 1.4rem;
+        margin-top: 15px;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        line-height: 1.4;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        animation: fadeIn 2s ease-in-out 1s forwards; /* Appare dolcemente dopo 1 secondo */
+        opacity: 0; /* Inizia invisibile */
+    }
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+    /* Adattamento mobile per il motto */
+    @media (max-width: 768px) {
+        .motto-text {
+            font-size: 1.1rem;
+            padding: 0 10px;
+        }
     }
   </style>
 
@@ -64,6 +91,13 @@
     <div class="hero-content">
       <p class="subtitle">Holly And Rex Group</p>
       <p class="signature">— con Rex, Bimba, Dj Ling 灵, Dj Luna 🌙 e Dj Nova ⭐ —</p>
+      
+      <!-- IL MOTTO UNIVERSALE INSERITO QUI -->
+      <p class="motto-text">
+        "Dove la pazzia è l'unica sanità mentale."
+      </p>
+      <!-- FINE MOTTO -->
+
     </div>
   </div>
 
@@ -118,7 +152,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER (MODIFICATO PER IL CAGNOLINO FELICE) -->
+  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // --- GESTIONE MENU MOBILE ---
@@ -160,13 +194,9 @@
       // Funzione per far apparire il cagnolino
       function showCagnolinoAnimation() {
           if (cagnolinoVideoContainer && cagnolinoVideo && cagnolinoMessaggio) {
-              // Aggiunge la classe CSS che fa salire il cagnolino
               cagnolinoVideoContainer.classList.add('active'); 
-              
-              // Applica l'animazione al video
               cagnolinoVideo.style.animation = 'cagnolino-walk-in 3s forwards'; 
 
-              // Quando l'animazione finisce, mostra il messaggio
               cagnolinoVideo.onanimationend = () => { 
                   cagnolinoMessaggio.style.display = 'flex';
                   cagnolinoMessaggio.style.opacity = '1';
@@ -177,7 +207,6 @@
           }
       }
 
-      // 1. Gestione visiva del banner (mostra/nascondi in base alla scelta precedente)
       if (cookieBanner) {
         if (localStorage.getItem('cookiesAccepted') === 'true') {
             cookieBanner.style.display = 'none';
@@ -186,17 +215,14 @@
         }
       }
 
-      // 2. IL CAGNOLINO APPARE SEMPRE DOPO 1.5 SECONDI! (Per tutti, accettanti o meno)
       setTimeout(() => {
           showCagnolinoAnimation();
       }, 1500);
 
-      // Funzioni per i pulsanti del banner
       window.acceptCookies = function() {
         localStorage.setItem('cookiesAccepted', 'true');
         if (cookieBanner) cookieBanner.style.display = 'none';
         
-        // Carica Google Analytics solo se accettato
         const gtagScript = document.createElement('script');
         gtagScript.async = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
@@ -211,9 +237,47 @@
       window.rejectCookies = function() {
         localStorage.setItem('cookiesAccepted', 'false');
         if (cookieBanner) cookieBanner.style.display = 'none';
-        // Il cagnolino è già apparso grazie al setTimeout sopra, quindi non serve fare nulla qui!
       };
     });
   </script>
+  <!-- SCRIPT PER LA SCIA MAGICA -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Funzione per creare la particella
+      function createParticle(x, y) {
+          const particle = document.createElement('div');
+          particle.classList.add('magic-particle');
+          
+          // Dimensione casuale tra 5px e 15px per variare l'effetto
+          const size = Math.random() * 10 + 5; 
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          // Posizione
+          particle.style.left = `${x}px`;
+          particle.style.top = `${y}px`;
+          
+          document.body.appendChild(particle);
+          
+          // Rimuovi la particella dal DOM dopo 1 secondo (quando l'animazione finisce)
+          setTimeout(() => {
+              particle.remove();
+          }, 1000);
+      }
+
+      // Ascolta il movimento del mouse
+      document.addEventListener('mousemove', function(e) {
+          // Crea una particella ogni volta che il mouse si muove
+          // Puoi aumentare la frequenza se vuoi una scia più densa
+          createParticle(e.clientX, e.clientY);
+      });
+      
+      // Supporto per touch (mobile/tablet) - opzionale, se vuoi l'effetto anche toccando lo schermo
+      document.addEventListener('touchmove', function(e) {
+          const touch = e.touches[0];
+          createParticle(touch.clientX, touch.clientY);
+      }, { passive: true });
+  });
+</script>
 </body>
 </html>
