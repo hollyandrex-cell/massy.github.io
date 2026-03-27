@@ -16,20 +16,17 @@
   <!-- META DESCRIPTION PER GOOGLE -->
   <meta name="description" content="Holly and Rex Group: un viaggio musicale con Rex, Bimba, Dj Ling, Dj Luna, Dj Nova. Canzoni d'amore, giustizia e libertà. Scopri la nostra storia e lascia un messaggio nella bacheca.">
   
-
-  <!-- Font eleganti -->
+  <!-- Font eleganti (CORRETTO: rimosso lo spazio extra nell'URL) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Il tuo stile principale (desktop) -->
   <link rel="stylesheet" href="css/stile.css">
   <!-- EFFETTO SCIA MAGICA (Solo per la Home) -->
-<link rel="stylesheet" href="css/index-magic.css">
+  <link rel="stylesheet" href="css/index-magic.css">
   <!-- Stile mobile esclusivo per la home page (index) -->
   <link rel="stylesheet" href="css/index.mobile.css" media="(max-width: 768px)"> 
-</head>
-<body class="pagina-index">
-
-    <style>
+  
+  <style>
     @keyframes slideInDown {
       from { transform: translateY(-100%); }
       to { transform: translateY(0); }
@@ -59,30 +56,81 @@
             padding: 0 10px;
         }
     }
-  </style>
+
+    /* =========================================
+       STILI DESKTOP PER LA MASCOTTE KIDS
+       (Il mobile è gestito da index.mobile.css)
+       ========================================= */
+    @media (min-width: 769px) {
+      #kids-mascot {
+        position: fixed;
+        top: -150px; /* Parte nascosta in alto */
+        
+        /* CENTRATURA PERFETTA */
+        left: 8%; 
+        transform: translateX(-50%); 
+        
+        width: 200px; /* INGRANDITA: da 140px a 180px */
+        height: auto;
+        z-index: 1002;
+        cursor: pointer;
+        transition: top 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        display: block;
+        border-radius: 10px;
+      }
+
+      #kids-mascot img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+      }
+
+      #kids-mascot.show {
+        top: 45px; /* ABBASSATA: da 20px a 40px dal bordo */
+        transform: translateX(-50%); /* Mantiene il centraggio quando scende */
+      }
+
+      #kids-mascot:hover {
+        /* Hover corretto: si ingrandisce ma resta centrata */
+        transform: translateX(-50%) scale(1.1) rotate(-5deg);
+        transition: transform 0.3s ease;
+      }
+    }
+  </style> <!-- <-- ECCO IL TAG CHIUSO CHE MANCAVA! -->
+</head>
+
+<body class="pagina-index">
 
   <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
   <div class="hamburger-menu">
-    <span></span><span></span><span></span>
-  </div>
+    <span></span>
+    <span></span>
+    <span></span> 
+  </div> 
+  </header>
 
-  <!-- MENU MOBILE UNIVERSALE -->
-  <nav id="mobile-nav" class="mobile-nav">
-    <a href="index.html">🏠 Home</a>
-    <a href="canzoni.html">🎵 Canzoni</a>
-    <a href="rex-bimba.html">🐶 Rex & Bimba</a>
-    <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
-    <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
-    <a href="dj-ling.html">✨ Dj Ling 灵</a>
-    <a href="dj-nova.html">⭐ Dj Nova</a>
-    <a href="dj-luna.html">🌙 Dj Luna</a>
-    <a href="gruppo.html">👥 Il Nostro Gruppo</a>
-    <a href="storia.html">📖 La Nostra Storia</a>
-    <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
-    <a href="relax.html">🎧 Relax</a>
-    <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
-    <a href="contatti.html">💌 Contatti</a>
-    <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
+<!-- MENU A SCOMPARSA (MOBILE) UNIFICATO -->
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="canzoni.html">🎵 Canzoni</a>
+  <a href="rex-bimba.html">🐶 Rex & Bimba</a>
+  <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
+  <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
+  <a href="dj-ling.html">✨ Dj Ling 灵</a>
+  <a href="dj-nova.html">⭐ Dj Nova</a>
+  <a href="dj-luna.html">🌙 Dj Luna</a>
+  <a href="gruppo.html">👥 Il Nostro Gruppo</a>
+  <a href="storia.html">📖 La Nostra Storia</a>
+  <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
+  <a href="relax.html">🎧 Relax</a>
+  <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
+  <a href="contatti.html">💌 Contatti</a>
+  <a href="bacheca.html" >📖 Bacheca</a>
+
+ 
+
   </nav>
 
    <!-- SFONDO CON TESTO -->
@@ -97,7 +145,6 @@
         "Dove la pazzia è l'unica sanità mentale."
       </p>
       <!-- FINE MOTTO -->
-
     </div>
   </div>
 
@@ -152,9 +199,18 @@
     </div>
   </div>
 
-  <!-- SCRIPT PER IL MENU MOBILE E COOKIE BANNER -->
+  <!-- =========================================
+     MASCOTTE KIDS (HTML SEMPLICE)
+     Gli stili sono divisi: Desktop qui sopra (nel head), Mobile in index.mobile.css
+     ========================================= -->
+  <a href="bambini.html" id="kids-mascot" title="Vai alla sezione Kids!">
+    <img src="immagini/kids-mascot.gif" alt="Kids Music">
+  </a>
+
+  <!-- SCRIPT PRINCIPALI -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      
       // --- GESTIONE MENU MOBILE ---
       const burger = document.querySelector('.hamburger-menu');
       const mobileNav = document.getElementById('mobile-nav');
@@ -191,18 +247,24 @@
       const cagnolinoVideo = document.getElementById('cagnolino-video');
       const cagnolinoMessaggio = document.getElementById('cagnolino-messaggio');
 
-      // Funzione per far apparire il cagnolino
       function showCagnolinoAnimation() {
           if (cagnolinoVideoContainer && cagnolinoVideo && cagnolinoMessaggio) {
-              cagnolinoVideoContainer.classList.add('active'); 
+              if (window.innerWidth > 768) {
+                  cagnolinoVideoContainer.classList.add('active'); 
+              }
               cagnolinoVideo.style.animation = 'cagnolino-walk-in 3s forwards'; 
-
               cagnolinoVideo.onanimationend = () => { 
                   cagnolinoMessaggio.style.display = 'flex';
                   cagnolinoMessaggio.style.opacity = '1';
-                  cagnolinoMessaggio.style.alignItems = 'center';
-                  cagnolinoMessaggio.style.justifyContent = 'center';
-                  cagnolinoMessaggio.style.flexDirection = 'column';
+                  if (window.innerWidth <= 768) {
+                      cagnolinoMessaggio.style.alignItems = 'flex-start';
+                      cagnolinoMessaggio.style.justifyContent = 'flex-start';
+                      cagnolinoMessaggio.style.flexDirection = 'column';
+                  } else {
+                      cagnolinoMessaggio.style.alignItems = 'center';
+                      cagnolinoMessaggio.style.justifyContent = 'center';
+                      cagnolinoMessaggio.style.flexDirection = 'column';
+                  }
               };
           }
       }
@@ -222,12 +284,10 @@
       window.acceptCookies = function() {
         localStorage.setItem('cookiesAccepted', 'true');
         if (cookieBanner) cookieBanner.style.display = 'none';
-        
         const gtagScript = document.createElement('script');
         gtagScript.async = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
         document.head.appendChild(gtagScript);
-
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -238,46 +298,40 @@
         localStorage.setItem('cookiesAccepted', 'false');
         if (cookieBanner) cookieBanner.style.display = 'none';
       };
+
+      // --- ATTIVAZIONE MASCOTTE KIDS ---
+      const kidsMascot = document.getElementById('kids-mascot');
+      if (kidsMascot) {
+        // Fallback semplice: falla scendere dopo 1 secondo
+        setTimeout(() => {
+            kidsMascot.classList.add('show');
+        }, 1000);
+      }
     });
   </script>
+
   <!-- SCRIPT PER LA SCIA MAGICA -->
-<script>
+  <script>
   document.addEventListener('DOMContentLoaded', function() {
-      // Funzione per creare la particella
       function createParticle(x, y) {
           const particle = document.createElement('div');
           particle.classList.add('magic-particle');
-          
-          // Dimensione casuale tra 5px e 15px per variare l'effetto
           const size = Math.random() * 10 + 5; 
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
-          
-          // Posizione
           particle.style.left = `${x}px`;
           particle.style.top = `${y}px`;
-          
           document.body.appendChild(particle);
-          
-          // Rimuovi la particella dal DOM dopo 1 secondo (quando l'animazione finisce)
-          setTimeout(() => {
-              particle.remove();
-          }, 1000);
+          setTimeout(() => { particle.remove(); }, 1000);
       }
-
-      // Ascolta il movimento del mouse
       document.addEventListener('mousemove', function(e) {
-          // Crea una particella ogni volta che il mouse si muove
-          // Puoi aumentare la frequenza se vuoi una scia più densa
           createParticle(e.clientX, e.clientY);
       });
-      
-      // Supporto per touch (mobile/tablet) - opzionale, se vuoi l'effetto anche toccando lo schermo
       document.addEventListener('touchmove', function(e) {
           const touch = e.touches[0];
           createParticle(touch.clientX, touch.clientY);
       }, { passive: true });
   });
-</script>
+  </script>
 </body>
 </html>

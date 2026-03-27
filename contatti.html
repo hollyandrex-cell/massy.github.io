@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   
   <!-- FAVICON REX & BIMBA -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="manifest" href="favicons/site.webmanifest">
-<link rel="shortcut icon" href="favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
 
   <title>Contatti • Massy</title>
     
@@ -25,7 +25,7 @@
   <!-- Stile mobile specifico -->
   <link rel="stylesheet" href="css/contatti.mobile.css" media="(max-width: 768px)">
 
-  <!-- STILI SPECIFICI PER CONTATTI -->
+  <!-- STILI SPECIFICI PER CONTATTI (CORRETTI CON EFFETTO LING) -->
   <style>
     
     body.no-scroll {
@@ -56,13 +56,18 @@
       align-items: center;
     }
 
+    /* TITOLO H1 - VERSIONE LING (BIANCO + OMBRA NERA) */
     h1 {
       font-family: 'Playfair Display', serif;
-      color: var(--oro);
-      text-shadow: 0 0 15px rgba(248, 213, 158, 0.7);
+      color: #ffffff !important; /* Bianco puro */
+      text-shadow: 
+        0 0 10px rgba(0, 0, 0, 0.8),   /* Alone nero */
+        0 0 20px rgba(0, 0, 0, 0.6),   /* Alone nero diffuso */
+        2px 2px 4px rgba(0, 0, 0, 1);  /* Ombra netta */
       letter-spacing: 2px;
       margin-bottom: 40px;
       font-size: 2.8rem;
+      font-weight: bold;
     }
 
     .links {
@@ -73,55 +78,66 @@
       width: 100%;
     }
 
+    /* LINK ITEM - VERSIONE LING (BIANCO + OMBRA NERA) */
     .link-item {
-      color: var(--oro);
+      color: #ffffff !important; /* Bianco puro per massima visibilità */
       text-decoration: none;
       font-size: 1.3rem;
+      font-weight: 600; /* Leggermente più grasso */
       transition: all 0.3s ease;
-      text-shadow: 0 0 8px rgba(248, 213, 158, 0.5);
+      
+      /* L'INVENZIONE DA LING: OMBRA MAGICA MARCATA */
+      text-shadow: 
+        0 0 5px rgba(0, 0, 0, 0.9),   /* Alone nero vicino */
+        0 0 10px rgba(0, 0, 0, 0.7),  /* Alone nero medio */
+        2px 2px 4px rgba(0, 0, 0, 1); /* Ombra netta spostata */
     }
 
+    /* HOVER MAGICO (DIVENTA ORO MA MANTIENE L'OMBRA) */
     .link-item:hover {
-      color: var(--oro-hover);
-      text-shadow: 0 0 15px rgba(255, 235, 59, 0.8);
-      transform: translateX(5px);
+      color: var(--oro-hover) !important; /* Diventa Oro Brillante */
+      text-shadow: 
+        0 0 10px rgba(255, 235, 59, 0.9), /* Bagliore oro */
+        0 0 20px rgba(255, 235, 59, 0.6),
+        2px 2px 4px rgba(0, 0, 0, 1);     /* Mantiene ombra nera */
+      transform: scale(1.05); /* Leggero ingrandimento */
     }
 
+    /* FIRMA - VERSIONE LING */
     .signature {
       margin-top: 60px;
       font-style: italic;
       font-size: 1.3rem;
-      opacity: 0.8;
-      color: var(--oro);
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      color: #eeeeee !important; /* Bianco sporco */
+      font-weight: bold;
+      text-shadow: 
+        0 0 5px rgba(0, 0, 0, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 1);
     }
 
-    /* --- FOOTER SPECIFICO PER CONTATTI (CORRETTO) --- */
+    /* --- FOOTER SPECIFICO PER CONTATTI --- */
     .contacts-footer {
       position: fixed;
       bottom: 20px;
-      left: 20px; /* Posizione attuale: sinistra */
+      left: 20px;
       z-index: 99;
       display: flex;
       gap: 20px;
-      
-      /* MODIFICA CHIAVE: Sfondo trasparente per togliere la banda nera */
       background: transparent !important; 
-      padding: 0; /* Rimuoviamo anche il padding extra */
+      padding: 0;
       border-radius: 0;
     }
 
     .contacts-footer a {
-      /* MODIFICA CHIAVE: Colore verde brillante come nelle altre pagine DJ */
       color: #79f406 !important; 
       text-decoration: underline;
       font-size: 0.9rem;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* Ombra per leggibilità sul video */
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       transition: color 0.3s ease;
     }
     
     .contacts-footer a:hover {
-      color: #bcff05 !important; /* Verde più chiaro all'hover */
+      color: #bcff05 !important;
     }
 
     /* Animazione Banner */
@@ -218,7 +234,7 @@
     <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
 
-  <!-- FOOTER CON POLICY (SENZA SFONDO E VERDE) -->
+  <!-- FOOTER CON POLICY -->
   <footer class="contacts-footer">
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="cookie-policy.html">Cookie Policy</a>

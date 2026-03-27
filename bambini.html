@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  
+  <!-- TITOLO E DESCRIZIONE PER GOOGLE -->
+  <title>Holly & Rex Junior - Caccia al Tesoro Musicale</title>
+  <meta name="description" content="Entra nel mondo magico di Holly & Rex Junior! Una caccia al tesoro musicale interattiva per bambini. Trova le canzoni nascoste nella stanza e ascolta le melodie magiche.">
+  
+  <!-- FAVICON REX & BIMBA -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- FOGLIO DI STILE KIDS (Contiene Desktop + Mobile) -->
+  <link rel="stylesheet" href="css/bambini.css">
+</head>
+
+<body class="kids-page">
+
+  <!-- HEADER SEMPLIFICATO (Solo tasto Home) -->
+  <div class="simple-header">
+    <a href="index.html" class="btn-home">🏠 Torna alla Home</a>
+  </div>
+
+  <div class="kids-container">
+    
+    <!-- TITOLO DI GIOCO -->
+    <div class="game-header">
+      <h1 class="kids-title">Holly & Rex Junior 🐾</h1>
+      <p class="kids-subtitle">✨ Musica magica per bambini sognatori!<br>Riesci a trovare le 4 canzoni nascoste nella stanza?</p>
+    </div>
+
+    <!-- I 4 TESORI NASCOSTI (STANZA DEI SOGNI) -->
+    
+    <!-- 1. Code che Volano (In alto a DX) -->
+    <div id="treasure-1" class="hidden-treasure">
+      <img src="immagini/code-volanti.jpg" alt="Code che Volano">
+      <div class="treasure-info">
+        <div class="t-title">Code che Volano</div>
+        <div class="t-btns">
+          <a href="#player-code" class="mini-btn btn-play">▶ Ascolta</a>
+          <a href="bambini-testi.html#code" class="mini-btn btn-text">📖 Leggi</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Io sono Ciuccio (In basso a SX) -->
+    <div id="treasure-2" class="hidden-treasure">
+      <img src="immagini/rex-ciuccio.png" alt="Io sono Ciuccio">
+      <div class="treasure-info">
+        <div class="t-title">Io sono Ciuccio</div>
+        <div class="t-btns">
+          <a href="#player-ciuccio" class="mini-btn btn-play">▶ Ascolta</a>
+          <a href="bambini-testi.html#ciuccio" class="mini-btn btn-text">📖 Leggi</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Due Cuori (In alto a SX) -->
+    <div id="treasure-3" class="hidden-treasure">
+      <img src="immagini/cuori.jpg" alt="Due Cuori">
+      <div class="treasure-info">
+        <div class="t-title">Due Cuori</div>
+        <div class="t-btns">
+          <a href="#player-cuori" class="mini-btn btn-play">▶ Ascolta</a>
+          <a href="bambini-testi.html#cuori" class="mini-btn btn-text">📖 Leggi</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Ma Che Caldo Fa (In basso a DX) -->
+    <div id="treasure-4" class="hidden-treasure">
+      <img src="immagini/Bimba-caldo.jpg" alt="Ma Che Caldo Fa">
+      <div class="treasure-info">
+        <div class="t-title">Ma Che Caldo Fa</div>
+        <div class="t-btns">
+          <a href="#player-caldo" class="mini-btn btn-play">▶ Ascolta</a>
+          <a href="bambini-testi.html#caldo" class="mini-btn btn-text">📖 Leggi</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PULSANTE PROSSIMA STANZA -->
+    <div class="next-level-container">
+      <a href="nuvola-musicale.html" class="btn-next-level">☁️ Passa alla Nuvola Musicale...</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER UNICO: DISCLAIMER E POLICY -->
+  <footer>
+    <p>Questo mondo magico esiste nei sogni — ma la nostra musica è reale. 
+      <a href="privacy-policy.html">Privacy Policy</a> | <a href="cookie-policy.html">Cookie Policy</a>
+    </p>
+  </footer>
+
+  <!-- BANNER DI CONSENSO COOKIE -->
+  <div id="cookie-banner">
+    <p>Utilizziamo i cookie per offrirti la migliore esperienza di navigazione. 
+       <a href="cookie-policy.html">Maggiori informazioni</a>.
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accetta tutto</button>
+      <button class="cookie-btn reject-btn" onclick="rejectCookies()">Rifiuta</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT PRINCIPALI (Cookie + Analytics) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // --- GESTIONE COOKIE BANNER ---
+      const cookieBanner = document.getElementById('cookie-banner');
+      
+      if (cookieBanner) {
+        if (localStorage.getItem('cookiesAccepted') === null) { 
+          cookieBanner.style.display = 'block'; 
+        } else {
+          cookieBanner.style.display = 'none'; 
+        }
+      }
+
+      window.acceptCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+        
+        // Caricamento Google Analytics
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6X5LB7S2VT');
+      };
+
+      window.rejectCookies = function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        if (cookieBanner) cookieBanner.style.display = 'none';
+      };
+    });
+  </script>
+
+</body>
+</html>

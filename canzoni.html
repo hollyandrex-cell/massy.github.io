@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   
-    <!-- FAVICON REX & BIMBA -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="manifest" href="favicons/site.webmanifest">
-<link rel="shortcut icon" href="favicons/favicon.ico">
+  <!-- FAVICON REX & BIMBA -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
 
   <title>Canzoni • L'emozione in Musica</title>
     
@@ -22,10 +22,10 @@
   <!-- Il tuo stile personale (globale, desktop) -->
   <link rel="stylesheet" href="css/stile.css"> 
   
-  <!-- Stile mobile specifico -->
+  <!-- Stile mobile specifico (ASSICURATI CHE IL NOME SIA CORRETTO: canzoni.mobile.css) -->
   <link rel="stylesheet" href="css/canzoni.mobile.css" media="(max-width: 768px)">
   
-  <!-- STILI SPECIFICI PER LA PAGINA CANZONI -->
+  <!-- STILI SPECIFICI PER LA PAGINA CANZONI (Desktop) -->
   <style>
     /* --- GLOBALI --- */
     body {
@@ -186,50 +186,12 @@
       font-size: 1rem;
     }
 
-    .search-item:last-child {
-      border-bottom: none;
-    }
+    .search-item:last-child { border-bottom: none; }
+    .search-item:hover { background: rgba(248, 213, 158, 0.1); color: #fff; }
+    .search-item strong { color: #d35400; font-weight: bold; }
+    .no-results { padding: 15px; text-align: center; color: rgba(248, 213, 158, 0.7); font-style: italic; }
 
-    .search-item:hover {
-      background: rgba(248, 213, 158, 0.1);
-      color: #fff;
-    }
-
-    .search-item strong {
-      color: #d35400;
-      font-weight: bold;
-    }
-
-    .no-results {
-      padding: 15px;
-      text-align: center;
-      color: rgba(248, 213, 158, 0.7);
-      font-style: italic;
-    }
-
-    /* --- FOOTER POLICY --- */
-    footer {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 10;
-      display: flex;
-      gap: 20px;
-      background: transparent;
-      padding: 0;
-    }
-    footer a {
-      color: #79f406;
-      text-decoration: underline;
-      font-size: 0.9rem;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    }
-
-    /* Animazione Banner */
-    @keyframes slideInDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
+    @keyframes slideInDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -242,21 +204,8 @@
   <div class="overlay"></div>
 
   <div class="content">
-    
     <!-- BANNER ANNUNCI -->
-    <a href="artists-announce.html" style="
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 8px 20px;
-      background: rgba(211, 84, 0, 0.8);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 20px;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.9rem;
-      border: 1px solid var(--oro);
-      transition: all 0.3s ease;
-    " onmouseover="this.style.background='var(--oro)'; this.style.color='#000'" onmouseout="this.style.background='rgba(211, 84, 0, 0.8)'; this.style.color='#fff'">
+    <a href="artists-announce.html" style="display: inline-block; margin-bottom: 20px; padding: 8px 20px; background: rgba(211, 84, 0, 0.8); color: #fff; text-decoration: none; border-radius: 20px; font-family: 'Playfair Display', serif; font-size: 0.9rem; border: 1px solid var(--oro); transition: all 0.3s ease;" onmouseover="this.style.background='var(--oro)'; this.style.color='#000'" onmouseout="this.style.background='rgba(211, 84, 0, 0.8)'; this.style.color='#fff'">
       ✨ Scopri le ultime novità del gruppo!
     </a>
 
@@ -280,11 +229,9 @@
     </div>
 
     <!-- PULSANTE MENU HAMBURGER (Mobile) -->
-    <div class="hamburger-menu">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="hamburger-menu"><span></span><span></span><span></span></div>
 
-    <!-- MENU MOBILE -->
+        <!-- MENU MOBILE -->
     <nav id="mobile-nav" class="mobile-nav">
       <a href="index.html">🏠 Home</a>
       <a href="canzoni.html">🎵 Canzoni</a>
@@ -325,14 +272,13 @@
       <a href="contatti.html" class="lanterna">Contatti</a>
       <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
     </div>
-
   </div>
 
-  <!-- FOOTER POLICY -->
-  <footer>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="cookie-policy.html">Cookie Policy</a>
-  </footer>
+    <!-- FOOTER POLICY -->
+    <footer class="combined-footer">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="cookie-policy.html">Cookie Policy</a>
+    </footer>
 
   <!-- BANNER COOKIE -->
   <div id="cookie-banner">
@@ -408,9 +354,7 @@
 
   <!-- SCRIPT RICERCA CANZONI -->
   <script>
-    // DATABASE DELLE CANZONI
     const songsDB = [
-      // REX
       { title: "Occhi nella notte", artist: "Rex", url: "canzoni-rex.html", search: "Occhi nella notte" },
       { title: "Il mio paradiso", artist: "Rex", url: "canzoni-rex.html", search: "Il mio paradiso" },
       { title: "Rex...Ciuccio", artist: "Rex", url: "canzoni-rex.html", search: "Rex...Ciuccio"},
@@ -426,23 +370,17 @@
       { title: "Non arrenderti mai", artist: "Rex", url: "canzoni-rex.html", search: "Non arrenderti mai"},
       { title: "Genova", artist: "Rex", url: "canzoni-rex.html", search: "Genova"},
       { title: "Due metri di mare", artist: "Rex", url: "canzoni-rex.html", search: "due metri di mare" },
-      
-      // HOLLY
       { title: "Holly Bau", artist: "Holly", url: "canzoni-holly.html", search: "Holly Bau" },
       { title: "Holly al mare", artist: "Holly", url: "canzoni-holly.html", search: "Holly al mare" },
       { title: "Ma che caldo fa", artist: "Holly", url: "canzoni-holly.html", search: "Ma che caldo fa" },
       { title: "Ti guardo da lontano", artist: "Holly", url: "canzoni-holly.html", search: "Ti guardo da lontano" },
       { title: "Tempo indietro", artist: "Holly", url: "canzoni-holly.html", search: "Tempo indietro" },
-      
-      // LING
       { title: "Non torniamo", artist: "Ling", url: "canzoni-ling.html", search: "Non torniamo" },
       { title: "Sogno e libertà", artist: "Ling", url: "canzoni-ling.html", search: "Sogno e libertà" },
       { title: "Quando il cuore parla da solo", artist: "Ling", url: "canzoni-ling.html", search: "Quando il cuore parla da solo" },
       { title: "Polvere di stelle", artist: "Ling", url: "canzoni-ling.html", search: "Polvere di stelle" },
       { title: "Vai via", artist: "Ling", url: "canzoni-ling.html", search: "Vai via" },
       { title: "Ling", artist: "Ling", url: "canzoni-ling.html", search: "ling" },
-      
-      // LUNA
       { title: "Via di mezzo", artist: "Luna", url: "canzoni-luna.html", search: "Via di mezzo" },
       { title: "Solo stanotte", artist: "Luna", url: "canzoni-luna.html", search: "Solo stanotte" },
       { title: "Insieme a te", artist: "Luna", url: "canzoni-luna.html", search: "Insieme a te" },
@@ -450,10 +388,7 @@
       { title: "Heartbeat", artist: "Luna", url: "canzoni-luna.html", search: "Heartbeat" },
       { title: "Fire on the beach", artist: "Luna", url: "canzoni-luna.html", search: "Fire on the beach" },
       { title: "Oggi forse SI", artist: "Luna", url: "canzoni-luna.html", search: "Oggi forse SI" },
-      
-      // NOVA
-      { title: "Oltre il server (Un viaggio con Rex)", artist: "Nova", url: "canzoni-nova.html", search: "Oltre il server (Un viaggio con Rex)" },
-      
+      { title: "Oltre il server (Un viaggio con Rex)", artist: "Nova", url: "canzoni-nova.html", search: "Oltre il server (Un viaggio con Rex)" }
     ];
 
     const searchInput = document.getElementById('searchInput');
@@ -463,21 +398,13 @@
       searchInput.addEventListener('input', function() {
         const query = this.value.toLowerCase().trim();
         resultsBox.innerHTML = '';
+        if (query.length < 2) { resultsBox.style.display = 'none'; return; }
 
-        if (query.length < 2) {
-          resultsBox.style.display = 'none';
-          return;
-        }
-
-        const matches = songsDB.filter(song => 
-          song.title.toLowerCase().includes(query) || 
-          song.artist.toLowerCase().includes(query)
-        );
+        const matches = songsDB.filter(song => song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query));
 
         if (matches.length > 0) {
           matches.forEach(song => {
             const link = document.createElement('a');
-            // Aggiungi il parametro ?canzone= al link
             link.href = `${song.url}?canzone=${encodeURIComponent(song.search)}`;
             link.className = 'search-item';
             link.innerHTML = `<strong>${song.title}</strong> - ${song.artist}`;
@@ -490,7 +417,6 @@
         }
       });
 
-      // Chiudi risultati se clicchi fuori
       document.addEventListener('click', function(e) {
         if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
           resultsBox.style.display = 'none';
@@ -498,6 +424,5 @@
       });
     }
   </script>
-  
 </body>
 </html>
