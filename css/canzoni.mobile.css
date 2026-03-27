@@ -1,154 +1,146 @@
-    /* --- canzoni.mobile.css --- */
-    /* Stili specifici per mobile (max-width: 768px) per la pagina canzoni.html */
+/* --- canzoni.mobile.css --- */
+/* Stili specifici per mobile (max-width: 768px) per la pagina canzoni.html */
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
 
-      /* --- HAMBURGER MENU ICON (LE TRE LINEETTE) --- */
-      .hamburger-menu {
-        display: flex !important; /* Lo rende visibile di default su mobile */
-        position: fixed;
-        top: 20px;
-        left: 20px; /* Di default a sinistra */
-        right: auto; /* Assicura che non ci siano conflitti con 'right' */
-        z-index: 1001; /* Alto per essere sopra tutto */
-        width: 30px;
-        height: 24px;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        padding: 5px;
-        background: rgba(10, 12, 20, 0.7); /* Sfondo semi-trasparente scuro */
-        border-radius: 5px;
-        transition: all 0.3s ease; /* Animazione delle barrette */
-      }
+  /* === 1. NASCONDI LANTERNA === */
+  .lanterna-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 
-      /* Stili per le barrette dell'hamburger */
-      .hamburger-menu span {
-        display: block;
-        height: 3px;
-        width: 100%;
-        background-color: var(--oro); /* Colore oro */
-        border-radius: 5px;
-        transition: all 0.3s ease;
-      }
+  /* === 2. HAMBURGER MENU === */
+  .hamburger-menu {
+    display: flex !important;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    width: 30px;
+    height: 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px;
+    background: rgba(10, 12, 20, 0.7);
+    border-radius: 5px;
+  }
+  .hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--oro, #f8d59e);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  .hamburger-menu.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+  .hamburger-menu.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
 
-      /* Animazione dell'hamburger quando è attivo (diventa una 'X') */
-      .hamburger-menu.active span:nth-child(1) {
-        transform: translateY(10px) rotate(45deg);
-      }
-      .hamburger-menu.active span:nth-child(2) {
-        opacity: 0;
-      }
-      .hamburger-menu.active span:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg);
-      }
+  /* === 3. MOBILE NAV === */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(10, 12, 20, 0.98);
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 1000;
+    padding: 80px 0 20px;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    text-align: center;
+  }
+  .mobile-nav.active { left: 0; }
+  .mobile-nav a {
+    color: var(--oro, #f8d59e);
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 8px 0;
+    display: block;
+  }
+  body.no-scroll { overflow: hidden; }
 
-      /* MOBILE-NAV: Stili generali del pannello a scomparsa */
-      .mobile-nav {
-        display: flex; /* Ora è sempre 'flex' per permettere la transizione e il layout interno */
-        position: fixed;
-        top: 0;
-        left: -100%; /* Inizialmente fuori schermo (nascosto) */
-        width: 100%;
-        height: 100vh; /* Piena altezza della viewport */
-        background-color: rgba(10, 12, 20, 0.98); /* Sfondo scuro quasi opaco */
-        flex-direction: column; /* Link uno sotto l'altro */
-        justify-content: space-evenly; /* Distribuisce i link uniformemente */
-        align-items: center;
-        z-index: 1000; /* Sotto l'hamburger ma sopra il contenuto della pagina */
-        padding: 80px 0 20px; /* Spazio dall'alto per non coprire l'hamburger e dal basso. Regola a piacere. */
-        text-align: center;
-        transition: left 0.3s ease-in-out;
-        overflow-y: auto; /* Permette lo scroll verticale se i link sono troppi */
-        -webkit-overflow-scrolling: touch; /* Migliora lo scroll su iOS */
-      }
+  /* === 4. FOOTER POLICY (DEFINITIVO - MURO SOLIDO) === */
+  footer.combined-footer {
+    position: fixed !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    background-color: #0a0c14 !important;
+    background-image: none !important;
+    padding: 10px !important;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 5px 15px !important;
+    z-index: 9999 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+  
+  footer.combined-footer a {
+    display: inline-block !important;
+    color: #aef604 !important;
+    text-decoration: none;
+    white-space: nowrap !important;
+    font-size: 0.75rem;
+    text-shadow: 0 1px 2px black;
+    opacity: 1 !important;
+  }
 
-      /* Stili per i link all'interno del menu mobile */
-      .mobile-nav a {
-        color: var(--oro); /* Colore oro per il testo dei link */
-        text-decoration: none;
-        font-family: 'Playfair Display', serif; /* Font elegante */
-        font-size: 1.5rem; /* Dimensione grande per facilitare il tap */
-        margin: 8px 0; /* Spazio verticale tra i link, regola a piacere */
-        transition: color 0.3s ease;
-        white-space: nowrap; /* Impedisce al testo di andare a capo */
-        padding: 5px 10px; /* Aggiunge area cliccabile */
-        display: block; /* Ogni link occupa la sua riga */
-      }
+  /* === 5. NASCONDI POLICY QUANDO IL MENU È APERTO === */
+  body.no-scroll footer.combined-footer {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 
-      /* Effetto hover sui link del menu mobile */
-      .mobile-nav a:hover {
-        color: var(--oro-hover); /* Cambia colore al passaggio del mouse/tap */
-      }
+  /* === 6. BODY PADDING === */
+  body {
+    padding-bottom: 80px !important;
+    padding-top: 60px !important;
+    overflow-x: hidden;
+  }
 
-      /* Quando il menu mobile è attivo */
-      .mobile-nav.active {
-        left: 0; /* Porta il menu sullo schermo quando è attivo */
-      }
+  /* === 7. ADATTAMENTI SPECIFICI CANZONI === */
+  .content {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    padding-top: 20px !important;
+  }
+  
+  .titolo { font-size: 2.5rem !important; }
+  .sottotitolo { font-size: 1.2rem !important; }
+  .pulsanti-top { gap: 10px !important; margin-bottom: 20px !important; }
+  .pulsante-top { font-size: 1rem !important; padding: 10px 20px !important; }
 
-      /* Assicurati che il corpo della pagina non scorra quando il menu è aperto */
-      body.no-scroll {
-        overflow: hidden;
-      }
+  /* === 8. BANNER COOKIE === */
+  #cookie-banner {
+    max-width: 90vw !important;
+    left: 5vw !important;
+    right: 5vw !important;
+    font-size: 0.9rem !important;
+    padding: 15px !important;
+  }
+  
+} /* <--- FINE DELLA MEDIA QUERY MOBILE */
 
-      /* Nasconde il lanterna-menu su mobile */
-      .lanterna-menu {
-        display: none!important;
-      }
-
-      /* Stili del Footer Mobile */
-      footer { /* Se il footer non ha una classe specifica per mobile, usa 'footer' */
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        gap: 10px;
-        font-size: 0.8rem;
-        background: rgba(10, 12, 20, 0.85); /* Sfondo per leggibilità */
-        padding: 8px;
-        border-radius: 8px;
-        z-index: 10; /* Per essere sopra altri elementi */
-        display: flex; /* Aggiunto per allineamento */
-        justify-content: center; /* Aggiunto per centrare */
-        flex-wrap: wrap; /* Aggiunto per wrap su schermi stretti */
-      }
-      footer a {
-        font-size: 0.75rem;
-        color: #79f406; /* Colore per i link del footer */
-      }
-
-      /* --- STILI SPECIFICI PER QUESTA PAGINA SU MOBILE --- */
-      body {
-        padding-top: 60px; /* Spazio per l'hamburger */
-      }
-      .content {
-        min-height: calc(100vh - 80px); /* Regola l'altezza minima, lasciando spazio al footer e banner */
-      }
-      .titolo {
-        font-size: 2.5rem;
-      }
-      .sottotitolo {
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-      }
-      .pulsanti-top {
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      .pulsante-top {
-        font-size: 0.9rem;
-        padding: 8px 15px;
-      }
-      .btn-musica {
-        font-size: 1rem;
-        padding: 10px 20px;
-      }
-    }
-
-    /* Nasconde l'hamburger-menu e mobile-nav su schermi grandi (desktop) */
-    @media (min-width: 769px) {
-      .hamburger-menu,
-      .mobile-nav {
-        display: none!important;
-      }
-    }
+/* === DESKTOP: Nascondi elementi mobile === */
+@media (min-width: 769px) {
+  .hamburger-menu,
+  .mobile-nav {
+    display: none !important;
+  }
+}

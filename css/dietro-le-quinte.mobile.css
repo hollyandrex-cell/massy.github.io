@@ -3,13 +3,19 @@
 
 @media (max-width: 768px) {
 
-  /* --- HAMBURGER MENU ICON (LE TRE LINEETTE) --- */
+  /* =========================================
+     1. CODICE MOBILE UNIVERSALE (MENU & FOOTER)
+     ========================================= */
+  
+  .lanterna-menu {
+    display: none !important;
+  }
+
   .hamburger-menu {
-    display: flex!important;
+    display: flex !important;
     position: fixed;
     top: 20px;
     left: 20px;
-    right: auto;
     z-index: 1001;
     width: 30px;
     height: 24px;
@@ -31,17 +37,10 @@
     transition: all 0.3s ease;
   }
 
-  .hamburger-menu.active span:nth-child(1) {
-    transform: translateY(10px) rotate(45deg);
-  }
-  .hamburger-menu.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger-menu.active span:nth-child(3) {
-    transform: translateY(-10px) rotate(-45deg);
-  }
+  .hamburger-menu.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+  .hamburger-menu.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
 
-  /* MOBILE-NAV */
   .mobile-nav {
     display: flex;
     position: fixed;
@@ -55,10 +54,9 @@
     align-items: center;
     z-index: 1000;
     padding: 80px 0 20px;
-    text-align: center;
     transition: left 0.3s ease-in-out;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    text-align: center;
   }
 
   .mobile-nav a {
@@ -67,120 +65,114 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     margin: 8px 0;
-    transition: color 0.3s ease;
     white-space: nowrap;
-    padding: 5px 10px;
-    display: block;
   }
 
-  .mobile-nav a:hover {
-    color: var(--oro-hover);
-  }
+  .mobile-nav.active { left: 0; }
+  body.no-scroll { overflow: hidden; }
 
-  .mobile-nav.active {
-    left: 0;
-  }
-
-  body.no-scroll {
-    overflow: hidden;
-  }
-
-  /* Nasconde la lanterna su mobile */
-  .lanterna-menu {
-    display: none!important;
-  }
-
-  /* Footer Mobile */
   footer {
     position: fixed;
     bottom: 10px;
     left: 10px;
     right: 10px;
-    gap: 10px;
-    font-size: 0.8rem;
     background: rgba(10, 12, 20, 0.85);
     padding: 8px;
     border-radius: 8px;
-    z-index: 100; /* ✨ AUMENTATO da 10 a 100 */
+    z-index: 10;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-  }
-  footer a {
-    font-size: 0.75rem;
-    color: #79f406;
+    gap: 10px;
   }
 
-  /* === ✨ FIX: Stili specifici pagina Dietro le Quinte === */
+  footer a {
+    font-size: 0.75rem;
+    color: var(--verde-link);
+    text-decoration: none;
+  }
+
+  /* =========================================
+     2. CORREZIONI SPECIFICHE PER "DIETRO LE QUINTE"
+     (Qui risolviamo il problema delle miniature nascoste)
+     ========================================= */
+
   body {
     background-color: var(--blu-notte);
     background-image: none;
-    padding-top: 60px;
-    padding-bottom: 180px !important; /* ✨ AGGIUNTO: spazio per footer fisso */
+    padding-top: 0 !important; /* Togliamo lo spazio inutile in alto */
+    padding-bottom: 180px !important; /* Spazio per il footer fisso */
   }
-  
+
   .hero-section {
     padding-top: 20px;
   }
-  
+
   .header-content h1 {
     font-size: 2.2rem;
   }
-  
+
   .header-content p.slogan {
     font-size: 1rem;
   }
-  
+
+  /* IL CONTENITORE PRINCIPALE: MENO MARGINE PER FAR SALIRE TUTTO */
   .main-content-overlay {
-    margin: 20px;
-    padding: 20px;
+    margin: 10px !important; /* Ridotto drasticamente da 20px/30px */
+    padding: 15px !important; /* Padding più leggero */
   }
-  
+
   .main-content-overlay h2 {
     font-size: 1.8rem;
+    margin-bottom: 15px;
   }
-  
+
   .main-content-overlay h3 {
     font-size: 1.5rem;
+    margin-top: 10px !important; /* Ridotto il margine sopra i titoli interni */
+    margin-bottom: 10px;
   }
-  
+
   .main-content-overlay p {
     font-size: 1rem;
+    line-height: 1.5;
   }
-  
+
+  /* LA BACHECA DELLE MINIATURE: SPAZIO OTTIMIZZATO */
   .bacheca-container {
-    margin-top: 40px;
+    margin-top: 20px !important; /* Ridotto da 40px a 20px */
     margin-left: auto;
     margin-right: auto;
     width: 95%;
-    height: 150px;
-    margin-bottom: 60px; /* ✨ AGGIUNTO: spazio extra sotto miniature */
+    height: auto; /* Altezza automatica per adattarsi */
+    min-height: 140px; /* Altezza minima di sicurezza */
+    margin-bottom: 40px; /* Spazio sotto prima del footer */
   }
-  
+
   .bacheca-item img {
     width: 80px;
     height: 80px;
   }
-  
+
   .bacheca-item p {
     font-size: 0.9em;
   }
-  
+
   .main-content-policy-links {
     flex-direction: column;
     gap: 15px;
     margin-top: 40px;
   }
-  
+
   .main-content-policy-links a {
     font-size: 0.9rem;
   }
-}
+
+} /* <-- FINE DELLA MEDIA QUERY MOBILE (QUI C'ERA L'ERRORE!) */
 
 /* Desktop: nascondi elementi mobile */
 @media (min-width: 769px) {
   .hamburger-menu,
   .mobile-nav {
-    display: none!important;
+    display: none !important;
   }
 }

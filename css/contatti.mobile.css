@@ -1,156 +1,218 @@
-    /* --- contatti.mobile.css --- */
-    /* Stili specifici per mobile (max-width: 768px) per la pagina contatti.html */
+/* --- contatti.mobile.css --- */
+/* Stili specifici per mobile (max-width: 768px) per la pagina contatti.html */
 
-    @media (max-width: 768px) {
+/* =========================================
+   1. CODICE MOBILE UNIVERSALE (MENU & FOOTER)
+   ========================================= */
+   @media (max-width: 768px) {
 
-      /* --- HAMBURGER MENU ICON (LE TRE LINEETTE) --- */
-      .hamburger-menu {
-        display: flex !important; /* Lo rende visibile di default su mobile */
-        position: fixed;
-        top: 20px;
-        left: 20px; /* Di default a sinistra */
-        right: auto; /* Assicura che non ci siano conflitti con 'right' */
-        z-index: 1001; /* Alto per essere sopra tutto */
-        width: 30px;
-        height: 24px;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        padding: 5px;
-        background: rgba(10, 12, 20, 0.7); /* Sfondo semi-trasparente scuro */
-        border-radius: 5px;
-        transition: all 0.3s ease; /* Animazione delle barrette */
-      }
-
-      /* Stili per le barrette dell'hamburger */
-      .hamburger-menu span {
-        display: block;
-        height: 3px;
-        width: 100%;
-        background-color: var(--oro); /* Colore oro */
-        border-radius: 5px;
-        transition: all 0.3s ease;
-      }
-
-      /* Animazione dell'hamburger quando è attivo (diventa una 'X') */
-      .hamburger-menu.active span:nth-child(1) {
-        transform: translateY(10px) rotate(45deg);
-      }
-      .hamburger-menu.active span:nth-child(2) {
-        opacity: 0;
-      }
-      .hamburger-menu.active span:nth-child(3) {
-        transform: translateY(-10px) rotate(-45deg);
-      }
-
-      /* MOBILE-NAV: Stili generali del pannello a scomparsa */
-      .mobile-nav {
-        display: flex; /* Ora è sempre 'flex' per permettere la transizione e il layout interno */
-        position: fixed;
-        top: 0;
-        left: -100%; /* Inizialmente fuori schermo (nascosto) */
-        width: 100%;
-        height: 100vh; /* Piena altezza della viewport */
-        background-color: rgba(10, 12, 20, 0.98); /* Sfondo scuro quasi opaco */
-        flex-direction: column; /* Link uno sotto l'altro */
-        justify-content: space-evenly; /* Distribuisce i link uniformemente */
-        align-items: center;
-        z-index: 1000; /* Sotto l'hamburger ma sopra il contenuto della pagina */
-        padding: 80px 0 20px; /* Spazio dall'alto per non coprire l'hamburger e dal basso. Regola a piacere. */
-        text-align: center;
-        transition: left 0.3s ease-in-out;
-        overflow-y: auto; /* Permette lo scroll verticale se i link sono troppi */
-        -webkit-overflow-scrolling: touch; /* Migliora lo scroll su iOS */
-      }
-
-      /* Stili per i link all'interno del menu mobile */
-      .mobile-nav a {
-        color: var(--oro); /* Colore oro per il testo dei link */
-        text-decoration: none;
-        font-family: 'Playfair Display', serif; /* Font elegante */
-        font-size: 1.5rem; /* Dimensione grande per facilitare il tap */
-        margin: 8px 0; /* Spazio verticale tra i link, regola a piacere */
-        transition: color 0.3s ease;
-        white-space: nowrap; /* Impedisce al testo di andare a capo */
-        padding: 5px 10px; /* Aggiunge area cliccabile */
-        display: block; /* Ogni link occupa la sua riga */
-      }
-
-      /* Effetto hover sui link del menu mobile */
-      .mobile-nav a:hover {
-        color: var(--oro-hover); /* Cambia colore al passaggio del mouse/tap */
-      }
-
-      /* Quando il menu mobile è attivo */
-      .mobile-nav.active {
-        left: 0; /* Porta il menu sullo schermo quando è attivo */
-      }
-
-      /* Assicurati che il corpo della pagina non scorra quando il menu è aperto */
-      body.no-scroll {
-        overflow: hidden;
-      }
-
-      /* Nasconde il lanterna-menu su mobile */
-      .lanterna-menu {
-        display: none!important;
-      }
-
-      /* --- REGOLE PER MOBILE (SPECIFICHE PER contatti.html) --- */
-      body {
-        /* Rimuoviamo il video di sfondo su mobile per evitare problemi di performance */
-        background-image: none !important;
-        background-color: var(--blu-notte) !important;
-        padding-top: 60px; /* Spazio per l'hamburger */
-      }
-      .content {
-          padding-bottom: 80px; /* Spazio per il footer su mobile */
-          padding-top: 20px; /* Un po' di padding in alto per non stare troppo attaccati */
-          height: auto; /* L'altezza si adatta al contenuto, non più 100vh */
-          min-height: calc(100vh - 60px); /* Garantisce che ci sia abbastanza spazio anche su schermi più corti */
-      }
-      h1 {
-          font-size: 2.2rem; /* Adatta la dimensione del titolo */
-          margin-bottom: 20px;
-      }
-      .links {
-          gap: 15px; /* Riduci lo spazio tra i link */
-      }
-      .link-item {
-          font-size: 1.1rem; /* Adatta la dimensione dei link */
-      }
-      .signature {
-          margin-top: 30px;
-          font-size: 1.1rem;
-      }
-      .contacts-footer {
-          bottom: 10px;
-          left: 10px;
-          right: 10px; /* Per far sì che occupi tutta la larghezza */
-          font-size: 0.8rem;
-          gap: 10px;
-          padding: 6px 10px;
-          justify-content: center; /* Centra i link nel footer */
-      }
-      #cookie-banner {
-          bottom: 10px;
-          right: 10px;
-          left: 10px; /* Occupa più larghezza su mobile */
-          max-width: unset; /* Rimuovi max-width */
-          width: calc(100% - 20px); /* Occupa quasi tutta la larghezza */
-          padding: 15px;
-          font-size: 0.9rem;
-      }
-      #cookie-banner .cookie-btn {
-          padding: 5px 10px;
-          font-size: 0.9rem;
-      }
+    /* Nascondi menu desktop */
+    .lanterna-menu {
+      display: none !important;
     }
-
-    /* Nasconde l'hamburger-menu e mobile-nav su schermi grandi (desktop) */
-    @media (min-width: 769px) {
-      .hamburger-menu,
-      .mobile-nav {
-        display: none!important;
-      }
+  
+    /* Hamburger Menu */
+    .hamburger-menu {
+      display: flex !important;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      width: 30px;
+      height: 24px;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 5px;
+      background: rgba(10, 12, 20, 0.7);
+      border-radius: 5px;
+      transition: all 0.3s ease;
     }
+  
+    .hamburger-menu span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: var(--oro);
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+  
+    /* Animazione X */
+    .hamburger-menu.active span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+    .hamburger-menu.active span:nth-child(2) { opacity: 0; }
+    .hamburger-menu.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+  
+    /* Mobile Nav */
+    .mobile-nav {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(10, 12, 20, 0.98);
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      z-index: 1000;
+      padding: 80px 0 20px;
+      transition: left 0.3s ease-in-out;
+      overflow-y: auto;
+      text-align: center;
+    }
+  
+    .mobile-nav a {
+      color: var(--oro);
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin: 8px 0;
+      white-space: nowrap;
+    }
+  
+    .mobile-nav a:hover {
+      color: var(--oro-hover);
+    }
+  
+    .mobile-nav.active { left: 0; }
+    body.no-scroll { overflow: hidden; }
+  
+    /* Footer Mobile Universale */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(10, 12, 20, 0.85);
+      padding: 8px;
+      border-radius: 8px;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+  
+    footer a {
+      font-size: 0.75rem;
+      color: var(--verde-link);
+      text-decoration: none;
+    }
+  }
+  
+  /* =========================================
+     2. REGOLE SPECIFICHE PER LA PAGINA CONTATTI (MOBILE)
+     ========================================= */
+  @media (max-width: 768px) {
+    
+    /* Video di sfondo (se vuoi tenerlo anche su mobile, altrimenti rimuovi questo blocco) */
+    .background-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+  
+    body.pagina-contatti {
+      background-color: var(--blu-notte) !important;
+      padding-top: 60px; 
+    }
+  
+    .content {
+      padding: 20px 20px 80px; /* Spazio in basso per il footer */
+      height: auto !important;
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Allinea in alto */
+      align-items: center;
+    }
+  
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      /* Applichiamo lo stile Ling anche al titolo mobile */
+      color: #ffffff !important;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6), 2px 2px 4px rgba(0,0,0,1);
+    }
+  
+    .links {
+      gap: 15px;
+      width: 100%;
+    }
+  
+    /* === EFFETTO LING SUL MOBILE === */
+    .link-item {
+      color: #ffffff !important; /* Bianco puro */
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      /* Ombra nera marcata per leggibilità */
+      text-shadow: 
+        0 0 5px rgba(0, 0, 0, 0.9),
+        0 0 10px rgba(0, 0, 0, 0.7),
+        2px 2px 4px rgba(0, 0, 0, 1);
+      transition: all 0.2s ease; /* Leggermente più veloce per il touch */
+      cursor: pointer; /* Assicura che il dito capisca che è cliccabile */
+    }
+  
+    /* Hover/Tap effect su mobile */
+    .link-item:hover,
+  .link-item:focus,
+  .link-item:active {
+    color: var(--oro-hover) !important; /* Diventa Oro */
+    /* Bagliore oro + mantiene ombra nera */
+      text-shadow: 
+        0 0 10px rgba(255, 235, 59, 0.9),
+        0 0 20px rgba(255, 235, 59, 0.6),
+        2px 2px 4px rgba(0, 0, 0, 1);
+      transform: scale(1.05); /* Leggero ingrandimento al tocco */
+    /* TRUCCO EXTRA: Manteniamo lo stile anche dopo il tocco per un istante */
+    outline: none;
+    }
+  
+    .signature {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      color: #eeeeee !important;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(0,0,0,0.9), 2px 2px 4px rgba(0,0,0,1);
+    }
+  
+    .contacts-footer {
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      font-size: 0.8rem;
+      gap: 10px;
+      padding: 6px 10px;
+      justify-content: center;
+    }
+  
+    #cookie-banner {
+      bottom: 10px;
+      right: 10px;
+      left: 10px;
+      max-width: unset;
+      width: calc(100% - 20px);
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+    
+    #cookie-banner .cookie-btn {
+      padding: 5px 10px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* =========================================
+     3. DESKTOP: NASCONDI ELEMENTI MOBILE
+     ========================================= */
+  @media (min-width: 769px) {
+    .hamburger-menu,
+    .mobile-nav {
+      display: none !important;
+    }
+  }

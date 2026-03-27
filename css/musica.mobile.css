@@ -154,7 +154,28 @@
   .text-zone .scroll-container {
     animation: none !important;
   }
+
+/* === BANNER COOKIE SU MOBILE === */
+#cookie-banner {
+  max-width: 90vw !important;
+  left: 5vw !important;
+  right: 5vw !important;
+  font-size: 0.9rem !important;
+  padding: 15px !important;
 }
+
+#cookie-banner .cookie-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#cookie-banner .cookie-btn {
+  width: 100%;
+  padding: 8px !important;
+}
+}
+
 
 /* Nasconde l'hamburger-menu e mobile-nav su schermi grandi (desktop) */
 @media (min-width: 769px) {
