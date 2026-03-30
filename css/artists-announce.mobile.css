@@ -16,7 +16,7 @@
         justify-content: space-between;
         cursor: pointer;
         padding: 5px;
-        background: rgba(10, 12, 20, 0.7); /* Sfondo semi-trasparente scuro */
+        
         border-radius: 5px;
         transition: all 0.3s ease; /* Animazione delle barrette */
       }
@@ -97,7 +97,7 @@
         right: 10px;
         gap: 10px;
         font-size: 0.8rem;
-        background: rgba(10, 12, 20, 0.85); /* Sfondo per leggibilità */
+        background: rgba(245, 246, 247, 0); /* Sfondo per leggibilità */
         padding: 8px;
         border-radius: 8px;
         position: fixed; /* Lo facciamo fixed qui, specifico per mobile */
