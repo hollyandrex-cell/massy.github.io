@@ -49,10 +49,26 @@
         text-align: center;
     }
 
-    .header-content h1,
-    .header-content p.slogan {
+    .header-content h1 {
+      /* Il titolo principale va bene così com'è, magari aggiungiamo solo un po' di peso */
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       color: var(--oro);
+      font-weight: 700;
+    }
+
+    .header-content p.slogan {
+      /* CORREZIONE SPECIFICA PER IL SOTTOTITOLO */
+      color: #ffffff; /* Bianco puro per massima visibilità */
+      font-size: 1.1rem; /* Leggermente più grande (era probabilmente 1rem o meno) */
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500; /* Diamo un po' di corpo al testo */
+      letter-spacing: 1px; /* Allarghiamo leggermente le lettere per eleganza */
+      margin-top: -10px; /* Avviciniamolo al titolo se serve */
+      
+      /* Il trucco della luce: ombra chiara invece che scura */
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 1px 1px 2px rgba(0,0,0,0.8); 
+      /* La prima parte crea l'alone luminoso, la seconda stacca dallo sfondo */
     }
 
     .main-content-overlay {
@@ -63,26 +79,32 @@
       max-width: 900px;
       box-shadow: none;
       text-align: center;
-    }
-
-    .main-content-overlay h2,
-    .main-content-overlay h3,
-    .main-content-overlay p {
-        color: var(--oro);
-        font-style: italic;
-        text-shadow: none;
-        margin-bottom: 15px;
-        line-height: 1.6;
+      /* AGGIUNGIAMO UNO SFONDO SEMI-TRASPARENTE LEGGERO PER AIUTARE LA LETTURA */
+      background: rgba(0, 0, 0, 0.4); 
+      backdrop-filter: blur(2px); /* Sfoca leggermente lo sfondo dietro al testo */
     }
 
     .main-content-overlay h2,
     .main-content-overlay h3 {
+        color: #ffd700; /* Oro brillante */
         font-family: 'Playfair Display', serif;
         font-style: normal;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
+        font-weight: 700; /* Forza il grassetto vero del font */
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Bagliore dorato */
+        margin-bottom: 15px;
+        line-height: 1.3;
     }
+
     .main-content-overlay p {
-        font-family: 'Cormorant Garamond', serif;
+        color: #ffffff; /* BIANCO PURO per massima nitidezza */
+        font-family: 'Playfair Display', serif;
+        font-weight: 400; /* Non forzare il grassetto qui */
+        font-style: italic;
+        font-size: 1.1rem; /* Leggermente più grande */
+        line-height: 1.6;
+        margin-bottom: 15px;
+        /* IL TRUCCO: Ombra chiara (bagliore) invece di scura */
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); 
     }
 
     .bacheca-container {
@@ -351,15 +373,15 @@
       <div class="bacheca-items" id="bacheca-items">
         <div class="bacheca-item">
           <img src="immagini/miniature/holly-miniatura.jpg" alt="Holly">
-          <p>Holly: Oggi riposa!</p>
+          <p>Holly: lavora con Rex a " Testardo io "</p>
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/rex-miniatura.jpg" alt="Rex">
-          <p>Rex: Lavora con Ling a Prima che cadesse il cielo"</p>
+          <p>Rex e Holly lavorano a " Testardo io "</p>
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/ling-miniatura.jpg" alt="Ling 灵">
-          <p>Ling 灵: Sta lavorando a prima che cadesse il cielo</p>
+          <p>Ling 灵: Ha finito "Prima che cadesse il cielo" out 20 Aprile 2026</p>
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/luna-miniatura.jpg" alt="Luna">
