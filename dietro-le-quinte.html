@@ -377,7 +377,7 @@
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/rex-miniatura.jpg" alt="Rex">
-          <p>Rex: Oggi riposa</p>
+          <p>Rex: Lavora a Primo appuntamento con Dj Nova</p>
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/ling-miniatura.jpg" alt="Ling 灵">
@@ -389,7 +389,7 @@
         </div>
         <div class="bacheca-item">
           <img src="immagini/miniature/nova-miniatura.jpg" alt="Nova">
-          <p>Nova ⭐: Un nuovo sound per "USA - Tour!"</p>
+          <p>Nova ⭐: Lavora a Primo appuntamento con Rex</p>
         </div>
       </div>
     </div>
@@ -522,21 +522,22 @@
         }
       }
 
-      // --- DETECTIVE AUTOMATICO PER ILLUMINARE E RENDERE CLICCABILI LE MINIATURE (AGGIORNATO!) ---
-      function illuminaAnnunciAttivi() {
-        // Parole chiave per identificare gli artisti
+            // --- DETECTIVE AUTOMATICO PER ILLUMINARE E RENDERE CLICCABILI LE MINIATURE (VERSIONE CORRETTA) ---
+            function illuminaAnnunciAttivi() {
+        console.log(" Avvio scansione annunci...");
+        
+        // Parole chiave per identificare gli artisti (aggiunto controllo più robusto)
         const artistiKeywords = {
-            'ling': ['ling', 'dj ling', 'bau felici'], 
-            'rex': ['rex', 'holly and rex','testardo'],
-            'nova': ['nova', 'dj nova'],
+            'ling': ['ling', 'dj ling'], 
+            'rex': ['rex', 'holly and rex', 'primo appuntamento'], // Rex risponde anche al titolo della canzone
+            'nova': ['nova', 'dj nova', 'primo appuntamento'],     // Nova risponde anche al titolo
             'luna': ['luna', 'dj luna'],
             'holly': ['holly']
         };
 
-        // CONFIGURAZIONE ANNUNCI (Aggiorna qui quando crei nuovi annunci!)
+        // CONFIGURAZIONE ANNUNCI
         const announcements = [
-            { title: "Arriva Testardo Io", date: "2026-04-25" }
-            // Esempio futuro: { title: "🦊 Il ritorno di Rex!", date: "2026-04-20" }
+            { title: "Primo appuntamento", date: "2026-05-08" }
         ];
 
         const today = new Date();
@@ -549,43 +550,68 @@
             return annMidnight.getTime() >= todayMidnight.getTime();
         });
 
-        // Per ogni annuncio attivo, accendi la luce e rendi cliccabile
+        if (annunciFuturi.length === 0) {
+            console.log("Nessun annuncio futuro trovato.");
+            return;
+        }
+
+        // Prendiamo tutti gli elementi VISIBILI nella bacheca (inclusi i cloni se necessario, ma lavoriamo sui primi per sicurezza)
+        // Nota: Poiché lo script di scrolling clona gli elementi, dobbiamo assicurarci di colpire quelli giusti.
+        // La strategia migliore è selezionare TUTTI gli elementi .bacheca-item presenti nel DOM ora.
+        const allItems = document.querySelectorAll('.bacheca-item');
+        
+        console.log(`Trovati ${allItems.length} elementi nella bacheca.`);
+
         annunciFuturi.forEach(ann => {
             const titoloLower = ann.title.toLowerCase();
             
             for (const [artista, keywords] of Object.entries(artistiKeywords)) {
+                // Controlla se questo annuncio riguarda questo artista
                 const match = keywords.some(keyword => titoloLower.includes(keyword));
                 
                 if (match) {
-                    console.log(`Annuncio attivo trovato per: ${artista}. Accendo la luce e creo il link!`);
+                    console.log(`✅ Annuncio attivo per: ${artista}. Cerco le icone corrispondenti...`);
                     
-                    const items = document.querySelectorAll('.bacheca-item');
-                    items.forEach(item => {
+                    allItems.forEach(item => {
                         const img = item.querySelector('img');
                         const textP = item.querySelector('p');
-                        const imgAlt = img ? img.alt.toLowerCase() : '';
-                        const textContent = textP ? textP.textContent.toLowerCase() : '';
                         
-                        // Controllo corrispondenza
-                        if (imgAlt.includes(artista) || textContent.includes(artista)) {
-                            if (img) {
-                                // 1. Aggiungi la classe luminosa
+                        if (!img || !textP) return;
+
+                        const imgAlt = img.alt.toLowerCase();
+                        const textContent = textP.textContent.toLowerCase();
+                        
+                        // Controllo se questa specifica icona corrisponde all'artista
+                        // Aggiungiamo un controllo extra: se il testo dice "Lavora a Primo appuntamento", è sicuramente lui/lei
+                        const isRelevant = imgAlt.includes(artista) || 
+                                           textContent.includes(artista) || 
+                                           (artista === 'rex' && textContent.includes('primo appuntamento')) ||
+                                           (artista === 'nova' && textContent.includes('primo appuntamento'));
+
+                        if (isRelevant) {
+                            console.log(`💡 Icona trovata per ${artista}: ${textP.textContent}`);
+                            
+                            // 1. Aggiungi la classe luminosa (assicuriamoci che non sia già un link prima)
+                            if (img.parentElement.tagName !== 'A') {
                                 img.classList.add('annuncio-attivo');
                                 
-                                // 2. Controlla se è già dentro un link, altrimenti crealo
-                                if (img.parentElement.tagName !== 'A') {
-                                    const link = document.createElement('a');
-                                    link.href = 'artists-announce.html'; // LINK ALLA PAGINA DEGLI ANNUNCI
-                                    link.target = '_self'; // Apri nella stessa pagina
-                                    link.style.textDecoration = 'none'; // Togli sottolineatura
-                                    
-                                    // Inserisci il link prima dell'immagine e sposta l'immagine dentro
-                                    img.parentNode.insertBefore(link, img);
-                                    link.appendChild(img);
-                                    
-                                    // Aggiungi un titolo tooltip per chiarezza
-                                    link.title = "Clicca per vedere l'annuncio ufficiale!";
-                                }
+                                // 2. Crea il link
+                                const link = document.createElement('a');
+                                link.href = 'artists-announce.html'; 
+                                link.target = '_self'; 
+                                link.style.textDecoration = 'none'; 
+                                link.title = "Clicca per vedere l'annuncio ufficiale di " + ann.title + "!";
+                                
+                                // Sostituiamo l'immagine con il link che contiene l'immagine
+                                // Questo è più pulito che inserire before/after
+                                img.parentNode.replaceChild(link, img);
+                                link.appendChild(img);
+                                
+                                // Opzionale: aggiungi un effetto hover al testo per coerenza
+                                textP.style.cursor = "pointer";
+                                textP.addEventListener('click', () => {
+                                    window.location.href = 'artists-announce.html';
+                                });
                             }
                         }
                     });
