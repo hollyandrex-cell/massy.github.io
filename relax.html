@@ -5,53 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   
   <!-- FAVICON REX & BIMBA -->
-<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="manifest" href="favicons/site.webmanifest">
-<link rel="shortcut icon" href="favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
 
   <title>Stanza del Relax • Il Nostro Mondo</title>
     
-  <!-- META DESCRIPTION PER GOOGLE -->
   <meta name="description" content="Holly and Rex Group: un viaggio musicale in pieno relax. Strumentali o solo suoni ambientali per rilassarsi 5 minuti.">
   
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
-  <!-- Fogli di stile principali -->
+  <!-- Fogli di stile -->
   <link rel="stylesheet" href="css/stile.css"> 
-  
   <link rel="stylesheet" href="css/relax.css">
-  
-  <!-- Stile mobile specifico per la pagina Relax -->
-<link rel="stylesheet" href="css/relax.mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="css/relax.mobile.css" media="(max-width: 768px)">
 
 </head>
 
-  <body class="pagina-relax">
+<body class="pagina-relax">
 
-    <!-- SFONDO VIDEO IN LOOP -->
-    <div id="bg-video-container">
-      <!-- Sostituisci 'immagini/tuo-video.mp4' con il percorso reale del tuo video del vinile -->
-      <video autoplay muted loop playsinline>
-        <source src="immagini/vinile-musica.mp4" type="video/mp4">
-        Il tuo browser non supporta il tag video.
-      </video>
+  <!-- OVERLAY DI BENVENUTO (Per sbloccare l'audio) -->
+  <div id="welcome-overlay">
+    <div class="overlay-content">
+      <h2>Benvenuto nella Stanza del Relax</h2>
+      <p>Chiudi gli occhi. Respira.<br>Indossa le cuffie e clicca per iniziare il viaggio.</p>
+      <button id="enter-btn">✨ Entra e Ascolta ✨</button>
     </div>
-    <!-- AUDIO SOTTOFONDO (LA MUSICA "INCISA" SUL VINILE) -->
-<audio id="vinile-audio" autoplay loop>
-  <source src="immagini/sottofondo.mp3" type="audio/mpeg">
-</audio>
-  
-    <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
-  <div class="hamburger-menu">
-    <span></span>
-    <span></span>
-    <span></span>
   </div>
 
-  <!-- MENU A SCOMPARSA (MOBILE) UNIFICATO -->
+  <!-- SFONDO VIDEO -->
+  <div id="bg-video-container">
+    <video autoplay muted loop playsinline>
+      <source src="immagini/vinile-musica.mp4" type="video/mp4">
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
+
+  <!-- AUDIO (Senza autoplay, gestito da JS) -->
+  <audio id="vinile-audio" loop>
+    <source src="immagini/sottofondo.mp3" type="audio/mpeg">
+  </audio>
+  
+  <!-- MENU HAMBURGER -->
+  <div class="hamburger-menu">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- MENU MOBILE -->
   <nav id="mobile-nav" class="mobile-nav">
     <a href="index.html">🏠 Home</a>
     <a href="canzoni.html">🎵 Canzoni</a>
@@ -67,9 +70,10 @@
     <a href="relax.html">🎧 Relax</a>
     <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
     <a href="contatti.html">💌 Contatti</a>
-    <a href="bacheca.html" >📖 Bacheca</a>
+    <a href="bacheca.html">📖 Bacheca</a>
   </nav>
 
+  <!-- CONTENUTO PRINCIPALE -->
   <div class="intro">
     <h1>Stanza del Relax</h1>
     <p>Chiudi gli occhi. Respira.<br>
@@ -79,35 +83,22 @@
   <span id="brano-fluttuante" class="brano-fluttuante"></span>
   <div id="next-track-bottom">▶️ Passa alla prossima</div>
 
-  <!-- AUDIO MENU -->
+  <!-- AUDIO MENU (Cuffia a Sinistra grazie al CSS) -->
   <div id="audio-layer">
-    <button id="toggle-audio-menu" 
-            style="background: rgba(10,12,20,0.8); border: 1px solid rgba(248,213,158,0.3); color: #f8d59e; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: all 0.3s;">
-      🎧
-    </button>
-
-    <div id="audio-menu" style="display: none; position: absolute; top: 50px; right: 0; background: rgba(10,12,20,0.95); border: 1px solid rgba(248,213,158,0.3); border-radius: 12px; padding: 12px 0; min-width: 160px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); z-index: 9999;">
-      <div style="padding: 6px 16px; color: #ffeb3b; font-family: 'Playfair Display', serif; font-size: 0.95rem;">Stanza del Relax</div>
-      <div style="border-top: 1px solid rgba(248,213,158,0.2); margin: 6px 0;"></div>
-      
-      <button class="audio-option" data-folder="ambiente" style="display: block; width: 100%; text-align: left; background: none; border: none; color: #f8d59e; padding: 8px 16px; font-family: 'Cormorant Garamond', serif; cursor: pointer; transition: all 0.2s;">
-        🌆 Ambiente
-      </button>
-      <button class="audio-option" data-folder="strumentali" style="display: block; width: 100%; text-align: left; background: none; border: none; color: #f8d59e; padding: 8px 16px; font-family: 'Cormorant Garamond', serif; cursor: pointer; transition: all 0.2s;">
-        🎹 Strumentali
-      </button>
-      <button id="stop-audio" style="display: block; width: 100%; text-align: left; background: none; border: none; color: #d35400; padding: 8px 16px; font-family: 'Cormorant Garamond', serif; cursor: pointer; transition: all 0.2s;">
-        🤫 Silenzio
-      </button>
+    <button id="toggle-audio-menu">🎧</button>
+    <div id="audio-menu">
+      <div class="menu-title">Stanza del Relax</div>
+      <div class="menu-divider"></div>
+      <button class="audio-option" data-folder="ambiente">🌆 Ambiente</button>
+      <button class="audio-option" data-folder="strumentali">🎹 Strumentali</button>
+      <button id="stop-audio">🤫 Silenzio</button>
     </div>
   </div>
 
-  <!-- MENU A LANTERNA (Desktop - prende gli stili da stile.css) -->
+  <!-- MENU LANTERNA (Desktop) -->
   <div class="lanterna-menu">
     <a href="index.html" class="lanterna">Home</a>
     <a href="canzoni.html" class="lanterna">Canzoni</a>
-    
-    <!-- REX & BIMBA CON SOTTOMENU -->
     <div class="lanterna-group">
       <a href="rex-bimba.html" class="lanterna">Rex & Bimba</a>
       <div class="lanterna-submenu">
@@ -115,7 +106,6 @@
         <a href="canzoni-holly.html">🐶 Le canzoni di Holly</a>
       </div>
     </div>
-    
     <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
     <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
     <a href="dj-luna.html" class="lanterna">Dj Luna</a>
@@ -127,16 +117,21 @@
     <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
 
-  <!-- FOOTER UNICO: DISCLAIMER E POLICY -->
-  <footer> <!-- Stile inline rimosso, verrà gestito dal CSS -->
-    <p>Questo consiglio non esiste nel mondo fisico — ma il nostro gruppo è reale. 
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="cookie-policy.html">Cookie Policy</a>
-    </p>
+  <!-- FOOTER BILANCIATO (Filosofia SX - Policy DX) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-philosophy">
+        Questo consiglio non esiste nel mondo fisico — ma il nostro gruppo è reale.
+      </div>
+      <div class="footer-policies">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- BANNER DI CONSENSO PERSONALIZZATO -->
-  <div id="cookie-banner" style="position: fixed; bottom: 20px; right: 20px; background: rgba(10, 12, 20, 0.95); color: var(--oro); padding: 20px; border-radius: 12px; max-width: 350px; z-index: 1000; border: 1px solid rgba(248, 213, 158, 0.3); font-family: 'Cormorant Garamond', serif; display: none;">
+  <!-- BANNER COOKIE -->
+  <div id="cookie-banner">
     <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
        <a href="cookie-policy.html">Maggiori informazioni</a>.
     </p>
@@ -146,22 +141,26 @@
     </div>
   </div>
 
-  <!-- SCRIPT AUDIO -->
+  <!-- SCRIPT UNIFICATI -->
   <script>
+    // --- 1. GESTIONE OVERLAY E AUDIO ---
+    const overlay = document.getElementById('welcome-overlay');
+    const enterBtn = document.getElementById('enter-btn');
+    const bgAudio = document.getElementById('vinile-audio');
+
+    if (enterBtn && overlay && bgAudio) {
+      enterBtn.addEventListener('click', () => {
+        bgAudio.volume = 0.15;
+        bgAudio.play().catch(e => console.log("Errore audio:", e));
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.display = 'none'; }, 800);
+      });
+    }
+
+    // --- 2. LOGICA PLAYER MUSICALE ---
     const playlists = {
-      ambiente: [
-        'audio/ambiente/genova-notte.mp3',
-        'audio/ambiente/vinile-rex.mp3',
-        'audio/ambiente/lanterna-pioggia.mp3'
-      ],
-      strumentali: [
-        'audio/strumentali/ballade-ling.mp3',
-        'audio/strumentali/ballade-luna.mp3',
-        'audio/strumentali/ballade-nova.mp3',
-        'audio/strumentali/ballade-holly.mp3',
-        'audio/strumentali/ballade-rex.mp3',
-        'audio/strumentali/ballade-massy.mp3'
-      ]
+      ambiente: ['audio/ambiente/genova-notte.mp3', 'audio/ambiente/vinile-rex.mp3', 'audio/ambiente/lanterna-pioggia.mp3'],
+      strumentali: ['audio/strumentali/ballade-ling.mp3', 'audio/strumentali/ballade-luna.mp3', 'audio/strumentali/ballade-nova.mp3', 'audio/strumentali/ballade-holly.mp3', 'audio/strumentali/ballade-rex.mp3', 'audio/strumentali/ballade-massy.mp3']
     };
 
     let currentAudio = null;
@@ -179,17 +178,24 @@
     });
 
     document.addEventListener('click', (e) => {
-      if (!audioMenu.contains(e.target) && e.target!== toggleAudioMenuBtn) {
+      if (!audioMenu.contains(e.target) && e.target !== toggleAudioMenuBtn) {
         audioMenu.style.display = 'none';
       }
     });
 
     function playTrack(folder, index) {
       if (!playlists[folder] || index >= playlists[folder].length) return;
+      
+      // AGGIUNTA: Ferma il sottofondo del vinile se sta suonando
+      if (bgAudio) {
+        bgAudio.pause();
+        // bgAudio.currentTime = 0; // Decommenta se vuoi che riparta da zero la prossima volta
+      }
 
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
+      // Ferma la traccia precedente se esiste
+      if (currentAudio) { 
+        currentAudio.pause(); 
+        currentAudio = null; 
       }
 
       currentFolder = folder;
@@ -200,7 +206,6 @@
       currentAudio = new Audio(trackPath);
       currentAudio.loop = true;
       currentAudio.volume = 0.15;
-
       currentAudio.play().catch(e => {
         console.warn("Autoplay bloccato");
         toggleAudioMenuBtn.innerHTML = '⚠️';
@@ -211,7 +216,6 @@
       branoFluttuante.textContent = fileName;
       nextBtnBottom.style.display = 'block';
     }
-
     document.querySelectorAll('.audio-option').forEach(btn => {
       btn.addEventListener('click', () => {
         const folder = btn.dataset.folder;
@@ -228,22 +232,16 @@
     });
 
     document.getElementById('stop-audio').addEventListener('click', () => {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-      }
+      if (currentAudio) { currentAudio.pause(); currentAudio = null; }
       currentFolder = null;
       toggleAudioMenuBtn.innerHTML = '🎧';
       nextBtnBottom.style.display = 'none';
       branoFluttuante.textContent = '';
       audioMenu.style.display = 'none';
     });
-  </script>
 
-  <!-- SCRIPT MENU MOBILE E COOKIE (JavaScript unificato e corretto) -->
-  <script>
+    // --- 3. MENU MOBILE E COOKIE ---
     document.addEventListener('DOMContentLoaded', function() {
-      // MENU MOBILE UNIVERSALE (ora con chiusura anche al click su link e fuori)
       const burger = document.querySelector('.hamburger-menu');
       const mobileNav = document.getElementById('mobile-nav');
       const body = document.body;
@@ -255,26 +253,22 @@
           mobileNav.classList.toggle('active');
           body.classList.toggle('no-scroll'); 
         });
-        
-        // Aggiungo la chiusura al click su un link all'interno del menu
         mobileNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileNav.classList.remove('active');
-                burger.classList.remove('active'); // Assicurati che l'hamburger torni normale
+                burger.classList.remove('active');
                 body.classList.remove('no-scroll');
             });
         });
-        // Aggiungo la chiusura al click fuori dal menu
         document.addEventListener('click', (e) => {
-            if (mobileNav.classList.contains('active') &&!mobileNav.contains(e.target) &&!burger.contains(e.target)) {
+            if (mobileNav.classList.contains('active') && !mobileNav.contains(e.target) && !burger.contains(e.target)) {
                 mobileNav.classList.remove('active');
-                burger.classList.remove('active'); // Assicurati che l'hamburger torni normale
+                burger.classList.remove('active');
                 body.classList.remove('no-scroll');
             }
         });
       }
 
-      // BANNER DI CONSENSO COOKIE (lo script è uguale a index.html)
       const cookieBanner = document.getElementById('cookie-banner');
       if (cookieBanner) {
         if (localStorage.getItem('cookiesAccepted') === null) { 
@@ -287,12 +281,10 @@
       window.acceptCookies = function() {
         localStorage.setItem('cookiesAccepted', 'true');
         if (cookieBanner) cookieBanner.style.display = 'none';
-        
         const gtagScript = document.createElement('script');
         gtagScript.async = true;
         gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';
         document.head.appendChild(gtagScript);
-
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -305,6 +297,5 @@
       }
     });
   </script>
-
 </body>
 </html>
