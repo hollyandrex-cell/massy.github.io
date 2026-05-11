@@ -1,358 +1,334 @@
 /* ========================================
-STILI SPECIFICI PER LA PAGINA RELAX (E MUSICA CON VIDEO)
-======================================== */
+   STILI SPECIFICI PER LA PAGINA RELAX
+   ======================================== */
 
-/* Assicura che il body occupi tutta l'altezza e non abbia margini */
-body.pagina-relax {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-x: hidden; /* Evita scroll orizzontali indesiderati */
-  position: relative;
-}
-
-/* Il contenitore del video di sfondo */
-/* Il tag video vero e proprio */
-#bg-video-container video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto; /* Lascia che la larghezza si adatti automaticamente */
-  height: auto; /* Lascia che l'altezza si adatti automaticamente */
-  min-width: 100%; /* Assicura che sia almeno largo quanto lo schermo */
-  min-height: 100%; /* Assicura che sia almeno alto quanto lo schermo */
-  max-width: none; /* Rimuove eventuali limiti di larghezza massima */
-  transform: translate(-50%, -50%); /* Centra il video perfettamente */
-  object-fit: contain; /* CAMBIAMENTO CHIAVE: Mostra tutto il video senza tagliarlo */
-}
-
-/* Il tag video vero e proprio */
-#bg-video-container video {
-  min-width: 100%; 
-  min-height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Centra il video perfettamente */
-  object-fit: cover; /* TAG MAGICO: Copre tutto lo schermo senza deformarsi */
-}
-
-/* Opzionale: Un overlay scuro sopra il video per rendere il testo più leggibile */
-/* Se il video è già scuro, puoi rimuovere questo blocco o aumentare l'opacità a 0.3 */
-body.pagina-relax::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Scurisce il video del 50% */
-  z-index: -1; /* Sta sopra il video ma sotto il testo */
-  pointer-events: none; /* Permette di cliccare attraverso se necessario */
-}
-
-/* ========================================
-STILI PER L'AUDIO PLAYER E ELEMENTI RELAX
-(Copiati dall'HTML originale per garantire il funzionamento)
-======================================== */
-
-/* --- Layout base per la pagina relax (se non c'è già) --- */
-/* --- Layout base per la pagina relax (CORRETTO) --- */
-body.pagina-relax {
-  background: var(--blu-notte, #0a0c14); 
-  color: var(--crema, #f8f4e9); 
-  font-family: 'Cormorant Garamond', serif; 
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  
-  /* RIMOSSO TUTTO IL FLEXBOX CHE CENTRAVA VERTICALMENTE */
-  /* Ora il contenuto scorre naturalmente o si posiziona da solo */
-  
-  text-align: center;
-  overflow-x: hidden;
-  position: relative; /* Importante per i figli assoluti */
-}
-
-/* --- Intro (Titolo e sottotitolo) - CORRETTA --- */
-.intro {
-  max-width: 600px;
-  padding: 40px 20px 20px; /* Aumentato padding TOP da 20px a 40px per dare aria */
-  text-align: center;
-  z-index: 2;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* AGGIUNTO: Spazio automatico tra Titolo e Paragrafi */
-}
-
-.intro h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  color: var(--oro-hover, #ffeb3b);
-  text-shadow: 0 0 15px rgba(248, 213, 158, 0.5);
-  margin: 0; /* Rimosso margin-bottom fisso, usiamo il gap del flex */
-  line-height: 1.2; /* Migliora leggibilità se il titolo va a capo */
-}
-
-.intro p {
-  opacity: 0.9; /* Leggermente più visibile */
-  line-height: 1.6;
-  font-size: 1.1rem;
-  margin: 0; /* Rimosso margini default, usiamo il gap */
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Ombra per staccare dal video */
-}
-
-/* --- TITOLO FLUTTUANTE DEL BRANO --- */
-.brano-fluttuante {
-  position: fixed;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  color: rgba(248, 213, 158, 0.7);
-  pointer-events: none;
-  z-index: 10;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-shadow: 0 0 12px rgba(10, 12, 20, 0.8);
-  animation: fluttua-brano 18s infinite ease-in-out;
-}
-
-@keyframes fluttua-brano {
-  0% { transform: translate(calc(-50% + 0vw), calc(-50% + 0vh)) rotate(0deg); opacity: 0; }
-  20% { opacity: 0.6; }
-  50% { transform: translate(calc(-50% + 12vw), calc(-50% + 8vh)) rotate(3deg); opacity: 0.8; }
-  80% { opacity: 0.5; }
-  100% { transform: translate(calc(-50% + 24vw), calc(-50% + 16vh)) rotate(6deg); opacity: 0; }
-}
-
-/* --- PULSANTE "PASSA ALLA PROSSIMA" --- */
-#next-track-bottom {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  background: rgba(10, 12, 20, 0.85);
-  border: 1px solid rgba(248, 213, 158, 0.3);
-  padding: 12px 32px;
-  border-radius: 30px;
-  color: #ffeb3b;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: none; /* Nascosto finché non si avvia la musica */
-}
-
-#next-track-bottom:hover {
-  background: rgba(211, 84, 0, 0.8);
-  color: white;
-}
-
-/* --- AUDIO MENU (LA CUFFIA E IL MENU A TENDINA) --- */
-#audio-layer {
-  position: fixed; 
-  top: 20px; 
-  right: 20px; 
-  z-index: 1000; /* Deve stare sopra a tutto */
-}
-
-/* Stile per il bottone della cuffia */
-#toggle-audio-menu {
-  background: rgba(10,12,20,0.8) !important; 
-  border: 1px solid rgba(248,213,158,0.3) !important; 
-  color: #f8d59e !important; 
-  width: 44px !important; 
-  height: 44px !important; 
-  border-radius: 50% !important; 
-  display: flex !important; 
-  align-items: center !important; 
-  justify-content: center !important; 
-  font-size: 1.2rem !important; 
-  cursor: pointer !important; 
-  transition: all 0.3s !important;
-}
-
-#toggle-audio-menu:hover {
-  background: rgba(248, 213, 158, 0.2) !important;
-  transform: scale(1.1);
-}
-
-/* Il menu a tendina nascosto */
-#audio-menu {
-  display: none; /* Nascosto di default */
-  position: absolute; 
-  top: 50px; 
-  right: 0; 
-  background: rgba(10,12,20,0.95); 
-  border: 1px solid rgba(248,213,158,0.3); 
-  border-radius: 12px; 
-  padding: 12px 0; 
-  min-width: 160px; 
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5); 
-  z-index: 9999;
-}
-
-/* Stili interni al menu audio (testi e bottoni) */
-#audio-menu div:first-child {
-  padding: 6px 16px; 
-  color: #ffeb3b; 
-  font-family: 'Playfair Display', serif; 
-  font-size: 0.95rem;
-  text-align: center;
-}
-
-#audio-menu .audio-option, 
-#audio-menu #stop-audio {
-  display: block; 
-  width: 100%; 
-  text-align: left; 
-  background: none; 
-  border: none; 
-  color: #f8d59e; 
-  padding: 8px 16px; 
-  font-family: 'Cormorant Garamond', serif; 
-  cursor: pointer; 
-  transition: all 0.2s;
-  font-size: 1rem;
-}
-
-#audio-menu .audio-option:hover, 
-#audio-menu #stop-audio:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-#audio-menu #stop-audio {
-  color: #d35400;
-  border-top: 1px solid rgba(248,213,158,0.2);
-  margin-top: 5px;
-}
-
-/* --- FOOTER --- */
-.combined-footer {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 100;
-  display: flex;
-  gap: 20px;
-  background: transparent;
-  color: var(--crema, #f8f4e9);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-}
-
-.combined-footer a {
-  color: #bcff05;
-  text-decoration: underline;
-}
-
-
-
-/* --- MOBILE ADJUSTMENTS --- */
-@media (max-width: 768px) {
-  .intro { 
-    padding-top: 80px; /* Aumentato da 60px a 80px per non sovrapporsi all'hamburger */
-    padding-left: 15px;
-    padding-right: 15px;
-    gap: 12px; /* Spazio ridotto ma presente su mobile */
-  }
- 
-  .intro h1 { 
-    font-size: 2rem; /* Ridotto leggermente per stare nello schermo */
-    line-height: 1.1;
-  }
-  .intro p { 
-    font-size: 1rem; 
-    line-height: 1.5; 
+   body.pagina-relax {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--blu-notte, #0a0c14); 
+    color: var(--crema, #f8f4e9); 
+    font-family: 'Cormorant Garamond', serif; 
+    overflow-x: hidden;
+    position: relative;
+    text-align: center;
   }
   
+  /* Video Background */
+  #bg-video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%; 
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -2;
+  }
+  
+  body.pagina-relax::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  /* Intro Title */
+  .intro {
+    max-width: 800px;
+    padding: 60px 20px 20px;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--oro-hover, #ffeb3b);
+    text-shadow: 0 0 15px rgba(248, 213, 158, 0.5);
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  .intro p {
+    opacity: 0.9;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+  
+  /* Floating Track Title */
+  .brano-fluttuante {
+    position: fixed;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: rgba(248, 213, 158, 0.7);
+    pointer-events: none;
+    z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 12px rgba(10, 12, 20, 0.8);
+    animation: fluttua-brano 18s infinite ease-in-out;
+  }
+  
+  @keyframes fluttua-brano {
+    0% { transform: translate(calc(-50% + 0vw), calc(-50% + 0vh)) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.6; }
+    50% { transform: translate(calc(-50% + 12vw), calc(-50% + 8vh)) rotate(3deg); opacity: 0.8; }
+    80% { opacity: 0.5; }
+    100% { transform: translate(calc(-50% + 24vw), calc(-50% + 16vh)) rotate(6deg); opacity: 0; }
+  }
+  
+  /* Next Button */
   #next-track-bottom {
-    bottom: 60px; /* Alzato da 25px a 60px per non sovrapporsi al footer */
-    font-size: 0.9rem;
-    padding: 10px 20px;
-    width: 90%; /* Più largo per essere cliccabile */
-    left: 5%;
-    transform: none; /* Resetta la trasformazione centrale */
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(10, 12, 20, 0.85);
+    border: 1px solid rgba(248, 213, 158, 0.3);
+    padding: 12px 32px;
+    border-radius: 30px;
+    color: #ffeb3b;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: none;
   }
   
-  .combined-footer {
-    bottom: 10px;
-    left: 10px;
-    right: 10px; /* Aggiunto right per centrarlo meglio */
-    font-size: 0.75rem;
-    gap: 8px;
-    justify-content: center; /* Centra i link */
+  #next-track-bottom:hover {
+    background: rgba(211, 84, 0, 0.8);
+    color: white;
   }
   
-  /* Sposta la cuffia in alto a destra anche su mobile, ma più piccola */
+  /* Audio Menu (CUFFIA A SINISTRA) */
   #audio-layer {
-    top: 15px;
-    right: 15px;
+    position: fixed; 
+    top: 20px; 
+    LEFT: 20px; /* SPOSTATO A SINISTRA */
+    right: auto;
+    z-index: 1000;
   }
+  
   #toggle-audio-menu {
-    width: 40px !important;
-    height: 40px !important;
-    font-size: 1rem !important;
+    background: rgba(10,12,20,0.8);
+    border: 1px solid rgba(248,213,158,0.3);
+    color: #f8d59e;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
   }
-}
-
-/* ========================================
-PULIZIA DEL PLAYER VIDEO PER PAGINA MUSICA.HTML
-(Nasconde i menu inutili e lascia solo play/pause)
-======================================== */
-
-/* Nasconde il menu contestuale del player (tasto destro) */
-video::-webkit-media-controls-panel {
-  display: none !important;
-}
-
-/* Nasconde i controlli default del browser */
-video::-webkit-media-controls-enclosure {
-  overflow: hidden !important;
-}
-
-/* Mostra solo il pulsante play/pause essenziale */
-video::-webkit-media-controls-play-button {
-  display: block !important;
-  background-color: rgba(248, 213, 158, 0.8);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-
-/* Nasconde la barra di avanzamento se non serve */
-video::-webkit-media-controls-current-time-display,
-video::-webkit-media-controls-time-remaining-display,
-video::-webkit-media-controls-timeline {
-  display: none !important;
-}
-
-/* Nasconde il menu a tre puntini (opzioni extra) */
-video::-webkit-media-controls-overlay-enclosure {
-  display: none !important;
-}
-
-/* Assicura che il video sia sempre in loop e muto di default se necessario */
-video[controls] {
-  pointer-events: auto; /* Permette di cliccare sul play/pause */
-}
-
-/* =========================================
-   CENTRAGGIO FINALE DESKTOP (SOLO PER SCHERMI GRANDI)
-   Aggiungilo in FONDO a relax.css
-   ========================================= */
-   @media (min-width: 769px) {
+  
+  #toggle-audio-menu:hover {
+    background: rgba(248, 213, 158, 0.2);
+    transform: scale(1.1);
+  }
+  
+  #audio-menu {
+    display: none;
+    position: absolute; 
+    top: 55px; 
+    left: 0; /* Allineato a sinistra rispetto al bottone */
+    right: auto;
+    background: rgba(10,12,20,0.95);
+    border: 1px solid rgba(248,213,158,0.3);
+    border-radius: 12px;
+    padding: 12px 0;
+    min-width: 180px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    z-index: 9999;
+  }
+  
+  .menu-title {
+    padding: 6px 16px;
+    color: #ffeb3b;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  
+  .menu-divider {
+    border-top: 1px solid rgba(248,213,158,0.2);
+    margin: 6px 0;
+  }
+  
+  .audio-option, #stop-audio {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #f8d59e;
+    padding: 8px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .audio-option:hover, #stop-audio:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  
+  #stop-audio {
+    color: #d35400;
+    border-top: 1px solid rgba(248,213,158,0.2);
+    margin-top: 5px;
+  }
+  
+  /* FOOTER BILANCIATO (FILOSOFIA SX - POLICY DX) */
+  footer {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    pointer-events: none;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--crema, #f8f4e9);
+    pointer-events: auto;
+  }
+  
+  .footer-philosophy {
+    font-style: italic;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    max-width: 60%;
+    text-align: left;
+  }
+  
+  .footer-policies {
+    display: flex;
+    gap: 20px;
+    text-align: right;
+  }
+  
+  .footer-policies a {
+    color: #bcff05;
+    text-decoration: underline;
+    transition: color 0.3s;
+  }
+  
+  .footer-policies a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Overlay Benvenuto */
+  #welcome-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 12, 20, 0.98);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f8d59e;
+    font-family: 'Cormorant Garamond', serif;
+    transition: opacity 0.8s ease;
+  }
+  
+  .overlay-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #ffeb3b;
+    text-shadow: 0 0 15px rgba(248, 213, 158, 0.6);
+    margin-bottom: 20px;
+  }
+  
+  .overlay-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  #enter-btn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: transparent;
+    border: 2px solid #f8d59e;
+    color: #f8d59e;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    transition: all 0.3s;
+  }
+  
+  #enter-btn:hover {
+    background: #f8d59e;
+    color: #0a0c14;
+    box-shadow: 0 0 20px rgba(248, 213, 158, 0.4);
+  }
+  
+  /* Cookie Banner */
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(10, 12, 20, 0.95);
+    color: var(--oro);
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 350px;
+    z-index: 1000;
+    border: 1px solid rgba(248, 213, 158, 0.3);
+    font-family: 'Cormorant Garamond', serif;
+    display: none;
+  }
+  
+  .cookie-btns {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .cookie-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    border: none;
+  }
+  
+  .accept-btn { background: #f8d59e; color: #0a0c14; }
+  .reject-btn { background: transparent; color: #f8d59e; border: 1px solid #f8d59e; }
+  
+  /* Desktop Centering for Intro */
+  @media (min-width: 769px) {
     .intro {
-      position: absolute !important;
-      top: 10% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important; /* Centra perfettamente */
-      
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 100%;
       max-width: 800px;
-      text-align: center;
       z-index: 10;
     }
   }
