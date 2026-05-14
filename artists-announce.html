@@ -153,7 +153,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT MAGICO -->
+  <!-- SCRIPT MAGICO AGGIORNATO CON JSON -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       
@@ -185,36 +185,8 @@
         });
       }
 
-      // --- CONFIGURAZIONE ANNUNCI 
-      const announcements = [
-        {
-          artistName: "Rex AND Dj Nova ⭐",
-          announcementArtistTitle: "🐾 Arriva Primo appuntamento 🐾",
-          announcementMessage: `L'estate è alle porte, <strong> Rex e Dj Nova⭐ </strong>, stanno lavorando ad un nuovo progetto.
-          
-in arrivo l' 8 Maggio 2026 <strong>" Primo appuntamento "</strong> una canzone che vi farà ballare in spiaggia, in stra, in auto..
-Il ritmo elevato i BPM al massimo faranno esplodere le casse e non solo.
-Il titmo di questa canzone entrerà nella testa come un tormentone e sicuramente lascerà un segno.
-          
-<em>"Primo appuntamento.... una canzone nata per ballare, ridere e soprattutto divertirsi. "</em>.
-         
-<br>
-<strong>L'uscita ufficiale è prevista per l' 8 Maggio 2026.</strong>
-Nel frattempo, correte sui nostri social per vedere l'anteprima esclusiva.`,
-          
-youtubeEmbedId: "IN_ARRIVO", 
-    
-    previewImageUrl: "immagini/primoappuntamento1.jpg", 
-    
-    // Qui mettiamo una foto statica semplice per il cerchio laterale (così non si rompe il layout)
-    // Usiamo la foto verticale che avevamo generato prima, tagliata bene per il cerchio
-    artistMediaHtml: '<img src="immagini/annuncioprimoappuntamento.jpg" alt="Rex" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">',
-//                                 
-    date: "2026-05-08" 
-  }
-];
-
-      // --- FUNZIONE PER CREARE UN PULSANTE STILIZZATO ---
+      // --- FUNZIONI DI UTILITÀ (Restano uguali) ---
+      
       function createButton(text, url, color, isTikTok = false) {
         const btn = document.createElement('a');
         btn.href = url;
@@ -252,7 +224,6 @@ youtubeEmbedId: "IN_ARRIVO",
         return btn;
       }
 
-      // --- FUNZIONE PER MOSTRARE L'ANNUNCIO ---
       function displayAnnouncement(announcement, isFuture) {
         document.getElementById('announcement-artist-title').innerHTML = announcement.announcementArtistTitle;
         
@@ -272,15 +243,12 @@ youtubeEmbedId: "IN_ARRIVO",
         const youtubePlayerContainer = document.querySelector('.youtube-player');
         const ctaContainer = document.getElementById('cta-container');
         
-        // Puliamo il contenitore dei bottoni
         ctaContainer.innerHTML = '';
 
-        // Mostriamo l'immagine di anteprima
         youtubePlayerContainer.innerHTML = `
     <img src="${announcement.previewImageUrl}" alt="Anteprima Video" style="width:100%; height: auto; object-fit: contain; border-radius: 8px;">
 `;
         if (isFuture) {
-            // FUTURO: MOSTRIAMO I 4 PULSANTI SOCIAL PERSONALIZZATI
             const socialLinks = [
                 { url: "https://www.instagram.com/bauholly/", label: "📸 Instagram — La regina della casa", color: "#E1306C" },
                 { url: "https://www.instagram.com/hollybau2019/", label: "📸 Instagram — Il nostro gruppo", color: "#C13584" },
@@ -295,14 +263,12 @@ youtubeEmbedId: "IN_ARRIVO",
             });
 
         } else {
-            // PASSATO/PRESENTE: MOSTRIAMO SOLO YOUTUBE
             const btn = createButton("🎬 Guarda il Video Completo su YouTube!", `https://www.youtube.com/watch?v=${announcement.youtubeEmbedId}`, "#FF0000");
             btn.style.backgroundColor = "#cc0000"; 
             ctaContainer.appendChild(btn);
         }
       }
 
-      // --- FUNZIONE PER MOSTRARE I "DIETRO LE QUINTE" ---
       function showBackstageMessage() {
         document.getElementById('announcement-artist-title').textContent = "🎵 Stiamo Componendo per Voi!";
         document.getElementById('announcement-message').innerHTML = `
@@ -321,41 +287,57 @@ youtubeEmbedId: "IN_ARRIVO",
         ctaContainer.appendChild(btn);
       }
 
-      // --- LOGICA PRINCIPALE DI CONTROLLO DATE ---
-      const today = new Date();
-      let currentAnnouncement = null;
-      let isFuture = false;
+      // --- NUOVA LOGICA: CARICAMENTO DA FILE JSON ---
+      
+      let announcements = []; // Variabile vuota iniziale
 
-      for (let i = 0; i < announcements.length; i++) {
-          const announcementDate = new Date(announcements[i].date);
-          const todayMidnight = new Date(today);
-          todayMidnight.setHours(0,0,0,0);
-          const announcementMidnight = new Date(announcementDate);
-          announcementMidnight.setHours(0,0,0,0);
+      function initPageLogic() {
+        const today = new Date();
+        let currentAnnouncement = null;
+        let isFuture = false;
 
-          if (announcementMidnight.getTime() === todayMidnight.getTime()) {
-              currentAnnouncement = announcements[i]; 
-              break;
-          } else if (announcementMidnight.getTime() > todayMidnight.getTime()) {
-              currentAnnouncement = announcements[i]; 
-              isFuture = true;
-              break;
-          } else {
-              currentAnnouncement = announcements[i]; 
-              isFuture = false;
-          }
+        for (let i = 0; i < announcements.length; i++) {
+            const announcementDate = new Date(announcements[i].date);
+            const todayMidnight = new Date(today);
+            todayMidnight.setHours(0,0,0,0);
+            const announcementMidnight = new Date(announcementDate);
+            announcementMidnight.setHours(0,0,0,0);
+
+            if (announcementMidnight.getTime() === todayMidnight.getTime()) {
+                currentAnnouncement = announcements[i]; 
+                break;
+            } else if (announcementMidnight.getTime() > todayMidnight.getTime()) {
+                currentAnnouncement = announcements[i]; 
+                isFuture = true;
+                break;
+            } else {
+                currentAnnouncement = announcements[i]; 
+                isFuture = false;
+            }
+        }
+
+        if (currentAnnouncement && !isFuture) {
+            showBackstageMessage();
+        } else if (currentAnnouncement && isFuture) {
+            displayAnnouncement(currentAnnouncement, true);
+        } else if (currentAnnouncement) {
+             displayAnnouncement(currentAnnouncement, false);
+        } else {
+            showBackstageMessage();
+        }
       }
 
-      // DECISIONE FINALE
-      if (currentAnnouncement && !isFuture) {
-          showBackstageMessage();
-      } else if (currentAnnouncement && isFuture) {
-          displayAnnouncement(currentAnnouncement, true);
-      } else if (currentAnnouncement) {
-           displayAnnouncement(currentAnnouncement, false);
-      } else {
-          showBackstageMessage();
-      }
+      // Fetch del file JSON esterno
+      fetch('annunci.json')
+        .then(response => response.json())
+        .then(data => {
+          announcements = data; // Salva i dati letti dal file
+          initPageLogic(); // Avvia la logica con i dati caricati
+        })
+        .catch(error => {
+          console.error('Errore nel caricamento di annunci.json:', error);
+          showBackstageMessage(); // In caso di errore, mostra messaggio generico
+        });
 
       // --- GESTIONE COOKIE ---
       const cookieBanner = document.getElementById('cookie-banner');
