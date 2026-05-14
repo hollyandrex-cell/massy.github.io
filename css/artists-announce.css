@@ -267,17 +267,15 @@ body.pagina-artists-announce {
 }
 
 /* FOOTER */
-.common-footer {
-    background: rgba(243, 243, 245, 0.7); /* Sfondo leggermente trasparente */
-}
+
 .common-footer a {
-    color: #aef604; /* Il tuo nuovo, brillante colore! */
+    color: #f6f204; /* Il tuo nuovo, brillante colore! */
     text-decoration: none;
-    margin: 0 5px;
+    
 }
 .common-footer a:hover {
     text-decoration: underline;
-    color: #aef604; /* Manteniamo lo stesso colore anche all'hover per coerenza */
+    color: #def604; /* Manteniamo lo stesso colore anche all'hover per coerenza */
 }
 
 /* --- RESPONSIVITÀ PER MOBILE --- */

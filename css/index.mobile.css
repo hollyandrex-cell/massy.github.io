@@ -4,8 +4,39 @@
 @media (max-width: 768px) {
 
   /* =========================================
+     TOP NEWS TICKER (MOBILE ADJUSTMENTS)
+     (Aggiunto direttamente qui, senza doppi media query)
+     ========================================= */
+  #news-ticker-bar {
+    height: 35px; /* Leggermente più sottile su mobile */
+    border-bottom: 1px solid #f8d59e;
+    display: block !important; /* Forza la visibilità se lo script lo attiva */
+  }
+  
+  #news-ticker-bar .ticker-content span {
+    font-size: 0.9rem !important; /* Testo leggermente più piccolo per stare nello schermo stretto */
+  }
+
+  /* Sposta l'Hamburger Menu più in basso per non sovrapporsi alla barra */
+  .hamburger-menu {
+    top: 50px !important; /* Era 20px, ora scende sotto la barra (35px + margine) */
+  }
+
+  /* Sposta anche la Hero content per dare aria */
+  body.pagina-index .hero {
+    padding-top: 180px; /* Aumentato da 150px a 180px per compensare la barra news + menu spostato */
+  }
+  
+  /* Assicurati che la mascotte Kids non si sovrapponga alla barra news */
+  #kids-mascot {
+    top: -150px !important; 
+  }
+  #kids-mascot.show {
+    top: 50px !important; /* Scende sotto la barra news */
+  }
+
+  /* =========================================
      1. RESET COMPLETO DEGLI STILI DESKTOP (CAGNOLINO)
-     Questa sezione disattiva qualsiasi regola proveniente da stile.css
      ========================================= */
   
   body.pagina-index #cagnolino-video-container {
@@ -17,10 +48,10 @@
     z-index: 999 !important;
     
     display: flex !important;
-    flex-direction: row !important; /* Cane a SX, Testo a DX */
+    flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    gap: 10px !important; /* Spazio tra cane e blocco testo */
+    gap: 10px !important;
     
     background: rgba(10, 12, 20, 0.95) !important;
     border: 1px solid var(--oro) !important;
@@ -48,16 +79,15 @@
   body.pagina-index #cagnolino-messaggio {
     all: unset !important;
     display: flex !important;
-    flex-direction: column !important; /* Testo sopra, bottone sotto */
+    flex-direction: column !important;
     justify-content: center !important;
-    align-items: flex-start !important; /* Allinea tutto a sinistra */
+    align-items: flex-start !important;
     
-    /* QUI GESTIAMO LO SPAZIO TRA TESTO E BOTTONE */
-    gap: 0 !important; /* Il gap lo mettiamo direttamente sul margine del testo */
+    gap: 0 !important;
     
     margin: 0 !important;
     padding: 0 !important;
-    padding-left: 25px !important; /* Leggero spazio dal cane */
+    padding-left: 25px !important;
     flex-grow: 1 !important;
     min-width: 0 !important;
     opacity: 1 !important;
@@ -78,8 +108,6 @@
     font-weight: bold !important;
     white-space: nowrap !important;
     margin: 0 !important;
-    
-    /* QUESTO È IL SEGRETO: Margine inferiore per spingere giù il bottone */
     margin-bottom: 10px !important; 
   }
 
@@ -103,10 +131,12 @@
      ========================================= */
   
       /* --- HAMBURGER MENU --- */
+      /* NOTA: Il top: 50px !important è già stato impostato sopra nella sezione News Ticker */
+      /* Quindi qui lasciamo le altre proprietà, ma il top verrà sovrascritto correttamente da quello sopra */
       .hamburger-menu {
         display: flex !important;
         position: fixed;
-        top: 20px;
+        /* top: 50px !important;  <-- RIMOSSO QUI PER EVITARE CONFLITTI, GESTITO SOPRA */
         left: 20px;
         z-index: 1001;
         width: 30px;
@@ -138,7 +168,7 @@
         transform: translateY(-10px) rotate(-45deg);
       }
     
-      /* --- MOBILE NAV (VERSIONE CHE FUNZIONA) --- */
+      /* --- MOBILE NAV --- */
       .mobile-nav {
         display: flex;
         position: fixed;
@@ -148,22 +178,20 @@
         height: 100vh;
         background-color: rgba(10, 12, 20, 0.98);
         flex-direction: column;
-        justify-content: space-evenly; /* DISTRIBUISCE BENE GLI ELEMENTI */
+        justify-content: space-evenly;
         align-items: center;
         z-index: 1000;
-        padding: 80px 0 20px; /* SPAZIO PER L'HAMBURGER */
+        padding: 80px 0 20px; /* SPAZIO PER L'HAMBURGER SPOSTATO */
         transition: left 0.3s ease-in-out;
         overflow-y: auto;
       }
     
-      /* REGOLA CHIAVE PER I LINK: SEMPLICE E PULITA */
       .mobile-nav a {
         color: var(--oro);
         text-decoration: none;
         font-family: 'Playfair Display', serif;
         font-size: 1.5rem;
         margin: 8px 0;
-        /* NIENTE ALTRO: Niente display, niente padding strani */
       }
     
       .mobile-nav.active {
@@ -182,8 +210,8 @@
      3. HERO SECTION & FOOTER
      ========================================= */
   
+  /* NOTA: padding-top gestito sopra nella sezione News Ticker (180px) */
   body.pagina-index .hero {
-    padding-top: 150px;
     height: 100vh;
   }
   body.pagina-index .hero-content .subtitle {
@@ -201,7 +229,7 @@
     right: 10px !important;
     gap: 10px;
     font-size: 0.8rem;
-    background: rgba(10, 12, 20, 0.85);
+    
     padding: 8px;
     border-radius: 8px;
     z-index: 10 !important;
@@ -230,33 +258,20 @@
     padding: 5px 10px !important;
     font-size: 0.9rem !important;
   }
-}
 
-/* Desktop: nascondi menu mobile */
-@media (min-width: 769px) {
-  .hamburger-menu,
-  .mobile-nav {
-    display: none !important;
-  }
-}
   /* =========================================
      4. MASCOTTE KIDS (MOBILE)
-     Stili specifici per la mascotte animata su mobile
      ========================================= */
   
      #kids-mascot {
       position: fixed !important;
-      top: -150px !important; /* Parte nascosta in alto */
-      
-      /* Spostata a destra per non coprire l'hamburger menu (che è a left: 20px) */
+      top: -150px !important;
       left: 140px !important; 
-      
-      width: 155px !important; /* Dimensione perfetta per mobile: visibile ma non invasiva */
+      width: 155px !important;
       height: auto !important;
-      z-index: 1002 !important; /* Sopra a tutto, anche sopra il menu mobile */
+      z-index: 1002 !important;
       cursor: pointer !important;
-      
-      transition: top 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important; /* Effetto rimbalzo */
+      transition: top 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)) !important;
       display: block !important;
       border-radius: 10px !important;
@@ -268,24 +283,29 @@
       height: auto !important;
       display: block !important;
       border-radius: 10px !important;
-      pointer-events: none !important; /* I click passano attraverso l'immagine al link */
+      pointer-events: none !important;
     }
   
-    /* Classe che viene aggiunta via JS per farla scendere */
     #kids-mascot.show {
-      top: 15px !important; /* Posizione finale visibile (appena sotto il bordo superiore) */
+      top: 50px !important; /* Allineato sotto la barra news */
     }
   
-    /* Effetto hover (opzionale su mobile, ma carino su tablet) */
     #kids-mascot:hover {
       transform: scale(1.1) rotate(-5deg) !important;
       transition: transform 0.3s ease !important;
     }
-    /* =========================================
-   NASCONDI LA MASCOTTE QUANDO IL MENU È APERTO
-   ========================================= */
-body.no-scroll #kids-mascot {
-  top: -200px !important; /* La fa volare via in alto, fuori dallo schermo */
-  opacity: 0;             /* La rende invisibile durante l'animazione */
-  pointer-events: none;   /* Disabilita i click mentre è nascosta */
+
+    body.no-scroll #kids-mascot {
+      top: -200px !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+}
+
+/* Desktop: nascondi menu mobile */
+@media (min-width: 769px) {
+  .hamburger-menu,
+  .mobile-nav {
+    display: none !important;
+  }
 }
