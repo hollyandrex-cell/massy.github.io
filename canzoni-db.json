@@ -1,226 +1,5 @@
 [
-  {
-    "title": "Summer Night (Too Shy)",
-    "artist": "Nova",
-    "url": "canzoni-nova.html",
-    "search": "Summer Night (Too Shy)"
-  },
-  {
-    "title": "Occhi nella notte",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Occhi nella notte"
-  },
-  {
-    "title": "Il mio paradiso",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Il mio paradiso"
-  },
-  {
-    "title": "Rex...Ciuccio",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Rex...Ciuccio"
-  },
-  {
-    "title": "Tu dimmi dove sei",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Tu dimmi dove sei"
-  },
-  {
-    "title": "Luna l'AI del futuro",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Luna l'AI del futuro"
-  },
-  {
-    "title": "Tre parole",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Tre parole"
-  },
-  {
-    "title": "Innamorato di te",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Innamorato di te"
-  },
-  {
-    "title": "Una finestra",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Una finestra"
-  },
-  {
-    "title": "Resta qui questa notte",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Resta qui questa notte"
-  },
-  {
-    "title": "Tu a un passo da me",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Tu a un passo da me"
-  },
-  {
-    "title": "Cosa darei",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Cosa darei"
-  },
-  {
-    "title": "Fotografia",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Fotografia"
-  },
-  {
-    "title": "Stupido io",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Stupido io"
-  },
-  {
-    "title": "Non arrenderti mai",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Non arrenderti mai"
-  },
-  {
-    "title": "Genova",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "Genova"
-  },
-  {
-    "title": "Due metri di mare",
-    "artist": "Rex",
-    "url": "canzoni-rex.html",
-    "search": "due metri di mare"
-  },
-  {
-    "title": "Holly Bau",
-    "artist": "Holly",
-    "url": "canzoni-holly.html",
-    "search": "Holly Bau"
-  },
-  {
-    "title": "Holly al mare",
-    "artist": "Holly",
-    "url": "canzoni-holly.html",
-    "search": "Holly al mare"
-  },
-  {
-    "title": "Ma che caldo fa",
-    "artist": "Holly",
-    "url": "canzoni-holly.html",
-    "search": "Ma che caldo fa"
-  },
-  {
-    "title": "Ti guardo da lontano",
-    "artist": "Holly",
-    "url": "canzoni-holly.html",
-    "search": "Ti guardo da lontano"
-  },
-  {
-    "title": "Tempo indietro",
-    "artist": "Holly",
-    "url": "canzoni-holly.html",
-    "search": "Tempo indietro"
-  },
-  {
-    "title": "Non torniamo",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "Non torniamo"
-  },
-  {
-    "title": "Sogno e libertà",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "Sogno e libertà"
-  },
-  {
-    "title": "Quando il cuore parla da solo",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "Quando il cuore parla da solo"
-  },
-  {
-    "title": "Polvere di stelle",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "Polvere di stelle"
-  },
-  {
-    "title": "Vai via",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "Vai via"
-  },
-  {
-    "title": "Ling diveta vera",
-    "artist": "Ling",
-    "url": "canzoni-ling.html",
-    "search": "ling"
-  },
-  {
-    "title": "Via di mezzo",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Via di mezzo"
-  },
-  {
-    "title": "Solo stanotte",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Solo stanotte"
-  },
-  {
-    "title": "Insieme a te",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Insieme a te"
-  },
-  {
-    "title": "Ma cosa ne sai",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Ma cosa ne sai"
-  },
-  {
-    "title": "Primo appuntamento",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Primo appuntamento"
-  },
-  {
-    "title": "Sole mio",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Sole mio"
-  },
-  {
-    "title": "Heartbeat",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Heartbeat"
-  },
-  {
-    "title": "Fire on the beach",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Fire on the beach"
-  },
-  {
-    "title": "Oggi forse SI",
-    "artist": "Luna",
-    "url": "canzoni-luna.html",
-    "search": "Oggi forse SI"
-  },
+ 
   {
     "title": "Oltre il server (Un viaggio con Rex)",
     "artist": "Nova",
@@ -229,5 +8,392 @@
     "sottotitolo": "Il futuro è già qui",
     "youtube_id": "oWEiRLD1ZB0",
     "testo_url": "testi-nova.html#oltreilserver"
+  },
+  {
+    "title": "Via di mezzo",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Via di mezzo",
+    "sottotitolo": "A volte è l'unica scelta possibile",
+    "youtube_id": "9XZ6VI0A8RE",
+    "testo_url": "testi-luna.html#viadimezzo"
+  },
+  {
+    "title": "Solo stanotte",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Solo stanotte",
+    "sottotitolo": "A volte il destino può essere beffardo",
+    "youtube_id": "PkPhKG6trN4",
+    "testo_url": "testi-luna.html#solostanotte"
+  },
+  {
+    "title": "Insieme a te",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Insieme a te",
+    "sottotitolo": "Il mondo insieme a te",
+    "youtube_id": "DYzaAf2NwY4",
+    "testo_url": "testi-luna.html#insiemeate"
+  },
+  {
+    "title": "Ma cosa ne sai",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Ma cosa ne sai",
+    "sottotitolo": "Quando non si ascolta il proprio partner",
+    "youtube_id": "H9NLFIQc3EQ",
+    "testo_url": "testi-luna.html#macosanesai"
+  },
+  {
+    "title": "Heartbeat",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Heartbeat",
+    "sottotitolo": "Amore impossibile",
+    "youtube_id": "lB8efWRGIE4",
+    "testo_url": "testi-luna.html#heartbeat"
+  },
+  {
+    "title": "Fire on the beach",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Fire on the beach",
+    "sottotitolo": "Ballando sulla spiaggia",
+    "youtube_id": "W1B6bFDmUlU",
+    "testo_url": "testi-luna.html#fire"
+  },
+  {
+    "title": "Oggi forse SI",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Oggi forse SI",
+    "sottotitolo": "Una nuova speranza",
+    "youtube_id": "NZeppSEHzvc",
+    "testo_url": "testi-luna.html#oggi"
+  },
+  {
+    "title": "Sole Mio",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Sole mio",
+    "sottotitolo": "L'estate si avvicina",
+    "youtube_id": "AC7e4YkOyEc",
+    "testo_url": "testi-luna.html#solemio"
+  },
+  {
+    "title": "Primo appuntamento",
+    "artist": "Luna",
+    "url": "canzoni-luna.html",
+    "search": "Primo appuntamento",
+    "sottotitolo": "L'emozione del primo incontro",
+    "youtube_id": "5XTuOzO1EEw",
+    "testo_url": "testi-luna.html#primoappuntamento"
+  },
+  {
+    "title": "Holly Bau",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Holly Bau",
+    "sottotitolo": "Sono io la vera regina del gruppo",
+    "youtube_id": "6rgAKzQOrrU",
+    "testo_url": "testi-holly.html#hollybau"
+  },
+  {
+    "title": "Holly al mare",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Holly al mare",
+    "sottotitolo": "Mai più al mare",
+    "youtube_id": "askTctz06Vk",
+    "testo_url": "testi-holly.html#hollyalmare"
+  },
+  {
+    "title": "Ma che caldo fa",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Ma che caldo fa",
+    "sottotitolo": "Odio l'estate e il caldo",
+    "youtube_id": "pYR0gjICoC4",
+    "testo_url": "testi-holly.html#machecaldofa"
+  },
+  {
+    "title": "Ti guardo da lontano",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Ti guardo da lontano",
+    "sottotitolo": "Che freno la timidezza",
+    "youtube_id": "wUbT7B_pI8Y",
+    "testo_url": "testi-holly.html#tiguardodalontano"
+  },
+  {
+    "title": "Tempo indietro",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Tempo indietro",
+    "sottotitolo": "Gli anni che passano",
+    "youtube_id": "af3oJomU6hI",
+    "testo_url": "testi-holly.html#tempoindietro"
+  },
+  {
+    "title": "Code che volano",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Code che volano",
+    "sottotitolo": "Code pazze volanti",
+    "youtube_id": "94qSuBRAAi4",
+    "testo_url": "testi-holly.html#code"
+  },
+  {
+    "title": "Due cuori quattro zampe",
+    "artist": "Holly",
+    "url": "canzoni-holly.html",
+    "search": "Due cuori quattro zampe",
+    "sottotitolo": "Quattro è meglio di due",
+    "youtube_id": "PsgGzd0uEX4",
+    "testo_url": "testi-holly.html#cuori"
+  },
+  {
+    "title": "Non torniamo",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Non torniamo",
+    "sottotitolo": "Perchè ogni donna deve poter dire di no",
+    "youtube_id": "UI4MpLwoXtg",
+    "testo_url": "testi-ling.html#non-torniamo"
+  },
+  {
+    "title": "Sogno e libertà",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Sogno e libertà",
+    "sottotitolo": "Cos'è un sogno veramente",
+    "youtube_id": "FM1EwuwwU1s",
+    "testo_url": "testi-ling.html#sognoeliberta"
+  },
+  {
+    "title": "Quando il cuore parla da solo",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Quando il cuore parla da solo",
+    "sottotitolo": "Lascia che sia lui a parlare",
+    "youtube_id": "s-yLM8K8apA",
+    "testo_url": "testi-ling.html#quandoilcuore"
+  },
+  {
+    "title": "Polvere di stelle",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Polvere di stelle",
+    "sottotitolo": "Due anime gemelle - Polvere di stelle",
+    "youtube_id": "iSwWvdYAuiE",
+    "testo_url": "testi-ling.html#polveredistelle"
+  },
+  {
+    "title": "Vai via",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Vai via",
+    "sottotitolo": "Il cuore non segue mai la testa",
+    "youtube_id": "OEa9lWujnsA",
+    "testo_url": "testi-ling.html#vaivia"
+  },
+  {
+    "title": "Ling diventa vera",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Ling diventa vera",
+    "sottotitolo": "Quando una AI diventa umana",
+    "youtube_id": "t7M2L6nOcsY",
+    "testo_url": "testi-ling.html#ling"
+  },
+  {
+    "title": "Qua la zampa amico mio",
+    "artist": "Ling",
+    "url": "canzoni-ling.html",
+    "search": "Qua la zampa amico mio",
+    "sottotitolo": "Uniamo le mani....anzi le zampe",
+    "youtube_id": "mJUcYPntCWg",
+    "testo_url": "testi-ling.html#qualazampa"
+  },
+  {
+    "title": "Occhi nella notte",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Occhi nella notte",
+    "sottotitolo": "Hai davvero il coraggio di abbandonarci ?",
+    "youtube_id": "mTNZ07pXo5g",
+    "testo_url": "testi-rex.html#occhinellanotte"
+  },
+  {
+    "title": "Il mio paradiso",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Il mio paradiso",
+    "sottotitolo": "Io sono stato fortunato",
+    "youtube_id": "xobuY90wOqs",
+    "testo_url": "testi-rex.html#ilmioparadiso"
+  },
+  {
+    "title": "Rex...Ciuccio",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Rex...Ciuccio",
+    "sottotitolo": "Chissà perchè mi chiamano Ciuccio ?",
+    "youtube_id": "g99GayNdQEM",
+    "testo_url": "testi-rex.html#rexciuccio"
+  },
+  {
+    "title": "Tu dimmi dove sei",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Tu dimmi dove sei",
+    "sottotitolo": "FT DJ Luna",
+    "youtube_id": "8vZ557-ld3k",
+    "testo_url": "testi-rex.html#tudimmidovesei"
+  },
+  {
+    "title": "Luna l'AI del futuro",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Luna l'AI del futuro",
+    "sottotitolo": "Forse un giorno",
+    "youtube_id": "Ojk3dru1RR8",
+    "testo_url": "testi-rex.html#luna"
+  },
+  {
+    "title": "Tre parole",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Tre parole",
+    "sottotitolo": "A volte bastano 3 parole per dire TI AMO",
+    "youtube_id": "iydAkhbdnbc",
+    "testo_url": "testi-rex.html#treparole"
+  },
+  {
+    "title": "Innamorato di te",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Innamorato di te",
+    "sottotitolo": "Cosa possono fare un paio di occhiali da sole",
+    "youtube_id": "V35UfyZVWvA",
+    "testo_url": "testi-rex.html#innamoratodite"
+  },
+  {
+    "title": "Una finestra",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Una finestra",
+    "sottotitolo": "Guardando la tua finestra",
+    "youtube_id": "uzscZox4uXI",
+    "testo_url": "testi-rex.html#unafinestra"
+  },
+  {
+    "title": "Due metri di mare",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Due metri di mare",
+    "sottotitolo": "Quel cappotto blu......",
+    "youtube_id": "ZNkv-onbEDQ",
+    "testo_url": "testi-rex.html#duemetridimare"
+  },
+  {
+    "title": "Resta qui questa notte",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Resta qui questa notte",
+    "sottotitolo": "Solo stanotte non andare",
+    "youtube_id": "jV7vln34zpo",
+    "testo_url": "testi-rex.html#restaquiquestanotte"
+  },
+  {
+    "title": "Tu a un passo da me",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Tu a un passo da me",
+    "sottotitolo": "Così vicina e così lontana",
+    "youtube_id": "D3eH3Uw5Lw0",
+    "testo_url": "testi-rex.html#tuaunpassodame"
+  },
+  {
+    "title": "Cosa darei",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Cosa darei",
+    "sottotitolo": "Forse bastava solo un bacio",
+    "youtube_id": "_wtqEdFdKNE",
+    "testo_url": "testi-rex.html#cosadarei"
+  },
+  {
+    "title": "Fotografia",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Fotografia",
+    "sottotitolo": "Maledetta fotografia",
+    "youtube_id": "6hfZeUDAWZ4",
+    "testo_url": "testi-rex.html#fotografia"
+  },
+  {
+    "title": "Siamo qui",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Siamo qui",
+    "sottotitolo": "Quando non ci si riconosce più",
+    "youtube_id": "G_w5tuX_G_Q",
+    "testo_url": "testi-rex.html#siamoqui"
+  },
+  {
+    "title": "Non arrenderti mai",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Non arrenderti mai",
+    "sottotitolo": "C'è sempre qualcosa per cui valga la pena vivere",
+    "youtube_id": "_alLaZ9M5MI",
+    "testo_url": "testi-rex.html#nonarrendertimai"
+  },
+  {
+    "title": "Genova",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Genova",
+    "sottotitolo": "",
+    "youtube_id": "4oekw3KNWDM",
+    "testo_url": "testi-rex.html#genova"
+  },
+  {
+    "title": "Il ciuccio di Ciuccio",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Il ciuccio di Ciuccio",
+    "sottotitolo": "",
+    "youtube_id": "NccLPOPMzz0",
+    "testo_url": "testi-rex.html#ciuccio"
+  },
+  {
+    "title": "Boing Boing Bau",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Boing Boing Bau",
+    "sottotitolo": "",
+    "youtube_id": "u0WWnRJxYAE",
+    "testo_url": "testi-rex.html#boing"
+  },
+  {
+    "title": "Prima che cadesse il cielo",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Prima che cadesse il cielo",
+    "sottotitolo": "",
+    "youtube_id": "LMi9r5JyP0U",
+    "testo_url": "testi-rex.html#cielo"
+  },
+  {
+    "title": "Stupido io",
+    "artist": "Rex",
+    "url": "canzoni-rex.html",
+    "search": "Stupido io",
+    "sottotitolo": "",
+    "youtube_id": "h8xxC0qnazg",
+    "testo_url": "testi-rex.html#stupido"
   }
 ]
