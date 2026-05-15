@@ -77,7 +77,7 @@
       margin-top: 50px;
       max-width: 700px;
       width: 100%;
-      height: 400px; /* ← Più alta per vedere più messaggi */
+      height: 400px; 
       overflow: hidden;
       position: relative;
       background: transparent;
@@ -101,7 +101,7 @@
       gap: 20px;
       min-height: 120px;
       box-sizing: border-box;
-      background: rgba(10, 12, 20, 0.4); /* ← Sfondo semi-trasparente per leggere */
+      background: rgba(10, 12, 20, 0.4); 
       border-radius: 12px;
       margin-bottom: 15px;
       border: 1px solid rgba(248, 213, 158, 0.3);
@@ -165,18 +165,16 @@
       color: #fd9e04;
       margin-bottom: 15px;
       font-size: 1.5rem;
-      margin-bottom: 12px; /* ← RIDOTTO da 15px */
     }
 
     .scrivi-container p {
-  margin-bottom: 25px;
-  color: #fff;              /* ← BIANCO (più leggibile) */
-  font-size: 1.1rem;        /* ← PIÙ GRANDE */
-  font-style: italic;
-  font-weight: 400;         /* ← Leggermente più marcato */
-  line-height: 1.6;         /* ← Migliore leggibilità */
-  margin-bottom: 60px; /* ← RIDOTTO da 25px */
-}
+      margin-bottom: 25px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.6;
+    }
 
     .btn-scrivi {
       display: inline-block;
@@ -219,9 +217,8 @@
 </head>
 <body>
 
-<!-- PULSANTE HOME IN ALTO -->
-    <!-- PULSANTE HOME A DESTRA -->
-  <a href="index.html" style="
+<!-- PULSANTE HOME IN ALTO A DESTRA -->
+<a href="index.html" style="
   position: absolute;
   top: 50px;
   right: 30px;
@@ -235,65 +232,14 @@
   transition: all 0.3s;
   z-index: 10;
 ">🏠 Home</a>
-  </header>
 
   <!-- CONTENUTO PRINCIPALE -->
   <main class="bacheca-content">
     
-    <!-- BACHECA SCORREVOLE -->
+    <!-- BACHECA SCORREVOLE (CONTENITORE VUOTO: I DATI ARRIVANO DAL JSON) -->
     <div class="bacheca-container">
       <div class="bacheca-items" id="bacheca-items">
-        
-        <!-- MESSAGGIO 1 -->
-        <div class="bacheca-item">
-          <img src="immagini/miniature/rex-miniatura.jpg" alt="Rex">
-          <div class="bacheca-item-content">
-            <p>Domani io e il mio amico peloso saremo i primi a guardare Qua la zampa</p>
-            <span class="bacheca-item-autore">— Chiara</span>
-            <span class="bacheca-item-data">8 Aprile 2026</span>
-          </div>
-        </div>
-
-        <!-- MESSAGGIO 2 -->
-        <div class="bacheca-item">
-          <img src="immagini/miniature/holly-miniatura.jpg" alt="Holly">
-          <div class="bacheca-item-content">
-            <p>Due Bau canterini !!!!!! che spasso</p>
-            <span class="bacheca-item-autore">— Andrea</span>
-            <span class="bacheca-item-data">2 Aprile 2026</span>
-          </div>
-        </div>
-
-        <!-- MESSAGGIO 3 -->
-        <div class="bacheca-item">
-          <img src="immagini/miniature/luna-miniatura.jpg" alt="Luna">
-          <div class="bacheca-item-content">
-            <p>Sole Mio stupenda per il ritmo e le parole</p>
-            <span class="bacheca-item-autore">— Natale</span>
-            <span class="bacheca-item-data">13 Aprile 2026</span>
-          </div>
-        </div>
-
-        <!-- MESSAGGIO 4 -->
-        <div class="bacheca-item">
-          <img src="immagini/miniature/ling-miniatura.jpg" alt="Ling">
-          <div class="bacheca-item-content">
-            <p>Wow, Sole Mio mi ha fatto ballare dall'inizio alla fine</p>
-            <span class="bacheca-item-autore">— Clara</span>
-            <span class="bacheca-item-data">13 Aprile 2026</span>
-          </div>
-        </div>
-
-        <!-- MESSAGGIO 5 -->
-        <div class="bacheca-item">
-          <img src="immagini/miniature/nova-miniatura.jpg" alt="Luna">
-          <div class="bacheca-item-content">
-            <p>Primo appuntamento, troppo bella</p>
-            <span class="bacheca-item-autore">— Natale</span>
-            <span class="bacheca-item-data">13 Aprile 2026</span>
-          </div>
-        </div>
-
+        <!-- Lo script inserirà qui i messaggi automaticamente -->
       </div>
     </div>
 
@@ -312,56 +258,79 @@
     <a href="cookie-policy.html">Cookie Policy</a>
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- SCRIPT AUTOMATICO PER LA BACHECA -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // SCRIPT PER LA BACHECA SCORREVOLE
-      const bachecaItemsContainer = document.getElementById('bacheca-items');
-      if (bachecaItemsContainer) {
-        const items = Array.from(bachecaItemsContainer.children);
-        let currentIndex = 0;
-        let itemHeight = 0;
-        
-        if (items.length > 0) {
-            itemHeight = items[0].offsetHeight; 
-        }
-        
-        const displayDuration = 4000; // 4 secondi per messaggio
-        const transitionDuration = 1000; // 1 secondo di transizione
+      
+      // === CARICAMENTO MESSAGGI DALLA BACHECA JSON ===
+      const bachecaContainer = document.getElementById('bacheca-items');
+      
+      if (bachecaContainer) {
+        fetch('bacheca-db.json')
+          .then(response => response.json())
+          .then(data => {
+            let htmlContent = '';
+            
+            data.forEach(item => {
+              htmlContent += `
+                <div class="bacheca-item">
+                  <img src="${item.avatar}" alt="${item.nome}">
+                  <div class="bacheca-item-content">
+                    <p>${item.messaggio}</p>
+                    <span class="bacheca-item-autore">— ${item.nome}</span>
+                    <span class="bacheca-item-data">${item.data}</span>
+                  </div>
+                </div>
+              `;
+            });
 
-        // Duplica gli elementi per loop infinito
-        items.forEach(item => {
-          bachecaItemsContainer.appendChild(item.cloneNode(true));
+            bachecaContainer.innerHTML = htmlContent;
+
+            // === AVVIA LO SCROLLING AUTOMATICO SOLO DOPO IL CARICAMENTO ===
+            startScrolling();
+          })
+          .catch(error => console.error('Errore nel caricamento della bacheca:', error));
+      }
+
+      // === FUNZIONE SCROLLING ===
+      function startScrolling() {
+        const itemsContainer = document.getElementById('bacheca-items');
+        if (!itemsContainer) return;
+
+        const items = Array.from(itemsContainer.children);
+        if (items.length === 0) return;
+
+        let currentIndex = 0;
+        let itemHeight = items[0].offsetHeight;
+        
+        // Ricalcola altezza se cambia finestra
+        window.addEventListener('resize', () => {
+            itemHeight = items[0].offsetHeight;
         });
 
-        function startScrolling() {
-          setInterval(() => {
-            currentIndex++;
-            const totalItems = items.length;
-            
-            bachecaItemsContainer.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
-            bachecaItemsContainer.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+        const displayDuration = 4000; // 4 secondi
+        const transitionDuration = 1000; // 1 secondo
 
-            if (currentIndex >= totalItems) {
-              setTimeout(() => {
-                bachecaItemsContainer.style.transition = 'none';
-                bachecaItemsContainer.style.transform = 'translateY(0)';
-                currentIndex = 0;
-              }, transitionDuration);
-            }
-          }, displayDuration + transitionDuration);
-        }
+        // Duplica elementi per loop infinito
+        items.forEach(item => {
+          itemsContainer.appendChild(item.cloneNode(true));
+        });
 
-        if (itemHeight > 0) {
-            startScrolling();
-        } else {
-            window.addEventListener('load', () => {
-                itemHeight = items[0].offsetHeight;
-                if (itemHeight > 0) {
-                    startScrolling();
-                }
-            });
-        }
+        setInterval(() => {
+          currentIndex++;
+          const totalItems = items.length;
+          
+          itemsContainer.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
+          itemsContainer.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+
+          if (currentIndex >= totalItems) {
+            setTimeout(() => {
+              itemsContainer.style.transition = 'none';
+              itemsContainer.style.transform = 'translateY(0)';
+              currentIndex = 0;
+            }, transitionDuration);
+          }
+        }, displayDuration + transitionDuration);
       }
     });
   </script>

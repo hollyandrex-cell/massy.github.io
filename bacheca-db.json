@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "Chiara",
+    "avatar": "immagini/miniature/rex-miniatura.jpg",
+    "messaggio": "Domani io e il mio amico peloso saremo i primi a guardare Qua la zampa",
+    "data": "8 Aprile 2026"
+  },
+  {
+    "nome": "Andrea",
+    "avatar": "immagini/miniature/holly-miniatura.jpg",
+    "messaggio": "Due Bau canterini !!!!!! che spasso",
+    "data": "2 Aprile 2026"
+  },
+  {
+    "nome": "Natale",
+    "avatar": "immagini/miniature/luna-miniatura.jpg",
+    "messaggio": "Sole Mio stupenda per il ritmo e le parole",
+    "data": "13 Aprile 2026"
+  },
+  {
+    "nome": "Clara",
+    "avatar": "immagini/miniature/ling-miniatura.jpg",
+    "messaggio": "Wow, Sole Mio mi ha fatto ballare dall'inizio alla fine",
+    "data": "13 Aprile 2026"
+  },
+  {
+    "nome": "Natale",
+    "avatar": "immagini/miniature/nova-miniatura.jpg",
+    "messaggio": "Primo appuntamento, troppo bella",
+    "data": "13 Aprile 2026"
+  }
+]
