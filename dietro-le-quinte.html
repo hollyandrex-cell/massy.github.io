@@ -22,7 +22,7 @@
   <!-- Stile personale (generale per tutto il sito) -->
   <link rel="stylesheet" href="css/stile.css">
   
-  <!-- NUOVO: Link allo stile mobile specifico per questa pagina -->
+  <!-- Link allo stile mobile specifico -->
   <link rel="stylesheet" href="css/dietro-le-quinte.mobile.css" media="(max-width: 768px)">
 
   <style>
@@ -50,25 +50,20 @@
     }
 
     .header-content h1 {
-      /* Il titolo principale va bene così com'è, magari aggiungiamo solo un po' di peso */
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       color: var(--oro);
       font-weight: 700;
     }
 
     .header-content p.slogan {
-      /* CORREZIONE SPECIFICA PER IL SOTTOTITOLO */
-      color: #ffffff; /* Bianco puro per massima visibilità */
-      font-size: 1.1rem; /* Leggermente più grande (era probabilmente 1rem o meno) */
+      color: #ffffff;
+      font-size: 1.1rem;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-weight: 500; /* Diamo un po' di corpo al testo */
-      letter-spacing: 1px; /* Allarghiamo leggermente le lettere per eleganza */
-      margin-top: -10px; /* Avviciniamolo al titolo se serve */
-      
-      /* Il trucco della luce: ombra chiara invece che scura */
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-top: -10px;
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 1px 1px 2px rgba(0,0,0,0.8); 
-      /* La prima parte crea l'alone luminoso, la seconda stacca dallo sfondo */
     }
 
     .main-content-overlay {
@@ -79,34 +74,33 @@
       max-width: 900px;
       box-shadow: none;
       text-align: center;
-      /* AGGIUNGIAMO UNO SFONDO SEMI-TRASPARENTE LEGGERO PER AIUTARE LA LETTURA */
       background: rgba(0, 0, 0, 0.4); 
-      backdrop-filter: blur(2px); /* Sfoca leggermente lo sfondo dietro al testo */
+      backdrop-filter: blur(2px);
     }
 
     .main-content-overlay h2,
     .main-content-overlay h3 {
-        color: #ffd700; /* Oro brillante */
+        color: #ffd700;
         font-family: 'Playfair Display', serif;
         font-style: normal;
-        font-weight: 700; /* Forza il grassetto vero del font */
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Bagliore dorato */
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         margin-bottom: 15px;
         line-height: 1.3;
     }
 
     .main-content-overlay p {
-        color: #ffffff; /* BIANCO PURO per massima nitidezza */
+        color: #ffffff;
         font-family: 'Playfair Display', serif;
-        font-weight: 400; /* Non forzare il grassetto qui */
+        font-weight: 400;
         font-style: italic;
-        font-size: 1.1rem; /* Leggermente più grande */
+        font-size: 1.1rem;
         line-height: 1.6;
         margin-bottom: 15px;
-        /* IL TRUCCO: Ombra chiara (bagliore) invece di scura */
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); 
     }
 
+    /* BACHECA PROGETTI */
     .bacheca-container {
       margin-top: 80px;
       max-width: 600px;
@@ -117,7 +111,7 @@
       background: transparent;
       border: none;
       box-shadow: none;
-      margin-left: 10%;
+      margin-left: auto;
       margin-right: auto;
       text-align: left;
     }
@@ -148,7 +142,7 @@
       object-fit: cover;
       border: 2px solid var(--oro);
       transition: transform 0.3s ease;
-      cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+      cursor: pointer;
     }
 
     .bacheca-item p {
@@ -161,63 +155,22 @@
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     }
 
-    .main-content-policy-links {
-      margin-top: 60px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      width: 100%;
+    /* EFFETTO LUMINOSO PER ANNUNCIO ATTIVO */
+    .annuncio-attivo {
+        box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.8); 
+        animation: battito-dorato 2s infinite;
+        border: 2px solid #fff;
+        transform: scale(1.05);
+        cursor: pointer;
     }
 
-    .main-content-policy-links a {
-      color: var(--oro);
-      text-decoration: underline;
-      font-size: 1rem;
-      font-family: 'Cormorant Garamond', serif;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    @keyframes battito-dorato {
+        0% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.6); }
+        50% { transform: scale(1.15); box-shadow: 0 0 25px 8px rgba(248, 213, 158, 1); }
+        100% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.6); }
     }
 
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(10, 12, 20, 0.95);
-      color: #f8d59e;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 350px;
-      z-index: 9999;
-      border: 1px solid rgba(248, 213, 158, 0.3);
-      font-family: 'Cormorant Garamond', serif;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      display: none;
-    }
-
-    #cookie-banner a {
-      color: #d35400;
-      text-decoration: underline;
-    }
-
-    .cookie-btns { margin-top: 12px; }
-
-    .cookie-btn {
-      display: inline-block;
-      padding: 6px 12px;
-      margin-right: 10px;
-      border: none;
-      border-radius: 6px;
-      font-family: 'Playfair Display', serif;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .accept-btn { background: #d35400; color: white; }
-    .reject-btn { background: transparent; color: #f8d59e; border: 1px solid rgba(248, 213, 158, 0.5); }
-    .accept-btn:hover { background: #e67e22; }
-    .reject-btn:hover { background: rgba(211, 84, 0, 0.2); }
-
-    /* --- STILE SPECIFICO PER IL BOX BLOG --- */
+    /* BOX BLOG & FOOTER & COOKIE (Stili invariati ma puliti) */
     .blog-dq-box {
         position: fixed;
         bottom: 20px;
@@ -235,91 +188,29 @@
         transition: transform 0.3s ease;
         animation: slideInLeft 0.8s ease-out;
     }
+    .blog-dq-box:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(248, 213, 158, 0.3); }
+    .blog-dq-box img { width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--oro); object-fit: cover; background: #000; }
+    .blog-dq-text { display: flex; flex-direction: column; gap: 8px; }
+    .blog-dq-text p { color: var(--oro); margin: 0; font-family: 'Playfair Display', serif; font-size: 0.95rem; line-height: 1.2; text-shadow: none; }
+    .blog-dq-btn { background: var(--oro); color: var(--blu-notte); padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; text-align: center; transition: all 0.3s; display: inline-block; width: fit-content; }
+    .blog-dq-btn:hover { background: #fff; color: #000; }
+    @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    
+    footer { position: fixed; bottom: 10px; right: 20px; z-index: 1; display: flex; gap: 20px; background: transparent; }
+    footer a { color: #79f406; text-decoration: underline; font-size: 0.9rem; }
 
-    .blog-dq-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(248, 213, 158, 0.3);
-    }
+    #cookie-banner { position: fixed; bottom: 20px; right: 20px; background: rgba(10, 12, 20, 0.95); color: #f8d59e; padding: 20px; border-radius: 12px; max-width: 350px; z-index: 9999; border: 1px solid rgba(248, 213, 158, 0.3); font-family: 'Cormorant Garamond', serif; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); display: none; }
+    #cookie-banner a { color: #d35400; text-decoration: underline; }
+    .cookie-btns { margin-top: 12px; }
+    .cookie-btn { display: inline-block; padding: 6px 12px; margin-right: 10px; border: none; border-radius: 6px; font-family: 'Playfair Display', serif; cursor: pointer; transition: all 0.2s; }
+    .accept-btn { background: #d35400; color: white; }
+    .reject-btn { background: transparent; color: #f8d59e; border: 1px solid rgba(248, 213, 158, 0.5); }
+    .accept-btn:hover { background: #e67e22; }
+    .reject-btn:hover { background: rgba(211, 84, 0, 0.2); }
 
-    .blog-dq-box img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 2px solid var(--oro);
-        object-fit: cover;
-        background: #000;
-    }
-
-    .blog-dq-text {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .blog-dq-text p {
-        color: var(--oro);
-        margin: 0;
-        font-family: 'Playfair Display', serif;
-        font-size: 0.95rem;
-        line-height: 1.2;
-        text-shadow: none;
-    }
-
-    .blog-dq-btn {
-        background: var(--oro);
-        color: var(--blu-notte);
-        padding: 6px 12px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 0.9rem;
-        text-align: center;
-        transition: all 0.3s;
-        display: inline-block;
-        width: fit-content;
-    }
-
-    .blog-dq-btn:hover {
-        background: #fff;
-        color: #000;
-    }
-
-    @keyframes slideInLeft {
-        from { transform: translateX(-100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-
-    /* --- EFFETTO LUMINOSO PER ANNUNCIO ATTIVO (NUOVO!) --- */
-    .annuncio-attivo {
-        /* Ombra dorata luminosa esterna */
-        box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.8); 
-        /* Leggera animazione di pulsazione */
-        animation: battito-dorato 2s infinite;
-        border: 2px solid #fff; /* Bordo bianco per staccare */
-        transform: scale(1.05); /* Leggermente più grande */
-        cursor: pointer; /* Manina che clicca */
-    }
-
-    @keyframes battito-dorato {
-        0% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.6); }
-        50% { transform: scale(1.15); box-shadow: 0 0 25px 8px rgba(248, 213, 158, 1); }
-        100% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(248, 213, 158, 0.6); }
-    }
-
-    /* Adattamento Mobile */
     @media (max-width: 768px) {
-        .blog-dq-box {
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            max-width: none;
-            justify-content: center;
-            text-align: center;
-        }
-        .blog-dq-text {
-            align-items: center;
-        }
+        .blog-dq-box { bottom: 10px; left: 10px; right: 10px; max-width: none; justify-content: center; text-align: center; }
+        .blog-dq-text { align-items: center; }
     }
   </style>
 </head>
@@ -332,14 +223,12 @@
     </div>
   </header>
 
-  <!-- PULSANTE MENU HAMBURGER UNIFICATO -->
+  <!-- PULSANTE MENU HAMBURGER -->
   <div class="hamburger-menu">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </div>
 
-  <!-- MENU A SCOMPARSA (MOBILE) UNIFICATO -->
+  <!-- MENU MOBILE -->
   <nav id="mobile-nav" class="mobile-nav">
     <a href="index.html">🏠 Home</a>
     <a href="canzoni.html">🎵 Canzoni</a>
@@ -355,10 +244,10 @@
     <a href="relax.html">🎧 Relax</a>
     <a href="dietro-le-quinte.html">🎬 Dietro le quinte</a>
     <a href="contatti.html">💌 Contatti</a>
-    <a href="bacheca.html" >📖 Bacheca</a>
+    <a href="bacheca.html">📖 Bacheca</a>
   </nav>
 
-  <!-- Contenuto principale della pagina "Dietro le Quinte" -->
+  <!-- Contenuto principale -->
   <main class="main-content-overlay">
     <h2>Benvenuti Dietro le Quinte!</h2>
     <p>Qui troverete storie, aneddoti, e momenti speciali del nostro percorso musicale con Rex, Bimba e tutto il gruppo. Preparatevi a scoprire il lato più intimo e divertente della nostra avventura sonora!</p>
@@ -367,42 +256,23 @@
     <p>Ogni nota, ogni melodia nasce da un momento, un'emozione, una passeggiata nel parco con Rex e Bimba. Sono loro la nostra musa principale, i compagni fedeli che ci guidano nel mondo della musica con la loro gioia contagiosa.</p>
     <p>Rimanete sintonizzati per nuove curiosità e aggiornamenti esclusivi!</p>
 
-    <!-- Bacheca Prossime Pubblicazioni -->
+    <!-- BACHECA PROGETTI (CONTENITORE VUOTO: I DATI ARRIVANO DAL JSON) -->
     <h3 style="margin-top: 20px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">I nostri prossimi progetti:</h3>
     <div class="bacheca-container">
       <div class="bacheca-items" id="bacheca-items">
-        <div class="bacheca-item">
-          <img src="immagini/miniature/holly-miniatura.jpg" alt="Holly">
-          <p>Holly: Oggi riposa</p>
-        </div>
-        <div class="bacheca-item">
-          <img src="immagini/miniature/rex-miniatura.jpg" alt="Rex">
-          <p>Rex: Oggi riposa</p>
-        </div>
-        <div class="bacheca-item">
-          <img src="immagini/miniature/ling-miniatura.jpg" alt="Ling 灵">
-          <p>Ling 灵: Oggi riposa</p>
-        </div>
-        <div class="bacheca-item">
-          <img src="immagini/miniature/luna-miniatura.jpg" alt="Luna">
-          <p>Luna 🌙: Oggi riposa"</p>
-        </div>
-        <div class="bacheca-item">
-          <img src="immagini/miniature/nova-miniatura.jpg" alt="Nova">
-          <p>Nova ⭐: Oggi riposa</p>
-        </div>
+        <!-- Lo script inserirà qui i progetti automaticamente -->
       </div>
     </div>
   </main>
 
-  <!-- FOOTER UNICO -->
+  <!-- FOOTER -->
   <footer>
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="cookie-policy.html">Cookie Policy</a>
   </footer>
 
-  <!-- BANNER DI CONSENSO COOKIE -->
-  <div id="cookie-banner" style="position: fixed; bottom: 20px; right: 20px; background: rgba(10, 12, 20, 0.95); color: var(--oro); padding: 20px; border-radius: 12px; max-width: 350px; z-index: 1000; border: 1px solid rgba(248, 213, 158, 0.3); font-family: 'Cormorant Garamond', serif; display: none;">
+  <!-- BANNER COOKIE -->
+  <div id="cookie-banner">
     <p>Questo sito utilizza i cookie per analizzare il traffico e migliorare la tua esperienza. 
        <a href="cookie-policy.html">Maggiori informazioni</a>.
     </p>
@@ -412,9 +282,10 @@
     </div>
   </div>
 
-  <!-- SCRIPT GLOBALE -->
+  <!-- SCRIPT OTTIMIZZATO -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      
       // --- GESTIONE MENU MOBILE ---
       const burger = document.querySelector('.hamburger-menu');
       const mobileNav = document.getElementById('mobile-nav');
@@ -475,153 +346,82 @@
         if (cookieBanner) cookieBanner.style.display = 'none';
       }
 
-      // --- SCRIPT PER LA BACHECA SCORREVOLE ---
-      const bachecaItemsContainer = document.getElementById('bacheca-items');
-      if (bachecaItemsContainer) {
-        const items = Array.from(bachecaItemsContainer.children);
+      // --- CARICAMENTO PROGETTI DA JSON ---
+      const bachecaContainer = document.getElementById('bacheca-items');
+      
+      if (bachecaContainer) {
+        fetch('progetti-db.json')
+          .then(response => response.json())
+          .then(data => {
+            let htmlContent = '';
+            
+            data.forEach(item => {
+              // Se "attivo" è true, aggiungiamo la classe luminosa e il link
+              const isActiveClass = item.attivo ? 'annuncio-attivo' : '';
+              const hasLink = item.attivo && item.link ? `<a href="${item.link}" style="text-decoration:none; display:block;" title="Vedi annuncio"></a>` : '';
+              
+              // Costruiamo l'HTML dell'immagine
+              let imgHtml = `<img src="${item.avatar}" alt="${item.nome}" class="${isActiveClass}">`;
+              
+              // Se c'è un link, avvolgiamo l'immagine nell'anchor tag
+              if (hasLink) {
+                  imgHtml = `<a href="${item.link}" style="text-decoration:none; display:inline-block;">${imgHtml}</a>`;
+              }
+
+              htmlContent += `
+                <div class="bacheca-item">
+                  ${imgHtml}
+                  <div class="bacheca-item-content">
+                    <p>${item.stato}</p>
+                  </div>
+                </div>
+              `;
+            });
+
+            bachecaContainer.innerHTML = htmlContent;
+
+            // Avvia lo scrolling solo dopo aver caricato i dati
+            startScrolling();
+          })
+          .catch(error => console.error('Errore nel caricamento dei progetti:', error));
+      }
+
+      // --- FUNZIONE SCROLLING ---
+      function startScrolling() {
+        const itemsContainer = document.getElementById('bacheca-items');
+        if (!itemsContainer) return;
+
+        const items = Array.from(itemsContainer.children);
+        if (items.length === 0) return;
+
         let currentIndex = 0;
-        let itemHeight = 0;
-        if (items.length > 0) {
-            itemHeight = items[0].offsetHeight; 
-        }
+        let itemHeight = items[0].offsetHeight;
         
+        window.addEventListener('resize', () => { itemHeight = items[0].offsetHeight; });
+
         const displayDuration = 4000;
         const transitionDuration = 1000;
 
         items.forEach(item => {
-          bachecaItemsContainer.appendChild(item.cloneNode(true));
+          itemsContainer.appendChild(item.cloneNode(true));
         });
 
-        function startScrolling() {
-          setInterval(() => {
-            currentIndex++;
-            const totalItems = items.length;
-            
-            bachecaItemsContainer.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
-            bachecaItemsContainer.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+        setInterval(() => {
+          currentIndex++;
+          const totalItems = items.length;
+          
+          itemsContainer.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
+          itemsContainer.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
 
-            if (currentIndex >= totalItems) {
-              setTimeout(() => {
-                bachecaItemsContainer.style.transition = 'none';
-                bachecaItemsContainer.style.transform = 'translateY(0)';
-                currentIndex = 0;
-              }, transitionDuration);
-            }
-          }, displayDuration + transitionDuration);
-        }
-
-        if (itemHeight > 0) {
-            startScrolling();
-        } else {
-            window.addEventListener('load', () => {
-                itemHeight = items[0].offsetHeight;
-                if (itemHeight > 0) {
-                    startScrolling();
-                }
-            });
-        }
+          if (currentIndex >= totalItems) {
+            setTimeout(() => {
+              itemsContainer.style.transition = 'none';
+              itemsContainer.style.transform = 'translateY(0)';
+              currentIndex = 0;
+            }, transitionDuration);
+          }
+        }, displayDuration + transitionDuration);
       }
-
-            // --- DETECTIVE AUTOMATICO PER ILLUMINARE E RENDERE CLICCABILI LE MINIATURE (VERSIONE CORRETTA) ---
-            function illuminaAnnunciAttivi() {
-        console.log(" Avvio scansione annunci...");
-        
-        // Parole chiave per identificare gli artisti (aggiunto controllo più robusto)
-        const artistiKeywords = {
-            'ling': ['ling', 'dj ling'], 
-            'rex': ['rex', 'holly and rex', 'primo appuntamento'], // Rex risponde anche al titolo della canzone
-            'nova': ['nova', 'dj nova', 'primo appuntamento'],     // Nova risponde anche al titolo
-            'luna': ['luna', 'dj luna'],
-            'holly': ['holly']
-        };
-
-        // CONFIGURAZIONE ANNUNCI
-        const announcements = [
-            { title: "Primo appuntamento", date: "2026-05-08" }
-        ];
-
-        const today = new Date();
-        const todayMidnight = new Date(today); todayMidnight.setHours(0,0,0,0);
-        
-        // Trova annunci futuri o di oggi
-        const annunciFuturi = announcements.filter(ann => {
-            const annDate = new Date(ann.date);
-            const annMidnight = new Date(annDate); annMidnight.setHours(0,0,0,0);
-            return annMidnight.getTime() >= todayMidnight.getTime();
-        });
-
-        if (annunciFuturi.length === 0) {
-            console.log("Nessun annuncio futuro trovato.");
-            return;
-        }
-
-        // Prendiamo tutti gli elementi VISIBILI nella bacheca (inclusi i cloni se necessario, ma lavoriamo sui primi per sicurezza)
-        // Nota: Poiché lo script di scrolling clona gli elementi, dobbiamo assicurarci di colpire quelli giusti.
-        // La strategia migliore è selezionare TUTTI gli elementi .bacheca-item presenti nel DOM ora.
-        const allItems = document.querySelectorAll('.bacheca-item');
-        
-        console.log(`Trovati ${allItems.length} elementi nella bacheca.`);
-
-        annunciFuturi.forEach(ann => {
-            const titoloLower = ann.title.toLowerCase();
-            
-            for (const [artista, keywords] of Object.entries(artistiKeywords)) {
-                // Controlla se questo annuncio riguarda questo artista
-                const match = keywords.some(keyword => titoloLower.includes(keyword));
-                
-                if (match) {
-                    console.log(`✅ Annuncio attivo per: ${artista}. Cerco le icone corrispondenti...`);
-                    
-                    allItems.forEach(item => {
-                        const img = item.querySelector('img');
-                        const textP = item.querySelector('p');
-                        
-                        if (!img || !textP) return;
-
-                        const imgAlt = img.alt.toLowerCase();
-                        const textContent = textP.textContent.toLowerCase();
-                        
-                        // Controllo se questa specifica icona corrisponde all'artista
-                        // Aggiungiamo un controllo extra: se il testo dice "Lavora a Primo appuntamento", è sicuramente lui/lei
-                        const isRelevant = imgAlt.includes(artista) || 
-                                           textContent.includes(artista) || 
-                                           (artista === 'rex' && textContent.includes('primo appuntamento')) ||
-                                           (artista === 'nova' && textContent.includes('primo appuntamento'));
-
-                        if (isRelevant) {
-                            console.log(`💡 Icona trovata per ${artista}: ${textP.textContent}`);
-                            
-                            // 1. Aggiungi la classe luminosa (assicuriamoci che non sia già un link prima)
-                            if (img.parentElement.tagName !== 'A') {
-                                img.classList.add('annuncio-attivo');
-                                
-                                // 2. Crea il link
-                                const link = document.createElement('a');
-                                link.href = 'artists-announce.html'; 
-                                link.target = '_self'; 
-                                link.style.textDecoration = 'none'; 
-                                link.title = "Clicca per vedere l'annuncio ufficiale di " + ann.title + "!";
-                                
-                                // Sostituiamo l'immagine con il link che contiene l'immagine
-                                // Questo è più pulito che inserire before/after
-                                img.parentNode.replaceChild(link, img);
-                                link.appendChild(img);
-                                
-                                // Opzionale: aggiungi un effetto hover al testo per coerenza
-                                textP.style.cursor = "pointer";
-                                textP.addEventListener('click', () => {
-                                    window.location.href = 'artists-announce.html';
-                                });
-                            }
-                        }
-                    });
-                }
-            }
-        });
-      }
-
-      // Esegui il detective
-      illuminaAnnunciAttivi();
     });
   </script>
 
