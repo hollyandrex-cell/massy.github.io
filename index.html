@@ -405,5 +405,66 @@
       }, { passive: true });
   });
   </script>
+
+<!-- INIZIO CONTATORE SEGRETO MASSEY -->
+<div id="secret-counter" style="display:none; position:fixed; bottom:20px; right:20px; background:rgba(0,0,0,0.85); color:#0f0; font-family:monospace; padding:10px; border-radius:5px; font-size:12px; z-index:99999; border:1px solid #333; box-shadow:0 0 10px rgba(0,255,0,0.2);">
+  🔒 VISITE OGGI: <span id="sc-today">0</span> | TOTALE: <span id="sc-total">0</span>
+  <br><small style="color:#aaa;">(Premi Ctrl+Shift+M per nascondere)</small>
+</div>
+
+<script>
+(function() {
+  const KEY_TOTAL = 'massy_secret_total_visits';
+  const KEY_TODAY = 'massy_secret_today_visits';
+  const KEY_DATE = 'massy_secret_last_date';
+  
+  // Combinazione segreta: Ctrl + Shift + Z
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'z' || e.key === 'Z')) {
+      const counter = document.getElementById('secret-counter');
+      if (counter.style.display === 'none') {
+        counter.style.display = 'block';
+        updateCounter(); // Aggiorna quando lo mostri
+      } else {
+        counter.style.display = 'none';
+      }
+    }
+  });
+
+  function updateCounter() {
+    const todayStr = new Date().toLocaleDateString();
+    
+    // Recupera valori esistenti
+    let total = parseInt(localStorage.getItem(KEY_TOTAL) || '0');
+    let today = parseInt(localStorage.getItem(KEY_TODAY) || '0');
+    let lastDate = localStorage.getItem(KEY_DATE);
+
+    // Controlla se è un nuovo giorno
+    if (lastDate !== todayStr) {
+      today = 0; // Resetta conteggio giornaliero
+      localStorage.setItem(KEY_DATE, todayStr);
+    }
+
+    // Incrementa (simula una visita in più per test immediato)
+    // Se vuoi contare solo la prima visita della sessione, togli queste righe di incremento qui
+    // e mettile solo al primo caricamento. Per ora incrementiamo sempre per vedere l'effetto.
+    total++; 
+    today++;
+
+    // Salva
+    localStorage.setItem(KEY_TOTAL, total);
+    localStorage.setItem(KEY_TODAY, today);
+
+    // Aggiorna UI
+    document.getElementById('sc-total').innerText = total;
+    document.getElementById('sc-today').innerText = today;
+  }
+
+  // Esegui al caricamento
+  updateCounter();
+})();
+</script>
+<!-- FINE CONTATORE SEGRETO MASSEY -->
+
 </body>
 </html>
