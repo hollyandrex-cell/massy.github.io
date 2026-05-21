@@ -9,9 +9,9 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Oggi riposa 🐾",
+    "stato": "Oggi riposa",
     "attivo": false,
-    "link": ""
+    "link": "artists-announce.html"
   },
   {
     "nome": "Ling 灵",
@@ -30,8 +30,8 @@
   {
     "nome": "Nova ⭐",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "stato": "Summer Night in arrivo! 🔥",
-    "attivo": true,
+    "stato": "Nova oggi riposa",
+    "attivo": false,
     "link": "artists-announce.html"
   }
 ]
