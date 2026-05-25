@@ -49,55 +49,55 @@
       </div>
     </div>
 
-        <!-- SEZIONE LOOKER STUDIO (ANALYTICS) -->
-        <h2>📈 Google Analytics (Dati Reali)</h2>
-        <div class="card">
-          <h3>Report Interattivo</h3>
-          <p style="font-size: 0.9em; margin-bottom: 15px;">Dati aggiornati direttamente da Google Analytics. <em>(Nota: I dati standard hanno un ritardo di 24-48h)</em></p>
+            <!-- SEZIONE LOOKER STUDIO (ANALYTICS) -->
+    <h2>📈 Google Analytics (Dati Reali)</h2>
+    <div class="card">
+      <h3>Report Interattivo</h3>
+      <p style="font-size: 0.9em; margin-bottom: 15px;">Dati aggiornati direttamente da Google Analytics. <em>(Nota: I dati standard hanno un ritardo di 24-48h)</em></p>
+      
+      <!-- INCOLLA QUI SOTTO IL CODICE IFRAME DI LOOKER STUDIO -->
+      <iframe width="100%" height="600" src="https://datastudio.google.com/embed/reporting/5014bb1c-eb50-42f6-b1d3-0b7ed607a854/page/0iFzF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+      <!-- FINE INCOLLAGGIO -->
+
+    </div>
+
+    <footer>
+      <p>Dashboard privata per Massy & Holly And Rex Group.<br>Accesso riservato.</p>
+    </footer>
+  </div>
+
+  <script>
+    const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
+    const CHANNEL_HANDLE = 'Holly-Rex'; 
+
+    async function fetchYouTubeStats() {
+      try {
+        const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+        const resChannel = await fetch(urlChannel);
+        const dataChannel = await resChannel.json();
+
+        if (dataChannel.items && dataChannel.items.length > 0) {
+          const stats = dataChannel.items[0].statistics;
+          const snippet = dataChannel.items[0].snippet;
           
-          <!-- INCOLLA QUI SOTTO IL CODICE IFRAME DI LOOKER STUDIO -->
-          <iframe width="100%" height="600" src="https://datastudio.google.com/embed/reporting/5014bb1c-eb50-42f6-b1d3-0b7ed607a854/page/0iFzF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-          <!-- FINE INCOLLAGGIO -->
-    
-        </div>
-    
-        <footer>
-          <p>Dashboard privata per Massy & Holly And Rex Group.<br>Accesso riservato.</p>
-        </footer>
-      </div>
-    
-      <script>
-        const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
-        const CHANNEL_HANDLE = 'Holly-Rex'; 
-    
-        async function fetchYouTubeStats() {
-          try {
-            const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
-            const resChannel = await fetch(urlChannel);
-            const dataChannel = await resChannel.json();
-    
-            if (dataChannel.items && dataChannel.items.length > 0) {
-              const stats = dataChannel.items[0].statistics;
-              const snippet = dataChannel.items[0].snippet;
-              
-              document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
-              document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
-              document.getElementById('yt-last-title').innerText = snippet.title;
-    
-              // Cerca l'ultimo video
-              const channelId = dataChannel.items[0].id;
-              const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${API_KEY}`;
-              const resSearch = await fetch(urlSearch);
-              const dataSearch = await resSearch.json();
-              
-              if(dataSearch.items && dataSearch.items.length > 0) {
-                 document.getElementById('yt-last-video').innerText = dataSearch.items[0].snippet.title;
-              }
-            }
-          } catch (error) { console.error("Errore YouTube:", error); }
+          document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
+          document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
+          document.getElementById('yt-last-title').innerText = snippet.title;
+
+          // Cerca l'ultimo video
+          const channelId = dataChannel.items[0].id;
+          const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${API_KEY}`;
+          const resSearch = await fetch(urlSearch);
+          const dataSearch = await resSearch.json();
+          
+          if(dataSearch.items && dataSearch.items.length > 0) {
+             document.getElementById('yt-last-video').innerText = dataSearch.items[0].snippet.title;
+          }
         }
-    
-        document.addEventListener('DOMContentLoaded', fetchYouTubeStats);
-      </script>
-    </body>
-    </html>
+      } catch (error) { console.error("Errore YouTube:", error); }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchYouTubeStats);
+  </script>
+</body>
+</html>
