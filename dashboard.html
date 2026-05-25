@@ -4,278 +4,100 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Privata - Holly And Rex Group</title>
-  
-  <!-- Font eleganti (gli stessi del sito) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  
-  <!-- Stili Base -->
   <style>
-    :root {
-      --bg-color: #0a0c14;
-      --text-color: #f8d59e; /* Il tuo color oro */
-      --card-bg: rgba(20, 22, 30, 0.9);
-      --accent: #ff4d4d;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Cormorant Garamond', serif;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-    }
-
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      text-align: center;
-      color: var(--text-color);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .header-dash {
-      border-bottom: 1px solid rgba(248, 213, 158, 0.3);
-      padding-bottom: 20px;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .back-btn {
-      text-decoration: none;
-      color: var(--text-color);
-      border: 1px solid var(--text-color);
-      padding: 8px 15px;
-      border-radius: 5px;
-      font-size: 0.9em;
-      transition: all 0.3s;
-    }
-    .back-btn:hover {
-      background: var(--text-color);
-      color: var(--bg-color);
-    }
-
-    /* Griglia delle Card */
-    .grid-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid rgba(248, 213, 158, 0.2);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      font-size: 1.2em;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 10px;
-      text-align: left;
-    }
-
-    .stat-number {
-      font-size: 2.5em;
-      font-weight: bold;
-      display: block;
-      margin: 10px 0;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .stat-label {
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-
-    .youtube-section {
-      background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
-    }
-
-    .analytics-placeholder {
-      width: 100%;
-      height: 300px;
-      background: rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      border: 1px dashed rgba(248, 213, 158, 0.3);
-      color: rgba(248, 213, 158, 0.6);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 0.8em;
-      opacity: 0.6;
-    }
+    :root { --bg-color: #0a0c14; --text-color: #f8d59e; --card-bg: rgba(20, 22, 30, 0.9); }
+    body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Cormorant Garamond', serif; margin: 0; padding: 20px; min-height: 100vh; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; text-align: center; color: var(--text-color); }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header-dash { border-bottom: 1px solid rgba(248, 213, 158, 0.3); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+    .back-btn { text-decoration: none; color: var(--text-color); border: 1px solid var(--text-color); padding: 8px 15px; border-radius: 5px; font-size: 0.9em; transition: all 0.3s; }
+    .back-btn:hover { background: var(--text-color); color: var(--bg-color); }
+    .grid-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .card { background: var(--card-bg); border: 1px solid rgba(248, 213, 158, 0.2); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .card h3 { margin-top: 0; font-size: 1.2em; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; text-align: left; }
+    .stat-number { font-size: 2.5em; font-weight: bold; display: block; margin: 10px 0; font-family: 'Playfair Display', serif; }
+    .stat-label { font-size: 0.9em; opacity: 0.8; }
+    .youtube-section { background: linear-gradient(45deg, #1a1a1a, #2a2a2a); }
+    footer { text-align: center; margin-top: 50px; font-size: 0.8em; opacity: 0.6; }
   </style>
 </head>
 <body>
-
   <div class="container">
-    
-    <!-- Intestazione -->
     <div class="header-dash">
       <h1>📊 Centro di Comando</h1>
       <a href="index.html" class="back-btn">← Torna al Sito</a>
     </div>
 
-    <!-- SEZIONE YOUTUBE (Dati in tempo reale/quasi) -->
+    <!-- SEZIONE YOUTUBE -->
     <h2>📺 YouTube Stats (Live)</h2>
     <div class="grid-stats">
-      
-      <!-- Card Iscritti -->
       <div class="card youtube-section">
         <h3>Iscritti Totali</h3>
         <span class="stat-number" id="yt-subs">Caricamento...</span>
         <span class="stat-label">Aggiornato alle API YouTube</span>
       </div>
-
-      <!-- Card Visualizzazioni Canale -->
       <div class="card youtube-section">
         <h3>Visualizzazioni Canale</h3>
         <span class="stat-number" id="yt-views">Caricamento...</span>
         <span class="stat-label">Totale storico</span>
       </div>
-
-      <!-- Card Ultimo Video -->
       <div class="card youtube-section">
         <h3>Ultimo Video</h3>
-        <span class="stat-number" id="yt-last-video">Caricamento...</span>
+        <span class="stat-number" id="yt-last-video" style="font-size: 1.5em;">Caricamento...</span>
         <span class="stat-label" id="yt-last-title">Titolo video...</span>
       </div>
     </div>
 
-    <!-- SEZIONE GOOGLE ANALYTICS (Dati comportamentali) -->
-    <h2> Google Analytics (Sito Web)</h2>
-    <div class="grid-stats">
-      
-      <!-- Card Visite Totali (Globale) -->
-      <div class="card">
-        <h3>Visite Totali Sito</h3>
-        <span class="stat-number" id="site-total-visits">--</span>
-        <span class="stat-label">Dal lancio del sito (Contatore Globale)</span>
+        <!-- SEZIONE LOOKER STUDIO (ANALYTICS) -->
+        <h2>📈 Google Analytics (Dati Reali)</h2>
+        <div class="card">
+          <h3>Report Interattivo</h3>
+          <p style="font-size: 0.9em; margin-bottom: 15px;">Dati aggiornati direttamente da Google Analytics. <em>(Nota: I dati standard hanno un ritardo di 24-48h)</em></p>
+          
+          <!-- INCOLLA QUI SOTTO IL CODICE IFRAME DI LOOKER STUDIO -->
+          <iframe width="100%" height="600" src="https://datastudio.google.com/embed/reporting/5014bb1c-eb50-42f6-b1d3-0b7ed607a854/page/0iFzF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+          <!-- FINE INCOLLAGGIO -->
+    
+        </div>
+    
+        <footer>
+          <p>Dashboard privata per Massy & Holly And Rex Group.<br>Accesso riservato.</p>
+        </footer>
       </div>
-
-      <!-- Card Visitatori Oggi -->
-      <div class="card">
-        <h3>Visitatori Oggi</h3>
-        <span class="stat-number" id="site-today-visits">--</span>
-        <span class="stat-label">Utenti unici nelle ultime 24h</span>
-      </div>
-    </div>
-
-    <!-- SEZIONE DETTAGLIATA (Looker Studio Embed) -->
-    <h2>📈 Report Dettagliato (Geografia & Dispositivi)</h2>
-    <div class="card">
-      <h3>Analisi Approfondita</h3>
-      <p style="font-size: 0.9em; margin-bottom: 15px;">
-        Qui verranno inseriti i grafici da Looker Studio per vedere: 
-        <strong>Paesi Top, Città, Dispositivi (Mobile/PC) e Pagine più viste.</strong>
-      </p>
-      
-      <!-- Questo è lo spazio dove incolleremo l'IFRAME di Looker Studio -->
-      <div class="analytics-placeholder">
-        [ Spazio riservato per il Grafico Interattivo di Google Looker Studio ]
-        <br><small>Configurazione in corso...</small>
-      </div>
-    </div>
-
-    <footer>
-      <p>Dashboard privata per Massy & Holly And Rex Group.<br>
-      Accesso riservato. Non condividere questo link.</p>
-    </footer>
-
-  </div>
-
-  <!-- SCRIPT COMPLETO E CORRETTO -->
-  <script>
-    // --- CONFIGURAZIONE YOUTUBE ---
-    const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
-    // Usiamo l'HANDLE invece dell'ID. Nota: senza la chiocciola @
-    const CHANNEL_HANDLE = 'Holly-Rex'; 
-
-    // --- CONFIGURAZIONE COUNTAPI (Contatore Globale Sito) ---
-    const COUNTAPI_NAMESPACE = 'hollyandrex-massy-site';
-    const COUNTAPI_KEY = 'visits-global';
-
-    async function fetchYouTubeStats() {
-      console.log("Inizio caricamento YouTube per handle:", CHANNEL_HANDLE);
-      try {
-        // Cambiamo la chiamata API: usiamo forHandle invece di id
-        const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
-        
-        const response = await fetch(url);
-        const data = await response.json();
-        
-        console.log("Risposta YouTube:", data);
-
-        if (data.items && data.items.length > 0) {
-          const channel = data.items[0];
-          const stats = channel.statistics;
-          const snippet = channel.snippet;
-
-          document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
-          document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
-          document.getElementById('yt-last-video').innerText = "Vedi Studio"; 
-          document.getElementById('yt-last-title').innerText = snippet.title;
-        } else {
-          console.error("Nessun dato trovato. Risposta API:", data);
-          document.getElementById('yt-subs').innerText = "Non trovato";
-          if(data.error) {
-              alert("Errore YouTube: " + data.error.message);
-          }
+    
+      <script>
+        const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
+        const CHANNEL_HANDLE = 'Holly-Rex'; 
+    
+        async function fetchYouTubeStats() {
+          try {
+            const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+            const resChannel = await fetch(urlChannel);
+            const dataChannel = await resChannel.json();
+    
+            if (dataChannel.items && dataChannel.items.length > 0) {
+              const stats = dataChannel.items[0].statistics;
+              const snippet = dataChannel.items[0].snippet;
+              
+              document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
+              document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
+              document.getElementById('yt-last-title').innerText = snippet.title;
+    
+              // Cerca l'ultimo video
+              const channelId = dataChannel.items[0].id;
+              const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${API_KEY}`;
+              const resSearch = await fetch(urlSearch);
+              const dataSearch = await resSearch.json();
+              
+              if(dataSearch.items && dataSearch.items.length > 0) {
+                 document.getElementById('yt-last-video').innerText = dataSearch.items[0].snippet.title;
+              }
+            }
+          } catch (error) { console.error("Errore YouTube:", error); }
         }
-      } catch (error) {
-        console.error("Errore nel caricamento YouTube:", error);
-        document.getElementById('yt-subs').innerText = "Errore Connessione";
-      }
-    }
-
-    async function fetchSiteVisits() {
-      try {
-        // Proviamo CountAPI con un namespace diverso per evitare conflitti
-        const namespace = 'holly-rex-massy-dashboard';
-        const keyTotal = 'total-visits';
-        const keyToday = 'today-' + new Date().toISOString().split('T')[0];
-
-        // Contatore Totale
-        const resTotal = await fetch(`https://api.countapi.xyz/hit/${namespace}/${keyTotal}`);
-        if (!resTotal.ok) throw new Error("CountAPI Total Error");
-        const dataTotal = await resTotal.json();
-        document.getElementById('site-total-visits').innerText = dataTotal.value.toLocaleString('it-IT');
-
-        // Contatore Oggi
-        const resToday = await fetch(`https://api.countapi.xyz/hit/${namespace}/${keyToday}`);
-        if (!resToday.ok) throw new Error("CountAPI Today Error");
-        const dataToday = await resToday.json();
-        document.getElementById('site-today-visits').innerText = dataToday.value.toLocaleString('it-IT');
-
-      } catch (error) {
-        console.error("Errore visite sito:", error);
-        // Se fallisce, mostriamo un messaggio gentile invece di "Errore"
-        document.getElementById('site-total-visits').innerText = "In attesa...";
-        document.getElementById('site-today-visits').innerText = "In attesa...";
-      }
-    }
-
-    // Avvia il caricamento quando la pagina è pronta
-    document.addEventListener('DOMContentLoaded', () => {
-      fetchYouTubeStats();
-      fetchSiteVisits();
-    });
-  </script>
-
-</body>
-</html>
+    
+        document.addEventListener('DOMContentLoaded', fetchYouTubeStats);
+      </script>
+    </body>
+    </html>
