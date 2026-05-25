@@ -199,42 +199,77 @@
 
   </div>
 
-  <!-- SCRIPT PER COLLEGARE I DATI YOUTUBE REALI -->
+  <!-- SCRIPT COMPLETO E CORRETTO -->
   <script>
     // --- CONFIGURAZIONE YOUTUBE ---
     const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
-    const CHANNEL_ID = 'UCBdR3NIghYwEfcIAMRQV4Qg';
+    // Usiamo l'HANDLE invece dell'ID. Nota: senza la chiocciola @
+    const CHANNEL_HANDLE = 'Holly-Rex'; 
+
+    // --- CONFIGURAZIONE COUNTAPI (Contatore Globale Sito) ---
+    const COUNTAPI_NAMESPACE = 'hollyandrex-massy-site';
+    const COUNTAPI_KEY = 'visits-global';
 
     async function fetchYouTubeStats() {
+      console.log("Inizio caricamento YouTube per handle:", CHANNEL_HANDLE);
       try {
-        // Chiediamo a YouTube: Dammi snippet (nome) e statistics (numeri)
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+        // Cambiamo la chiamata API: usiamo forHandle invece di id
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+        
+        const response = await fetch(url);
         const data = await response.json();
+        
+        console.log("Risposta YouTube:", data);
 
         if (data.items && data.items.length > 0) {
           const channel = data.items[0];
           const stats = channel.statistics;
           const snippet = channel.snippet;
 
-          // Aggiorniamo i numeri nella pagina
           document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
           document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
-          
-          // Per l'ultimo video serve un'altra chiamata, ma per ora teniamo semplice
           document.getElementById('yt-last-video').innerText = "Vedi Studio"; 
           document.getElementById('yt-last-title').innerText = snippet.title;
         } else {
-          console.error("Nessun dato trovato. Controlla API Key e Channel ID.");
-          document.getElementById('yt-subs').innerText = "Errore";
+          console.error("Nessun dato trovato. Risposta API:", data);
+          document.getElementById('yt-subs').innerText = "Non trovato";
+          if(data.error) {
+              alert("Errore YouTube: " + data.error.message);
+          }
         }
       } catch (error) {
-        console.error("Errore nel caricamento:", error);
+        console.error("Errore nel caricamento YouTube:", error);
         document.getElementById('yt-subs').innerText = "Errore Connessione";
       }
     }
 
+    async function fetchSiteVisits() {
+      try {
+        // CountAPI.hit incrementa e restituisce il valore
+        const response = await fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/${COUNTAPI_KEY}`);
+        const data = await response.json();
+        
+        document.getElementById('site-total-visits').innerText = data.value.toLocaleString('it-IT');
+        
+        // Per le visite "oggi" usiamo una chiave basata sulla data
+        const today = new Date().toISOString().split('T')[0]; // Es: 2026-05-25
+        const responseToday = await fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/visits-${today}`);
+        const dataToday = await responseToday.json();
+        
+        document.getElementById('site-today-visits').innerText = dataToday.value.toLocaleString('it-IT');
+
+      } catch (error) {
+        console.error("Errore nel caricamento visite sito:", error);
+        document.getElementById('site-total-visits').innerText = "Errore";
+        document.getElementById('site-today-visits').innerText = "Errore";
+      }
+    }
+
     // Avvia il caricamento quando la pagina è pronta
-    document.addEventListener('DOMContentLoaded', fetchYouTubeStats);
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchYouTubeStats();
+      fetchSiteVisits();
+    });
   </script>
 
 </body>
