@@ -245,23 +245,28 @@
 
     async function fetchSiteVisits() {
       try {
-        // CountAPI.hit incrementa e restituisce il valore
-        const response = await fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/${COUNTAPI_KEY}`);
-        const data = await response.json();
-        
-        document.getElementById('site-total-visits').innerText = data.value.toLocaleString('it-IT');
-        
-        // Per le visite "oggi" usiamo una chiave basata sulla data
-        const today = new Date().toISOString().split('T')[0]; // Es: 2026-05-25
-        const responseToday = await fetch(`https://api.countapi.xyz/hit/${COUNTAPI_NAMESPACE}/visits-${today}`);
-        const dataToday = await responseToday.json();
-        
+        // Proviamo CountAPI con un namespace diverso per evitare conflitti
+        const namespace = 'holly-rex-massy-dashboard';
+        const keyTotal = 'total-visits';
+        const keyToday = 'today-' + new Date().toISOString().split('T')[0];
+
+        // Contatore Totale
+        const resTotal = await fetch(`https://api.countapi.xyz/hit/${namespace}/${keyTotal}`);
+        if (!resTotal.ok) throw new Error("CountAPI Total Error");
+        const dataTotal = await resTotal.json();
+        document.getElementById('site-total-visits').innerText = dataTotal.value.toLocaleString('it-IT');
+
+        // Contatore Oggi
+        const resToday = await fetch(`https://api.countapi.xyz/hit/${namespace}/${keyToday}`);
+        if (!resToday.ok) throw new Error("CountAPI Today Error");
+        const dataToday = await resToday.json();
         document.getElementById('site-today-visits').innerText = dataToday.value.toLocaleString('it-IT');
 
       } catch (error) {
-        console.error("Errore nel caricamento visite sito:", error);
-        document.getElementById('site-total-visits').innerText = "Errore";
-        document.getElementById('site-today-visits').innerText = "Errore";
+        console.error("Errore visite sito:", error);
+        // Se fallisce, mostriamo un messaggio gentile invece di "Errore"
+        document.getElementById('site-total-visits').innerText = "In attesa...";
+        document.getElementById('site-today-visits').innerText = "In attesa...";
       }
     }
 
