@@ -1,0 +1,201 @@
+/* manifesto.css - Stile Desktop per il Gruppo Holly AND Rex */
+
+:root {
+  --oro-manifesto: #f8d59e; /* Il nostro oro classico */
+  --bianco-puro: #ffffff;
+  --sfondo-scuro: rgba(0, 0, 0, 0.7);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--bianco-puro);
+  background-color: #0a0c14;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* CONTENITORE PRINCIPALE CON SFONDO */
+.manifesto-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  
+  /* QUI C'È LA MAGIA: L'IMMAGINE DI SFONDO */
+  background-image: url('../immagini/manifesto-bg.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Effetto parallasse fisso mentre scorri */
+}
+
+/* VELO SCURO SOPRA L'IMMAGINE PER LEGGERE IL TESTO */
+.manifesto-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(10,12,20,0.5), rgba(10,12,20,0.85));
+  z-index: 1;
+}
+
+/* CONTENUTO TESTO (SOPRA IL VELO) */
+.manifesto-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* TITOLO GRANDE E DORATO */
+.manifesto-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  color: var(--oro-manifesto);
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+  
+  /* Animazione ingresso */
+  opacity: 0;
+  animation: fadeInDown 1.5s ease-out forwards;
+}
+
+/* BLOCCHI DI TESTO (LE FRASI) */
+.manifesto-phrase {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  margin-bottom: 35px;
+  padding: 25px;
+  border-left: 3px solid var(--oro-manifesto);
+  background: rgba(0, 0, 0, 0.5); /* Sfondo semitrasparente nero */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  
+  /* Stato iniziale nascosto per animazione scroll */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+/* CLASSE CHE VIENE AGGIUNTA DA JAVASCRIPT QUANDO SCORRI */
+.manifesto-phrase.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* PARTE FINALE (FIRMA) */
+.manifesto-footer {
+  margin-top: 60px;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--oro-manifesto);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+  
+  opacity: 0;
+  animation: fadeInUp 2s ease-out 1s forwards;
+}
+
+/* PULSANTE TORNA ALLA HOME */
+.back-btn {
+  display: inline-block;
+  margin-top: 50px;
+  padding: 15px 40px;
+  border: 2px solid var(--oro-manifesto);
+  color: var(--oro-manifesto);
+  text-decoration: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  transition: all 0.3s;
+  background: transparent;
+  
+  opacity: 0;
+  animation: fadeInUp 2s ease-out 1.5s forwards;
+}
+
+.back-btn:hover {
+  background: var(--oro-manifesto);
+  color: #0a0c14;
+  box-shadow: 0 0 20px var(--oro-manifesto);
+  transform: scale(1.05);
+}
+
+/* FOOTER CON LE POLICY */
+footer {
+  position: relative;
+  z-index: 2;
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+footer a {
+  color: var(--oro-manifesto);
+  margin: 0 15px;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--oro-manifesto);
+}
+footer a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* STILI BANNER COOKIE (Semplici ed efficaci) */
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 12, 20, 0.98);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  z-index: 9999;
+  border-top: 2px solid var(--oro-manifesto);
+  display: none; /* Gestito da JS */
+  font-family: 'Cormorant Garamond', serif;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+}
+.cookie-btns {
+  margin-top: 15px;
+}
+.cookie-btn {
+  background: transparent;
+  border: 1px solid var(--oro-manifesto);
+  color: var(--oro-manifesto);
+  padding: 10px 25px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  transition: all 0.3s;
+  border-radius: 5px;
+}
+.cookie-btn:hover {
+  background: var(--oro-manifesto);
+  color: #0a0c14;
+}
+.accept-btn {
+  background: var(--oro-manifesto);
+  color: #0a0c14;
+  font-weight: bold;
+}
+
+/* ANIMAZIONI KEYFRAMES */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
