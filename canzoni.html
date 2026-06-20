@@ -22,7 +22,7 @@
   <!-- Il tuo stile personale (globale, desktop) -->
   <link rel="stylesheet" href="css/stile.css"> 
   
-  <!-- Stile mobile specifico (ASSICURATI CHE IL NOME SIA CORRETTO: canzoni.mobile.css) -->
+  <!-- Stile mobile specifico -->
   <link rel="stylesheet" href="css/canzoni.mobile.css" media="(max-width: 768px)">
   
   <!-- STILI SPECIFICI PER LA PAGINA CANZONI (Desktop) -->
@@ -147,6 +147,7 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       backdrop-filter: blur(5px);
+      cursor: pointer;
     }
 
     #searchInput:focus {
@@ -184,6 +185,7 @@
       border-bottom: 1px solid rgba(248, 213, 158, 0.1);
       transition: background 0.2s;
       font-size: 1rem;
+      text-align: left;
     }
 
     .search-item:last-child { border-bottom: none; }
@@ -224,7 +226,7 @@
 
     <!-- BARRA DI RICERCA -->
     <div class="search-box-container">
-      <input type="text" id="searchInput" placeholder="🔍 Cerca artista o canzone..." autocomplete="off">
+      <input type="text" id="searchInput" placeholder="🔍 Clicca qui per vedere tutte le canzoni..." autocomplete="off">
       <div id="searchResults" class="search-results"></div>
     </div>
 
@@ -352,63 +354,79 @@
     });
   </script>
 
-  <!-- SCRIPT RICERCA CANZONI -->
-    <!-- SCRIPT RICERCA CANZONI (LEGGE DA JSON) -->
-    <script>
-      let songsDB = []; // Database vuoto inizialmente
-  
-      // Carica il database dal file esterno
-      fetch('canzoni-db.json')
-        .then(response => response.json())
-        .then(data => {
-          songsDB = data; // Salva i dati letti
-          console.log("Database canzoni caricato:", songsDB.length, "brani trovati.");
-        })
-        .catch(error => console.error('Errore nel caricamento del database canzoni:', error));
-  
-      const searchInput = document.getElementById('searchInput');
-      const resultsBox = document.getElementById('searchResults');
-  
-      if (searchInput && resultsBox) {
-        searchInput.addEventListener('input', function() {
-          // Se il database non è ancora caricato, non fare nulla
-          if (songsDB.length === 0) return;
-  
-          const query = this.value.toLowerCase().trim();
-          resultsBox.innerHTML = '';
-          
-          if (query.length < 2) { 
-            resultsBox.style.display = 'none'; 
-            return; 
-          }
-  
-          // Cerca nel database caricato
-          const matches = songsDB.filter(song => 
-            song.title.toLowerCase().includes(query) || 
-            song.artist.toLowerCase().includes(query)
-          );
-  
-          if (matches.length > 0) {
-            matches.forEach(song => {
-              const link = document.createElement('a');
-              link.href = `${song.url}?canzone=${encodeURIComponent(song.search)}`;
-              link.className = 'search-item';
-              link.innerHTML = `<strong>${song.title}</strong> - ${song.artist}`;
-              resultsBox.appendChild(link);
-            });
-            resultsBox.style.display = 'block';
-          } else {
-            resultsBox.innerHTML = '<div class="no-results">Nessuna canzone trovata 😢</div>';
-            resultsBox.style.display = 'block';
-          }
-        });
-  
-        document.addEventListener('click', function(e) {
-          if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
-            resultsBox.style.display = 'none';
-          }
-        });
+  <!-- SCRIPT RICERCA CANZONI POTENZIATO (LEGGE DA JSON E MOSTRA TUTTO AL CLICK) -->
+  <script>
+    let songsDB = []; // Database vuoto inizialmente
+
+    // Carica il database dal file esterno
+    fetch('canzoni-db.json')
+      .then(response => response.json())
+      .then(data => {
+        songsDB = data; // Salva i dati letti
+        console.log("✅ Database canzoni caricato:", songsDB.length, "brani trovati.");
+      })
+      .catch(error => console.error('❌ Errore nel caricamento del database canzoni:', error));
+
+    const searchInput = document.getElementById('searchInput');
+    const resultsBox = document.getElementById('searchResults');
+
+    // Funzione per mostrare i risultati
+    function showResults(query) {
+      resultsBox.innerHTML = '';
+      
+      // Se la query è vuota, mostriamo TUTTE le canzoni (La magia!)
+      let matches = [];
+      if (!query || query.trim() === '') {
+        matches = songsDB; 
+      } else {
+        // Altrimenti filtriamo come facevi prima
+        const lowerQuery = query.toLowerCase().trim();
+        matches = songsDB.filter(song => 
+          song.title.toLowerCase().includes(lowerQuery) || 
+          song.artist.toLowerCase().includes(lowerQuery)
+        );
       }
-    </script>
+
+      if (matches.length > 0) {
+        matches.forEach(song => {
+          const link = document.createElement('a');
+          link.href = `${song.url}?canzone=${encodeURIComponent(song.search)}`;
+          link.className = 'search-item';
+          // Mostriamo Titolo e Artista in modo chiaro
+          link.innerHTML = `<strong>${song.title}</strong> <span style="opacity:0.7">di ${song.artist}</span>`;
+          resultsBox.appendChild(link);
+        });
+        resultsBox.style.display = 'block';
+      } else {
+        resultsBox.innerHTML = '<div class="no-results">Nessuna canzone trovata 😢</div>';
+        resultsBox.style.display = 'block';
+      }
+    }
+
+    if (searchInput && resultsBox) {
+      
+      // 1. Quando l'utente SCRIVE
+      searchInput.addEventListener('input', function() {
+        if (songsDB.length === 0) return; // Aspetta che il DB sia caricato
+        showResults(this.value);
+      });
+
+      // 2. QUANDO L'UTENTE CLICCA SULLA CASELLA (La novità!)
+      searchInput.addEventListener('click', function() {
+        if (songsDB.length === 0) return;
+        // Se la casella è vuota o ha poco testo, mostriamo tutto!
+        if (this.value.length < 2) {
+          showResults(''); 
+        }
+      });
+
+      // Chiudi la lista se clicchi fuori
+      document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+          resultsBox.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
