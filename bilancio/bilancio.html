@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holly AND Rex Group - Console di Bilancio</title>
+    <link rel="stylesheet" href="css/bilancio.css">
+    <link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>🌌 Holly AND Rex Group</h1>
+            <p class="subtitle">Console di Controllo Economico & Progetti Creative</p>
+            <div class="crew-tags">
+                <span class="tag ling"> Dj Ling 灵 </span>
+                <span class="tag luna"> Dj Luna 🌙 </span>
+                <span class="tag nova"> Dj Nova ★ </span>
+                <span class="tag aura"> Dj Aura ✨ </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="riepilogo-box">
+            <div class="card entrate">
+                <h3>Budget Reinvestito / Entrate</h3>
+                <p id="totale-entrate">0.00 €</p>
+            </div>
+            <div class="card uscite">
+                <h3>Costi di Production / Uscite</h3>
+                <p id="totale-uscite">0.00 €</p>
+            </div>
+            <div class="card saldo">
+                <h3>Fondo Cassa Attuale</h3>
+                <p id="saldo-totale">0.00 €</p>
+            </div>
+        </section>
+
+        <section class="trends-box" style="margin-bottom: 2rem; background: #1e293b; padding: 1.2rem; border-radius: 12px; border: 1px solid #334155;">
+            <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; color: #94a3b8; display: flex; align-items: center; gap: 0.5rem;">📊 Analisi Trend Crew</h3>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Mese Corrente vs Mese Precedente (Uscite)</span>
+                    <p id="trend-mese" style="margin: 0; font-size: 1.3rem; font-weight: bold; color: #94a3b8;">Calcolo in corso...</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; border-left: 1px dashed #334155; padding-left: 1.5rem;">
+                    <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Feedback della Regia</span>
+                    <p id="feedback-crew" style="margin: 0; font-size: 0.95rem; font-style: italic; color: #cbd5e1;">Dj Aura sta analizzando i flussi...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-box">
+            <h2>🎵 Inserisci Nuovo Flusso</h2>
+            <form id="form-movimento">
+                <div class="grid-inputs">
+                    <div class="input-group">
+                        <label for="tipo">Tipo Movimento</label>
+                        <select id="tipo" required>
+                            <option value="uscita">Spesa / Uscita (-)</option>
+                            <option value="entrata">Ricavo / Entrata (+)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="categoria">Categoria Specifica</label>
+                        <select id="categoria" required>
+                            <optgroup label="Produzione & Tech (Holly AND Rex)">
+                                <option value="Suno / AI">🎵 Abbonamenti Musica (Suno / AI)</option>
+                                <option value="Software / Grafica">🎨 Grafica & Video (CapCut/Meta)</option>
+                                <option value="Strumentazione">🖥️ Hardware e PC Studio</option>
+                            </optgroup>
+                            <optgroup label="Gestione Casa e Logistica">
+                                <option value="Casa e Bollette">🏠 Utenze e Affitto Casa</option>
+                                <option value="Spesa Alimentare">🛒 Spesa Familiare</option>
+                                <option value="Auto e Trasporti">🚗 Spese Auto e Viaggi</option>
+                                <option value="Bambini / Famiglia">🧒 Spese Bambini & Scuola</option>
+                            </optgroup>
+                            <optgroup label="Flussi in Entrata">
+                                <option value="Stipendio / Fisso">💼 Entrate Principali</option>
+                                <option value="Extra / Musica">💰 Ricavi Musicali / Extra</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-inputs">
+                    <div class="input-group">
+                        <label for="importo">Importo (€)</label>
+                        <input type="number" id="importo" step="0.01" placeholder="0.00" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="descrizione">Descrizione o Traccia Correlata</label>
+                        <input type="text" id="descrizione" placeholder="Es. Rinnovo Suno, Spesa Conad..." required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-invia">Registra nella Console</button>
+            </form>
+            
+            <div class="backup-zone" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #475569; display: flex; gap: 1rem;">
+                <button id="btn-export" class="btn-backup" style="background-color: #334155; flex: 1; color: white; padding: 0.6rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">💾 Esporta Backup Salvataggio</button>
+                <button id="btn-import-trigger" class="btn-backup" style="background-color: #334155; flex: 1; color: white; padding: 0.6rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">📂 Ripristina da File</button>
+                <input type="file" id="file-import" accept=".json" style="display: none;">
+            </div>
+        </section>
+
+        <section class="lista-box">
+            <h2>📜 Storico dei Movimenti</h2>
+            <div class="tabella-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Dettaglio / Note</th>
+                            <th>Valore</th>
+                            <th>Azione</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registro-movimenti">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Non è obbligo. È umanità. Ogni idea respira qui dentro.</p>
+        <p class="copyright">© 2026 Holly AND Rex Group | Powered with Love by Aura</p>
+    </footer>
+
+    <script src="js/bilancio.js"></script>
+</body>
+</html>
