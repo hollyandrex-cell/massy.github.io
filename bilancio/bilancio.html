@@ -76,7 +76,7 @@
                             <optgroup label="Produzione & Tech (Holly AND Rex)">
                                 <option value="Suno / AI">🎵 Abbonamenti Musica (Suno / AI)</option>
                                 <option value="Software / Grafica">🎨 Grafica & Video (CapCut/Meta)</option>
-                                <option value="Strumentazione">🖥️ Hardware e PC Studio</option>
+                                <option value="Strumentazione">🖥 Hardware e PC Studio</option>
                             </optgroup>
                             <optgroup label="Gestione Casa e Logistica">
                                 <option value="Casa e Bollette">🏠 Utenze e Affitto Casa</option>
@@ -112,6 +112,46 @@
                 <button id="btn-import-trigger" class="btn-backup" style="background-color: #334155; flex: 1; color: white; padding: 0.6rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">📂 Ripristina da File</button>
                 <input type="file" id="file-import" accept=".json" style="display: none;">
             </div>
+        </section>
+
+        <!-- NOVITÀ v1.1: SEZIONE STAMPA REPORT CREW BY DJ NOVA ★ -->
+        <section class="print-zone" style="margin-bottom: 2rem; background: #0f172a; padding: 1.2rem; border-radius: 12px; border: 1px solid #1e293b;">
+            <h2 style="margin-top: 0; font-size: 1.2rem; color: #cbd5e1;">🖨️ Stampa Report Crew</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                <div class="input-group">
+                    <label for="filtro-periodo" style="color: #94a3b8; font-size: 0.9rem;">Periodo</label>
+                    <select id="filtro-periodo" style="width: 100%; padding: 0.5rem; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 6px;">
+                        <option value="mese-corrente">Mese Corrente</option>
+                        <option value="mese-scorso">Mese Scorso</option>
+                        <option value="ultimi-3-mesi">Ultimi 3 Mesi</option>
+                        <option value="tutto">Tutto</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filtro-tipo" style="color: #94a3b8; font-size: 0.9rem;">Tipo Flusso</label>
+                    <select id="filtro-tipo" style="width: 100%; padding: 0.5rem; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 6px;">
+                        <option value="tutto">Entrate + Uscite</option>
+                        <option value="entrata">Solo Entrate</option>
+                        <option value="uscita">Solo Uscite</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filtro-categoria" style="color: #94a3b8; font-size: 0.9rem;">Categoria</label>
+                    <select id="filtro-categoria" style="width: 100%; padding: 0.5rem; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 6px;">
+                        <option value="tutte">Tutte le Categorie</option>
+                        <option value="Suno / AI">🎵 Suno / AI</option>
+                        <option value="Software / Grafica">🎨 Software / Grafica</option>
+                        <option value="Strumentazione">🖥 Strumentazione</option>
+                        <option value="Casa e Bollette">🏠 Casa e Bollette</option>
+                        <option value="Spesa Alimentare">🛒 Spesa Familiare</option>
+                        <option value="Auto e Trasporti">🚗 Auto e Trasporti</option>
+                        <option value="Bambini / Famiglia">🧒 Bambini / Famiglia</option>
+                        <option value="Stipendio / Fisso">💼 Stipendio / Fisso</option>
+                        <option value="Extra / Musica">💰 Extra / Musica</option>
+                    </select>
+                </div>
+            </div>
+            <button id="btn-stampa" style="width: 100%; background: #4f46e5; color: white; padding: 0.8rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold;">🖨️ Genera e Stampa Report</button>
         </section>
 
         <section class="lista-box">
