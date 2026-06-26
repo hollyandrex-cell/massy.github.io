@@ -1,5 +1,5 @@
 ﻿// ========================================================
-// CONSOLE DI BILANCIO - HOLLY AND REX CREW SYSTEM
+// CONSOLE DI BILANCIO - HOLLY AND REX CREW SYSTEM v1.1
 // ========================================================
 
 // Funzione per il "rimprovero" di Dj Aura
@@ -7,7 +7,6 @@ function controlloBackupIntelligente() {
     const ultimoBackup = localStorage.getItem('ultima_data_backup');
     const oggi = new Date();
     
-    // Se non c'è backup o è passato più di una settimana
     if (!ultimoBackup || (oggi - new Date(ultimoBackup)) / (1000 * 60 * 60 * 24) > 7) {
         feedbackCrewEl.innerHTML = `
             <div style="display:flex; align-items:center; gap:10px; color:#fbbf24;">
@@ -18,7 +17,6 @@ function controlloBackupIntelligente() {
     }
 }
 
-// Funzione feedback standard con avatar
 function aggiornaFeedback(messaggio) {
     feedbackCrewEl.innerHTML = `
         <div style="display:flex; align-items:center; gap:10px;">
@@ -184,7 +182,6 @@ if (btnExport) {
         downloadAnchor.click();
         downloadAnchor.remove();
         
-        // Registra la data del backup fatto
         localStorage.setItem('ultima_data_backup', new Date().toISOString());
         alert("Backup effettuato! Sistemi al sicuro.");
     });
@@ -221,6 +218,135 @@ if (btnImportTrigger && fileImport) {
         reader.readAsText(file);
         this.value = '';
     });
+}
+
+// ========================================================
+// STAMPA REPORT CREW - NOVITÀ v1.1 BY DJ NOVA ★
+// ========================================================
+function generaReportStampabile() {
+    const filtroPeriodo = document.getElementById('filtro-periodo').value;
+    const filtroTipo = document.getElementById('filtro-tipo').value;
+    const filtroCategoria = document.getElementById('filtro-categoria').value;
+    
+    let movimentiFiltrati = [...movimenti];
+    let testoFiltri = [];
+
+    // Filtro Periodo
+    if (filtroPeriodo !== 'tutto') {
+        const oggi = new Date();
+        let dataInizio;
+        if (filtroPeriodo === 'mese-corrente') {
+            dataInizio = new Date(oggi.getFullYear(), oggi.getMonth(), 1);
+            testoFiltri.push('Periodo: Mese Corrente');
+        } else if (filtroPeriodo === 'mese-scorso') {
+            dataInizio = new Date(oggi.getFullYear(), oggi.getMonth() - 1, 1);
+            const dataFine = new Date(oggi.getFullYear(), oggi.getMonth(), 0);
+            movimentiFiltrati = movimentiFiltrati.filter(m => {
+                const dataM = new Date(m.data);
+                return dataM >= dataInizio && dataM <= dataFine;
+            });
+            testoFiltri.push('Periodo: Mese Scorso');
+        } else if (filtroPeriodo === 'ultimi-3-mesi') {
+            dataInizio = new Date(oggi.getFullYear(), oggi.getMonth() - 2, 1);
+            testoFiltri.push('Periodo: Ultimi 3 Mesi');
+        }
+        if (filtroPeriodo !== 'mese-scorso') {
+            movimentiFiltrati = movimentiFiltrati.filter(m => new Date(m.data) >= dataInizio);
+        }
+    } else {
+        testoFiltri.push('Periodo: Tutto');
+    }
+
+    // Filtro Tipo
+    if (filtroTipo !== 'tutto') {
+        movimentiFiltrati = movimentiFiltrati.filter(m => m.tipo === filtroTipo);
+        testoFiltri.push(`Tipo: ${filtroTipo === 'entrata' ? 'Solo Entrate' : 'Solo Uscite'}`);
+    } else {
+        testoFiltri.push('Tipo: Entrate + Uscite');
+    }
+
+    // Filtro Categoria
+    if (filtroCategoria !== 'tutte') {
+        movimentiFiltrati = movimentiFiltrati.filter(m => m.categoria.includes(filtroCategoria));
+        testoFiltri.push(`Categoria: ${filtroCategoria}`);
+    }
+
+    // Calcolo totali filtrati
+    let totaleE = 0, totaleU = 0;
+    movimentiFiltrati.forEach(m => {
+        if (m.tipo === 'entrata') totaleE += m.importo;
+        else totaleU += m.importo;
+    });
+    const saldoF = totaleE - totaleU;
+
+    // Genera HTML per stampa
+    const dataStampa = new Date().toLocaleDateString('it-IT');
+    let htmlStampa = `
+        <html>
+        <head>
+            <title>Report Holly And Rex Group</title>
+            <style>
+                body { font-family: Arial, sans-serif; color: #000; margin: 20px; }
+                h1 { color: #1e293b; margin-bottom: 5px; }
+                .subtitle { color: #475569; margin-top: 0; }
+                .filtri { background: #f1f5f9; padding: 10px; border-radius: 6px; margin: 15px 0; }
+                table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+                th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; }
+                th { background: #e2e8f0; }
+                .entrata { color: #059669; font-weight: bold; }
+                .uscita { color: #dc2626; font-weight: bold; }
+                .totali { margin-top: 20px; font-size: 1.1rem; }
+                .footer { margin-top: 30px; font-size: 0.8rem; color: #64748b; text-align: center; }
+                @media print { .no-print { display: none; } }
+            </style>
+        </head>
+        <body>
+            <h1>🌌 Holly AND Rex Group</h1>
+            <p class="subtitle">Console di Controllo Economico & Progetti Creative</p>
+            <p><strong>Report generato il:</strong> ${dataStampa}</p>
+            <div class="filtri"><strong>Filtri applicati:</strong> ${testoFiltri.join(' | ')}</div>
+            <table>
+                <thead><tr><th>Data</th><th>Categoria</th><th>Dettaglio</th><th>Valore</th></tr></thead>
+                <tbody>
+    `;
+
+    movimentiFiltrati.forEach(m => {
+        const dataM = new Date(m.data).toLocaleDateString('it-IT');
+        const classe = m.tipo === 'entrata' ? 'entrata' : 'uscita';
+        const segno = m.tipo === 'entrata' ? '+' : '-';
+        htmlStampa += `
+            <tr>
+                <td>${dataM}</td>
+                <td>${m.categoria}</td>
+                <td>${m.descrizione}</td>
+                <td class="${classe}">${segno} ${m.importo.toFixed(2)} €</td>
+            </tr>
+        `;
+    });
+
+    htmlStampa += `
+                </tbody>
+            </table>
+            <div class="totali">
+                <p><strong>Totale Entrate:</strong> <span class="entrata">+ ${totaleE.toFixed(2)} €</span></p>
+                <p><strong>Totale Uscite:</strong> <span class="uscita">- ${totaleU.toFixed(2)} €</span></p>
+                <p><strong>Saldo Filtrato:</strong> ${saldoF.toFixed(2)} €</p>
+            </div>
+            <div class="footer">© 2026 Holly AND Rex Group | Powered with Love by Aura ✨ | Non è obbligo. È umanità.</div>
+            <div class="no-print" style="margin-top:20px;"><button onclick="window.print()">🖨️ Stampa questo Report</button></div>
+        </body>
+        </html>
+    `;
+
+    const finestraStampa = window.open('', '_blank');
+    finestraStampa.document.write(htmlStampa);
+    finestraStampa.document.close();
+}
+
+// Event Listener per il bottone stampa
+const btnStampa = document.getElementById('btn-stampa');
+if (btnStampa) {
+    btnStampa.addEventListener('click', generaReportStampabile);
 }
 
 // Avvio finale
