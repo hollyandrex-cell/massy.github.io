@@ -10,32 +10,33 @@
     body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Cormorant Garamond', serif; margin: 0; padding: 20px; min-height: 100vh; }
     h1, h2 { font-family: 'Playfair Display', serif; text-align: center; color: var(--text-color); }
     
-    .container { max-width: 1200px; margin: 0 auto; }
+   .container { max-width: 1200px; margin: 0 auto; }
     
     /* Header */
-    .header-dash { border-bottom: 1px solid rgba(248, 213, 158, 0.3); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-    .btn-group { display: flex; gap: 10px; }
-    .btn { text-decoration: none; color: var(--bg-color); background: var(--text-color); padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: all 0.3s; border: none; cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 1em; }
-    .btn:hover { background: #fff; transform: translateY(-2px); }
-    .btn-outline { background: transparent; border: 1px solid var(--text-color); color: var(--text-color); }
-    .btn-outline:hover { background: var(--text-color); color: var(--bg-color); }
+   .header-dash { border-bottom: 1px solid rgba(248, 213, 158, 0.3); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+   .btn-group { display: flex; gap: 10px; }
+   .btn { text-decoration: none; color: var(--bg-color); background: var(--text-color); padding: 10px 20px; border-radius: 5px; font-weight: bold; transition: all 0.3s; border: none; cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 1em; }
+   .btn:hover { background: #fff; transform: translateY(-2px); }
+   .btn-outline { background: transparent; border: 1px solid var(--text-color); color: var(--text-color); }
+   .btn-outline:hover { background: var(--text-color); color: var(--bg-color); }
 
     /* Tabella */
-    .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid rgba(248, 213, 158, 0.2); }
+   .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid rgba(248, 213, 158, 0.2); }
     table { width: 100%; border-collapse: collapse; min-width: 800px; }
     th { text-align: left; padding: 15px; border-bottom: 2px solid var(--text-color); font-family: 'Playfair Display', serif; font-size: 1.1em; }
     td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
     tr:hover { background: rgba(255,255,255,0.05); }
     
-    .video-title { font-weight: bold; color: #fff; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
-    .stat-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); font-size: 0.9em; margin-right: 5px; }
-    .icon { margin-right: 5px; }
+   .video-title { font-weight: bold; color: #fff; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+   .stat-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); font-size: 0.9em; margin-right: 5px; }
+   .icon { margin-right: 5px; }
 
     /* Loading */
     #loading { text-align: center; padding: 50px; font-size: 1.5em; font-style: italic; }
-    .progress-bar { width: 100%; background: #333; height: 10px; border-radius: 5px; margin-top: 20px; overflow: hidden; display: none; }
-    .progress-fill { height: 100%; background: var(--text-color); width: 0%; transition: width 0.3s; }
+   .progress-bar { width: 100%; background: #333; height: 10px; border-radius: 5px; margin-top: 20px; overflow: hidden; display: none; }
+   .progress-fill { height: 100%; background: var(--text-color); width: 0%; transition: width 0.3s; }
+   .error-msg { color: #ff6b6b; font-weight: bold; margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -62,7 +63,7 @@
           <tr>
             <th>Titolo Video</th>
             <th>Data Pubblicazione</th>
-            <th>👁️ Views</th>
+            <th>👁 Views</th>
             <th>👍 Like</th>
             <th>💬 Commenti</th>
             <th>🔗 Link</th>
@@ -76,36 +77,27 @@
   </div>
 
   <script>
-    // CONFIGURAZIONE
+    // CONFIGURAZIONE - FIXATA DA DJ NOVA ★
     const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg'; 
-    const CHANNEL_HANDLE = 'Holly-Rex'; 
+    const CHANNEL_ID = 'UCBdR3NIghYwEfciAMRQV4Qg'; // ← ID FISSO, ZERO SPRECHI
     let videoDataGlobal = []; 
 
     async function fetchAllVideos() {
       let allVideos = [];
       let nextPageToken = '';
-      let channelId = '';
       
       try {
-        // 1. Ottieni ID Canale
-        const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
-        const resChannel = await fetch(urlChannel);
-        const dataChannel = await resChannel.json();
-        
-        if (!dataChannel.items || dataChannel.items.length === 0) throw new Error("Canale non trovato");
-        channelId = dataChannel.items[0].id;
-
-        // 2. CICLO DI PAGINAZIONE (Prende tutti i video)
+        // 1. CICLO DI PAGINAZIONE - Ora usiamo direttamente CHANNEL_ID
         do {
-          // Aggiorna barra di caricamento
           updateProgress(allVideos.length);
 
-          // Chiede 50 video per volta (massimo consentito)
-          const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=50&pageToken=${nextPageToken}&key=${API_KEY}`;
+          // Chiede 50 video per volta usando l'ID fisso
+          const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=50&pageToken=${nextPageToken}&key=${API_KEY}`;
           const resSearch = await fetch(urlSearch);
           const dataSearch = await resSearch.json();
 
-          if (!dataSearch.items) break;
+          if (dataSearch.error) throw new Error(`API Error: ${dataSearch.error.message}`);
+          if (!dataSearch.items || dataSearch.items.length === 0) break;
 
           const videoIds = dataSearch.items.map(item => item.id.videoId).join(',');
 
@@ -114,18 +106,21 @@
           const resStats = await fetch(urlStats);
           const dataStats = await resStats.json();
 
+          if (dataStats.error) throw new Error(`API Error: ${dataStats.error.message}`);
+
           // Aggiungi i video trovati alla lista totale
           allVideos = allVideos.concat(dataStats.items);
 
           // Prepara il token per la prossima pagina (se esiste)
           nextPageToken = dataSearch.nextPageToken || '';
 
-        } while (nextPageToken); // Continua finché YouTube dice "c'è ancora qualcosa"
+        } while (nextPageToken); 
 
+        if (allVideos.length === 0) throw new Error("Nessun video trovato sul canale");
         renderTable(allVideos);
 
       } catch (error) {
-        document.getElementById('loading').innerText = "Errore critico: " + error.message;
+        document.getElementById('loading').innerHTML = `Errore critico: ${error.message}<br><div class="error-msg">Controlla la API Key o la quota su Google Cloud Console</div>`;
         console.error(error);
       }
     }
@@ -134,9 +129,7 @@
       const bar = document.getElementById('prog-bar');
       const fill = document.getElementById('prog-fill');
       bar.style.display = 'block';
-      // Stima approssimativa della percentuale (non sappiamo il totale esatto prima di finire)
-      // Ma mostriamo almeno che sta lavorando
-      let width = Math.min((count / 50) * 100, 90); 
+      let width = Math.min((count / 54) * 100, 95); 
       fill.style.width = width + '%';
     }
 
@@ -146,14 +139,14 @@
       videoDataGlobal = [];
 
       videos.forEach(video => {
-        const stats = video.statistics;
+        const stats = video.statistics || {};
         const snippet = video.snippet;
         const date = new Date(snippet.publishedAt).toLocaleDateString('it-IT');
         
         videoDataGlobal.push({
           Titolo: snippet.title,
           Data: date,
-          Views: stats.viewCount,
+          Views: stats.viewCount || 0,
           Like: stats.likeCount || 0,
           Commenti: stats.commentCount || 0,
           Link: `https://www.youtube.com/watch?v=${video.id}`
@@ -163,8 +156,8 @@
           <tr>
             <td><span class="video-title" title="${snippet.title}">${snippet.title}</span></td>
             <td>${date}</td>
-            <td><span class="stat-badge">️ ${parseInt(stats.viewCount).toLocaleString('it-IT')}</span></td>
-            <td><span class="stat-badge"> ${parseInt(stats.likeCount || 0).toLocaleString('it-IT')}</span></td>
+            <td><span class="stat-badge">👁 ${parseInt(stats.viewCount || 0).toLocaleString('it-IT')}</span></td>
+            <td><span class="stat-badge">👍 ${parseInt(stats.likeCount || 0).toLocaleString('it-IT')}</span></td>
             <td><span class="stat-badge">💬 ${parseInt(stats.commentCount || 0).toLocaleString('it-IT')}</span></td>
             <td><a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" style="color:#f8d59e;">Guarda ▶</a></td>
           </tr>
@@ -182,7 +175,7 @@
       const headers = ["Titolo", "Data", "Visualizzazioni", "Like", "Commenti", "Link"];
       const csvRows = [headers.join(";")];
       videoDataGlobal.forEach(row => {
-        const values = [`"${row.Titolo}"`, row.Data, row.Views, row.Like, row.Commenti, row.Link];
+        const values = [`"${row.Titolo.replace(/"/g, '""')}"`, row.Data, row.Views, row.Like, row.Commenti, row.Link];
         csvRows.push(values.join(";"));
       });
       const csvContent = csvRows.join("\n");
