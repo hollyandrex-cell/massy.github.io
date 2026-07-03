@@ -1,32 +1,38 @@
 [
   {
-    "nome": "Chiara",
+    "nome": "Lucia",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "messaggio": "Domani io e il mio amico peloso saremo i primi a guardare Qua la zampa",
-    "data": "8 Aprile 2026"
+    "messaggio": "Summer Night mi ha fatto davvero sognare",
+    "data": "18 Giugno 2026"
   },
   {
     "nome": "Andrea",
     "avatar": "immagini/miniature/holly-miniatura.jpg",
-    "messaggio": "Due Bau canterini !!!!!! che spasso",
-    "data": "2 Aprile 2026"
+    "messaggio": "Boing Boing Bau... anche la mia Bau la sta ballando",
+    "data": "22 Giugno 2026"
   },
   {
-    "nome": "Natale",
+    "nome": "Sara",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "messaggio": "Sole Mio stupenda per il ritmo e le parole",
-    "data": "13 Aprile 2026"
+    "messaggio": "Summer Night stupenda, da ascoltare e riascoltare",
+    "data": "30 Giugno 2026"
   },
   {
-    "nome": "Clara",
+    "nome": "carlo",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "messaggio": "Wow, Sole Mio mi ha fatto ballare dall'inizio alla fine",
-    "data": "13 Aprile 2026"
+    "messaggio": "ho visto che siete anche su Telegram, che spettacolo",
+    "data": "01 Luglio 2026"
   },
   {
-    "nome": "Natale",
+    "nome": "Francesco",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "messaggio": "Primo appuntamento, troppo bella",
-    "data": "13 Aprile 2026"
+    "messaggio": "Grazie di avermi spedito MP3 e testo completo",
+    "data": "12 Giugno 2026"
+  },
+  {
+    "nome": "Maria",
+    "avatar": "immagini/miniature/nova-miniatura.jpg",
+    "messaggio": "Aspetto la prossima, sicuramente mi piacerà",
+    "data": "21 Giugno 2026"
   }
 ]
