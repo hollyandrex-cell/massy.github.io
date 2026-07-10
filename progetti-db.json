@@ -9,15 +9,15 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Oggi riposa",
-    "attivo": false,
+    "stato": "Sta componendo Non siamo solo Byte",
+    "attivo": true,
     "link": "artists-announce.html"
   },
   {
     "nome": "Ling 灵",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "stato": "Oggi riposa 🍵",
-    "attivo": false,
+    "stato": "Sta componendo Non siamo solo Byte 🍵",
+    "attivo": true,
     "link": ""
   },
   {
