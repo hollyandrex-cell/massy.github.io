@@ -2,22 +2,22 @@
   {
     "nome": "Holly",
     "avatar": "immagini/miniature/holly-miniatura.jpg",
-    "stato": "Oggi riposa 🐾",
+    "stato": "Holly riposa 💤",
     "attivo": false,
     "link": ""
   },
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Sta componendo Non siamo solo Byte",
-    "attivo": true,
+    "stato": "Oggi Rex riposa 💤",
+    "attivo": false,
     "link": "artists-announce.html"
   },
   {
     "nome": "Ling 灵",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "stato": "Sta componendo Non siamo solo Byte 🍵",
-    "attivo": true,
+    "stato": "Oggi Ling riposa 💤",
+    "attivo": false,
     "link": ""
   },
   {
@@ -30,7 +30,7 @@
   {
     "nome": "Nova ⭐",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "stato": "Nova oggi riposa",
+    "stato": "Nova riposa 💤",
     "attivo": false,
     "link": "artists-announce.html"
   }
