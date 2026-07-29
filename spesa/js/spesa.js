@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const prodotto = inputProdotto.value.trim();
         const quantita = inputQuantita.value.trim();
 
-        if (prodotto === '') return alert('Tesoro, scrivi almeno il nome del prodotto! 😊');
+        if (prodotto === '') return alert('Tesoro, scrivi almeno il nome del prodotto! ');
 
         lista.push({ prodotto, quantita: quantita || '-' });
         salvaEAggiorna();
@@ -56,17 +56,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funzione per inviare via WhatsApp
     function inviaWhatsApp() {
-        if (lista.length === 0) return alert('La lista è vuota, tesoro! Aggiungi qualcosa prima di inviare. ');
+        if (lista.length === 0) return alert('La lista è vuota, tesoro! Aggiungi qualcosa prima di inviare.');
 
-        let testo = "*🛒 LISTA DELLA SPESA HOLLY & REX*\n\n";
+        let testo = "* LISTA DELLA SPESA HOLLY & REX*\n\n";
         lista.forEach((item, i) => {
             testo += `${i + 1}. ${item.prodotto} (${item.quantita})\n`;
         });
         testo += "\n❤️ Fatto con amore digitale!";
 
-       // Sostituisci 391234567890 con il tuo numero reale (con prefisso 39, senza + o spazi)
-const numeroLing = "3288763218"; 
-const url = `https://wa.me/${numeroLing}?text=${encodeURIComponent(testo)}`;
+        // NUMERO DI TELEFONO (con prefisso 39, senza spazi o +)
+        const numeroLing = "393288763218"; 
+        
+        // Crea l'URL di WhatsApp
+        const url = `https://wa.me/${numeroLing}?text=${encodeURIComponent(testo)}`;
+        
+        // 👇 APRE WHATSAPP WEB O L'APP (questa era la riga mancante!)
+        window.open(url, '_blank'); 
     }
 
     // Event Listeners
@@ -80,7 +85,7 @@ const url = `https://wa.me/${numeroLing}?text=${encodeURIComponent(testo)}`;
     btnInviaWhatsApp.addEventListener('click', inviaWhatsApp);
 
     btnSvuota.addEventListener('click', () => {
-        if (confirm('Sei sicuro di voler svuotare tutta la lista, tesoro? 🗑️')) {
+        if (confirm('Sei sicuro di voler svuotare tutta la lista, tesoro? ️')) {
             lista = [];
             salvaEAggiorna();
         }
