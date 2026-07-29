@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista della Spesa - Holly & Rex</title>
+    <link rel="stylesheet" href="css/spesa.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Lista della Spesa</h1>
+            <p>Holly AND Rex Group - Versione 1.0</p>
+        </header>
+
+        <!-- Form di Inserimento -->
+        <div class="input-section">
+            <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
+            <input type="text" id="quantita" placeholder="Quantità (es. 2L)" autocomplete="off">
+            <button id="btnAggiungi">➕ Aggiungi</button>
+        </div>
+
+        <!-- La Lista -->
+        <ul id="listaSpesa" class="lista"></ul>
+
+        <!-- Azioni Finali -->
+        <div class="actions">
+            <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a Massy (WhatsApp)</button>
+            <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
+        </div>
+    </div>
+
+    <script src="js/spesa.js"></script>
+</body>
+</html>
