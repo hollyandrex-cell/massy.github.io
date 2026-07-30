@@ -14,7 +14,8 @@
             --danger-color: #ef4444;
             --warning-color: #f59e0b;
             --info-color: #3b82f6;
-            --mic-color: #ec4899; /* Rosa acceso per il microfono */
+            --mic-color: #ec4899; 
+            --mic-active: #be123c;
         }
 
         body {
@@ -70,10 +71,9 @@
 
         input:focus { border-color: var(--primary-color); }
 
-        /* NUOVO STILE PER I TASTI AZIONE */
         .action-buttons-row {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Due colonne uguali */
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             width: 100%;
             margin-top: 10px;
@@ -86,7 +86,7 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
-            transition: transform 0.1s, opacity 0.2s, background-color 0.2s;
+            transition: all 0.2s;
             color: white;
             display: flex;
             align-items: center;
@@ -96,9 +96,7 @@
 
         button:active { transform: scale(0.96); }
 
-        #btnAggiungi {
-            background-color: var(--primary-color);
-        }
+        #btnAggiungi { background-color: var(--primary-color); }
 
         #btnMic {
             background-color: var(--mic-color);
@@ -106,15 +104,22 @@
             overflow: hidden;
         }
 
-        /* Animazione quando ascolta */
+        /* Stato di ascolto attivo */
         #btnMic.listening {
-            animation: pulse-mic 1.5s infinite;
-            background-color: #be123c;
+            background-color: var(--mic-active);
+            animation: pulse-mic 2s infinite;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Feedback visivo quando ha aggiunto con successo */
+        #btnMic.success-flash {
+            background-color: var(--success-color);
+            transform: scale(1.05);
         }
 
         @keyframes pulse-mic {
             0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(236, 72, 153, 0); }
+            70% { box-shadow: 0 0 0 15px rgba(236, 72, 153, 0); }
             100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
 
@@ -162,7 +167,6 @@
         .btn-save { background-color: var(--warning-color); color: #000; }
         .btn-load { background-color: var(--info-color); }
 
-        /* Note Section */
         .notes-section {
             margin-top: 1.5rem;
             text-align: left;
@@ -200,10 +204,9 @@
     <div class="container">
         <header>
             <h1>🛒 Lista della Spesa</h1>
-            <p>Holly AND Rex Group - Versione 2.1 (Vocale & Note)</p>
+            <p>Holly AND Rex Group - Versione 2.1 (Flusso Continuo)</p>
         </header>
 
-        <!-- Form di Inserimento -->
         <div class="input-section">
             <div class="input-group">
                 <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
@@ -212,29 +215,24 @@
                 <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
             </div>
             
-            <!-- RIGA TASTI: AGGIUNGI + MICROFONO -->
             <div class="action-buttons-row">
                 <button id="btnAggiungi">➕ Aggiungi</button>
-                <button id="btnMic">🎤 Parla</button>
+                <button id="btnMic"> Parla</button>
             </div>
         </div>
 
-        <!-- La Lista -->
         <ul id="listaSpesa" class="lista"></ul>
 
-        <!-- Sezione Note -->
         <div class="notes-section">
             <label for="noteInput">📝 Note per Massy (opzionale):</label>
             <textarea id="noteInput" placeholder="Es. Prendi le buste, controlla scadenza..."></textarea>
         </div>
 
-        <!-- Azioni Principali -->
         <div class="actions">
             <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a Massy (WhatsApp)</button>
-            <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
+            <button id="btnSvuota" class="btn-danger">️ Svuota Lista</button>
         </div>
 
-        <!-- NUOVE AZIONI: SALVA E CARICA -->
         <div class="actions-extra">
             <button id="btnSalvaPreferita" class="btn-save">💾 Salva Preferita</button>
             <button id="btnCaricaPreferita" class="btn-load">📂 Carica Preferita</button>
@@ -242,7 +240,6 @@
     </div>
 
     <script>
-        // === LOGICA COMPLETA INTEGRATA ===
         const STORAGE_KEY = 'hollyRexSpesa_v2';
         const STORAGE_KEY_PREF = 'hollyRexSpesa_Preferita';
         
@@ -259,35 +256,43 @@
         const btnCarica = document.getElementById('btnCaricaPreferita');
         const noteInput = document.getElementById('noteInput');
         
-        // Setup Riconoscimento Vocale
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
         let isListening = false;
 
         if (SpeechRecognition) {
             recognition = new SpeechRecognition();
-            recognition.continuous = false; // Si ferma dopo una frase
+            // MODIFICA CHIAVE: Continuous = true per ascoltare più frasi
+            recognition.continuous = true; 
             recognition.lang = 'it-IT';
             recognition.interimResults = false;
 
             recognition.onstart = () => {
                 isListening = true;
                 btnMic.classList.add('listening');
-                btnMic.innerHTML = "👂 Ascolto...";
+                btnMic.innerHTML = " Stop"; // Cambia testo per indicare che cliccando si stoppa
             };
 
             recognition.onend = () => {
-                isListening = false;
-                btnMic.classList.remove('listening');
-                btnMic.innerHTML = "🎤 Parla";
+                // Se si è fermato da solo (errore o timeout), resetta lo stato
+                if (isListening) {
+                   // Riavvia automaticamente se era previsto fosse continuo ma si è interrotto
+                   try { recognition.start(); } catch(e){}
+                } else {
+                    // Se l'utente ha cliccato stop
+                    btnMic.classList.remove('listening');
+                    btnMic.innerHTML = "🎤 Parla";
+                }
             };
 
             recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript.trim();
-                console.log("Hai detto:", transcript);
+                // Prende l'ultimo risultato detto
+                const lastResultIndex = event.results.length - 1;
+                const transcript = event.results[lastResultIndex][0].transcript.trim();
                 
+                console.log("Detto:", transcript);
+
                 // Logica intelligente per separare prodotto e quantità
-                // Cerca parole chiave come "chili", "litri", "pezzi", "etto" o numeri
                 const quantityKeywords = /(\d+[.,]?\d*\s*(kg|g|l|ml|pz|pezzi|confezioni|scatole)|chili|litri|etti|pacchi)/i;
                 
                 let prodotto = transcript;
@@ -296,13 +301,10 @@
                 const match = transcript.match(quantityKeywords);
                 
                 if (match) {
-                    // Se trova una quantità, la separa
                     quantita = match[0];
                     prodotto = transcript.replace(match[0], "").trim();
-                    // Pulizia extra
                     prodotto = prodotto.replace(/,$/, "").replace(/\s+/g, " ");
                 } else {
-                    // Se non trova quantità esplicita, prova a prendere l'ultima parola come quantità se è un numero
                     const words = transcript.split(" ");
                     if (words.length > 1 && /\d/.test(words[words.length-1])) {
                         quantita = words.pop();
@@ -310,23 +312,34 @@
                     }
                 }
 
-                // Compila i campi
-                if (prodotto) inputProd.value = prodotto.charAt(0).toUpperCase() + prodotto.slice(1);
-                if (quantita) inputQta.value = quantita;
-
-                // Se abbiamo almeno un prodotto, aggiungiamo automaticamente dopo un breve delay
                 if (prodotto) {
+                    inputProd.value = prodotto.charAt(0).toUpperCase() + prodotto.slice(1);
+                    if (quantita) inputQta.value = quantita;
+                    
+                    // Aggiunge automaticamente
+                    aggiungiItem();
+                    
+                    // Feedback visivo "Successo" lampeggiante
+                    btnMic.classList.add('success-flash');
                     setTimeout(() => {
-                        aggiungiItem();
-                        // Opzionale: svuota le note se contenevano comandi? No, lasciamo stare per sicurezza.
-                    }, 600);
+                        btnMic.classList.remove('success-flash');
+                    }, 300);
                 }
             };
 
             recognition.onerror = (event) => {
                 console.error("Errore vocale:", event.error);
+                if(event.error === 'no-speech') {
+                    // Ignora se non sente nulla, resta in ascolto
+                    return;
+                }
+                // Per altri errori, fermiamo l'ascolto
+                isListening = false;
+                btnMic.classList.remove('listening');
                 btnMic.innerHTML = "❌ Riprova";
-                setTimeout(() => { btnMic.innerHTML = "🎤 Parla"; }, 2000);
+                setTimeout(() => { 
+                    if(!isListening) btnMic.innerHTML = "🎤 Parla"; 
+                }, 2000);
             };
 
             btnMic.addEventListener('click', () => {
@@ -337,14 +350,15 @@
                         console.error(e);
                     }
                 } else {
+                    isListening = false;
                     recognition.stop();
+                    btnMic.classList.remove('listening');
+                    btnMic.innerHTML = "🎤 Parla";
                 }
             });
 
         } else {
-            // Nascondi il microfono se non supportato
             btnMic.style.display = 'none';
-            // Rendi il tasto Aggiungi a tutta larghezza se non c'è il mic
             document.querySelector('.action-buttons-row').style.gridTemplateColumns = '1fr';
         }
 
@@ -372,7 +386,7 @@
                 lista.push({ nome, qta });
                 inputProd.value = '';
                 inputQta.value = '';
-                inputProd.focus();
+                // Non rimettiamo il focus qui per non disturbare il flusso vocale
                 aggiornaUI();
             } 
         }
@@ -384,7 +398,6 @@
 
         btnAggiungi.addEventListener('click', aggiungiItem);
         
-        // Permetti di aggiungere premendo INVIO
         inputQta.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') aggiungiItem();
         });
@@ -392,24 +405,22 @@
             if (e.key === 'Enter') inputQta.focus();
         });
 
-        // Invio WhatsApp CON NOTE
         btnWhatsapp.addEventListener('click', () => {
             if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
                 alert('La lista è vuota! Aggiungi qualcosa prima di inviare.');
                 return;
             }
             
-            let testo = " *LISTA AGGIORNATA HOLLY & REX* \n\n";
-            testo += ` *Totale articoli: ${lista.length}*\n\n`;
+            let testo = "🔄 *LISTA AGGIORNATA HOLLY & REX* \n\n";
+            testo += `📦 *Totale articoli: ${lista.length}*\n\n`;
             
             lista.forEach((item, i) => {
                 testo += `${i+1}. ${item.nome} ${item.qta ? '(' + item.qta + ')' : ''}\n`;
             });
 
-            // Aggiungi le note se presenti
             const note = noteInput.value.trim();
             if (note) {
-                testo += `\n------------------\n *NOTE DA LING:*\n${note}\n`;
+                testo += `\n------------------\n📝 *NOTE DA LING:*\n${note}\n`;
             }
             
             testo += "\n⚠️ *Se sei al supermercato, RICARICA LA PAGINA per vedere queste modifiche!* \n";
@@ -433,23 +444,21 @@
                 return;
             }
             localStorage.setItem(STORAGE_KEY_PREF, JSON.stringify(lista));
-            alert('✅ Lista Preferita salvata con successo!\nOra puoi ricaricarla in qualsiasi momento.');
+            alert('✅ Lista Preferita salvata con successo!');
         });
 
         btnCarica.addEventListener('click', () => {
             const preferita = JSON.parse(localStorage.getItem(STORAGE_KEY_PREF));
             if (!preferita || preferita.length === 0) {
-                alert('⚠️ Nessuna lista preferita salvata.\nCompila la lista e premi "Salva Preferita" per crearne una.');
+                alert('⚠️ Nessuna lista preferita salvata.');
                 return;
             }
             if (lista.length > 0 && !(lista.length === 1 && lista[0].nome === '')) {
-                if(!confirm('Hai già degli articoli nella lista attuale. Vuoi sovrascriverli con la preferita?')) {
-                    return;
-                }
+                if(!confirm('Sovrascrivere la lista attuale?')) return;
             }
             lista = [...preferita]; 
             aggiornaUI();
-            alert('📂 Lista Preferita caricata! Pronto per la spesa.');
+            alert('📂 Lista Preferita caricata!');
         });
 
         aggiornaUI();
