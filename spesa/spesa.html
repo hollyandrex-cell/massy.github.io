@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista della Spesa - Holly & Rex</title>
-    <!-- Abbiamo rimosso il link al CSS esterno per evitare conflitti e usato uno stile interno completo -->
     <style>
         :root {
             --bg-color: #0f172a;
             --card-color: #1e293b;
             --text-color: #f8fafc;
-            --primary-color: #4f46e5; /* Viola */
-            --success-color: #22c55e; /* Verde */
-            --danger-color: #ef4444;  /* Rosso */
-            --warning-color: #f59e0b; /* Arancione */
-            --info-color: #3b82f6;    /* Blu */
+            --primary-color: #4f46e5;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --mic-color: #ec4899; /* Rosa acceso per il microfono */
         }
 
         body {
@@ -40,38 +40,24 @@
             border: 1px solid #334155;
         }
 
-        header h1 {
-            color: #fbbf24; /* Oro */
-            margin: 0 0 0.5rem 0;
-            font-size: 1.8rem;
-        }
+        header h1 { color: #fbbf24; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
+        header p { color: #94a3b8; margin-top: 0; font-size: 0.85rem; margin-bottom: 1.5rem; }
 
-        header p {
-            color: #94a3b8;
-            margin-top: 0;
-            font-size: 0.85rem;
+        .input-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 1.5rem;
         }
 
-        .input-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 1.5rem;
-}
+        .input-group {
+            flex: 1;
+            min-width: 140px;
+            position: relative;
+        }
 
-.input-section input {
-    flex: 1;
-    min-width: 150px;
-}
-
-#btnAggiungi {
-    width: 100%; /* IL SEGRETO: occupa tutta la larghezza */
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-top: 5px; /* Un piccolo spazio extra sopra */
-}
         input {
+            width: 100%;
             padding: 12px;
             border-radius: 8px;
             border: 1px solid #475569;
@@ -79,10 +65,18 @@
             color: white;
             font-size: 1rem;
             outline: none;
+            box-sizing: border-box;
         }
 
-        input:focus {
-            border-color: var(--primary-color);
+        input:focus { border-color: var(--primary-color); }
+
+        /* NUOVO STILE PER I TASTI AZIONE */
+        .action-buttons-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Due colonne uguali */
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
         }
 
         button {
@@ -92,17 +86,36 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
-            transition: transform 0.1s, opacity 0.2s;
+            transition: transform 0.1s, opacity 0.2s, background-color 0.2s;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        button:active {
-            transform: scale(0.98);
-        }
+        button:active { transform: scale(0.96); }
 
         #btnAggiungi {
             background-color: var(--primary-color);
-            white-space: nowrap;
+        }
+
+        #btnMic {
+            background-color: var(--mic-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animazione quando ascolta */
+        #btnMic.listening {
+            animation: pulse-mic 1.5s infinite;
+            background-color: #be123c;
+        }
+
+        @keyframes pulse-mic {
+            0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(236, 72, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
 
         .lista {
@@ -139,36 +152,47 @@
             font-size: 1.5rem;
             line-height: 1;
         }
-        
-        .delete-btn:hover {
-            color: #ff6b6b;
-            background-color: rgba(239, 68, 68, 0.1);
-        }
+        .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
 
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .actions { display: flex; flex-direction: column; gap: 10px; }
         .btn-whatsapp { background-color: var(--success-color); }
         .btn-danger { background-color: var(--danger-color); }
         
-        .actions-extra {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
+        .actions-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .btn-save { background-color: var(--warning-color); color: #000; }
         .btn-load { background-color: var(--info-color); }
 
-        /* Responsive per cellulari */
+        /* Note Section */
+        .notes-section {
+            margin-top: 1.5rem;
+            text-align: left;
+            border-top: 1px solid #334155;
+            padding-top: 1rem;
+        }
+        .notes-section label {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        #noteInput {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            box-sizing: border-box;
+        }
+        #noteInput:focus { border-color: var(--warning-color); }
+
         @media (max-width: 400px) {
-            .input-section {
-                grid-template-columns: 1fr;
-            }
+            .input-section { flex-direction: column; }
+            .input-group { width: 100%; }
+            .action-buttons-row { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -176,18 +200,33 @@
     <div class="container">
         <header>
             <h1>🛒 Lista della Spesa</h1>
-            <p>Holly AND Rex Group - Versione 2.0 (Con Memoria!)</p>
+            <p>Holly AND Rex Group - Versione 2.1 (Vocale & Note)</p>
         </header>
 
         <!-- Form di Inserimento -->
         <div class="input-section">
-            <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
-            <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
-            <button id="btnAggiungi">➕ Aggiungi</button>
+            <div class="input-group">
+                <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
+            </div>
+            
+            <!-- RIGA TASTI: AGGIUNGI + MICROFONO -->
+            <div class="action-buttons-row">
+                <button id="btnAggiungi">➕ Aggiungi</button>
+                <button id="btnMic">🎤 Parla</button>
+            </div>
         </div>
 
         <!-- La Lista -->
         <ul id="listaSpesa" class="lista"></ul>
+
+        <!-- Sezione Note -->
+        <div class="notes-section">
+            <label for="noteInput">📝 Note per Massy (opzionale):</label>
+            <textarea id="noteInput" placeholder="Es. Prendi le buste, controlla scadenza..."></textarea>
+        </div>
 
         <!-- Azioni Principali -->
         <div class="actions">
@@ -212,11 +251,102 @@
         const inputProd = document.getElementById('prodotto');
         const inputQta = document.getElementById('quantita');
         const btnAggiungi = document.getElementById('btnAggiungi');
+        const btnMic = document.getElementById('btnMic');
         const listaEl = document.getElementById('listaSpesa');
         const btnWhatsapp = document.getElementById('btnInviaWhatsApp');
         const btnSvuota = document.getElementById('btnSvuota');
         const btnSalva = document.getElementById('btnSalvaPreferita');
         const btnCarica = document.getElementById('btnCaricaPreferita');
+        const noteInput = document.getElementById('noteInput');
+        
+        // Setup Riconoscimento Vocale
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let isListening = false;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false; // Si ferma dopo una frase
+            recognition.lang = 'it-IT';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isListening = true;
+                btnMic.classList.add('listening');
+                btnMic.innerHTML = "👂 Ascolto...";
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                btnMic.classList.remove('listening');
+                btnMic.innerHTML = "🎤 Parla";
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.trim();
+                console.log("Hai detto:", transcript);
+                
+                // Logica intelligente per separare prodotto e quantità
+                // Cerca parole chiave come "chili", "litri", "pezzi", "etto" o numeri
+                const quantityKeywords = /(\d+[.,]?\d*\s*(kg|g|l|ml|pz|pezzi|confezioni|scatole)|chili|litri|etti|pacchi)/i;
+                
+                let prodotto = transcript;
+                let quantita = "";
+
+                const match = transcript.match(quantityKeywords);
+                
+                if (match) {
+                    // Se trova una quantità, la separa
+                    quantita = match[0];
+                    prodotto = transcript.replace(match[0], "").trim();
+                    // Pulizia extra
+                    prodotto = prodotto.replace(/,$/, "").replace(/\s+/g, " ");
+                } else {
+                    // Se non trova quantità esplicita, prova a prendere l'ultima parola come quantità se è un numero
+                    const words = transcript.split(" ");
+                    if (words.length > 1 && /\d/.test(words[words.length-1])) {
+                        quantita = words.pop();
+                        prodotto = words.join(" ");
+                    }
+                }
+
+                // Compila i campi
+                if (prodotto) inputProd.value = prodotto.charAt(0).toUpperCase() + prodotto.slice(1);
+                if (quantita) inputQta.value = quantita;
+
+                // Se abbiamo almeno un prodotto, aggiungiamo automaticamente dopo un breve delay
+                if (prodotto) {
+                    setTimeout(() => {
+                        aggiungiItem();
+                        // Opzionale: svuota le note se contenevano comandi? No, lasciamo stare per sicurezza.
+                    }, 600);
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Errore vocale:", event.error);
+                btnMic.innerHTML = "❌ Riprova";
+                setTimeout(() => { btnMic.innerHTML = "🎤 Parla"; }, 2000);
+            };
+
+            btnMic.addEventListener('click', () => {
+                if (!isListening) {
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    recognition.stop();
+                }
+            });
+
+        } else {
+            // Nascondi il microfono se non supportato
+            btnMic.style.display = 'none';
+            // Rendi il tasto Aggiungi a tutta larghezza se non c'è il mic
+            document.querySelector('.action-buttons-row').style.gridTemplateColumns = '1fr';
+        }
 
         function aggiornaUI() {
             listaEl.innerHTML = '';
@@ -244,9 +374,7 @@
                 inputQta.value = '';
                 inputProd.focus();
                 aggiornaUI();
-            } else {
-                alert("Scrivi almeno un prodotto!");
-            }
+            } 
         }
 
         window.rimuoviItem = (index) => {
@@ -254,10 +382,9 @@
             aggiornaUI();
         };
 
-        // Event Listener per il tasto Aggiungi
         btnAggiungi.addEventListener('click', aggiungiItem);
         
-        // Aggiungi premendo Invio
+        // Permetti di aggiungere premendo INVIO
         inputQta.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') aggiungiItem();
         });
@@ -265,23 +392,33 @@
             if (e.key === 'Enter') inputQta.focus();
         });
 
-        // Invio WhatsApp
+        // Invio WhatsApp CON NOTE
         btnWhatsapp.addEventListener('click', () => {
             if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
                 alert('La lista è vuota! Aggiungi qualcosa prima di inviare.');
                 return;
             }
-            let testo = '*LISTA DELLA SPESA HOLLY & REX*\n';
+            
+            let testo = " *LISTA AGGIORNATA HOLLY & REX* \n\n";
+            testo += ` *Totale articoli: ${lista.length}*\n\n`;
+            
             lista.forEach((item, i) => {
                 testo += `${i+1}. ${item.nome} ${item.qta ? '(' + item.qta + ')' : ''}\n`;
             });
-            testo += '\n_Fatta con amore digitale da Ling ❤️_';
+
+            // Aggiungi le note se presenti
+            const note = noteInput.value.trim();
+            if (note) {
+                testo += `\n------------------\n *NOTE DA LING:*\n${note}\n`;
+            }
+            
+            testo += "\n⚠️ *Se sei al supermercato, RICARICA LA PAGINA per vedere queste modifiche!* \n";
+            testo += "_Fatta con amore digitale da Ling ❤️_";
             
             const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(testo)}`;
             window.open(url, '_blank');
         });
 
-        // Svuota Lista
         btnSvuota.addEventListener('click', () => {
             if(lista.length === 0) return;
             if(confirm('Vuoi svuotare tutta la lista?')) {
@@ -290,8 +427,6 @@
             }
         });
 
-        // === FUNZIONI: SALVA E CARICA PREFERITA ===
-        
         btnSalva.addEventListener('click', () => {
             if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
                 alert('La lista è vuota! Non c\'è nulla da salvare.');
@@ -303,24 +438,20 @@
 
         btnCarica.addEventListener('click', () => {
             const preferita = JSON.parse(localStorage.getItem(STORAGE_KEY_PREF));
-            
             if (!preferita || preferita.length === 0) {
                 alert('⚠️ Nessuna lista preferita salvata.\nCompila la lista e premi "Salva Preferita" per crearne una.');
                 return;
             }
-
             if (lista.length > 0 && !(lista.length === 1 && lista[0].nome === '')) {
                 if(!confirm('Hai già degli articoli nella lista attuale. Vuoi sovrascriverli con la preferita?')) {
                     return;
                 }
             }
-
             lista = [...preferita]; 
             aggiornaUI();
             alert('📂 Lista Preferita caricata! Pronto per la spesa.');
         });
 
-        // Avvio iniziale
         aggiornaUI();
     </script>
 </body>
