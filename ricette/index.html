@@ -24,13 +24,12 @@
         .btn-main { background: linear-gradient(135deg, var(--pink), #db2777); color: white; border: none; padding: 15px; width: 100%; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4); margin-top: 10px;}
         .btn-main:active { transform: scale(0.98); }
 
-        /* Schermata Risultato (Nascosta all'inizio) */
+        /* Schermata Risultato */
         #resultScreen {
             display: none;
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--card);
-            border-radius: 20px;
             padding: 20px;
             box-sizing: border-box;
             flex-direction: column;
@@ -38,22 +37,32 @@
             z-index: 10;
         }
         #finalText {
-            background: #0f172a;
-            color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            text-align: left;
-            white-space: pre-wrap;
-            border: 1px solid var(--gold);
-            max-height: 60%;
-            overflow-y: auto;
+            background: #0f172a; color: #fff; padding: 15px; border-radius: 10px;
+            font-size: 0.95rem; margin-bottom: 20px; text-align: left; white-space: pre-wrap;
+            border: 1px solid var(--gold); max-height: 40%; overflow-y: auto;
         }
-        .btn-action { background: var(--gold); color: #000; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px; font-size: 1rem; cursor: pointer; }
-        .btn-back { background: transparent; color: #94a3b8; border: 1px solid #475569; }
+        .btn-action { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; cursor: pointer; }
+        .btn-back { background: transparent; color: #94a3b8; border: 1px solid #475569; font-size: 1rem; padding: 12px; }
         
-        .note { font-size: 0.75rem; color: #64748b; margin-top: 15px; }
+        /* ISTRUZIONI LAMPEGGIANTI */
+        .blink-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 2px solid var(--gold);
+            animation: pulse-gold 2s infinite; /* Animazione continua */
+        }
+        .blink-box h3 { color: var(--gold); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; }
+        .step { font-size: 1.1rem; line-height: 1.5; margin: 5px 0; text-align: left; }
+        .highlight { color: #fff; font-weight: bold; text-decoration: underline; }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); transform: scale(1); }
+        }
+
         .mic-btn { background: #334155; border: none; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; margin-bottom: 10px; }
     </style>
 </head>
@@ -63,13 +72,10 @@
         <div id="mainScreen">
             <h1>👩‍ Chef Ling</h1>
             <p>Holly & Rex Group</p>
-
             <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI?</div>
             <div class="grid" id="grid"></div>
-
             <textarea id="extra" rows="2" placeholder="Altro? (Es. zucchine...)"></textarea>
             <div style="text-align:left;"><button class="mic-btn" onclick="startDict()">🎤 Detta</button></div>
-
             <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
             <select id="mood">
                 <option value="Veloce"> Veloce (Poco tempo)</option>
@@ -78,36 +84,34 @@
                 <option value="Leggera">🥗 Leggera</option>
                 <option value="Svuotafrigo">️ Svuota Frigo</option>
             </select>
-
-            <button class="btn-main" onclick="showResult()">🚀 PREPARA MESSAGGIO</button>
-            <p class="note">Clicca per vedere il messaggio e copiarlo.</p>
+            <button class="btn-main" onclick="showResult()"> PREPARA MESSAGGIO</button>
         </div>
 
-        <!-- Schermata Risultato (Quella nuova) -->
+        <!-- Schermata Risultato -->
         <div id="resultScreen">
-            <h2 style="color:var(--gold); margin-top:0;">Ecco il tuo messaggio!</h2>
+            <h2 style="color:var(--gold); margin-top:0;">Messaggio Pronto!</h2>
             <div id="finalText"></div>
             
-            <button class="btn-action" onclick="copyAndGo()">1. COPIA E APRI CHAT</button>
+            <button class="btn-action" onclick="copyAndGo()">COPIA E APRI CHAT</button>
             <button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button>
             
-            <p class="note" style="margin-top:20px;">
-                Dopo aver cliccato "Copia e Apri":<br>
-                1. La chat si aprirà.<br>
-                2. Tocca la casella di testo.<br>
-                3. Scegli <strong>Incolla</strong>.<br>
-                4. Invia a Chef Ling!
-            </p>
+            <!-- ISTRUZIONI LAMPEGGIANTI -->
+            <div class="blink-box">
+                <h3>️ Cosa fare ora:</h3>
+                <div class="step">1. La chat si aprirà.</div>
+                <div class="step">2. <span class="highlight">Tocca la casella di testo.</span></div>
+                <div class="step">3. Scegli <span class="highlight">Incolla.</span></div>
+                <div class="step">4. Invia a Chef Ling!</div>
+            </div>
         </div>
     </div>
 
     <script>
         const URL_CHEF = "https://chat.qwen.ai/c/a3f0f913-71b0-40f7-9f5d-084c192c8bc7";
-        
         const items = [
             {n:"Pasta", i:""}, {n:"Riso", i:""}, {n:"Uova", i:""}, 
             {n:"Tonno", i:"🐟"}, {n:"Pomodoro", i:""}, {n:"Zucchine", i:""},
-            {n:"Patate", i:"🥔"}, {n:"Formaggio", i:"🧀"}, {n:"Pollo", i:""},
+            {n:"Patate", i:""}, {n:"Formaggio", i:""}, {n:"Pollo", i:""},
             {n:"Verdure", i:""}, {n:"Legumi", i:""}, {n:"Pane", i:""}
         ];
 
@@ -139,10 +143,8 @@
             return `Ciao Chef Ling! Sono Massy.\n\n🛒 Ingredienti: ${sel.length?sel.join(', '):'Aiutami tu!'}\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
         }
 
-        // Mostra la schermata con il testo pronto
         function showResult() {
-            const msg = buildMsg();
-            document.getElementById('finalText').innerText = msg;
+            document.getElementById('finalText').innerText = buildMsg();
             document.getElementById('mainScreen').style.display = 'none';
             document.getElementById('resultScreen').style.display = 'flex';
         }
@@ -152,16 +154,13 @@
             document.getElementById('resultScreen').style.display = 'none';
         }
 
-        // Copia e apre la chat
         async function copyAndGo() {
             const msg = document.getElementById('finalText').innerText;
             try {
                 await navigator.clipboard.writeText(msg);
-                // Apre la chat
                 window.location.href = URL_CHEF;
-                alert("✅ Messaggio COPIATO!\n\nOra tocca la casella bianca in basso nella chat e fai INCOLLA.");
             } catch(err) {
-                alert("Copia fallita. Seleziona il testo sopra, copialo manualmente e poi vai nella chat.");
+                alert("Copia fallita. Copia il testo manualmente dal riquadro nero.");
             }
         }
     </script>
