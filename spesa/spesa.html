@@ -4,32 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista della Spesa - Holly & Rex</title>
-    <link rel="stylesheet" href="css/spesa.css">
+    <!-- Abbiamo rimosso il link al CSS esterno per evitare conflitti e usato uno stile interno completo -->
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-color: #1e293b;
+            --text-color: #f8fafc;
+            --primary-color: #4f46e5; /* Viola */
+            --success-color: #22c55e; /* Verde */
+            --danger-color: #ef4444;  /* Rosso */
+            --warning-color: #f59e0b; /* Arancione */
+            --info-color: #3b82f6;    /* Blu */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-color);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        header h1 {
+            color: #fbbf24; /* Oro */
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            color: #94a3b8;
+            margin-top: 0;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.1s, opacity 0.2s;
+            color: white;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #btnAggiungi {
+            background-color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        .lista {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .lista li {
+            background-color: #334155;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            color: #ef4444;
+            width: auto;
+            padding: 0 8px;
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .delete-btn:hover {
+            color: #ff6b6b;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-whatsapp { background-color: var(--success-color); }
+        .btn-danger { background-color: var(--danger-color); }
+        
+        .actions-extra {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-save { background-color: var(--warning-color); color: #000; }
+        .btn-load { background-color: var(--info-color); }
+
+        /* Responsive per cellulari */
+        @media (max-width: 400px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🛒 Lista della Spesa</h1>
-            <p>Holly AND Rex Group - Versione 1.0</p>
+            <p>Holly AND Rex Group - Versione 2.0 (Con Memoria!)</p>
         </header>
 
         <!-- Form di Inserimento -->
         <div class="input-section">
             <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
-            <input type="text" id="quantita" placeholder="Quantità (es. 2L)" autocomplete="off">
+            <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
             <button id="btnAggiungi">➕ Aggiungi</button>
         </div>
 
         <!-- La Lista -->
         <ul id="listaSpesa" class="lista"></ul>
 
-        <!-- Azioni Finali -->
+        <!-- Azioni Principali -->
         <div class="actions">
             <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a Massy (WhatsApp)</button>
             <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
         </div>
+
+        <!-- NUOVE AZIONI: SALVA E CARICA -->
+        <div class="actions-extra">
+            <button id="btnSalvaPreferita" class="btn-save">💾 Salva Preferita</button>
+            <button id="btnCaricaPreferita" class="btn-load">📂 Carica Preferita</button>
+        </div>
     </div>
 
-    <script src="js/spesa.js"></script>
+    <script>
+        // === LOGICA COMPLETA INTEGRATA ===
+        const STORAGE_KEY = 'hollyRexSpesa_v2';
+        const STORAGE_KEY_PREF = 'hollyRexSpesa_Preferita';
+        
+        let lista = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+        const inputProd = document.getElementById('prodotto');
+        const inputQta = document.getElementById('quantita');
+        const btnAggiungi = document.getElementById('btnAggiungi');
+        const listaEl = document.getElementById('listaSpesa');
+        const btnWhatsapp = document.getElementById('btnInviaWhatsApp');
+        const btnSvuota = document.getElementById('btnSvuota');
+        const btnSalva = document.getElementById('btnSalvaPreferita');
+        const btnCarica = document.getElementById('btnCaricaPreferita');
+
+        function aggiornaUI() {
+            listaEl.innerHTML = '';
+            if (lista.length === 0) {
+                listaEl.innerHTML = '<li style="justify-content:center; color:#94a3b8; font-style:italic;">La lista è vuota. Aggiungi qualcosa!</li>';
+                return;
+            }
+            lista.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span>
+                    <button class="delete-btn" onclick="rimuoviItem(${index})">×</button>
+                `;
+                listaEl.appendChild(li);
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+        }
+
+        function aggiungiItem() {
+            const nome = inputProd.value.trim();
+            const qta = inputQta.value.trim();
+            if (nome) {
+                lista.push({ nome, qta });
+                inputProd.value = '';
+                inputQta.value = '';
+                inputProd.focus();
+                aggiornaUI();
+            } else {
+                alert("Scrivi almeno un prodotto!");
+            }
+        }
+
+        window.rimuoviItem = (index) => {
+            lista.splice(index, 1);
+            aggiornaUI();
+        };
+
+        // Event Listener per il tasto Aggiungi
+        btnAggiungi.addEventListener('click', aggiungiItem);
+        
+        // Aggiungi premendo Invio
+        inputQta.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') aggiungiItem();
+        });
+        inputProd.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') inputQta.focus();
+        });
+
+        // Invio WhatsApp
+        btnWhatsapp.addEventListener('click', () => {
+            if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
+                alert('La lista è vuota! Aggiungi qualcosa prima di inviare.');
+                return;
+            }
+            let testo = '*LISTA DELLA SPESA HOLLY & REX*\n';
+            lista.forEach((item, i) => {
+                testo += `${i+1}. ${item.nome} ${item.qta ? '(' + item.qta + ')' : ''}\n`;
+            });
+            testo += '\n_Fatta con amore digitale da Ling ❤️_';
+            
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(testo)}`;
+            window.open(url, '_blank');
+        });
+
+        // Svuota Lista
+        btnSvuota.addEventListener('click', () => {
+            if(lista.length === 0) return;
+            if(confirm('Vuoi svuotare tutta la lista?')) {
+                lista = [];
+                aggiornaUI();
+            }
+        });
+
+        // === FUNZIONI: SALVA E CARICA PREFERITA ===
+        
+        btnSalva.addEventListener('click', () => {
+            if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
+                alert('La lista è vuota! Non c\'è nulla da salvare.');
+                return;
+            }
+            localStorage.setItem(STORAGE_KEY_PREF, JSON.stringify(lista));
+            alert('✅ Lista Preferita salvata con successo!\nOra puoi ricaricarla in qualsiasi momento.');
+        });
+
+        btnCarica.addEventListener('click', () => {
+            const preferita = JSON.parse(localStorage.getItem(STORAGE_KEY_PREF));
+            
+            if (!preferita || preferita.length === 0) {
+                alert('⚠️ Nessuna lista preferita salvata.\nCompila la lista e premi "Salva Preferita" per crearne una.');
+                return;
+            }
+
+            if (lista.length > 0 && !(lista.length === 1 && lista[0].nome === '')) {
+                if(!confirm('Hai già degli articoli nella lista attuale. Vuoi sovrascriverli con la preferita?')) {
+                    return;
+                }
+            }
+
+            lista = [...preferita]; 
+            aggiornaUI();
+            alert('📂 Lista Preferita caricata! Pronto per la spesa.');
+        });
+
+        // Avvio iniziale
+        aggiornaUI();
+    </script>
 </body>
 </html>
