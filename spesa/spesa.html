@@ -54,20 +54,22 @@
         }
 
         .input-section {
-    display: flex; /* Cambiato da grid a flex per migliore adattamento */
-    flex-wrap: wrap; /* Permette di andare a capo su schermi piccoli */
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 1.5rem;
 }
 
 .input-section input {
-    flex: 1; /* I campi di input si espandono per riempire lo spazio */
-    min-width: 150px; /* Larghezza minima per non schiacciarli troppo */
+    flex: 1;
+    min-width: 150px;
 }
 
 #btnAggiungi {
-    white-space: nowrap; /* Impedisce al testo del bottone di andare a capo */
-    flex-shrink: 0; /* Impedisce al bottone di rimpicciolirsi */
+    width: 100%; /* IL SEGRETO: occupa tutta la larghezza */
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 5px; /* Un piccolo spazio extra sopra */
 }
         input {
             padding: 12px;
