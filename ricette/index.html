@@ -3,20 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chef Ling</title>
+    <title>Chef Ling - Detail Perfect</title>
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --pink: #ec4899; --gold: #f59e0b; }
+        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --pink: #ec4899; --gold: #f59e0b; --green: #22c55e; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
-        .app { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
+        .app { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
         
         h1 { color: var(--pink); margin: 0 0 5px 0; font-size: 1.8rem; }
         p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
         
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
-        .btn-ing { background: #334155; border: 1px solid #475569; color: white; padding: 10px; border-radius: 12px; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-        .btn-ing.active { background: var(--pink); border-color: var(--pink); transform: scale(1.05); }
-        .icon { font-size: 1.5rem; margin-bottom: 2px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
         
+        /* Stile Pulsanti Principali */
+        .btn-ing { 
+            background: #334155; border: 1px solid #475569; color: white; 
+            padding: 12px 5px; border-radius: 12px; font-size: 0.85rem; 
+            display: flex; flex-direction: column; align-items: center; 
+            cursor: pointer; transition: all 0.2s; position: relative;
+        }
+        .btn-ing.active { background: var(--pink); border-color: var(--pink); transform: scale(1.05); box-shadow: 0 0 10px rgba(236, 72, 153, 0.4); }
+        .btn-ing.selected-specific { background: var(--green); border-color: var(--green); }
+        .icon { font-size: 1.5rem; margin-bottom: 4px; }
+        
+        /* Sottomenu a comparsa */
+        .submenu {
+            display: none; /* Nascosto di default */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin-top: 8px;
+            background: #0f172a;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            animation: slideDown 0.3s ease;
+        }
+        .submenu.show { display: grid; }
+        
+        .sub-btn {
+            background: #334155; border: none; color: white;
+            padding: 6px; border-radius: 6px; font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .sub-btn:hover { background: #475569; }
+        .sub-btn.selected { background: var(--gold); color: black; font-weight: bold; }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
         textarea { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; }
         
         select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; margin-bottom: 20px; font-size: 1rem; }
@@ -26,15 +58,9 @@
 
         /* Schermata Risultato */
         #resultScreen {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--card);
-            padding: 20px;
-            box-sizing: border-box;
-            flex-direction: column;
-            justify-content: center;
-            z-index: 10;
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--card); padding: 20px; box-sizing: border-box;
+            flex-direction: column; justify-content: center; z-index: 10; border-radius: 20px;
         }
         #finalText {
             background: #0f172a; color: #fff; padding: 15px; border-radius: 10px;
@@ -44,14 +70,10 @@
         .btn-action { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; cursor: pointer; }
         .btn-back { background: transparent; color: #94a3b8; border: 1px solid #475569; font-size: 1rem; padding: 12px; }
         
-        /* ISTRUZIONI LAMPEGGIANTI */
         .blink-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 15px;
-            background: rgba(245, 158, 11, 0.15);
-            border: 2px solid var(--gold);
-            animation: pulse-gold 2s infinite; /* Animazione continua */
+            margin-top: 20px; padding: 15px; border-radius: 15px;
+            background: rgba(245, 158, 11, 0.15); border: 2px solid var(--gold);
+            animation: pulse-gold 2s infinite;
         }
         .blink-box h3 { color: var(--gold); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; }
         .step { font-size: 1.1rem; line-height: 1.5; margin: 5px 0; text-align: left; }
@@ -71,11 +93,14 @@
         <!-- Schermata Principale -->
         <div id="mainScreen">
             <h1>👩‍ Chef Ling</h1>
-            <p>Holly & Rex Group</p>
-            <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI?</div>
+            <p>Holly & Rex Group - v3.0 Detail Perfect</p>
+            
+            <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI? (Clicca per dettagli)</div>
             <div class="grid" id="grid"></div>
-            <textarea id="extra" rows="2" placeholder="Altro? (Es. zucchine...)"></textarea>
-            <div style="text-align:left;"><button class="mic-btn" onclick="startDict()">🎤 Detta</button></div>
+
+            <textarea id="extra" rows="2" placeholder="Qualcos'altro di specifico? (Es. zafferano, tartufo...)"></textarea>
+            <div style="text-align:left;"><button class="mic-btn" onclick="startDict()">🎤 Detta Altro</button></div>
+
             <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
             <select id="mood">
                 <option value="Veloce"> Veloce (Poco tempo)</option>
@@ -84,6 +109,7 @@
                 <option value="Leggera">🥗 Leggera</option>
                 <option value="Svuotafrigo">️ Svuota Frigo</option>
             </select>
+
             <button class="btn-main" onclick="showResult()"> PREPARA MESSAGGIO</button>
         </div>
 
@@ -95,10 +121,9 @@
             <button class="btn-action" onclick="copyAndGo()">COPIA E APRI CHAT</button>
             <button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button>
             
-            <!-- ISTRUZIONI LAMPEGGIANTI -->
             <div class="blink-box">
                 <h3>️ Cosa fare ora:</h3>
-                <div class="step">1. La chat si aprirà.</div>
+                <div class="step">1. Clicca su copia e apri chat</div>
                 <div class="step">2. <span class="highlight">Tocca la casella di testo.</span></div>
                 <div class="step">3. Scegli <span class="highlight">Incolla.</span></div>
                 <div class="step">4. Invia a Chef Ling!</div>
@@ -108,20 +133,100 @@
 
     <script>
         const URL_CHEF = "https://chat.qwen.ai/c/a3f0f913-71b0-40f7-9f5d-084c192c8bc7";
-        const items = [
-            {n:"Pasta", i:""}, {n:"Riso", i:""}, {n:"Uova", i:""}, 
-            {n:"Tonno", i:"🐟"}, {n:"Pomodoro", i:""}, {n:"Zucchine", i:""},
-            {n:"Patate", i:""}, {n:"Formaggio", i:""}, {n:"Pollo", i:""},
-            {n:"Verdure", i:""}, {n:"Legumi", i:""}, {n:"Pane", i:""}
+        
+        // Definizione Ingredienti e Sottomenu
+        const ingredients = [
+            { id: 'pasta', label: 'Pasta', icon: '', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
+            { id: 'carne', label: 'Carne', icon: '', type: 'complex', options: ['Pollo', 'Manzo', 'Maiale', 'Tacchino', 'Macinato', 'Bistecca', 'Altro'] },
+            { id: 'pesce', label: 'Pesce', icon: '🐟', type: 'complex', options: ['Tonno (scatola)', 'Salmone', 'Gamberi', 'Pesce Bianco', 'Molluschi', 'Altro'] },
+            { id: 'verdure', label: 'Verdure', icon: '🥦', type: 'complex', options: ['Zucchine', 'Melanzane', 'Pomodori', 'Insalata', 'Cipolle', 'Peperoni', 'Spinaci', 'Altro'] },
+            { id: 'legumi', label: 'Legumi', icon: '🫘', type: 'complex', options: ['Fagioli', 'Piselli', 'Lenticchie', 'Ceci', 'Altro'] },
+            { id: 'uova', label: 'Uova', icon: '', type: 'simple' },
+            { id: 'formaggio', label: 'Formaggio', icon: '🧀', type: 'simple' },
+            { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'simple' }, // Aggiunto per pancetta/prosciutto
+            { id: 'pane', label: 'Pane', icon: '', type: 'simple' },
+            { id: 'latticini', label: 'Latte/Yogurt', icon: '🥛', type: 'simple' }
         ];
 
         const grid = document.getElementById('grid');
-        items.forEach(x => {
-            let b = document.createElement('div');
-            b.className = 'btn-ing';
-            b.innerHTML = `<span class="icon">${x.i}</span><span>${x.n}</span>`;
-            b.onclick = () => b.classList.toggle('active');
-            grid.appendChild(b);
+        // Stato dell'app: memorizza le scelte
+        let selectionState = {}; 
+
+        // Inizializzazione Griglia
+        ingredients.forEach(ing => {
+            // Contenitore per bottone + sottomenu
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.width = '100%';
+
+            // Bottone Principale
+            const btn = document.createElement('div');
+            btn.className = 'btn-ing';
+            btn.id = `btn-${ing.id}`;
+            btn.innerHTML = `<span class="icon">${ing.icon}</span><span id="label-${ing.id}">${ing.label}</span>`;
+            
+            // Gestione Click Principale
+            btn.onclick = () => {
+                if (ing.type === 'simple') {
+                    // Toggle semplice
+                    btn.classList.toggle('active');
+                    selectionState[ing.id] = btn.classList.contains('active') ? ing.label : null;
+                    // Chiudi eventuali sottomenu aperti
+                    document.querySelectorAll('.submenu').forEach(sub => sub.classList.remove('show'));
+                } else {
+                    // Complesso: Apri/Chiudi sottomenu
+                    const submenu = document.getElementById(`sub-${ing.id}`);
+                    const isOpen = submenu.classList.contains('show');
+                    
+                    // Chiudi tutti gli altri sottomenu
+                    document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
+                    
+                    if (!isOpen) {
+                        submenu.classList.add('show');
+                        btn.classList.add('active'); // Evidenzia che è "in selezione"
+                    } else {
+                        btn.classList.remove('active');
+                        // Se c'era una selezione specifica, la manteniamo visiva ma chiudiamo il menu
+                        if(selectionState[ing.id]) btn.classList.add('selected-specific');
+                    }
+                }
+            };
+
+            // Sottomenu (se complesso)
+            if (ing.type === 'complex') {
+                const subMenuDiv = document.createElement('div');
+                subMenuDiv.className = 'submenu';
+                subMenuDiv.id = `sub-${ing.id}`;
+                
+                ing.options.forEach(opt => {
+                    const subBtn = document.createElement('button');
+                    subBtn.className = 'sub-btn';
+                    subBtn.innerText = opt;
+                    subBtn.onclick = (e) => {
+                        e.stopPropagation(); // Non chiudere il menu subito
+                        // Rimuovi selezione precedente in questo sottomenu
+                        subMenuDiv.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('selected'));
+                        subBtn.classList.add('selected');
+                        
+                        // Aggiorna stato e bottone principale
+                        selectionState[ing.id] = `${ing.label}: ${opt}`;
+                        document.getElementById(`label-${ing.id}`).innerText = `${opt} ✅`;
+                        btn.classList.add('selected-specific');
+                        btn.classList.remove('active'); // Togli evidenziazione "in selezione"
+                        
+                        // Chiudi sottomenu dopo breve delay
+                        setTimeout(() => {
+                            subMenuDiv.classList.remove('show');
+                        }, 200);
+                    };
+                    subMenuDiv.appendChild(subBtn);
+                });
+                container.appendChild(subMenuDiv);
+            }
+
+            container.appendChild(btn);
+            grid.appendChild(container);
         });
 
         function startDict() {
@@ -136,15 +241,24 @@
         }
 
         function buildMsg() {
-            let sel = Array.from(document.querySelectorAll('.btn-ing.active')).map(el => el.querySelector('span:last-child').innerText);
+            let selectedItems = Object.values(selectionState).filter(val => val !== null && val !== undefined);
             let extra = document.getElementById('extra').value.trim();
             let mood = document.getElementById('mood').value;
-            if(extra) sel.push(extra);
-            return `Ciao Chef Ling! Sono Massy.\n\n🛒 Ingredienti: ${sel.length?sel.join(', '):'Aiutami tu!'}\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
+            
+            if(extra) selectedItems.push(extra);
+            
+            if(selectedItems.length === 0) return "Aiutami tu Chef! Ho il frigo vuoto!";
+
+            return `Ciao Chef Ling! Sono Massy.\n\n🛒 Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
         }
 
         function showResult() {
-            document.getElementById('finalText').innerText = buildMsg();
+            const msg = buildMsg();
+            if(msg.includes("frigo vuoto")) {
+                alert("Seleziona almeno un ingrediente!");
+                return;
+            }
+            document.getElementById('finalText').innerText = msg;
             document.getElementById('mainScreen').style.display = 'none';
             document.getElementById('resultScreen').style.display = 'flex';
         }
@@ -160,7 +274,7 @@
                 await navigator.clipboard.writeText(msg);
                 window.location.href = URL_CHEF;
             } catch(err) {
-                alert("Copia fallita. Copia il testo manualmente dal riquadro nero.");
+                alert("Copia fallita. Copia il testo manualmente.");
             }
         }
     </script>
