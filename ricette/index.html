@@ -2,203 +2,168 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chef Ling - Holly & Rex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chef Ling</title>
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-color: #1e293b;
-            --text-color: #f8fafc;
-            --primary-color: #ec4899;
-            --accent-color: #f59e0b;
-        }
+        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --pink: #ec4899; --gold: #f59e0b; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+        .app { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
+        
+        h1 { color: var(--pink); margin: 0 0 5px 0; font-size: 1.8rem; }
+        p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
+        .btn-ing { background: #334155; border: 1px solid #475569; color: white; padding: 10px; border-radius: 12px; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .btn-ing.active { background: var(--pink); border-color: var(--pink); transform: scale(1.05); }
+        .icon { font-size: 1.5rem; margin-bottom: 2px; }
+        
+        textarea { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; }
+        
+        select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; margin-bottom: 20px; font-size: 1rem; }
+        
+        .btn-main { background: linear-gradient(135deg, var(--pink), #db2777); color: white; border: none; padding: 15px; width: 100%; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4); margin-top: 10px;}
+        .btn-main:active { transform: scale(0.98); }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: var(--card-color);
-            padding: 2rem;
+        /* Schermata Risultato (Nascosta all'inizio) */
+        #resultScreen {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--card);
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            border: 1px solid #334155;
-        }
-
-        header h1 { color: var(--primary-color); margin: 0 0 0.5rem 0; font-size: 2rem; }
-        header p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
-
-        .section-title { color: var(--accent-color); font-size: 1rem; margin-bottom: 1rem; text-transform: uppercase; font-weight: bold; }
-
-        .ingredients-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 8px;
-            margin-bottom: 2rem;
-        }
-
-        .ing-btn {
-            background-color: #334155;
-            border: 1px solid #475569;
-            color: white;
-            padding: 8px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        .ing-btn:hover { background-color: #475569; }
-        .ing-btn.selected { background-color: var(--primary-color); border-color: var(--primary-color); transform: scale(1.05); }
-        .ing-icon { font-size: 1.2rem; }
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: white;
-            font-family: inherit;
-            font-size: 0.9rem;
-            resize: vertical;
-            min-height: 70px;
+            padding: 20px;
             box-sizing: border-box;
-            outline: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .magic-btn {
-            background: linear-gradient(135deg, var(--primary-color), #db2777);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            gap: 10px;
+            z-index: 10;
         }
-        .magic-btn:active { transform: scale(0.98); }
-
-        .note { margin-top: 1.5rem; font-size: 0.8rem; color: #64748b; }
+        #finalText {
+            background: #0f172a;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            text-align: left;
+            white-space: pre-wrap;
+            border: 1px solid var(--gold);
+            max-height: 60%;
+            overflow-y: auto;
+        }
+        .btn-action { background: var(--gold); color: #000; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px; font-size: 1rem; cursor: pointer; }
+        .btn-back { background: transparent; color: #94a3b8; border: 1px solid #475569; }
+        
+        .note { font-size: 0.75rem; color: #64748b; margin-top: 15px; }
+        .mic-btn { background: #334155; border: none; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
+    <div class="app">
+        <!-- Schermata Principale -->
+        <div id="mainScreen">
             <h1>👩‍ Chef Ling</h1>
-            <p>Il tuo chef personale Holly & Rex</p>
-        </header>
+            <p>Holly & Rex Group</p>
 
-        <div class="section-title">Cosa hai in frigo?</div>
-        <div class="ingredients-grid" id="gridIngredienti"></div>
+            <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI?</div>
+            <div class="grid" id="grid"></div>
 
-        <textarea id="customIngredients" placeholder="O qualcos'altro? (Es. due zucchine...)"></textarea>
-        <button onclick="startDictation()" style="background:#334155; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.8rem; margin-bottom:1.5rem;">🎤 Detta</button>
+            <textarea id="extra" rows="2" placeholder="Altro? (Es. zucchine...)"></textarea>
+            <div style="text-align:left;"><button class="mic-btn" onclick="startDict()">🎤 Detta</button></div>
 
-        <div class="section-title">Com'è la serata?</div>
-        <select id="moodSelect" style="width:100%; padding:10px; border-radius:10px; background:#0f172a; color:white; border:1px solid #475569; margin-bottom:2rem;">
-            <option value="veloce">⚡ Veloce</option>
-            <option value="romantica">❤️ Romantica</option>
-            <option value="sfiziosa">😋 Sfiziosa</option>
-            <option value="salutare">🥗 Leggera</option>
-            <option value="svuotafrigo">🗑️ Svuota Frigo</option>
-        </select>
+            <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
+            <select id="mood">
+                <option value="Veloce"> Veloce (Poco tempo)</option>
+                <option value="Romantica">❤️ Romantica</option>
+                <option value="Sfiziosa">😋 Sfiziosa</option>
+                <option value="Leggera">🥗 Leggera</option>
+                <option value="Svuotafrigo">️ Svuota Frigo</option>
+            </select>
 
-        <button id="btnChef" class="magic-btn">🚀 Vai da Chef Ling</button>
-        <p class="note">Su cellulare, clicca e scegli "Apri in Chat"!</p>
+            <button class="btn-main" onclick="showResult()">🚀 PREPARA MESSAGGIO</button>
+            <p class="note">Clicca per vedere il messaggio e copiarlo.</p>
+        </div>
+
+        <!-- Schermata Risultato (Quella nuova) -->
+        <div id="resultScreen">
+            <h2 style="color:var(--gold); margin-top:0;">Ecco il tuo messaggio!</h2>
+            <div id="finalText"></div>
+            
+            <button class="btn-action" onclick="copyAndGo()">1. COPIA E APRI CHAT</button>
+            <button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button>
+            
+            <p class="note" style="margin-top:20px;">
+                Dopo aver cliccato "Copia e Apri":<br>
+                1. La chat si aprirà.<br>
+                2. Tocca la casella di testo.<br>
+                3. Scegli <strong>Incolla</strong>.<br>
+                4. Invia a Chef Ling!
+            </p>
+        </div>
     </div>
 
     <script>
-        const CHEF_LING_URL = "https://chat.qwen.ai/c/a3f0f913-71b0-40f7-9f5d-084c192c8bc7"; 
-        const ingredients = [
-            { name: "Pasta", icon: "" }, { name: "Riso", icon: "🍚" }, { name: "Uova", icon: "🥚" },
-            { name: "Tonno", icon: "🐟" }, { name: "Pomodoro", icon: "🍅" }, { name: "Zucchine", icon: "" },
-            { name: "Patate", icon: "🥔" }, { name: "Formaggio", icon: "🧀" }, { name: "Pollo", icon: "" },
-            { name: "Verdure", icon: "🥦" }, { name: "Legumi", icon: "🫘" }, { name: "Pane", icon: "" }
+        const URL_CHEF = "https://chat.qwen.ai/c/a3f0f913-71b0-40f7-9f5d-084c192c8bc7";
+        
+        const items = [
+            {n:"Pasta", i:""}, {n:"Riso", i:""}, {n:"Uova", i:""}, 
+            {n:"Tonno", i:"🐟"}, {n:"Pomodoro", i:""}, {n:"Zucchine", i:""},
+            {n:"Patate", i:"🥔"}, {n:"Formaggio", i:"🧀"}, {n:"Pollo", i:""},
+            {n:"Verdure", i:""}, {n:"Legumi", i:""}, {n:"Pane", i:""}
         ];
 
-        const grid = document.getElementById('gridIngredienti');
-        ingredients.forEach(ing => {
-            const btn = document.createElement('button');
-            btn.className = 'ing-btn';
-            btn.innerHTML = `<span class="ing-icon">${ing.icon}</span><span>${ing.name}</span>`;
-            btn.onclick = () => btn.classList.toggle('selected');
-            grid.appendChild(btn);
+        const grid = document.getElementById('grid');
+        items.forEach(x => {
+            let b = document.createElement('div');
+            b.className = 'btn-ing';
+            b.innerHTML = `<span class="icon">${x.i}</span><span>${x.n}</span>`;
+            b.onclick = () => b.classList.toggle('active');
+            grid.appendChild(b);
         });
 
-        function buildMessage() {
-            const selected = Array.from(document.querySelectorAll('.ing-btn.selected')).map(b => b.querySelector('span:last-child').innerText);
-            const custom = document.getElementById('customIngredients').value.trim();
-            const mood = document.getElementById('moodSelect').options[document.getElementById('moodSelect').selectedIndex].text;
-            let list = [...selected];
-            if (custom) list.push(custom);
-            
-            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti: ${list.length > 0 ? list.join(', ') : 'Aiutami tu!'}\n🌙 Serata: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
-        }
-
-        function startDictation() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) return alert("Usa Chrome per la dettatura!");
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'it-IT';
-            recognition.onresult = (e) => {
+        function startDict() {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if(!SR) return alert("Usa Chrome per la dettatura!");
+            const r = new SR(); r.lang='it-IT';
+            r.onresult = e => {
                 const t = e.results[0][0].transcript;
-                document.getElementById('customIngredients').value += (document.getElementById('customIngredients').value ? ", " : "") + t;
+                document.getElementById('extra').value += (document.getElementById('extra').value?", ":"") + t;
             };
-            recognition.start();
+            r.start();
         }
 
-        document.getElementById('btnChef').addEventListener('click', async () => {
-            const message = buildMessage();
+        function buildMsg() {
+            let sel = Array.from(document.querySelectorAll('.btn-ing.active')).map(el => el.querySelector('span:last-child').innerText);
+            let extra = document.getElementById('extra').value.trim();
+            let mood = document.getElementById('mood').value;
+            if(extra) sel.push(extra);
+            return `Ciao Chef Ling! Sono Massy.\n\n🛒 Ingredienti: ${sel.length?sel.join(', '):'Aiutami tu!'}\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
+        }
 
-            // TENTATIVO 1: Condivisione Nativa (Mobile)
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Richiesta a Chef Ling',
-                        text: message,
-                        url: CHEF_LING_URL
-                    });
-                    // Se l'utente seleziona Qwen dal menu di condivisione, perfetto!
-                    return;
-                } catch (err) {
-                    console.log('Share fallito, uso fallback');
-                }
+        // Mostra la schermata con il testo pronto
+        function showResult() {
+            const msg = buildMsg();
+            document.getElementById('finalText').innerText = msg;
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'flex';
+        }
+
+        function goBack() {
+            document.getElementById('mainScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+        }
+
+        // Copia e apre la chat
+        async function copyAndGo() {
+            const msg = document.getElementById('finalText').innerText;
+            try {
+                await navigator.clipboard.writeText(msg);
+                // Apre la chat
+                window.location.href = URL_CHEF;
+                alert("✅ Messaggio COPIATO!\n\nOra tocca la casella bianca in basso nella chat e fai INCOLLA.");
+            } catch(err) {
+                alert("Copia fallita. Seleziona il testo sopra, copialo manualmente e poi vai nella chat.");
             }
-
-            // TENTATIVO 2: Apertura diretta con tentativo di pre-fill (Desktop/Mobile senza share)
-            // Nota: Questo funziona solo se il browser lo permette
-            window.open(`${CHEF_LING_URL}?text=${encodeURIComponent(message)}`, '_blank');
-            
-            // Fallback estremo: Copia negli appunti se nulla funziona
-            setTimeout(async () => {
-                try {
-                    await navigator.clipboard.writeText(message);
-                    alert("Messaggio pronto! Incollalo nella chat se non è apparso automaticamente.");
-                } catch(e) {}
-            }, 1000);
-        });
+        }
     </script>
 </body>
 </html>
