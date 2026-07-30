@@ -428,5 +428,56 @@
         aggiornaUI();
         updateContactPanel();
     </script>
+        <!-- ... Tutto il resto del codice HTML sopra rimane uguale ... -->
+
+    <!-- AGGIUNGI QUESTO STILE NEL TUO <style> (o sostituisci il footer esistente) -->
+        <style>
+            /* Assicurati che il container abbia spazio sotto */
+            .container {
+                /* ... gli altri stili che hai già ... */
+                padding-bottom: 80px; /* SPAZIO PER IL FOOTER */
+                position: relative;
+            }
+    
+            /* Stile del Footer Corretto */
+            .site-footer {
+                margin-top: 40px;
+                border-top: 1px solid #334155;
+                padding-top: 20px;
+                text-align: center;
+                font-size: 0.75rem;
+                color: #64748b;
+                width: 100%;
+                position: relative; /* Non assoluto, così scorre col contenuto */
+                bottom: auto;
+            }
+            .site-footer a {
+                color: #94a3b8;
+                text-decoration: none;
+                margin: 0 10px;
+                transition: color 0.2s;
+            }
+            .site-footer a:hover {
+                color: #fbbf24; /* Colore oro quando passi sopra */
+                text-decoration: underline;
+            }
+        </style>
+    
+        <!-- INSERISCI QUESTO FOOTER DOPO L'ULTIMO PULSANTE (dopo Carica Preferita) -->
+        
+        <!-- ... fine div actions-extra ... -->
+        
+        <!-- NUOVO FOOTER VISIBILE -->
+        <div class="site-footer">
+            <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
+            <p>
+                <a href="privacy-policy.html">Privacy Policy</a> | 
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </p>
+        </div>
+    
+        </div> <!-- Chiusura del container principale -->
+    
+        <!-- ... Il resto dello script rimane uguale ... -->
 </body>
 </html>
