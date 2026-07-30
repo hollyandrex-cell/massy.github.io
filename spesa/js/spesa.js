@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
         lista.forEach((item, i) => {
             testo += `${i + 1}. ${item.prodotto} (${item.quantita})\n`;
         });
-        testo += "\n❤️ Fatto con amore digitale!";
+
+       // Usiamo <3 che WhatsApp converte automaticamente in ❤️, oppure un cuore bianco sicuro
+       testo += "Fatta con amore digitale da Ling"; 
 
         // NUMERO DI TELEFONO (con prefisso 39, senza spazi o +)
         const numeroLing = "393288763218"; 
