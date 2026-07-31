@@ -18,7 +18,7 @@
             text-align: center; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
             position: relative; 
-            overflow: hidden; /* Importante per contenere gli overlay */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -65,7 +65,12 @@
 
         textarea { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; resize: vertical; }
         
-        select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; margin-bottom: 20px; font-size: 1rem; }
+        select, input[type="number"], input[type="text"] { 
+            width: 100%; padding: 12px; background: #0f172a; 
+            border: 1px solid #475569; color: white; 
+            border-radius: 10px; margin-bottom: 10px; font-size: 1rem; 
+            box-sizing: border-box;
+        }
         
         .btn-main { background: linear-gradient(135deg, var(--pink), #db2777); color: white; border: none; padding: 15px; width: 100%; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4); margin-top: 10px;}
         .btn-main:active { transform: scale(0.98); }
@@ -122,6 +127,51 @@
             color: var(--gold);
             text-decoration: underline;
         }
+
+        /* Stili aggiuntivi per il form Pet */
+        .pet-form-container {
+            margin-top: 20px; 
+            padding: 18px; 
+            background: rgba(30, 41, 59, 0.7); 
+            border-radius: 16px; 
+            border: 1px solid #475569; 
+            backdrop-filter: blur(5px);
+        }
+        .btn-pet {
+            background: linear-gradient(135deg, #ec4899, #f59e0b); 
+            color: white; 
+            border: none; 
+            padding: 16px 32px; 
+            width: 100%; 
+            border-radius: 50px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+        .btn-pet:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.6);
+        }
+        .btn-save {
+            background: linear-gradient(135deg, var(--green), #16a34a); 
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-size: 0.95rem; 
+            cursor: pointer; 
+            width: 100%; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .btn-save:hover { transform: translateY(-2px); }
+        
+        .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .form-col { flex: 1; }
     </style>
 </head>
 <body>
@@ -142,11 +192,101 @@
                 <option value="Veloce">⚡ Veloce (Poco tempo)</option>
                 <option value="Romantica">❤️ Romantica</option>
                 <option value="Sfiziosa">😋 Sfiziosa</option>
-                <option value="Leggera">🥗 Leggera</option>
+                <option value="Leggera"> Leggera</option>
                 <option value="Svuotafrigo">🧹 Svuota Frigo</option>
             </select>
 
             <button class="btn-main" onclick="showResult()"> PREPARA MESSAGGIO</button>
+
+            <!-- NUOVO PULSANTE CHEF LING FOR PET -->
+            <div style="margin-top: 15px; text-align: center;">
+                <button id="btnInspire" class="btn-pet" onclick="goToPublicQwen()">
+                    Chef Ling for Pet 🐾
+                </button>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px; line-height: 1.4;">
+                    Clicca → Incolla nella barra <strong>"Cosa vorresti esplorare?"</strong> di Qwen<br>
+                    (Funziona anche senza account!)
+                </p>
+            </div>
+
+            <!-- NUOVO FORM PROFILO SICUREZZA & GUSTI COMPLETO -->
+            <div id="petProfileContainer" class="pet-form-container">
+                <h3 style="color: var(--gold); margin: 0 0 12px 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; justify-content: center;">
+                    🛡️ Profilo Sicurezza & Gusti
+                    <span style="font-size: 0.7rem; color: #94a3b8; font-weight: normal; text-transform: none;">(Salvato sul tuo dispositivo)</span>
+                </h3>
+                
+                <div style="margin-bottom: 12px;">
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: #f8fafc; font-size: 0.95rem; font-weight: 500; justify-content: center;">
+                        <input type="checkbox" id="chkPets" onchange="togglePetFields()" 
+                               style="width: 18px; height: 18px; accent-color: var(--pink); cursor: pointer;">
+                        Ho animali domestici in casa
+                    </label>
+                </div>
+                
+                <div id="petFields" style="display: none; animation: slideDown 0.3s ease;">
+                    <!-- Riga 1: Tipo e Nome -->
+                    <div class="form-row">
+                        <div class="form-col">
+                            <select id="selPetType">
+                                <option value="">Tipo animale...</option>
+                                <option value="Cane">🐶 Cane</option>
+                                <option value="Gatto">🐱 Gatto</option>
+                                <option value="Altro">🐰 Altro</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <input type="text" id="txtPetName" placeholder="Nome (es. Pluto)">
+                        </div>
+                    </div>
+
+                    <!-- Riga 2: Taglia e Peso -->
+                    <div class="form-row">
+                        <div class="form-col">
+                            <select id="selPetSize">
+                                <option value="">Taglia...</option>
+                                <option value="Piccola (fino a 10kg)"> Piccola</option>
+                                <option value="Media (10-25kg)">🦮 Media</option>
+                                <option value="Grande (oltre 25kg)">🐕‍🦺 Grande</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <input type="number" id="numPetWeight" placeholder="Peso kg (opz.)">
+                        </div>
+                    </div>
+
+                    <!-- Riga 3: Età e Razza -->
+                    <div class="form-row">
+                        <div class="form-col">
+                            <select id="selPetAge">
+                                <option value="">Età/Fase...</option>
+                                <option value="Cucciolo">🍼 Cucciolo</option>
+                                <option value="Adulto">🐕 Adulto</option>
+                                <option value="Anziano">👴 Anziano</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <input type="text" id="txtPetBreed" placeholder="Razza (opz.)">
+                        </div>
+                    </div>
+                    
+                    <!-- Riga 4: Note Mediche/Gusti -->
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #94a3b8; font-size: 0.85rem; margin-bottom: 6px; font-weight: 500; text-align: left;">
+                            Allergie, Condizioni Mediche o Gusti:
+                        </label>
+                        <textarea id="txtTastes" rows="3" placeholder="Es. No lattosio, pancreatite, odia il pesce..." 
+                                  style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; font-size: 0.9rem; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
+                    </div>
+                    
+                    <button onclick="saveUserProfile()" class="btn-save">
+                        💾 Salva Profilo Locale
+                    </button>
+                    <p id="saveFeedback" style="color: var(--green); font-size: 0.8rem; margin-top: 8px; text-align: center; display: none; font-weight: 500;">
+                        ✅ Profilo salvato! Ora "Chef Ling for Pet" userà questi dati.
+                    </p>
+                </div>
+            </div>
 
             <!-- FOOTER INTEGRATO QUI DENTRO -->
             <div class="site-footer">
@@ -177,15 +317,15 @@
     </div>
 
     <script>
-        const URL_CHEF = "https://chat.qwen.ai/c/65c8a1e9-38cb-4d82-a77c-b4c9dd980808";
+        const URL_CHEF = "https://chat.qwen.ai/";
         
         // Definizione Ingredienti e Sottomenu
         const ingredients = [
-            { id: 'pasta', label: 'Pasta', icon: '🍝', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
+            { id: 'pasta', label: 'Pasta', icon: '', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
             { id: 'carne', label: 'Carne', icon: '🥩', type: 'complex', options: ['Pollo', 'Manzo', 'Maiale', 'Tacchino', 'Macinato', 'Bistecca', 'Altro'] },
             { id: 'pesce', label: 'Pesce', icon: '', type: 'complex', options: ['Tonno (scatola)', 'Salmone', 'Gamberi', 'Pesce Bianco', 'Molluschi', 'Altro'] },
-            { id: 'verdure', label: 'Verdure', icon: '🥦', type: 'complex', options: ['Zucchine', 'Melanzane', 'Pomodori', 'Insalata', 'Cipolle', 'Peperoni', 'Spinaci', 'Altro'] },
-            { id: 'legumi', label: 'Legumi', icon: '🫘', type: 'complex', options: ['Fagioli', 'Piselli', 'Lenticchie', 'Ceci', 'Altro'] },
+            { id: 'verdure', label: 'Verdure', icon: '', type: 'complex', options: ['Zucchine', 'Melanzane', 'Pomodori', 'Insalata', 'Cipolle', 'Peperoni', 'Spinaci', 'Altro'] },
+            { id: 'legumi', label: 'Legumi', icon: '', type: 'complex', options: ['Fagioli', 'Piselli', 'Lenticchie', 'Ceci', 'Altro'] },
             { id: 'uova', label: 'Uova', icon: '🥚', type: 'simple' },
             { id: 'formaggio', label: 'Formaggio', icon: '', type: 'simple' },
             { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'simple' },
@@ -281,7 +421,7 @@
             
             if(selectedItems.length === 0) return "Aiutami tu Chef! Ho il frigo vuoto!";
 
-            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
+            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
         }
 
         function showResult() {
@@ -308,6 +448,139 @@
             } catch(err) {
                 alert("Copia fallita. Copia il testo manualmente.");
             }
+        }
+
+        // --- FUNZIONI PER IL PROFILO PET DEFINITIVO ---
+        function togglePetFields() {
+            const chk = document.getElementById('chkPets');
+            const fields = document.getElementById('petFields');
+            
+            if (chk.checked) {
+                fields.style.display = 'block';
+                fields.style.opacity = '0';
+                setTimeout(() => { 
+                    fields.style.transition = 'opacity 0.3s ease'; 
+                    fields.style.opacity = '1'; 
+                }, 10);
+            } else {
+                fields.style.display = 'none';
+                // Reset campi quando si deseleziona
+                document.getElementById('selPetType').value = "";
+                document.getElementById('txtPetName').value = "";
+                document.getElementById('selPetSize').value = "";
+                document.getElementById('numPetWeight').value = "";
+                document.getElementById('selPetAge').value = "";
+                document.getElementById('txtPetBreed').value = "";
+                
+                localStorage.setItem('userHasPets', 'false');
+            }
+        }
+
+        function saveUserProfile() {
+            const hasPets = document.getElementById('chkPets').checked;
+            const profile = {
+                type: document.getElementById('selPetType').value,
+                name: document.getElementById('txtPetName').value.trim(),
+                size: document.getElementById('selPetSize').value,
+                weight: document.getElementById('numPetWeight').value,
+                age: document.getElementById('selPetAge').value,
+                breed: document.getElementById('txtPetBreed').value.trim(),
+                tastes: document.getElementById('txtTastes').value.trim()
+            };
+            
+            localStorage.setItem('userHasPets', hasPets);
+            localStorage.setItem('userPetProfile', JSON.stringify(profile));
+            
+            const feedback = document.getElementById('saveFeedback');
+            feedback.style.display = 'block';
+            setTimeout(() => { feedback.style.display = 'none'; }, 3000);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('userHasPets') === 'true') {
+                document.getElementById('chkPets').checked = true;
+                togglePetFields();
+                
+                const savedProfile = JSON.parse(localStorage.getItem('userPetProfile') || '{}');
+                if(savedProfile) {
+                    document.getElementById('selPetType').value = savedProfile.type || '';
+                    document.getElementById('txtPetName').value = savedProfile.name || '';
+                    document.getElementById('selPetSize').value = savedProfile.size || '';
+                    document.getElementById('numPetWeight').value = savedProfile.weight || '';
+                    document.getElementById('selPetAge').value = savedProfile.age || '';
+                    document.getElementById('txtPetBreed').value = savedProfile.breed || '';
+                    document.getElementById('txtTastes').value = savedProfile.tastes || '';
+                }
+            }
+        });
+
+        // FUNZIONE GO TO PUBLIC QWEN - LOGICA COMPLETA E SICURA
+        function goToPublicQwen() {
+            console.log("🔍 goToPublicQwen attivata!");
+            
+            const chkPets = document.getElementById('chkPets');
+            
+            // CONTROLLO 1: CASELLA NON SPUNTATA
+            if (!chkPets.checked) {
+                alert("️ Aspetta tesoro!\n\nQuesto pulsante è dedicato ai tuoi amici pelosi! 🐾\n\nPer usarlo devi prima spuntare 'Ho animali domestici in casa' qui sotto.");
+                document.getElementById('petProfileContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+
+            // CONTROLLO 2: DATI ESSENZIALI MANCANTI
+            const petType = document.getElementById('selPetType').value;
+            const petName = document.getElementById('txtPetName').value.trim();
+            const petSize = document.getElementById('selPetSize').value;
+            
+            if (!petType || !petName || !petSize) {
+                alert("⚠️ Quasi fatto!\n\nPer creare la ricetta perfetta ho bisogno di:\n1. Tipo di animale \n2. Nome 🏷️\n3. Taglia ⚖️\n\nCompila questi campi obbligatori!");
+                return false;
+            }
+
+            // RACCOLTA DATI COMPLETA
+            const petWeight = document.getElementById('numPetWeight').value;
+            const petAge = document.getElementById('selPetAge').value;
+            const petBreed = document.getElementById('txtPetBreed').value.trim();
+            const tastes = document.getElementById('txtTastes').value.trim();
+
+            // COSTRUZIONE MESSAGGIO INTELLIGENTE
+            const PUBLIC_QWEN_URL = "https://chat.qwen.ai/";
+            let message = "Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per il mio amico.\n\n";
+            
+            message += `️ MEMORIA PET:\n`;
+            message += `- Animale: ${petType} di nome ${petName}\n`;
+            message += `- Taglia: ${petSize}`;
+            if(petWeight) message += ` (Peso: ${petWeight}kg)`;
+            message += `\n`;
+            if(petAge) message += `- Fase vita: ${petAge}\n`;
+            if(petBreed) message += `- Razza: ${petBreed}\n`;
+            
+            if(tastes) {
+                message += `\n❤️ VINCOLI E GUSTI: ${tastes}\n`;
+            }
+            
+            message += `\nAdatta la magia alla sua realtà! Ricorda avvisi Zampa Sicura!`;
+            
+            navigator.clipboard.writeText(message).then(() => {
+                const btn = document.getElementById('btnInspire');
+                const originalHTML = btn.innerHTML;
+                
+                btn.innerHTML = "✅ Messaggio copiato! Incollalo in Qwen";
+                btn.style.background = "#22c55e";
+                btn.style.transform = "scale(1.02)";
+                
+                setTimeout(() => {
+                    window.open(PUBLIC_QWEN_URL, '_blank');
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style.background = "";
+                        btn.style.transform = "";
+                    }, 3000);
+                }, 1200);
+                
+            }).catch(err => {
+                alert("Impossibile copiare. Copia questo testo:\n\n" + message);
+            });
         }
     </script>
 </body>
