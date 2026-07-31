@@ -40,7 +40,7 @@
             text-align: center;
             border: 1px solid #334155;
             position: relative;
-            padding-bottom: 3rem; /* Spazio per il footer */
+            padding-bottom: 3rem;
         }
 
         header h1 { color: #fbbf24; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
@@ -146,6 +146,14 @@
             color: #fbbf24;
             text-decoration: underline;
         }
+
+        /* Pulsante Reset Dati */
+        .reset-section { margin-top: 15px; text-align: center; }
+        .btn-reset { 
+            background-color: transparent; color: #64748b; font-size: 0.8rem; padding: 8px 16px; 
+            border: 1px dashed #475569; width: auto; display: inline-block; 
+        }
+        .btn-reset:hover { color: #ef4444; border-color: #ef4444; }
     </style>
 </head>
 <body>
@@ -164,7 +172,7 @@
             </div>
             <div class="action-buttons-row">
                 <button id="btnAggiungi">➕ Aggiungi</button>
-                <button id="btnMic">🎤 Parla</button>
+                <button id="btnMic"> Parla</button>
             </div>
         </div>
 
@@ -179,7 +187,7 @@
             <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a WhatsApp</button>
             <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
             
-            <button id="btnSettings" class="btn-settings">⚙️ Gestisci Contatto Salvato</button>
+            <button id="btnSettings" class="btn-settings">️ Gestisci Contatto Salvato</button>
             
             <div id="contactPanel">
                 <div class="contact-info" id="contactInfoText">Nessun contatto salvato.</div>
@@ -191,8 +199,13 @@
         </div>
 
         <div class="actions-extra">
-            <button id="btnSalvaPreferita" class="btn-save">💾 Salva Preferita</button>
-            <button id="btnCaricaPreferita" class="btn-load">📂 Carica Preferita</button>
+            <button id="btnSalvaPreferita" class="btn-save">💾 Salva su File</button>
+            <button id="btnCaricaPreferita" class="btn-load">📂 Carica da File</button>
+        </div>
+
+        <!-- SEZIONE RESET DATI -->
+        <div class="reset-section">
+            <button id="btnResetDati" class="btn-reset">⚠️ Reset Dati App (Solo test)</button>
         </div>
 
         <!-- FOOTER INTEGRATO CORRETTAMENTE -->
@@ -217,7 +230,6 @@
     <script>
         // === LOGICA GENERALE ===
         const STORAGE_KEY = 'hollyRexSpesa_v2';
-        const STORAGE_KEY_PREF = 'hollyRexSpesa_Preferita';
         const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact';
         
         let lista = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -240,6 +252,7 @@
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
         const modalActions = document.getElementById('modalActions');
+        const btnResetDati = document.getElementById('btnResetDati');
 
         // Aggiorna UI Pannello Contatti
         function updateContactPanel() {
@@ -427,12 +440,78 @@
 
         btnSvuota.addEventListener('click', () => { if(confirm('Svuotare?')) { lista=[]; aggiornaUI(); } });
         
+        // === NUOVE FUNZIONI SALVA/CARICA SU FILE FISICO ===
         btnSalva.addEventListener('click', () => {
-            if(lista.length>0) { localStorage.setItem(STORAGE_KEY_PREF, JSON.stringify(lista)); alert('Lista preferita salvata!'); }
+            if(lista.length === 0) {
+                alert("La lista è vuota! Aggiungi qualcosa prima di salvare.");
+                return;
+            }
+            
+            const backupData = {
+                dataSalvataggio: new Date().toLocaleString('it-IT'),
+                lista: lista,
+                versione: "hollyRexSpesa_v2"
+            };
+            
+            const jsonString = JSON.stringify(backupData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Lista_Spesa_HollyRex_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert("✅ Lista salvata come file sul dispositivo!\nControlla la cartella Download.");
         });
+
         btnCarica.addEventListener('click', () => {
-            const p = JSON.parse(localStorage.getItem(STORAGE_KEY_PREF));
-            if(p) { if(confirm('Caricare la lista preferita? (sovrascriverà quella attuale)')) { lista=p; aggiornaUI(); } }
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const backupData = JSON.parse(event.target.result);
+                        
+                        if (!backupData.lista || !Array.isArray(backupData.lista)) {
+                            throw new Error("Formato file non valido");
+                        }
+                        
+                        if(confirm(`📅 File salvato il: ${backupData.dataSalvataggio}\n📦 Articoli: ${backupData.lista.length}\n\nVuoi caricare questa lista? (sovrascriverà quella attuale)`)) {
+                            lista = backupData.lista;
+                            aggiornaUI();
+                            alert("✅ Lista caricata con successo!");
+                        }
+                    } catch (err) {
+                        alert("❌ Errore nel caricamento del file:\n" + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        });
+
+        // === PULSANTE RESET DATI ===
+        btnResetDati.addEventListener('click', () => {
+            if(confirm("⚠️ ATTENZIONE: Questo cancellerà TUTTI i dati salvati (lista attuale, contatti).\nProcedere?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_KEY_CONTACT);
+                lista = [];
+                currentContact = null;
+                aggiornaUI();
+                updateContactPanel();
+                alert("Dati resettati! L'app è ora pulita.");
+                location.reload();
+            }
         });
 
         // Init
