@@ -27,6 +27,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .container {
@@ -39,6 +40,7 @@
             text-align: center;
             border: 1px solid #334155;
             position: relative;
+            padding-bottom: 3rem; /* Spazio per il footer */
         }
 
         header h1 { color: #fbbf24; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
@@ -84,7 +86,6 @@
         .btn-save { background-color: var(--warning-color); color: #000; }
         .btn-load { background-color: var(--info-color); }
         
-        /* Pulsante Impostazioni Contatti */
         .btn-settings { 
             background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; 
         }
@@ -125,6 +126,26 @@
         .btn-edit { background: var(--info-color); }
         .btn-delete { background: var(--danger-color); }
 
+        /* FOOTER */
+        .site-footer {
+            margin-top: 40px;
+            border-top: 1px solid #334155;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            width: 100%;
+        }
+        .site-footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.2s;
+        }
+        .site-footer a:hover {
+            color: #fbbf24;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -150,7 +171,7 @@
         <ul id="listaSpesa" class="lista"></ul>
 
         <div class="notes-section">
-            <label for="noteInput">📝 Note (opzionale):</label>
+            <label for="noteInput"> Note (opzionale):</label>
             <textarea id="noteInput" placeholder="Es. Prendi le buste, controlla scadenza..."></textarea>
         </div>
 
@@ -158,10 +179,8 @@
             <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a WhatsApp</button>
             <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
             
-            <!-- Pulsante Gestione Contatti -->
             <button id="btnSettings" class="btn-settings">⚙️ Gestisci Contatto Salvato</button>
             
-            <!-- Pannello Nascosto -->
             <div id="contactPanel">
                 <div class="contact-info" id="contactInfoText">Nessun contatto salvato.</div>
                 <div class="panel-actions">
@@ -174,6 +193,15 @@
         <div class="actions-extra">
             <button id="btnSalvaPreferita" class="btn-save">💾 Salva Preferita</button>
             <button id="btnCaricaPreferita" class="btn-load">📂 Carica Preferita</button>
+        </div>
+
+        <!-- FOOTER INTEGRATO CORRETTAMENTE -->
+        <div class="site-footer">
+            <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
+            <p>
+                <a href="privacy-policy.html">Privacy Policy</a> | 
+                <a href="cookie-policy.html">Cookie Policy</a>
+            </p>
         </div>
     </div>
 
@@ -190,9 +218,10 @@
         // === LOGICA GENERALE ===
         const STORAGE_KEY = 'hollyRexSpesa_v2';
         const STORAGE_KEY_PREF = 'hollyRexSpesa_Preferita';
-        const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact'; // Salva {nome, numero}
+        const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact';
         
         let lista = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let currentContact = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT));
 
         const inputProd = document.getElementById('prodotto');
         const inputQta = document.getElementById('quantita');
@@ -212,8 +241,6 @@
         const modalContent = document.getElementById('modalContent');
         const modalActions = document.getElementById('modalActions');
 
-        let currentContact = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT));
-
         // Aggiorna UI Pannello Contatti
         function updateContactPanel() {
             if (currentContact) {
@@ -232,13 +259,12 @@
             modalActions.innerHTML = '';
 
             if (type === 'ASK_NEW') {
-                // Primo inserimento o inserimento nuovo temporaneo
                 modalTitle.innerText = "Chi riceve la lista?";
                 modalContent.innerHTML = `
                     <label class="modal-label">Nome (es. Mamma, Marco):</label>
-                    <input type="text" id="mName" class="modal-input" placeholder="Inserisci nome">
+                    <input type="text" id="mName" class="modal-input" placeholder="Inserisci nome" value="${currentContact ? currentContact.nome : ''}">
                     <label class="modal-label">Numero WhatsApp (con prefisso, es. 39333...):</label>
-                    <input type="tel" id="mPhone" class="modal-input" placeholder="393331234567">
+                    <input type="tel" id="mPhone" class="modal-input" placeholder="393331234567" value="${currentContact ? currentContact.numero : ''}">
                     <div class="checkbox-container">
                         <input type="checkbox" id="mSave" checked>
                         <label for="mSave">Salva questo contatto per i prossimi invii</label>
@@ -249,7 +275,6 @@
                     <button class="modal-btn btn-cancel" onclick="closeModal()">ANNULLA</button>
                 `;
             } else if (type === 'CONFIRM_EXISTING') {
-                // Conferma uso contatto esistente
                 modalTitle.innerText = "Usa contatto salvato?";
                 modalContent.innerHTML = `
                     <p>Trovo il contatto: <strong style="color:var(--warning-color); font-size:1.2rem;">${currentContact.nome}</strong></p>
@@ -259,7 +284,7 @@
                 `;
                 modalActions.innerHTML = `
                     <button class="modal-btn btn-confirm" onclick="sendWithCurrent()">SÌ, INVIA A ${currentContact.nome.toUpperCase()}</button>
-                    <button class="modal-btn btn-secondary" onclick="showModal('ASK_NEW')">USA UN ALTRO NUMERO (Temporaneo)</button>
+                    <button class="modal-btn btn-secondary" onclick="showModal('ASK_NEW')">USA UN ALTRO NUMERO</button>
                     <button class="modal-btn btn-cancel" onclick="closeModal()">ANNULLA</button>
                 `;
             }
@@ -279,7 +304,7 @@
                 return;
             }
 
-            const phone = phoneRaw.replace(/\D/g, ''); // Solo numeri
+            const phone = phoneRaw.replace(/\D/g, ''); 
 
             if (save) {
                 currentContact = { nome: name, numero: phone };
@@ -300,23 +325,15 @@
         // === FUNZIONI PANNELLO IMPOSTAZIONI ===
         btnSettings.addEventListener('click', () => {
             updateContactPanel();
-            // Scrolla verso il pannello
             contactPanel.scrollIntoView({ behavior: 'smooth' });
         });
 
         window.editContact = function() {
             showModal('ASK_NEW');
-            // Pre-compila se esiste
-            if(currentContact) {
-                setTimeout(() => {
-                    document.getElementById('mName').value = currentContact.nome;
-                    document.getElementById('mPhone').value = currentContact.numero;
-                }, 100);
-            }
         };
 
         window.deleteContact = function() {
-            if(confirm("Sei sicuro di voler cancellare il contatto salvato? Dovrai reinserirlo la prossima volta.")) {
+            if(confirm("Sei sicuro di voler cancellare il contatto salvato?")) {
                 currentContact = null;
                 localStorage.removeItem(STORAGE_KEY_CONTACT);
                 updateContactPanel();
@@ -326,7 +343,7 @@
 
         // === INVIO WHATSAPP ===
         btnWhatsapp.addEventListener('click', () => {
-            if (lista.length === 0 || (lista.length === 1 && lista[0].nome === '')) {
+            if (lista.length === 0) {
                 alert('La lista è vuota!');
                 return;
             }
@@ -357,23 +374,18 @@
             window.open(url, '_blank');
         }
 
-        // === RESTO DEL CODICE (Spesa, Vocale, ecc.) ===
-        // ... (Includi qui tutta la logica di aggiunta, rimozione, vocale, salva/carica preferita già vista prima) ...
-        // Per brevità non la ripeto tutta, ma assicurati di includere le funzioni:
-        // aggiornaUI(), aggiungiItem(), rimuoviItem(), startDictation(), btnSalva, btnCarica
-        
-        // --- LOGICA SPESE E VOCALE (Riassunta per completezza) ---
+        // === LOGICA LISTA E VOCALE ===
         function aggiornaUI() {
             listaEl.innerHTML = '';
             if (lista.length === 0) {
                 listaEl.innerHTML = '<li style="justify-content:center; color:#94a3b8; font-style:italic;">La lista è vuota.</li>';
-                return;
+            } else {
+                lista.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span><button class="delete-btn" onclick="rimuoviItem(${index})">×</button>`;
+                    listaEl.appendChild(li);
+                });
             }
-            lista.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `<span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span><button class="delete-btn" onclick="rimuoviItem(${index})">×</button>`;
-                listaEl.appendChild(li);
-            });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
         }
 
@@ -399,7 +411,6 @@
             recognition.onend = () => { btnMic.classList.remove('listening'); btnMic.innerText = "🎤 Parla"; };
             recognition.onresult = (e) => {
                 const t = e.results[0][0].transcript;
-                // Logica semplice separazione
                 const parts = t.split(' ');
                 if(parts.length > 1 && /\d/.test(parts[parts.length-1])) {
                     inputQta.value = parts.pop();
@@ -417,67 +428,16 @@
         btnSvuota.addEventListener('click', () => { if(confirm('Svuotare?')) { lista=[]; aggiornaUI(); } });
         
         btnSalva.addEventListener('click', () => {
-            if(lista.length>0) { localStorage.setItem(STORAGE_KEY_PREF, JSON.stringify(lista)); alert('Salvata!'); }
+            if(lista.length>0) { localStorage.setItem(STORAGE_KEY_PREF, JSON.stringify(lista)); alert('Lista preferita salvata!'); }
         });
         btnCarica.addEventListener('click', () => {
             const p = JSON.parse(localStorage.getItem(STORAGE_KEY_PREF));
-            if(p) { if(confirm('Sovrascrivere?')) { lista=p; aggiornaUI(); } }
+            if(p) { if(confirm('Caricare la lista preferita? (sovrascriverà quella attuale)')) { lista=p; aggiornaUI(); } }
         });
 
         // Init
         aggiornaUI();
         updateContactPanel();
     </script>
-        <!-- ... Tutto il resto del codice HTML sopra rimane uguale ... -->
-
-    <!-- AGGIUNGI QUESTO STILE NEL TUO <style> (o sostituisci il footer esistente) -->
-        <style>
-            /* Assicurati che il container abbia spazio sotto */
-            .container {
-                /* ... gli altri stili che hai già ... */
-                padding-bottom: 80px; /* SPAZIO PER IL FOOTER */
-                position: relative;
-            }
-    
-            /* Stile del Footer Corretto */
-            .site-footer {
-                margin-top: 40px;
-                border-top: 1px solid #334155;
-                padding-top: 20px;
-                text-align: center;
-                font-size: 0.75rem;
-                color: #64748b;
-                width: 100%;
-                position: relative; /* Non assoluto, così scorre col contenuto */
-                bottom: auto;
-            }
-            .site-footer a {
-                color: #94a3b8;
-                text-decoration: none;
-                margin: 0 10px;
-                transition: color 0.2s;
-            }
-            .site-footer a:hover {
-                color: #fbbf24; /* Colore oro quando passi sopra */
-                text-decoration: underline;
-            }
-        </style>
-    
-        <!-- INSERISCI QUESTO FOOTER DOPO L'ULTIMO PULSANTE (dopo Carica Preferita) -->
-        
-        <!-- ... fine div actions-extra ... -->
-        
-        <!-- NUOVO FOOTER VISIBILE -->
-        <div class="site-footer">
-            <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
-            <p>
-                <a href="privacy-policy.html">Privacy Policy</a> | 
-                <a href="cookie-policy.html">Cookie Policy</a>
-            </p>
-        </div>
-    
-        </div> <!-- Chiusura del container principale -->
-    
-        <!-- ... Il resto dello script rimane uguale ... -->
 </body>
 </html>
