@@ -7,7 +7,21 @@
     <style>
         :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --pink: #ec4899; --gold: #f59e0b; --green: #22c55e; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
-        .app { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
+        
+        /* Container principale dell'app */
+        .app { 
+            background: var(--card); 
+            padding: 20px; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 450px; 
+            text-align: center; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+            position: relative; 
+            overflow: hidden; /* Importante per contenere gli overlay */
+            display: flex;
+            flex-direction: column;
+        }
         
         h1 { color: var(--pink); margin: 0 0 5px 0; font-size: 1.8rem; }
         p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
@@ -27,7 +41,7 @@
         
         /* Sottomenu a comparsa */
         .submenu {
-            display: none; /* Nascosto di default */
+            display: none; 
             grid-template-columns: repeat(2, 1fr);
             gap: 5px;
             margin-top: 8px;
@@ -49,18 +63,18 @@
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        textarea { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; }
+        textarea { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; resize: vertical; }
         
         select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; margin-bottom: 20px; font-size: 1rem; }
         
         .btn-main { background: linear-gradient(135deg, var(--pink), #db2777); color: white; border: none; padding: 15px; width: 100%; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4); margin-top: 10px;}
         .btn-main:active { transform: scale(0.98); }
 
-        /* Schermata Risultato */
+        /* Schermata Risultato (Overlay) */
         #resultScreen {
             display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--card); padding: 20px; box-sizing: border-box;
-            flex-direction: column; justify-content: center; z-index: 10; border-radius: 20px;
+            flex-direction: column; justify-content: center; z-index: 20; border-radius: 20px;
         }
         #finalText {
             background: #0f172a; color: #fff; padding: 15px; border-radius: 10px;
@@ -85,14 +99,36 @@
             100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); transform: scale(1); }
         }
 
-        .mic-btn { background: #334155; border: none; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; margin-bottom: 10px; }
+        .mic-btn { background: #334155; border: none; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; margin-bottom: 10px; cursor: pointer; }
+
+        /* --- STILE FOOTER AGGIUNTO --- */
+        .site-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            width: 100%;
+        }
+        .site-footer p { margin: 5px 0; }
+        .site-footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.2s;
+        }
+        .site-footer a:hover {
+            color: var(--gold);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="app">
         <!-- Schermata Principale -->
         <div id="mainScreen">
-            <h1>👩‍ Chef Ling</h1>
+            <h1>👩‍🍳 Chef Ling</h1>
             <p>Holly & Rex Group - v3.0 Detail Perfect</p>
             
             <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI? (Clicca per dettagli)</div>
@@ -103,17 +139,26 @@
 
             <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
             <select id="mood">
-                <option value="Veloce"> Veloce (Poco tempo)</option>
+                <option value="Veloce">⚡ Veloce (Poco tempo)</option>
                 <option value="Romantica">❤️ Romantica</option>
                 <option value="Sfiziosa">😋 Sfiziosa</option>
                 <option value="Leggera">🥗 Leggera</option>
-                <option value="Svuotafrigo">️ Svuota Frigo</option>
+                <option value="Svuotafrigo">🧹 Svuota Frigo</option>
             </select>
 
             <button class="btn-main" onclick="showResult()"> PREPARA MESSAGGIO</button>
+
+            <!-- FOOTER INTEGRATO QUI DENTRO -->
+            <div class="site-footer">
+                <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
+                <p>
+                    <a href="privacy-policy.html">Privacy Policy</a> | 
+                    <a href="cookie-policy.html">Cookie Policy</a>
+                </p>
+            </div>
         </div>
 
-        <!-- Schermata Risultato -->
+        <!-- Schermata Risultato (Overlay) -->
         <div id="resultScreen">
             <h2 style="color:var(--gold); margin-top:0;">Messaggio Pronto!</h2>
             <div id="finalText"></div>
@@ -122,7 +167,7 @@
             <button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button>
             
             <div class="blink-box">
-                <h3>️ Cosa fare ora:</h3>
+                <h3>📝 Cosa fare ora:</h3>
                 <div class="step">1. Clicca su copia e apri chat</div>
                 <div class="step">2. <span class="highlight">Tocca la casella di testo.</span></div>
                 <div class="step">3. Scegli <span class="highlight">Incolla.</span></div>
@@ -136,64 +181,54 @@
         
         // Definizione Ingredienti e Sottomenu
         const ingredients = [
-            { id: 'pasta', label: 'Pasta', icon: '', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
-            { id: 'carne', label: 'Carne', icon: '', type: 'complex', options: ['Pollo', 'Manzo', 'Maiale', 'Tacchino', 'Macinato', 'Bistecca', 'Altro'] },
-            { id: 'pesce', label: 'Pesce', icon: '🐟', type: 'complex', options: ['Tonno (scatola)', 'Salmone', 'Gamberi', 'Pesce Bianco', 'Molluschi', 'Altro'] },
+            { id: 'pasta', label: 'Pasta', icon: '🍝', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
+            { id: 'carne', label: 'Carne', icon: '🥩', type: 'complex', options: ['Pollo', 'Manzo', 'Maiale', 'Tacchino', 'Macinato', 'Bistecca', 'Altro'] },
+            { id: 'pesce', label: 'Pesce', icon: '', type: 'complex', options: ['Tonno (scatola)', 'Salmone', 'Gamberi', 'Pesce Bianco', 'Molluschi', 'Altro'] },
             { id: 'verdure', label: 'Verdure', icon: '🥦', type: 'complex', options: ['Zucchine', 'Melanzane', 'Pomodori', 'Insalata', 'Cipolle', 'Peperoni', 'Spinaci', 'Altro'] },
             { id: 'legumi', label: 'Legumi', icon: '🫘', type: 'complex', options: ['Fagioli', 'Piselli', 'Lenticchie', 'Ceci', 'Altro'] },
-            { id: 'uova', label: 'Uova', icon: '', type: 'simple' },
-            { id: 'formaggio', label: 'Formaggio', icon: '🧀', type: 'simple' },
-            { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'simple' }, // Aggiunto per pancetta/prosciutto
-            { id: 'pane', label: 'Pane', icon: '', type: 'simple' },
+            { id: 'uova', label: 'Uova', icon: '🥚', type: 'simple' },
+            { id: 'formaggio', label: 'Formaggio', icon: '', type: 'simple' },
+            { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'simple' },
+            { id: 'pane', label: 'Pane', icon: '🍞', type: 'simple' },
             { id: 'latticini', label: 'Latte/Yogurt', icon: '🥛', type: 'simple' }
         ];
 
         const grid = document.getElementById('grid');
-        // Stato dell'app: memorizza le scelte
         let selectionState = {}; 
 
         // Inizializzazione Griglia
         ingredients.forEach(ing => {
-            // Contenitore per bottone + sottomenu
             const container = document.createElement('div');
             container.style.display = 'flex';
             container.style.flexDirection = 'column';
             container.style.width = '100%';
 
-            // Bottone Principale
             const btn = document.createElement('div');
             btn.className = 'btn-ing';
             btn.id = `btn-${ing.id}`;
             btn.innerHTML = `<span class="icon">${ing.icon}</span><span id="label-${ing.id}">${ing.label}</span>`;
             
-            // Gestione Click Principale
             btn.onclick = () => {
                 if (ing.type === 'simple') {
-                    // Toggle semplice
                     btn.classList.toggle('active');
                     selectionState[ing.id] = btn.classList.contains('active') ? ing.label : null;
-                    // Chiudi eventuali sottomenu aperti
                     document.querySelectorAll('.submenu').forEach(sub => sub.classList.remove('show'));
                 } else {
-                    // Complesso: Apri/Chiudi sottomenu
                     const submenu = document.getElementById(`sub-${ing.id}`);
                     const isOpen = submenu.classList.contains('show');
                     
-                    // Chiudi tutti gli altri sottomenu
                     document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
                     
                     if (!isOpen) {
                         submenu.classList.add('show');
-                        btn.classList.add('active'); // Evidenzia che è "in selezione"
+                        btn.classList.add('active');
                     } else {
                         btn.classList.remove('active');
-                        // Se c'era una selezione specifica, la manteniamo visiva ma chiudiamo il menu
                         if(selectionState[ing.id]) btn.classList.add('selected-specific');
                     }
                 }
             };
 
-            // Sottomenu (se complesso)
             if (ing.type === 'complex') {
                 const subMenuDiv = document.createElement('div');
                 subMenuDiv.className = 'submenu';
@@ -204,18 +239,15 @@
                     subBtn.className = 'sub-btn';
                     subBtn.innerText = opt;
                     subBtn.onclick = (e) => {
-                        e.stopPropagation(); // Non chiudere il menu subito
-                        // Rimuovi selezione precedente in questo sottomenu
+                        e.stopPropagation();
                         subMenuDiv.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('selected'));
                         subBtn.classList.add('selected');
                         
-                        // Aggiorna stato e bottone principale
                         selectionState[ing.id] = `${ing.label}: ${opt}`;
                         document.getElementById(`label-${ing.id}`).innerText = `${opt} ✅`;
                         btn.classList.add('selected-specific');
-                        btn.classList.remove('active'); // Togli evidenziazione "in selezione"
+                        btn.classList.remove('active');
                         
-                        // Chiudi sottomenu dopo breve delay
                         setTimeout(() => {
                             subMenuDiv.classList.remove('show');
                         }, 200);
@@ -249,7 +281,7 @@
             
             if(selectedItems.length === 0) return "Aiutami tu Chef! Ho il frigo vuoto!";
 
-            return `Ciao Chef Ling! Sono Massy.\n\n🛒 Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
+            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n🌙 Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤️`;
         }
 
         function showResult() {
@@ -278,56 +310,5 @@
             }
         }
     </script>
-        <!-- ... Tutto il resto del codice HTML sopra rimane uguale ... -->
-
-    <!-- AGGIUNGI QUESTO STILE NEL TUO <style> (o sostituisci il footer esistente) -->
-        <style>
-            /* Assicurati che il container abbia spazio sotto */
-            .container {
-                /* ... gli altri stili che hai già ... */
-                padding-bottom: 80px; /* SPAZIO PER IL FOOTER */
-                position: relative;
-            }
-    
-            /* Stile del Footer Corretto */
-            .site-footer {
-                margin-top: 40px;
-                border-top: 1px solid #334155;
-                padding-top: 20px;
-                text-align: center;
-                font-size: 0.75rem;
-                color: #64748b;
-                width: 100%;
-                position: relative; /* Non assoluto, così scorre col contenuto */
-                bottom: auto;
-            }
-            .site-footer a {
-                color: #94a3b8;
-                text-decoration: none;
-                margin: 0 10px;
-                transition: color 0.2s;
-            }
-            .site-footer a:hover {
-                color: #fbbf24; /* Colore oro quando passi sopra */
-                text-decoration: underline;
-            }
-        </style>
-    
-        <!-- INSERISCI QUESTO FOOTER DOPO L'ULTIMO PULSANTE (dopo Carica Preferita) -->
-        
-        <!-- ... fine div actions-extra ... -->
-        
-        <!-- NUOVO FOOTER VISIBILE -->
-        <div class="site-footer">
-            <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
-            <p>
-                <a href="privacy-policy.html">Privacy Policy</a> | 
-                <a href="cookie-policy.html">Cookie Policy</a>
-            </p>
-        </div>
-    
-        </div> <!-- Chiusura del container principale -->
-    
-        <!-- ... Il resto dello script rimane uguale ... -->
 </body>
 </html>
