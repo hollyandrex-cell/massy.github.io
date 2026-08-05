@@ -16,7 +16,6 @@
             --info-color: #3b82f6;
             --pink-color: #ec4899;
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
@@ -29,8 +28,7 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
-        .container {
+      .container {
             background-color: var(--card-color);
             padding: 2rem;
             border-radius: 16px;
@@ -42,173 +40,149 @@
             position: relative;
             padding-bottom: 3rem;
         }
-
         header h1 { color: #fbbf24; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
         header p { color: #94a3b8; margin-top: 0; font-size: 0.85rem; margin-bottom: 1.5rem; }
-
-        .input-section { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
-        .input-group { flex: 1; min-width: 140px; position: relative; }
-        
+        #loginSection { margin: 2rem 0; }
+        #btnLogin { background-color: var(--info-color); width: 100%; }
+        #userInfo { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1rem; display: none; align-items: center; justify-content: center; }
+        #userInfo img { width: 24px; height: 24px; border-radius: 50%; margin-right: 8px; }
+        #appContent { display: none; }
+        #loader { color: #fbbf24; margin: 2rem 0; }
+      .input-section { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+      .input-group { flex: 1; min-width: 140px; position: relative; }
         input[type="text"], textarea {
             width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569;
             background-color: #0f172a; color: white; font-size: 1rem; outline: none; box-sizing: border-box;
         }
         input:focus, textarea:focus { border-color: var(--primary-color); }
-
-        .action-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
-        
+      .action-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
         button {
             padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
             font-size: 1rem; transition: all 0.2s; color: white; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         button:active { transform: scale(0.96); }
-
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
         #btnAggiungi { background-color: var(--primary-color); }
         #btnMic { background-color: var(--pink-color); }
         #btnMic.listening { background-color: #be123c; animation: pulse 1.5s infinite; }
-
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
-
-        .lista { list-style: none; padding: 0; text-align: left; margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto; }
-        .lista li {
+      .lista { list-style: none; padding: 0; text-align: left; margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto; }
+      .lista li {
             background-color: #334155; padding: 12px; margin-bottom: 8px; border-radius: 8px;
             display: flex; justify-content: space-between; align-items: center; animation: slideIn 0.3s ease;
         }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .delete-btn { background: transparent; color: #ef4444; width: auto; padding: 0 8px; margin: 0; font-size: 1.5rem; }
-        .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
-
-        .actions { display: flex; flex-direction: column; gap: 10px; }
-        .btn-whatsapp { background-color: var(--success-color); }
-        .btn-danger { background-color: var(--danger-color); }
-        .actions-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .btn-save { background-color: var(--warning-color); color: #000; }
-        .btn-load { background-color: var(--info-color); }
-        
-        .btn-settings { 
-            background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; 
-        }
-        .btn-settings:hover { background-color: #64748b; }
-
-        .notes-section { margin-top: 1.5rem; text-align: left; border-top: 1px solid #334155; padding-top: 1rem; }
-        .notes-section label { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
+      .delete-btn { background: transparent; color: #ef4444; width: auto; padding: 0 8px; margin: 0; font-size: 1.5rem; }
+      .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
+      .actions { display: flex; flex-direction: column; gap: 10px; }
+      .btn-whatsapp { background-color: var(--success-color); }
+      .btn-danger { background-color: var(--danger-color); }
+      .actions-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+      .btn-save { background-color: var(--warning-color); color: #000; }
+      .btn-load { background-color: var(--info-color); }
+      .btn-settings { background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; }
+      .btn-settings:hover { background-color: #64748b; }
+      .notes-section { margin-top: 1.5rem; text-align: left; border-top: 1px solid #334155; padding-top: 1rem; }
+      .notes-section label { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
         #noteInput { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background-color: #0f172a; color: white; font-family: inherit; resize: vertical; min-height: 60px; box-sizing: border-box; }
-
-        /* MODALE PERSONALIZZATA */
-        .modal-overlay {
+      .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
         }
-        .modal {
+      .modal {
             background: var(--card-color); padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px;
             border: 1px solid var(--primary-color); box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
             text-align: left;
         }
-        .modal h3 { color: var(--warning-color); margin-top: 0; }
-        .modal-label { display: block; margin-top: 15px; color: #94a3b8; font-size: 0.9rem; }
-        .modal-input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
-        .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .modal-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .btn-confirm { background: var(--success-color); color: white; }
-        .btn-secondary { background: #475569; color: white; }
-        .btn-cancel { background: transparent; color: #94a3b8; border: 1px solid #475569; }
-        
-        .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; }
+      .modal h3 { color: var(--warning-color); margin-top: 0; }
+      .modal-label { display: block; margin-top: 15px; color: #94a3b8; font-size: 0.9rem; }
+      .modal-input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
+      .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+      .modal-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+      .btn-confirm { background: var(--success-color); color: white; }
+      .btn-secondary { background: #475569; color: white; }
+      .btn-cancel { background: transparent; color: #94a3b8; border: 1px solid #475569; }
+      .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; }
         input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-color); }
-
-        /* Pannello Gestione Contatti */
         #contactPanel { display: none; margin-top: 15px; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #475569; text-align: left; }
-        .contact-info { margin-bottom: 15px; font-size: 0.95rem; }
-        .contact-info strong { color: var(--warning-color); }
-        .panel-actions { display: flex; gap: 10px; }
-        .panel-btn { flex: 1; padding: 8px; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; color: white; }
-        .btn-edit { background: var(--info-color); }
-        .btn-delete { background: var(--danger-color); }
-
-        /* FOOTER */
-        .site-footer {
-            margin-top: 40px;
-            border-top: 1px solid #334155;
-            padding-top: 20px;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #64748b;
-            width: 100%;
+      .contact-info { margin-bottom: 15px; font-size: 0.95rem; }
+      .contact-info strong { color: var(--warning-color); }
+      .panel-actions { display: flex; gap: 10px; }
+      .panel-btn { flex: 1; padding: 8px; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; color: white; }
+      .btn-edit { background: var(--info-color); }
+      .btn-delete { background: var(--danger-color); }
+      .site-footer {
+            margin-top: 40px; border-top: 1px solid #334155; padding-top: 20px; text-align: center;
+            font-size: 0.75rem; color: #64748b; width: 100%;
         }
-        .site-footer a {
-            color: #94a3b8;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.2s;
-        }
-        .site-footer a:hover {
-            color: #fbbf24;
-            text-decoration: underline;
-        }
-
-        /* Pulsante Reset Dati */
-        .reset-section { margin-top: 15px; text-align: center; }
-        .btn-reset { 
-            background-color: transparent; color: #64748b; font-size: 0.8rem; padding: 8px 16px; 
-            border: 1px dashed #475569; width: auto; display: inline-block; 
-        }
-        .btn-reset:hover { color: #ef4444; border-color: #ef4444; }
+      .site-footer a { color: #94a3b8; text-decoration: none; margin: 0 10px; transition: color 0.2s; }
+      .site-footer a:hover { color: #fbbf24; text-decoration: underline; }
+      .reset-section { margin-top: 15px; text-align: center; }
+      .btn-reset { background-color: transparent; color: #64748b; font-size: 0.8rem; padding: 8px 16px; border: 1px dashed #475569; width: auto; display: inline-block; }
+      .btn-reset:hover { color: #ef4444; border-color: #ef4444; }
+      .btn-logout { background-color: #64748b; font-size: 0.8rem; padding: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🛒 Lista della Spesa</h1>
-            <p>Holly & Rex Group - Privacy First</p>
+            <p>Holly & Rex Group - Sincronizzata</p>
         </header>
 
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
-            </div>
-            <div class="input-group">
-                <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
-            </div>
-            <div class="action-buttons-row">
-                <button id="btnAggiungi">➕ Aggiungi</button>
-                <button id="btnMic"> Parla</button>
-            </div>
+        <div id="loginSection">
+            <div id="loader">Caricamento...</div>
+            <button id="btnLogin" style="display:none;">🔐 Accedi con Google per sincronizzare</button>
         </div>
 
-        <ul id="listaSpesa" class="lista"></ul>
+        <div id="userInfo"></div>
 
-        <div class="notes-section">
-            <label for="noteInput"> Note (opzionale):</label>
-            <textarea id="noteInput" placeholder="Es. Prendi le buste, controlla scadenza..."></textarea>
-        </div>
-
-        <div class="actions">
-            <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a WhatsApp</button>
-            <button id="btnSvuota" class="btn-danger">🗑️ Svuota Lista</button>
-            
-            <button id="btnSettings" class="btn-settings">️ Gestisci Contatto Salvato</button>
-            
-            <div id="contactPanel">
-                <div class="contact-info" id="contactInfoText">Nessun contatto salvato.</div>
-                <div class="panel-actions">
-                    <button class="panel-btn btn-edit" onclick="editContact()">Modifica</button>
-                    <button class="panel-btn btn-delete" onclick="deleteContact()">Cancella</button>
+        <div id="appContent">
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="prodotto" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
+                </div>
+                <div class="action-buttons-row">
+                    <button id="btnAggiungi">➕ Aggiungi</button>
+                    <button id="btnMic">🎤 Parla</button>
                 </div>
             </div>
+
+            <ul id="listaSpesa" class="lista"></ul>
+
+            <div class="notes-section">
+                <label for="noteInput">📝 Note (opzionale):</label>
+                <textarea id="noteInput" placeholder="Es. Prendi le buste, controlla scadenza..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a WhatsApp</button>
+                <button id="btnSvuota" class="btn-danger">🗑 Svuota Lista</button>
+                <button id="btnSettings" class="btn-settings">⚙️ Gestisci Contatto Salvato</button>
+                <div id="contactPanel">
+                    <div class="contact-info" id="contactInfoText">Nessun contatto salvato.</div>
+                    <div class="panel-actions">
+                        <button class="panel-btn btn-edit" onclick="editContact()">Modifica</button>
+                        <button class="panel-btn btn-delete" onclick="deleteContact()">Cancella</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-extra">
+                <button id="btnSalvaPreferita" class="btn-save">💾 Salva su File</button>
+                <button id="btnCaricaPreferita" class="btn-load">📂 Carica da File</button>
+            </div>
+
+            <button id="btnLogout" class="btn-logout">Esci</button>
+
+            <div class="reset-section">
+                <button id="btnResetDati" class="btn-reset">⚠ Reset Lista Condivisa</button>
+            </div>
         </div>
 
-        <div class="actions-extra">
-            <button id="btnSalvaPreferita" class="btn-save">💾 Salva su File</button>
-            <button id="btnCaricaPreferita" class="btn-load">📂 Carica da File</button>
-        </div>
-
-        <!-- SEZIONE RESET DATI -->
-        <div class="reset-section">
-            <button id="btnResetDati" class="btn-reset">⚠️ Reset Dati App (Solo test)</button>
-        </div>
-
-        <!-- FOOTER INTEGRATO CORRETTAMENTE -->
         <div class="site-footer">
             <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
             <p>
@@ -218,7 +192,6 @@
         </div>
     </div>
 
-    <!-- MODALE DINAMICA -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal">
             <h3 id="modalTitle">Configura Invio</h3>
@@ -227,14 +200,40 @@
         </div>
     </div>
 
-    <script>
-        // === LOGICA GENERALE ===
-        const STORAGE_KEY = 'hollyRexSpesa_v2';
-        const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact';
-        
-        let lista = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        let currentContact = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT));
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
+        const firebaseConfig = {
+            apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
+            authDomain: "holly-rex-spesa.firebaseapp.com",
+            projectId: "holly-rex-spesa",
+            storageBucket: "holly-rex-spesa.firebasestorage.app",
+            messagingSenderId: "450072023944",
+            appId: "1:450072023944:web:888af5555a5b50c599203d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // === VARIABILI GLOBALI ===
+        const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact';
+        let lista = [];
+        let currentContact = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT));
+        let unsubscribeFirestore = null;
+        let docRef = null;
+        let isUpdatingFromFirestore = false;
+
+        const loginSection = document.getElementById('loginSection');
+        const appContent = document.getElementById('appContent');
+        const userInfo = document.getElementById('userInfo');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnLogout = document.getElementById('btnLogout');
+        const loader = document.getElementById('loader');
         const inputProd = document.getElementById('prodotto');
         const inputQta = document.getElementById('quantita');
         const btnAggiungi = document.getElementById('btnAggiungi');
@@ -254,7 +253,115 @@
         const modalActions = document.getElementById('modalActions');
         const btnResetDati = document.getElementById('btnResetDati');
 
-        // Aggiorna UI Pannello Contatti
+        // === AUTH ===
+        btnLogin.addEventListener('click', () => signInWithPopup(auth, provider).catch(e => alert('Errore login: ' + e.message)));
+        btnLogout.addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, (user) => {
+            loader.style.display = 'none';
+            if (user) {
+                const allowedEmails = ['tariffazioneliguria@gmail.com', 'hollybau1972@gmail.com'];
+                if (!allowedEmails.includes(user.email)) {
+                    alert('Non hai accesso a questa lista.');
+                    signOut(auth);
+                    return;
+                }
+                btnLogin.style.display = 'none';
+                appContent.style.display = 'block';
+                userInfo.style.display = 'flex';
+                userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
+                
+                docRef = doc(db, 'liste', 'holly-rex-condivisa');
+                
+                unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
+                    isUpdatingFromFirestore = true;
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        lista = data.items || [];
+                        noteInput.value = data.note || '';
+                        aggiornaUI(false);
+                    } else {
+                        setDoc(docRef, { items: [], note: '' });
+                    }
+                    isUpdatingFromFirestore = false;
+                });
+            } else {
+                btnLogin.style.display = 'block';
+                appContent.style.display = 'none';
+                userInfo.style.display = 'none';
+                if (unsubscribeFirestore) unsubscribeFirestore();
+            }
+        });
+
+        // === FIRESTORE SYNC ===
+        async function salvaSuFirestore() {
+            if (!docRef || isUpdatingFromFirestore) return;
+            await setDoc(docRef, {
+                items: lista,
+                note: noteInput.value,
+                ultimoAggiornamento: new Date().toISOString()
+            });
+        }
+
+        let noteTimeout;
+        noteInput.addEventListener('input', () => {
+            clearTimeout(noteTimeout);
+            noteTimeout = setTimeout(salvaSuFirestore, 1000);
+        });
+
+        // === LOGICA LISTA ===
+        function aggiornaUI(salva = true) {
+            listaEl.innerHTML = '';
+            if (lista.length === 0) {
+                listaEl.innerHTML = '<li style="justify-content:center; color:#94a3b8; font-style:italic;">La lista è vuota.</li>';
+            } else {
+                lista.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span><strong>${item.nome}</strong> ${item.qta? '(' + item.qta + ')' : ''}</span><button class="delete-btn" onclick="rimuoviItem(${index})">×</button>`;
+                    listaEl.appendChild(li);
+                });
+            }
+            if (salva) salvaSuFirestore();
+        }
+
+        function aggiungiItem() {
+            const nome = inputProd.value.trim();
+            const qta = inputQta.value.trim();
+            if (nome) {
+                lista.push({ nome, qta });
+                inputProd.value = ''; inputQta.value = ''; inputProd.focus();
+                aggiornaUI();
+            }
+        }
+
+        window.rimuoviItem = (index) => { lista.splice(index, 1); aggiornaUI(); };
+        btnAggiungi.addEventListener('click', aggiungiItem);
+        
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false; recognition.lang = 'it-IT';
+            recognition.onstart = () => { btnMic.classList.add('listening'); btnMic.innerText = "Ascolto..."; };
+            recognition.onend = () => { btnMic.classList.remove('listening'); btnMic.innerText = "🎤 Parla"; };
+            recognition.onresult = (e) => {
+                const t = e.results[0][0].transcript;
+                const parts = t.split(' ');
+                if(parts.length > 1 && /\d/.test(parts[parts.length-1])) {
+                    inputQta.value = parts.pop();
+                    inputProd.value = parts.join(' ');
+                } else {
+                    inputProd.value = t;
+                }
+                aggiungiItem();
+            };
+            btnMic.addEventListener('click', () => { try{recognition.start()}catch(e){} });
+        } else {
+            btnMic.style.display = 'none';
+        }
+
+        btnSvuota.addEventListener('click', () => { if(confirm('Svuotare la lista per tutti?')) { lista=[]; aggiornaUI(); } });
+        
+        // === WHATSAPP + MODALE ===
         function updateContactPanel() {
             if (currentContact) {
                 contactInfoText.innerHTML = `Contatto Salvato:<br><strong>${currentContact.nome}</strong><br>${currentContact.numero}`;
@@ -265,19 +372,17 @@
             }
         }
 
-        // === GESTIONE MODALE ===
         function showModal(type) {
             modalOverlay.style.display = 'flex';
             modalContent.innerHTML = '';
             modalActions.innerHTML = '';
-
             if (type === 'ASK_NEW') {
                 modalTitle.innerText = "Chi riceve la lista?";
                 modalContent.innerHTML = `
                     <label class="modal-label">Nome (es. Mamma, Marco):</label>
-                    <input type="text" id="mName" class="modal-input" placeholder="Inserisci nome" value="${currentContact ? currentContact.nome : ''}">
+                    <input type="text" id="mName" class="modal-input" placeholder="Inserisci nome" value="${currentContact? currentContact.nome : ''}">
                     <label class="modal-label">Numero WhatsApp (con prefisso, es. 39333...):</label>
-                    <input type="tel" id="mPhone" class="modal-input" placeholder="393331234567" value="${currentContact ? currentContact.numero : ''}">
+                    <input type="tel" id="mPhone" class="modal-input" placeholder="393331234567" value="${currentContact? currentContact.numero : ''}">
                     <div class="checkbox-container">
                         <input type="checkbox" id="mSave" checked>
                         <label for="mSave">Salva questo contatto per i prossimi invii</label>
@@ -303,49 +408,28 @@
             }
         }
 
-        function closeModal() {
-            modalOverlay.style.display = 'none';
-        }
+        window.closeModal = () => modalOverlay.style.display = 'none';
 
-        function processNewContact() {
+        window.processNewContact = () => {
             const name = document.getElementById('mName').value.trim();
             const phoneRaw = document.getElementById('mPhone').value.trim();
             const save = document.getElementById('mSave').checked;
-
-            if (!name || !phoneRaw) {
-                alert("Per favore inserisci sia il nome che il numero.");
-                return;
-            }
-
+            if (!name ||!phoneRaw) { alert("Per favore inserisci sia il nome che il numero."); return; }
             const phone = phoneRaw.replace(/\D/g, ''); 
-
             if (save) {
                 currentContact = { nome: name, numero: phone };
                 localStorage.setItem(STORAGE_KEY_CONTACT, JSON.stringify(currentContact));
                 updateContactPanel();
             }
-
             closeModal();
             sendWhatsApp(phone);
-        }
-
-        function sendWithCurrent() {
-            if (!currentContact) return;
-            closeModal();
-            sendWhatsApp(currentContact.numero);
-        }
-
-        // === FUNZIONI PANNELLO IMPOSTAZIONI ===
-        btnSettings.addEventListener('click', () => {
-            updateContactPanel();
-            contactPanel.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        window.editContact = function() {
-            showModal('ASK_NEW');
         };
 
-        window.deleteContact = function() {
+        window.sendWithCurrent = () => { if (!currentContact) return; closeModal(); sendWhatsApp(currentContact.numero); };
+
+        btnSettings.addEventListener('click', () => { updateContactPanel(); contactPanel.scrollIntoView({ behavior: 'smooth' }); });
+        window.editContact = () => showModal('ASK_NEW');
+        window.deleteContact = () => {
             if(confirm("Sei sicuro di voler cancellare il contatto salvato?")) {
                 currentContact = null;
                 localStorage.removeItem(STORAGE_KEY_CONTACT);
@@ -354,105 +438,26 @@
             }
         };
 
-        // === INVIO WHATSAPP ===
         btnWhatsapp.addEventListener('click', () => {
-            if (lista.length === 0) {
-                alert('La lista è vuota!');
-                return;
-            }
-
-            if (currentContact) {
-                showModal('CONFIRM_EXISTING');
-            } else {
-                showModal('ASK_NEW');
-            }
+            if (lista.length === 0) { alert('La lista è vuota!'); return; }
+            if (currentContact) { showModal('CONFIRM_EXISTING'); } else { showModal('ASK_NEW'); }
         });
 
         function sendWhatsApp(phone) {
             let testo = "🔄 *LISTA AGGIORNATA HOLLY & REX* \n\n";
             testo += `📦 *Totale articoli: ${lista.length}*\n\n`;
-            
-            lista.forEach((item, i) => {
-                testo += `${i+1}. ${item.nome} ${item.qta ? '(' + item.qta + ')' : ''}\n`;
-            });
-
+            lista.forEach((item, i) => { testo += `${i+1}. ${item.nome} ${item.qta? '(' + item.qta + ')' : ''}\n`; });
             const note = noteInput.value.trim();
-            if (note) {
-                testo += `\n------------------\n📝 *NOTE:*\n${note}\n`;
-            }
-            
-            testo += "\n_Generata con amore digitale da Holly & Rex Group ❤️_";
-            
+            if (note) { testo += `\n------------------\n📝 *NOTE:*\n${note}\n`; }
+            testo += "\n_Generata con amore digitale da Holly & Rex Group e Ling ❤_";
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(testo)}`;
             window.open(url, '_blank');
         }
 
-        // === LOGICA LISTA E VOCALE ===
-        function aggiornaUI() {
-            listaEl.innerHTML = '';
-            if (lista.length === 0) {
-                listaEl.innerHTML = '<li style="justify-content:center; color:#94a3b8; font-style:italic;">La lista è vuota.</li>';
-            } else {
-                lista.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span><button class="delete-btn" onclick="rimuoviItem(${index})">×</button>`;
-                    listaEl.appendChild(li);
-                });
-            }
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-        }
-
-        function aggiungiItem() {
-            const nome = inputProd.value.trim();
-            const qta = inputQta.value.trim();
-            if (nome) {
-                lista.push({ nome, qta });
-                inputProd.value = ''; inputQta.value = ''; inputProd.focus();
-                aggiornaUI();
-            }
-        }
-
-        window.rimuoviItem = (index) => { lista.splice(index, 1); aggiornaUI(); };
-        btnAggiungi.addEventListener('click', aggiungiItem);
-        
-        // Dettatura
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-            recognition.continuous = false; recognition.lang = 'it-IT';
-            recognition.onstart = () => { btnMic.classList.add('listening'); btnMic.innerText = "Ascolto..."; };
-            recognition.onend = () => { btnMic.classList.remove('listening'); btnMic.innerText = "🎤 Parla"; };
-            recognition.onresult = (e) => {
-                const t = e.results[0][0].transcript;
-                const parts = t.split(' ');
-                if(parts.length > 1 && /\d/.test(parts[parts.length-1])) {
-                    inputQta.value = parts.pop();
-                    inputProd.value = parts.join(' ');
-                } else {
-                    inputProd.value = t;
-                }
-                aggiungiItem();
-            };
-            btnMic.addEventListener('click', () => { try{recognition.start()}catch(e){} });
-        } else {
-            btnMic.style.display = 'none';
-        }
-
-        btnSvuota.addEventListener('click', () => { if(confirm('Svuotare?')) { lista=[]; aggiornaUI(); } });
-        
-        // === NUOVE FUNZIONI SALVA/CARICA SU FILE FISICO ===
+        // === SALVA/CARICA FILE ===
         btnSalva.addEventListener('click', () => {
-            if(lista.length === 0) {
-                alert("La lista è vuota! Aggiungi qualcosa prima di salvare.");
-                return;
-            }
-            
-            const backupData = {
-                dataSalvataggio: new Date().toLocaleString('it-IT'),
-                lista: lista,
-                versione: "hollyRexSpesa_v2"
-            };
-            
+            if(lista.length === 0) { alert("La lista è vuota! Aggiungi qualcosa prima di salvare."); return; }
+            const backupData = { dataSalvataggio: new Date().toLocaleString('it-IT'), lista: lista, versione: "hollyRexSpesa_v3" };
             const jsonString = JSON.stringify(backupData, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -463,59 +468,42 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
-            alert("✅ Lista salvata come file sul dispositivo!\nControlla la cartella Download.");
+            alert("✅ Lista salvata come file sul dispositivo!");
         });
 
         btnCarica.addEventListener('click', () => {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = '.json';
-            
             input.onchange = (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
-                
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     try {
                         const backupData = JSON.parse(event.target.result);
-                        
-                        if (!backupData.lista || !Array.isArray(backupData.lista)) {
-                            throw new Error("Formato file non valido");
-                        }
-                        
-                        if(confirm(`📅 File salvato il: ${backupData.dataSalvataggio}\n📦 Articoli: ${backupData.lista.length}\n\nVuoi caricare questa lista? (sovrascriverà quella attuale)`)) {
+                        if (!backupData.lista ||!Array.isArray(backupData.lista)) { throw new Error("Formato file non valido"); }
+                        if(confirm(`📅 File salvato il: ${backupData.dataSalvataggio}\n📦 Articoli: ${backupData.lista.length}\n\nVuoi caricare questa lista? (sovrascriverà quella condivisa)`)) {
                             lista = backupData.lista;
                             aggiornaUI();
-                            alert("✅ Lista caricata con successo!");
+                            alert("✅ Lista caricata e sincronizzata!");
                         }
-                    } catch (err) {
-                        alert("❌ Errore nel caricamento del file:\n" + err.message);
-                    }
+                    } catch (err) { alert("❌ Errore nel caricamento del file:\n" + err.message); }
                 };
                 reader.readAsText(file);
             };
-            
             input.click();
         });
 
-        // === PULSANTE RESET DATI ===
         btnResetDati.addEventListener('click', () => {
-            if(confirm("⚠️ ATTENZIONE: Questo cancellerà TUTTI i dati salvati (lista attuale, contatti).\nProcedere?")) {
-                localStorage.removeItem(STORAGE_KEY);
-                localStorage.removeItem(STORAGE_KEY_CONTACT);
+            if(confirm("⚠ ATTENZIONE: Questo cancellerà la lista condivisa per TUTTI.\nProcedere?")) {
                 lista = [];
-                currentContact = null;
+                noteInput.value = '';
                 aggiornaUI();
-                updateContactPanel();
-                alert("Dati resettati! L'app è ora pulita.");
-                location.reload();
+                alert("Lista resettata per tutti!");
             }
         });
 
-        // Init
-        aggiornaUI();
         updateContactPanel();
     </script>
 </body>
