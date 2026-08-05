@@ -258,22 +258,29 @@
         btnLogout.addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, (user) => {
-            loader.style.display = 'none';
-            if (user) {
-                const allowedEmails = ['tariffazioneliguria@gmail.com', 'hollybau1972@gmail.com'];
-                if (!allowedEmails.includes(user.email)) {
-                    alert('Non hai accesso a questa lista.');
-                    signOut(auth);
-                    return;
-                }
-                btnLogin.style.display = 'none';
-                appContent.style.display = 'block';
-                userInfo.style.display = 'flex';
-                userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
-                
-                docRef = doc(db, 'liste', 'holly-rex-condivisa');
-                
-                unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
+    loader.style.display = 'none';
+    if (user) {
+        const allowedEmails = ['tariffazioneliguria@gmail.com', 'hollybau1972@gmail.com'];
+        if (!allowedEmails.includes(user.email)) {
+            alert('Non hai accesso a questa lista.');
+            signOut(auth);
+            return;
+        }
+        btnLogin.style.display = 'none';
+        appContent.style.display = 'block';
+        userInfo.style.display = 'flex';
+        userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
+
+        // --- PULIZIA VECCHIO LOCALSTORAGE --- INCOLLA QUI ---
+        if (localStorage.getItem('hollyRexSpesa_v2')) {
+            localStorage.removeItem('hollyRexSpesa_v2');
+            console.log('Vecchia lista locale cancellata. Ora usiamo solo Firebase ❤️');
+        }
+        // --- FINE PULIZIA ---
+
+        docRef = doc(db, 'liste', 'holly-rex-condivisa');
+        
+        unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
                     isUpdatingFromFirestore = true;
                     if (docSnap.exists()) {
                         const data = docSnap.data();
