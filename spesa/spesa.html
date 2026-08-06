@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
-    <script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('sw.js');
-        }
-      </script>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista della Spesa - Holly & Rex</title>
     <link rel="icon" type="image/x-icon" href="bau.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="bau-32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="bau-192x192.png">
@@ -13,9 +11,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista della Spesa - Holly & Rex</title>
+    <meta name="description" content="Lista spesa sincronizzata di Holly & Rex Group">
     <style>
         :root {
             --bg-color: #0f172a;
@@ -40,7 +36,7 @@
             padding: 20px;
             box-sizing: border-box;
         }
-      .container {
+     .container {
             background-color: var(--card-color);
             padding: 2rem;
             border-radius: 16px;
@@ -60,14 +56,14 @@
         #userInfo img { width: 24px; height: 24px; border-radius: 50%; margin-right: 8px; }
         #appContent { display: none; }
         #loader { color: #fbbf24; margin: 2rem 0; }
-      .input-section { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
-      .input-group { flex: 1; min-width: 140px; position: relative; }
+     .input-section { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+     .input-group { flex: 1; min-width: 140px; position: relative; }
         input[type="text"], textarea {
             width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569;
             background-color: #0f172a; color: white; font-size: 1rem; outline: none; box-sizing: border-box;
         }
         input:focus, textarea:focus { border-color: var(--primary-color); }
-      .action-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
+     .action-buttons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 10px; }
         button {
             padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
             font-size: 1rem; transition: all 0.2s; color: white; display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -78,64 +74,64 @@
         #btnMic { background-color: var(--pink-color); }
         #btnMic.listening { background-color: #be123c; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
-      .lista { list-style: none; padding: 0; text-align: left; margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto; }
-      .lista li {
+     .lista { list-style: none; padding: 0; text-align: left; margin-bottom: 1.5rem; max-height: 300px; overflow-y: auto; }
+     .lista li {
             background-color: #334155; padding: 12px; margin-bottom: 8px; border-radius: 8px;
             display: flex; justify-content: space-between; align-items: center; animation: slideIn 0.3s ease;
-            cursor: pointer; /* Indica che è cliccabile per modificare */
+            cursor: pointer;
             transition: background-color 0.2s;
         }
-        .lista li:hover { background-color: #475569; }
+       .lista li:hover { background-color: #475569; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-      .delete-btn { background: transparent; color: #ef4444; width: auto; padding: 0 8px; margin: 0; font-size: 1.5rem; }
-      .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
-      .actions { display: flex; flex-direction: column; gap: 10px; }
-      .btn-whatsapp { background-color: var(--success-color); }
-      .btn-danger { background-color: var(--danger-color); }
-      .actions-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-      .btn-save { background-color: var(--warning-color); color: #000; }
-      .btn-load { background-color: var(--info-color); }
-      .btn-settings { background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; }
-      .btn-settings:hover { background-color: #64748b; }
-      .notes-section { margin-top: 1.5rem; text-align: left; border-top: 1px solid #334155; padding-top: 1rem; }
-      .notes-section label { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
+     .delete-btn { background: transparent; color: #ef4444; width: auto; padding: 0 8px; margin: 0; font-size: 1.5rem; }
+     .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
+     .actions { display: flex; flex-direction: column; gap: 10px; }
+     .btn-whatsapp { background-color: var(--success-color); }
+     .btn-danger { background-color: var(--danger-color); }
+     .actions-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+     .btn-save { background-color: var(--warning-color); color: #000; }
+     .btn-load { background-color: var(--info-color); }
+     .btn-settings { background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; }
+     .btn-settings:hover { background-color: #64748b; }
+     .notes-section { margin-top: 1.5rem; text-align: left; border-top: 1px solid #334155; padding-top: 1rem; }
+     .notes-section label { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
         #noteInput { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background-color: #0f172a; color: white; font-family: inherit; resize: vertical; min-height: 60px; box-sizing: border-box; }
-      .modal-overlay {
+     .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
         }
-      .modal {
+     .modal {
             background: var(--card-color); padding: 2rem; border-radius: 16px; width: 90%; max-width: 400px;
             border: 1px solid var(--primary-color); box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
             text-align: left;
         }
-      .modal h3 { color: var(--warning-color); margin-top: 0; }
-      .modal-label { display: block; margin-top: 15px; color: #94a3b8; font-size: 0.9rem; }
-      .modal-input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
-      .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-      .modal-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-      .btn-confirm { background: var(--success-color); color: white; }
-      .btn-secondary { background: #475569; color: white; }
-      .btn-cancel { background: transparent; color: #94a3b8; border: 1px solid #475569; }
-      .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; }
+     .modal h3 { color: var(--warning-color); margin-top: 0; }
+     .modal-label { display: block; margin-top: 15px; color: #94a3b8; font-size: 0.9rem; }
+     .modal-input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
+     .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+     .modal-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+     .btn-confirm { background: var(--success-color); color: white; }
+     .btn-secondary { background: #475569; color: white; }
+     .btn-cancel { background: transparent; color: #94a3b8; border: 1px solid #475569; }
+     .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; }
         input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-color); }
         #contactPanel { display: none; margin-top: 15px; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #475569; text-align: left; }
-      .contact-info { margin-bottom: 15px; font-size: 0.95rem; }
-      .contact-info strong { color: var(--warning-color); }
-      .panel-actions { display: flex; gap: 10px; }
-      .panel-btn { flex: 1; padding: 8px; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; color: white; }
-      .btn-edit { background: var(--info-color); }
-      .btn-delete { background: var(--danger-color); }
-      .site-footer {
+     .contact-info { margin-bottom: 15px; font-size: 0.95rem; }
+     .contact-info strong { color: var(--warning-color); }
+     .panel-actions { display: flex; gap: 10px; }
+     .panel-btn { flex: 1; padding: 8px; font-size: 0.9rem; border: none; border-radius: 6px; cursor: pointer; color: white; }
+     .btn-edit { background: var(--info-color); }
+     .btn-delete { background: var(--danger-color); }
+     .site-footer {
             margin-top: 40px; border-top: 1px solid #334155; padding-top: 20px; text-align: center;
             font-size: 0.75rem; color: #64748b; width: 100%;
         }
-      .site-footer a { color: #94a3b8; text-decoration: none; margin: 0 10px; transition: color 0.2s; }
-      .site-footer a:hover { color: #fbbf24; text-decoration: underline; }
-      .reset-section { margin-top: 15px; text-align: center; }
-      .btn-reset { background-color: transparent; color: #64748b; font-size: 0.8rem; padding: 8px 16px; border: 1px dashed #475569; width: auto; display: inline-block; }
-      .btn-reset:hover { color: #ef4444; border-color: #ef4444; }
-      .btn-logout { background-color: #64748b; font-size: 0.8rem; padding: 8px; margin-top: 10px; }
+     .site-footer a { color: #94a3b8; text-decoration: none; margin: 0 10px; transition: color 0.2s; }
+     .site-footer a:hover { color: #fbbf24; text-decoration: underline; }
+     .reset-section { margin-top: 15px; text-align: center; }
+     .btn-reset { background-color: transparent; color: #64748b; font-size: 0.8rem; padding: 8px 16px; border: 1px dashed #475569; width: auto; display: inline-block; }
+     .btn-reset:hover { color: #ef4444; border-color: #ef4444; }
+     .btn-logout { background-color: #64748b; font-size: 0.8rem; padding: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -176,7 +172,7 @@
             <div class="actions">
                 <button id="btnInviaWhatsApp" class="btn-whatsapp"> Invia a WhatsApp</button>
                 <button id="btnSvuota" class="btn-danger">🗑 Svuota Lista</button>
-                <button id="btnSettings" class="btn-settings">⚙️ Gestisci Contatto Salvato</button>
+                <button id="btnSettings" class="btn-settings">⚙ Gestisci Contatto Salvato</button>
                 <div id="contactPanel">
                     <div class="contact-info" id="contactInfoText">Nessun contatto salvato.</div>
                     <div class="panel-actions">
@@ -201,7 +197,7 @@
         <div class="site-footer">
             <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
             <p>
-                <a href="privacy-policy.html">Privacy Policy</a> | 
+                <a href="privacy-policy.html">Privacy Policy</a> |
                 <a href="cookie-policy.html">Cookie Policy</a>
             </p>
         </div>
@@ -221,6 +217,15 @@
                 <button class="modal-btn btn-confirm" onclick="salvaModifica()">SALVA MODIFICHE</button>
                 <button class="modal-btn btn-cancel" onclick="chiudiEditModal()">ANNULLA</button>
             </div>
+        </div>
+    </div>
+
+    <!-- MODALE CONTATTI -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal">
+            <h3 id="modalTitle">Gestisci Contatto</h3>
+            <div id="modalContent"></div>
+            <div class="modal-actions" id="modalActions"></div>
         </div>
     </div>
 
@@ -251,7 +256,7 @@
         let unsubscribeFirestore = null;
         let docRef = null;
         let isUpdatingFromFirestore = false;
-        let editIndex = null; // Indice dell'elemento in modifica
+        let editIndex = null;
 
         const loginSection = document.getElementById('loginSection');
         const appContent = document.getElementById('appContent');
@@ -272,8 +277,8 @@
         const btnSettings = document.getElementById('btnSettings');
         const contactPanel = document.getElementById('contactPanel');
         const contactInfoText = document.getElementById('contactInfoText');
-        
-        // Elementi Modale Edit
+        const btnResetDati = document.getElementById('btnResetDati');
+
         const editModalOverlay = document.getElementById('editModalOverlay');
         const editNomeInput = document.getElementById('editNome');
         const editQtaInput = document.getElementById('editQta');
@@ -301,7 +306,7 @@
                 }
 
                 docRef = doc(db, 'liste', 'holly-rex-condivisa');
-                
+
                 unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
                     isUpdatingFromFirestore = true;
                     if (docSnap.exists()) {
@@ -338,7 +343,7 @@
             noteTimeout = setTimeout(salvaSuFirestore, 1000);
         });
 
-        // === LOGICA LISTA INTELLIGENTE ===
+        // === LOGICA LISTA ===
         function aggiornaUI(salva = true) {
             listaEl.innerHTML = '';
             if (lista.length === 0) {
@@ -346,12 +351,11 @@
             } else {
                 lista.forEach((item, index) => {
                     const li = document.createElement('li');
-                    // Cliccando sull'item si apre la modifica
                     li.onclick = (e) => {
                         if(!e.target.classList.contains('delete-btn')) apriModifica(index);
                     };
                     li.innerHTML = `
-                        <span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span>
+                        <span><strong>${item.nome}</strong> ${item.qta? '(' + item.qta + ')' : ''}</span>
                         <button class="delete-btn" onclick="rimuoviItem(${index})">×</button>
                     `;
                     listaEl.appendChild(li);
@@ -363,38 +367,31 @@
         function aggiungiItem() {
             const nome = inputProd.value.trim();
             const qta = inputQta.value.trim();
-            
+
             if (nome) {
-                // CERCA SE ESISTE GIÀ (Case insensitive)
                 const esistenteIndex = lista.findIndex(i => i.nome.toLowerCase() === nome.toLowerCase());
-                
-                if (esistenteIndex !== -1) {
-                    // SE ESISTE: SOMMA LA QUANTITÀ O AGGIORNA
+
+                if (esistenteIndex!== -1) {
                     const vecchioQta = lista[esistenteIndex].qta;
-                    // Prova a sommare se sono numeri, altrimenti concatena o sostituisci
                     let nuovaQta = qta;
-                    if (vecchioQta && qta && !isNaN(vecchioQta) && !isNaN(qta)) {
+                    if (vecchioQta && qta &&!isNaN(vecchioQta) &&!isNaN(qta)) {
                         nuovaQta = String(Number(vecchioQta) + Number(qta));
                     } else if (qta) {
-                        nuovaQta = qta; // Sostituisce se c'è una nuova qta esplicita
+                        nuovaQta = qta;
                     }
-                    
+
                     lista[esistenteIndex].qta = nuovaQta;
-                    // Feedback visivo temporaneo (opzionale, ma carino)
-                    console.log(`Aggiornato: ${nome} -> ${nuovaQta}`);
                 } else {
-                    // SE NON ESISTE: AGGIUNGI NUOVO
                     lista.push({ nome, qta });
                 }
 
-                inputProd.value = ''; 
-                inputQta.value = ''; 
+                inputProd.value = '';
+                inputQta.value = '';
                 inputProd.focus();
                 aggiornaUI();
             }
         }
 
-        // === FUNZIONI DI MODIFICA RAPIDA ===
         window.apriModifica = (index) => {
             editIndex = index;
             const item = lista[index];
@@ -405,10 +402,10 @@
         };
 
         window.salvaModifica = () => {
-            if (editIndex !== null) {
+            if (editIndex!== null) {
                 const nuovoNome = editNomeInput.value.trim();
                 const nuovaQta = editQtaInput.value.trim();
-                
+
                 if (nuovoNome) {
                     lista[editIndex].nome = nuovoNome;
                     lista[editIndex].qta = nuovaQta;
@@ -423,67 +420,62 @@
             editIndex = null;
         };
 
-        window.rimuoviItem = (index) => { 
-            lista.splice(index, 1); 
-            aggiornaUI(); 
+        window.rimuoviItem = (index) => {
+            lista.splice(index, 1);
+            aggiornaUI();
         };
 
         btnAggiungi.addEventListener('click', aggiungiItem);
-        
-        // Supporto tasto Enter negli input principali
+
         [inputProd, inputQta].forEach(input => {
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') aggiungiItem();
             });
         });
 
-        // === DETTATURA VOCALE POTENZIATA ===
+        // === DETTATURA VOCALE ===
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognition = new SpeechRecognition();
-            recognition.continuous = false; 
+            recognition.continuous = false;
             recognition.lang = 'it-IT';
             recognition.interimResults = false;
 
             recognition.onstart = () => { btnMic.classList.add('listening'); btnMic.innerText = "Ascolto..."; };
             recognition.onend = () => { btnMic.classList.remove('listening'); btnMic.innerText = "🎤 Parla"; };
-            
+
             recognition.onresult = (e) => {
                 const t = e.results[0][0].transcript.toLowerCase();
-                // Logica semplice: cerca numeri alla fine o nel testo
                 const matchNum = t.match(/(\d+)/);
                 let qta = "";
                 let prod = t;
 
                 if (matchNum) {
-                    // Se trova un numero, prova a separarlo
                     const num = matchNum[1];
-                    // Rimuove il numero dalla stringa del prodotto
                     prod = t.replace(num, '').trim();
-                    // Pulisce parole extra tipo "pezzi", "confezioni" se necessario, ma teniamo semplice
                     qta = num;
                 }
-                
-                inputProd.value = prod.charAt(0).toUpperCase() + prod.slice(1); // Maiuscola iniziale
+
+                inputProd.value = prod.charAt(0).toUpperCase() + prod.slice(1);
                 inputQta.value = qta;
                 aggiungiItem();
             };
-            
-            btnMic.addEventListener('click', () => { 
-                try { recognition.start(); } catch(e) {} 
+
+            btnMic.addEventListener('click', () => {
+                try { recognition.start(); } catch(e) {}
             });
         } else {
             btnMic.style.display = 'none';
         }
 
-        btnSvuota.addEventListener('click', () => { 
-            if(confirm('Svuotare la lista per tutti?')) { 
-                lista=[]; 
-                aggiornaUI(); 
-            } 
+        btnSvuota.addEventListener('click', () => {
+            if(confirm('Svuotare la lista per tutti?')) {
+                lista=[];
+                aggiornaUI();
+            }
         });
-        
-        // === WHATSAPP + MODALE CONTATTI ===
+
+        // === WHATSAPP ===
         function updateContactPanel() {
             if (currentContact) {
                 contactInfoText.innerHTML = `Contatto Salvato:<br><strong>${currentContact.nome}</strong><br>${currentContact.numero}`;
@@ -503,7 +495,7 @@
             modalOverlay.style.display = 'flex';
             modalContent.innerHTML = '';
             modalActions.innerHTML = '';
-            
+
             if (type === 'ASK_NEW') {
                 modalTitle.innerText = "Chi riceve la lista?";
                 modalContent.innerHTML = `
@@ -543,7 +535,7 @@
             const phoneRaw = document.getElementById('mPhone').value.trim();
             const save = document.getElementById('mSave').checked;
             if (!name ||!phoneRaw) { alert("Per favore inserisci sia il nome che il numero."); return; }
-            const phone = phoneRaw.replace(/\D/g, ''); 
+            const phone = phoneRaw.replace(/\D/g, '');
             if (save) {
                 currentContact = { nome: name, numero: phone };
                 localStorage.setItem(STORAGE_KEY_CONTACT, JSON.stringify(currentContact));
@@ -633,6 +625,13 @@
         });
 
         updateContactPanel();
+    </script>
+
+    <!-- SERVICE WORKER REGISTRATION - DEVE STARE QUI PRIMA DI </body> -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/massy.github.io/spesa/sw.js', {scope: '/massy.github.io/spesa/'});
+    }
     </script>
 </body>
 </html>
