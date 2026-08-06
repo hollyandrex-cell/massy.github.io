@@ -1,22 +1,22 @@
 {
   "name": "Lista Spesa - Holly & Rex",
   "short_name": "H&R Spesa",
-  "description": "Lista della spesa sincronizzata di Holly & Rex Group",
-  "start_url": "./spesa.html",
+  "start_url": "/massy.github.io/spesa/spesa.html",
+  "scope": "/massy.github.io/spesa/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#4f46e5",
-  "orientation": "portrait",
+  "description": "Lista della spesa sincronizzata di Holly & Rex Group",
   "icons": [
     {
       "src": "bau-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "bau-512x512.png",
-      "sizes": "512x512", 
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
