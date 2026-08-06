@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('sw.js');
+        }
+      </script>
 <head>
     <link rel="icon" type="image/x-icon" href="bau.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="bau-32.png">
