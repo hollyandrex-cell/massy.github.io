@@ -70,7 +70,10 @@
       .lista li {
             background-color: #334155; padding: 12px; margin-bottom: 8px; border-radius: 8px;
             display: flex; justify-content: space-between; align-items: center; animation: slideIn 0.3s ease;
+            cursor: pointer; /* Indica che è cliccabile per modificare */
+            transition: background-color 0.2s;
         }
+        .lista li:hover { background-color: #475569; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
       .delete-btn { background: transparent; color: #ef4444; width: auto; padding: 0 8px; margin: 0; font-size: 1.5rem; }
       .delete-btn:hover { color: #ff6b6b; background-color: rgba(239, 68, 68, 0.1); }
@@ -126,7 +129,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛒 Lista della Spesa</h1>
+            <h1> Lista della Spesa</h1>
             <p>Holly & Rex Group - Sincronizzata</p>
         </header>
 
@@ -147,7 +150,7 @@
                 </div>
                 <div class="action-buttons-row">
                     <button id="btnAggiungi">➕ Aggiungi</button>
-                    <button id="btnMic">🎤 Parla</button>
+                    <button id="btnMic"> Parla</button>
                 </div>
             </div>
 
@@ -159,7 +162,7 @@
             </div>
 
             <div class="actions">
-                <button id="btnInviaWhatsApp" class="btn-whatsapp">📱 Invia a WhatsApp</button>
+                <button id="btnInviaWhatsApp" class="btn-whatsapp"> Invia a WhatsApp</button>
                 <button id="btnSvuota" class="btn-danger">🗑 Svuota Lista</button>
                 <button id="btnSettings" class="btn-settings">⚙️ Gestisci Contatto Salvato</button>
                 <div id="contactPanel">
@@ -173,7 +176,7 @@
 
             <div class="actions-extra">
                 <button id="btnSalvaPreferita" class="btn-save">💾 Salva su File</button>
-                <button id="btnCaricaPreferita" class="btn-load">📂 Carica da File</button>
+                <button id="btnCaricaPreferita" class="btn-load"> Carica da File</button>
             </div>
 
             <button id="btnLogout" class="btn-logout">Esci</button>
@@ -192,11 +195,20 @@
         </div>
     </div>
 
-    <div id="modalOverlay" class="modal-overlay">
+    <!-- MODALE DI MODIFICA RAPIDA -->
+    <div id="editModalOverlay" class="modal-overlay">
         <div class="modal">
-            <h3 id="modalTitle">Configura Invio</h3>
-            <div id="modalContent"></div>
-            <div class="modal-actions" id="modalActions"></div>
+            <h3 id="editModalTitle">Modifica Prodotto</h3>
+            <div id="editModalContent">
+                <label class="modal-label">Nome:</label>
+                <input type="text" id="editNome" class="modal-input">
+                <label class="modal-label">Quantità:</label>
+                <input type="text" id="editQta" class="modal-input">
+            </div>
+            <div class="modal-actions" id="editModalActions">
+                <button class="modal-btn btn-confirm" onclick="salvaModifica()">SALVA MODIFICHE</button>
+                <button class="modal-btn btn-cancel" onclick="chiudiEditModal()">ANNULLA</button>
+            </div>
         </div>
     </div>
 
@@ -227,6 +239,7 @@
         let unsubscribeFirestore = null;
         let docRef = null;
         let isUpdatingFromFirestore = false;
+        let editIndex = null; // Indice dell'elemento in modifica
 
         const loginSection = document.getElementById('loginSection');
         const appContent = document.getElementById('appContent');
@@ -247,40 +260,37 @@
         const btnSettings = document.getElementById('btnSettings');
         const contactPanel = document.getElementById('contactPanel');
         const contactInfoText = document.getElementById('contactInfoText');
-        const modalOverlay = document.getElementById('modalOverlay');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-        const modalActions = document.getElementById('modalActions');
-        const btnResetDati = document.getElementById('btnResetDati');
+        
+        // Elementi Modale Edit
+        const editModalOverlay = document.getElementById('editModalOverlay');
+        const editNomeInput = document.getElementById('editNome');
+        const editQtaInput = document.getElementById('editQta');
 
         // === AUTH ===
         btnLogin.addEventListener('click', () => signInWithPopup(auth, provider).catch(e => alert('Errore login: ' + e.message)));
         btnLogout.addEventListener('click', () => signOut(auth));
 
         onAuthStateChanged(auth, (user) => {
-    loader.style.display = 'none';
-    if (user) {
-        const allowedEmails = ['tariffazioneliguria@gmail.com', 'hollybau1972@gmail.com'];
-        if (!allowedEmails.includes(user.email)) {
-            alert('Non hai accesso a questa lista.');
-            signOut(auth);
-            return;
-        }
-        btnLogin.style.display = 'none';
-        appContent.style.display = 'block';
-        userInfo.style.display = 'flex';
-        userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
+            loader.style.display = 'none';
+            if (user) {
+                const allowedEmails = ['tariffazioneliguria@gmail.com', 'hollybau1972@gmail.com'];
+                if (!allowedEmails.includes(user.email)) {
+                    alert('Non hai accesso a questa lista.');
+                    signOut(auth);
+                    return;
+                }
+                btnLogin.style.display = 'none';
+                appContent.style.display = 'block';
+                userInfo.style.display = 'flex';
+                userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
 
-        // --- PULIZIA VECCHIO LOCALSTORAGE --- INCOLLA QUI ---
-        if (localStorage.getItem('hollyRexSpesa_v2')) {
-            localStorage.removeItem('hollyRexSpesa_v2');
-            console.log('Vecchia lista locale cancellata. Ora usiamo solo Firebase ❤️');
-        }
-        // --- FINE PULIZIA ---
+                if (localStorage.getItem('hollyRexSpesa_v2')) {
+                    localStorage.removeItem('hollyRexSpesa_v2');
+                }
 
-        docRef = doc(db, 'liste', 'holly-rex-condivisa');
-        
-        unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
+                docRef = doc(db, 'liste', 'holly-rex-condivisa');
+                
+                unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
                     isUpdatingFromFirestore = true;
                     if (docSnap.exists()) {
                         const data = docSnap.data();
@@ -316,7 +326,7 @@
             noteTimeout = setTimeout(salvaSuFirestore, 1000);
         });
 
-        // === LOGICA LISTA ===
+        // === LOGICA LISTA INTELLIGENTE ===
         function aggiornaUI(salva = true) {
             listaEl.innerHTML = '';
             if (lista.length === 0) {
@@ -324,7 +334,14 @@
             } else {
                 lista.forEach((item, index) => {
                     const li = document.createElement('li');
-                    li.innerHTML = `<span><strong>${item.nome}</strong> ${item.qta? '(' + item.qta + ')' : ''}</span><button class="delete-btn" onclick="rimuoviItem(${index})">×</button>`;
+                    // Cliccando sull'item si apre la modifica
+                    li.onclick = (e) => {
+                        if(!e.target.classList.contains('delete-btn')) apriModifica(index);
+                    };
+                    li.innerHTML = `
+                        <span><strong>${item.nome}</strong> ${item.qta ? '(' + item.qta + ')' : ''}</span>
+                        <button class="delete-btn" onclick="rimuoviItem(${index})">×</button>
+                    `;
                     listaEl.appendChild(li);
                 });
             }
@@ -334,41 +351,127 @@
         function aggiungiItem() {
             const nome = inputProd.value.trim();
             const qta = inputQta.value.trim();
+            
             if (nome) {
-                lista.push({ nome, qta });
-                inputProd.value = ''; inputQta.value = ''; inputProd.focus();
+                // CERCA SE ESISTE GIÀ (Case insensitive)
+                const esistenteIndex = lista.findIndex(i => i.nome.toLowerCase() === nome.toLowerCase());
+                
+                if (esistenteIndex !== -1) {
+                    // SE ESISTE: SOMMA LA QUANTITÀ O AGGIORNA
+                    const vecchioQta = lista[esistenteIndex].qta;
+                    // Prova a sommare se sono numeri, altrimenti concatena o sostituisci
+                    let nuovaQta = qta;
+                    if (vecchioQta && qta && !isNaN(vecchioQta) && !isNaN(qta)) {
+                        nuovaQta = String(Number(vecchioQta) + Number(qta));
+                    } else if (qta) {
+                        nuovaQta = qta; // Sostituisce se c'è una nuova qta esplicita
+                    }
+                    
+                    lista[esistenteIndex].qta = nuovaQta;
+                    // Feedback visivo temporaneo (opzionale, ma carino)
+                    console.log(`Aggiornato: ${nome} -> ${nuovaQta}`);
+                } else {
+                    // SE NON ESISTE: AGGIUNGI NUOVO
+                    lista.push({ nome, qta });
+                }
+
+                inputProd.value = ''; 
+                inputQta.value = ''; 
+                inputProd.focus();
                 aggiornaUI();
             }
         }
 
-        window.rimuoviItem = (index) => { lista.splice(index, 1); aggiornaUI(); };
+        // === FUNZIONI DI MODIFICA RAPIDA ===
+        window.apriModifica = (index) => {
+            editIndex = index;
+            const item = lista[index];
+            editNomeInput.value = item.nome;
+            editQtaInput.value = item.qta || '';
+            editModalOverlay.style.display = 'flex';
+            editNomeInput.focus();
+        };
+
+        window.salvaModifica = () => {
+            if (editIndex !== null) {
+                const nuovoNome = editNomeInput.value.trim();
+                const nuovaQta = editQtaInput.value.trim();
+                
+                if (nuovoNome) {
+                    lista[editIndex].nome = nuovoNome;
+                    lista[editIndex].qta = nuovaQta;
+                    aggiornaUI();
+                }
+            }
+            chiudiEditModal();
+        };
+
+        window.chiudiEditModal = () => {
+            editModalOverlay.style.display = 'none';
+            editIndex = null;
+        };
+
+        window.rimuoviItem = (index) => { 
+            lista.splice(index, 1); 
+            aggiornaUI(); 
+        };
+
         btnAggiungi.addEventListener('click', aggiungiItem);
         
+        // Supporto tasto Enter negli input principali
+        [inputProd, inputQta].forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') aggiungiItem();
+            });
+        });
+
+        // === DETTATURA VOCALE POTENZIATA ===
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognition = new SpeechRecognition();
-            recognition.continuous = false; recognition.lang = 'it-IT';
+            recognition.continuous = false; 
+            recognition.lang = 'it-IT';
+            recognition.interimResults = false;
+
             recognition.onstart = () => { btnMic.classList.add('listening'); btnMic.innerText = "Ascolto..."; };
             recognition.onend = () => { btnMic.classList.remove('listening'); btnMic.innerText = "🎤 Parla"; };
+            
             recognition.onresult = (e) => {
-                const t = e.results[0][0].transcript;
-                const parts = t.split(' ');
-                if(parts.length > 1 && /\d/.test(parts[parts.length-1])) {
-                    inputQta.value = parts.pop();
-                    inputProd.value = parts.join(' ');
-                } else {
-                    inputProd.value = t;
+                const t = e.results[0][0].transcript.toLowerCase();
+                // Logica semplice: cerca numeri alla fine o nel testo
+                const matchNum = t.match(/(\d+)/);
+                let qta = "";
+                let prod = t;
+
+                if (matchNum) {
+                    // Se trova un numero, prova a separarlo
+                    const num = matchNum[1];
+                    // Rimuove il numero dalla stringa del prodotto
+                    prod = t.replace(num, '').trim();
+                    // Pulisce parole extra tipo "pezzi", "confezioni" se necessario, ma teniamo semplice
+                    qta = num;
                 }
+                
+                inputProd.value = prod.charAt(0).toUpperCase() + prod.slice(1); // Maiuscola iniziale
+                inputQta.value = qta;
                 aggiungiItem();
             };
-            btnMic.addEventListener('click', () => { try{recognition.start()}catch(e){} });
+            
+            btnMic.addEventListener('click', () => { 
+                try { recognition.start(); } catch(e) {} 
+            });
         } else {
             btnMic.style.display = 'none';
         }
 
-        btnSvuota.addEventListener('click', () => { if(confirm('Svuotare la lista per tutti?')) { lista=[]; aggiornaUI(); } });
+        btnSvuota.addEventListener('click', () => { 
+            if(confirm('Svuotare la lista per tutti?')) { 
+                lista=[]; 
+                aggiornaUI(); 
+            } 
+        });
         
-        // === WHATSAPP + MODALE ===
+        // === WHATSAPP + MODALE CONTATTI ===
         function updateContactPanel() {
             if (currentContact) {
                 contactInfoText.innerHTML = `Contatto Salvato:<br><strong>${currentContact.nome}</strong><br>${currentContact.numero}`;
@@ -380,9 +483,15 @@
         }
 
         function showModal(type) {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
+            const modalActions = document.getElementById('modalActions');
+            const modalTitle = document.getElementById('modalTitle');
+
             modalOverlay.style.display = 'flex';
             modalContent.innerHTML = '';
             modalActions.innerHTML = '';
+            
             if (type === 'ASK_NEW') {
                 modalTitle.innerText = "Chi riceve la lista?";
                 modalContent.innerHTML = `
@@ -415,7 +524,7 @@
             }
         }
 
-        window.closeModal = () => modalOverlay.style.display = 'none';
+        window.closeModal = () => document.getElementById('modalOverlay').style.display = 'none';
 
         window.processNewContact = () => {
             const name = document.getElementById('mName').value.trim();
