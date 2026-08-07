@@ -9,6 +9,9 @@
     <link rel="icon" type="image/png" sizes="192x192" href="bau-192x192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="bau-180.png">
     <link rel="manifest" href="manifest.json">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="description" content="Lista spesa sincronizzata di Holly & Rex Group">
@@ -93,6 +96,20 @@
      .btn-load { background-color: var(--info-color); }
      .btn-settings { background-color: #475569; margin-top: 10px; font-size: 0.9rem; padding: 10px; }
      .btn-settings:hover { background-color: #64748b; }
+        /* === H&R PRICE MEMORY === */
+        .price-btn { background: transparent; color: #14b8a6; width: auto; padding: 0 8px; margin: 0; font-size: 1.1rem; font-weight: bold; border: 1px solid rgba(20,184,166,0.3); border-radius: 6px; }
+        .price-btn:hover { background-color: rgba(20,184,166,0.15); color: #5eead4; }
+        .price-badge { display: inline-flex; align-items: center; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.2); color: #4ade80; font-size: 0.70rem; font-weight: 700; padding: 2px 6px; border-radius: 20px; margin-left: 6px; }
+        .price-suggestions { display: none; background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 8px; margin-top: -10px; margin-bottom: 15px; text-align: left; }
+        .price-suggestions.active { display: block; animation: slideIn 0.2s ease; }
+        .price-suggestions-title { font-size: 0.70rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; font-weight: 600; }
+        .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { background: #1e3a5f; border: 1px solid rgba(59,130,246,0.3); color: #93c5fd; padding: 5px 10px; border-radius: 20px; font-size: 0.80rem; cursor: pointer; transition: all 0.2s; }
+        .chip:hover { background: #234876; transform: translateY(-1px); }
+        .chip.generic { background: #334155; border-color: #475569; color: #cbd5e1; }
+        .chip.generic:hover { background: #475569; }
+        .item-actions { display: flex; gap: 4px; align-items: center; }
+
      .notes-section { margin-top: 1.5rem; text-align: left; border-top: 1px solid #334155; padding-top: 1rem; }
      .notes-section label { display: block; color: #94a3b8; font-size: 0.9rem; margin-bottom: 5px; }
         #noteInput { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background-color: #0f172a; color: white; font-family: inherit; resize: vertical; min-height: 60px; box-sizing: border-box; }
@@ -156,7 +173,11 @@
                 <div class="input-group">
                     <input type="text" id="quantita" placeholder="Qta (es. 2L)" autocomplete="off">
                 </div>
-                <div class="action-buttons-row">
+                        <div id="priceSuggestions" class="price-suggestions">
+            <div class="price-suggestions-title">💡 Suggerimenti dalla memoria prezzi</div>
+            <div id="priceChips" class="chips"></div>
+        </div>
+        <div class="action-buttons-row">
                     <button id="btnAggiungi">➕ Aggiungi</button>
                     <button id="btnMic"> Parla</button>
                 </div>
@@ -252,6 +273,23 @@
         // === VARIABILI GLOBALI ===
         const STORAGE_KEY_CONTACT = 'hollyRexSpesa_Contact';
         let lista = [];
+        let prezziMap = {};
+        const PREZZI_PATH = 'prezzi/liguria';
+
+        // --- MAPPING CATEGORIE GENERICHE ---
+        const genericMap = {
+            'insalata': ['radicchio','lattuga','scarola','rucola','insalata gentile','valeriana','iceberg'],
+            'carne': ['costine','roastbeef','pollo','hamburger','salsiccia'],
+            'pane': ['pane croce','panino','baguette'],
+            'fagioli': ['cannellini','borlotti','rossi']
+        };
+        function getGenericForProduct(nomeLower){
+            for(const [gen, list] of Object.entries(genericMap)){
+                if(list.some(v => nomeLower.includes(v)) || nomeLower===gen) return gen;
+            }
+            return null;
+        }
+
         let currentContact = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT));
         let unsubscribeFirestore = null;
         let docRef = null;
@@ -298,6 +336,10 @@
                 }
                 btnLogin.style.display = 'none';
                 appContent.style.display = 'block';
+                initPrezziListener();
+                // Listener per suggerimenti
+                inputProd.addEventListener('input', (e)=> mostraSuggerimentiPrezzo(e.target.value));
+
                 userInfo.style.display = 'flex';
                 userInfo.innerHTML = `<img src="${user.photoURL}" alt=""> ${user.displayName}`;
 
@@ -344,7 +386,107 @@
         });
 
         // === LOGICA LISTA ===
+        
+        // === H&R PRICE MEMORY LOGIC ===
+        function initPrezziListener(){
+            const prezziRef = db.collection(PREZZI_PATH);
+            prezziRef.onSnapshot(snap=>{
+                prezziMap = {};
+                snap.forEach(doc=>{
+                    prezziMap[doc.id.toLowerCase()] = doc.data();
+                });
+                console.log('Prezzi caricati:', prezziMap);
+                aggiornaUI(false);
+            });
+        }
+
+        function salvaPrezzo(nomeProd, prezzo, tipoDi=null){
+            const prezzoNum = parseFloat(String(prezzo).replace(',','.'));
+            if(isNaN(prezzoNum)) { alert('Prezzo non valido'); return; }
+            const id = nomeProd.trim();
+            if(!id) return;
+            const data = {
+                nome: id,
+                prezzo: prezzoNum,
+                data: new Date().toISOString(),
+                tipoDi: tipoDi || getGenericForProduct(id.toLowerCase()) || null,
+                scontrino: null
+            };
+            db.collection(PREZZI_PATH).doc(id).set(data).then(()=>{
+                console.log('Prezzo salvato', data);
+            }).catch(e=>alert('Errore salvataggio prezzo: '+e.message));
+        }
+
+        window.chiediPrezzo = (nomeProd, index)=>{
+            const curr = prezziMap[nomeProd.toLowerCase()];
+            const suggerito = curr ? curr.prezzo : '';
+            const input = prompt(`💰 Prezzo per "${nomeProd}"?\n(Usa virgola o punto, es. 6,84)`, suggerito ? String(suggerito).replace('.',',') : '');
+            if(input===null) return;
+            if(input.trim()==='') return;
+            const tipo = getGenericForProduct(nomeProd.toLowerCase());
+            salvaPrezzo(nomeProd, input, tipo);
+        };
+
+        function mostraSuggerimentiPrezzo(testoInput){
+            const box = document.getElementById('priceSuggestions');
+            const chipsEl = document.getElementById('priceChips');
+            const q = testoInput.toLowerCase().trim();
+            if(q.length < 2){ box.classList.remove('active'); return; }
+            // Cerca se q è generico
+            let results = [];
+            // Se è generico, mostra tutti i figli
+            if(genericMap[q]){
+                genericMap[q].forEach(child=>{
+                    const p = prezziMap[child];
+                    if(p) results.push({label: p.nome, price: p.prezzo});
+                });
+                // aggiungi anche quelli che hanno tipoDi = q
+                Object.values(prezziMap).forEach(p=>{
+                    if(p.tipoDi===q && !results.find(r=>r.label.toLowerCase()===p.nome.toLowerCase())){
+                        results.push({label: p.nome, price: p.prezzo});
+                    }
+                });
+            } else {
+                // Cerca per nome parziale
+                Object.values(prezziMap).forEach(p=>{
+                    if(p.nome.toLowerCase().includes(q) || (p.tipoDi && p.tipoDi.includes(q))){
+                        results.push({label: p.nome, price: p.prezzo});
+                    }
+                });
+            }
+            if(results.length===0 && genericMap[q]){
+                // Se generico ma ancora nessun prezzo, mostra opzione generica
+                box.classList.remove('active');
+                return;
+            }
+            if(results.length===0){ box.classList.remove('active'); return; }
+
+            // Costruisci chips
+            chipsEl.innerHTML = '';
+            results.slice(0,6).forEach(r=>{
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `${r.label} <strong>${String(r.price).replace('.',',')}€</strong>`;
+                chip.onclick = ()=>{
+                    inputProd.value = r.label;
+                    box.classList.remove('active');
+                    inputQta.focus();
+                };
+                chipsEl.appendChild(chip);
+            });
+            // Chip lascia generico
+            if(genericMap[q]){
+                const genChip = document.createElement('div');
+                genChip.className = 'chip generic';
+                genChip.textContent = 'Lascia generico: '+q;
+                genChip.onclick = ()=>{ box.classList.remove('active'); };
+                chipsEl.appendChild(genChip);
+            }
+            box.classList.add('active');
+        }
+
         function aggiornaUI(salva = true) {
+
             listaEl.innerHTML = '';
             if (lista.length === 0) {
                 listaEl.innerHTML = '<li style="justify-content:center; color:#94a3b8; font-style:italic;">La lista è vuota.</li>';
@@ -354,9 +496,14 @@
                     li.onclick = (e) => {
                         if(!e.target.classList.contains('delete-btn')) apriModifica(index);
                     };
+                    const priceData = prezziMap[item.nome.toLowerCase()];
+                    const priceBadge = priceData ? `<span class="price-badge">Ultimo: ${String(priceData.prezzo).replace('.',',')}€</span>` : '';
                     li.innerHTML = `
-                        <span><strong>${item.nome}</strong> ${item.qta? '(' + item.qta + ')' : ''}</span>
-                        <button class="delete-btn" onclick="rimuoviItem(${index})">×</button>
+                        <span><strong>${item.nome}</strong> ${item.qta? '(' + item.qta + ')' : ''} ${priceBadge}</span>
+                        <div class="item-actions">
+                            <button class="price-btn" onclick="event.stopPropagation(); chiediPrezzo('${item.nome.replace(/'/g, "\\'")}', ${index})">€</button>
+                            <button class="delete-btn" onclick="rimuoviItem(${index})">×</button>
+                        </div>
                     `;
                     listaEl.appendChild(li);
                 });
