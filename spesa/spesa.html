@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#0f172a">
-<title>Lista della Spesa - Holly & Rex</title>
-<link rel="manifest" href="manifest.json">
+<title>Lista della Spesa - Holly & Rex FIXED</title>
 <style>
 /* Holly & Rex Group - Design identico originale 784 righe */
 * { box-sizing: border-box; margin:0; padding:0; }
@@ -120,7 +119,6 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 @keyframes pulseBtn{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
 .empty{ text-align:center; padding:30px 20px; color:#64748b; }
 .empty span{ font-size:2rem; display:block; margin-bottom:8px; }
-
 .btn-edit{
   background:#0f172a; color:#fbbf24; border:1px solid #334155; font-size:.9rem;
   width:36px; height:36px; border-radius:9px; cursor:pointer; display:flex; align-items:center; justify-content:center;
@@ -153,12 +151,12 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 <body>
 <div class="card">
 <h1>Lista della Spesa</h1>
-<div class="sub">Holly & Rex Group - Sincronizzata</div>
+<div class="sub">Holly & Rex Group - Sincronizzata FIXED</div>
 <div class="user"><img src="https://i.pravatar.cc/100?img=5"><span id="userEmail">tariffazione liguria</span><span class="dot" id="syncDot" style="margin-left:8px;"></span><small id="syncText" style="color:#22c55e">sync</small></div>
 
 <div class="inputs">
 <input id="inpNome" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off" spellcheck="false">
-<input id="inpQta" placeholder="Qta (es. 2L)" autocomplete="off">
+<input id="inpQta" placeholder="Qta (es. 4)" autocomplete="off">
 </div>
 <div id="suggs" class="suggestions"></div>
 <div class="btns">
@@ -175,7 +173,7 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 <input type="checkbox" id="toggleGiro" style="accent-color:#fbbf24;width:16px;height:16px;"> 🛒 Ordina per giro (automatico, per non tornare indietro)
 </label>
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
-<button class="btn-clear" id="btnClear">🗑️ Svuota Lista</button>
+<button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
 <div style="display:flex;gap:10px;margin-top:10px;">
 <button class="btn-save" id="btnSave" style="flex:1">💾 Salva su File (Backup)</button>
 <button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica Backup</button>
@@ -184,12 +182,12 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 <div class="status" id="status"></div>
 <div class="small">
   <span id="count">0 articoli</span> • Prezzi salvati in Firebase • Tappa <b>€</b> per aggiornare prezzo<br>
-  Scrivere <i>Insalata</i> propone: Radicchio 2,49€, Lattuga 0,99€<br><br><a href="./privacy-policy.html" target="_blank">🔒 Privacy</a> • <a href="./cookie-policy.html" target="_blank">🍪 Cookie</a> • Gratis per sempre ❤
+  <b style="color:#fbbf24">NUOVO: inserisci il TOTALE scontrino, divide da solo!</b><br>
+  <a href="./privacy-policy.html" target="_blank">🔒 Privacy</a> • <a href="./cookie-policy.html" target="_blank">🍪 Cookie</a> • Gratis per sempre ❤
 </div>
 </div>
 
 <script type="module">
-// Holly & Rex - Spesa Completa 784+ righe equivalente - con prezzi Luana + Firebase doppio
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, onSnapshot, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -226,8 +224,7 @@ let prezziDB = {
   "roast beef": [{nome:"Roast beef", prezzo:4.5, nota:""}],
   "gelati": [{nome:"Gelati", prezzo:3.49, nota:""}],
   "occhi di bue": [{nome:"Occhi di bue", prezzo:2.99, nota:""}],
-  "carne bau": [{nome:"Carne bau", prezzo:5.99, nota:""}],
-  "fesa": [{nome:"Fesa", prezzo:6.99, nota:""}]
+  "carne bau": [{nome:"Carne bau", prezzo:5.99, nota:""}]
 };
 
 let isLocalChange = false;
@@ -242,7 +239,19 @@ function setStatus(msg, ok=true){
   document.getElementById('syncDot').style.background = ok ? '#22c55e' : '#ef4444';
 }
 
-function normalize(s){ return s.toLowerCase().trim(); }
+function normalize(s){ 
+  return s.toLowerCase().trim().replace(/\s+/g,' ').replace(/[^a-z0-9àèéìòù ]/g,'').trim(); 
+}
+
+function parseQta(qtaStr){
+  // estrae numero da stringhe tipo "4", "2L", "4 pezzi", "4x"
+  const m = String(qtaStr||'1').replace(',','.').match(/(\d+(\.\d+)?)/);
+  return m ? parseFloat(m[1]) : 1;
+}
+
+function findItemIndexByNorm(norm){
+  return items.findIndex(it=> normalize(it.nome) === norm);
+}
 
 async function save(){
   try{
@@ -282,7 +291,6 @@ onAuthStateChanged(auth, async u=>{
     try{
       await signInWithPopup(auth, provider);
     }catch(e){
-      // Fallback localStorage se auth fallisce
       const local = localStorage.getItem('spesa_backup_local');
       if(local){
         try{
@@ -293,7 +301,6 @@ onAuthStateChanged(auth, async u=>{
           setStatus('Modalità offline - backup locale', false);
         }catch{}
       }
-      // Auto retry login after 2s
       setTimeout(()=>signInWithPopup(auth, provider).catch(()=>{}), 2000);
     }
   }
@@ -303,7 +310,6 @@ function initSync(){
   onSnapshot(docRef, snap=>{
     if(snap.exists()){
       const d=snap.data();
-      // Evita sovrascrittura se appena salvato localmente
       if(isLocalChange){ isLocalChange=false; return; }
       items=d.items||[];
       document.getElementById('note').value=d.note||"";
@@ -311,7 +317,6 @@ function initSync(){
       render();
       if(items.length>0) setStatus(`Sincronizzato • ${items.length} articoli`);
     } else {
-      // Primo avvio: crea documento vuoto
       save();
     }
   }, err=>{
@@ -336,7 +341,7 @@ function calcTotale(){
     const stor=prezziDB[key];
     const ult=stor&&stor.length?stor[stor.length-1]:null;
     if(ult){ 
-      const q=parseFloat((it.qta||'1').toString().replace(',','.'))||1;
+      const q=parseQta(it.qta||'1');
       tot+=ult.prezzo*q; 
       prezzati++; 
     }
@@ -358,10 +363,39 @@ function editItem(idx){
   if(!n) return;
   const vecchiaKey=normalize(it.nome);
   const nuovaKey=normalize(n);
-  // se cambi nome e aveva prezzi, copia ultimo prezzo su nuovo nome per non perderlo
-  if(vecchiaKey!==nuovaKey && prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
-    prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
-    savePrezzi();
+  
+  // FIX ANTI-DUPLICATI: se rinomini in un nome che esiste già, unisci e cancella vecchio
+  if(vecchiaKey!==nuovaKey){
+    const existingIdx = findItemIndexByNorm(nuovaKey);
+    if(existingIdx!==-1 && existingIdx!==idx){
+      // già esiste altro item con stesso nome -> unisci quantità e cancella vecchio
+      if(confirm(`"${n}" esiste già in lista. Unisco le quantità?`)){
+        const qOld = parseQta(items[existingIdx].qta);
+        const qNew = parseQta(it.qta);
+        items[existingIdx].qta = String(qOld + qNew);
+        items.splice(idx,1);
+        // sposta prezzo storico se serve
+        if(prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
+          prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
+        }
+        if(prezziDB[vecchiaKey] && vecchiaKey!==nuovaKey){
+          delete prezziDB[vecchiaKey];
+        }
+        render();
+        save();
+        savePrezzi();
+        setStatus(`✓ Unito: ${n}`);
+        return;
+      }
+    }
+    // sposta storico prezzo
+    if(prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
+      prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
+    }
+    if(prezziDB[vecchiaKey]){
+      delete prezziDB[vecchiaKey];
+      savePrezzi();
+    }
   }
   items[idx].nome=n;
   render();
@@ -382,15 +416,17 @@ function render(){
     const key=normalize(it.nome);
     const storico=prezziDB[key]||[];
     const ultimo=storico.length?storico[storico.length-1]:null;
+    const qNum = parseQta(it.qta||'1');
+    const totRiga = ultimo ? (ultimo.prezzo * qNum).toFixed(2).replace('.',',') : null;
     const div=document.createElement('div');
     div.className='item';
     div.innerHTML=`
       <div class="item-left">
-        <span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8; font-weight:400">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>
-        ${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}
+        <span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8; font-weight:400">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:''}</span>
+        ${ultimo?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}
       </div>
       <div class="item-actions">
-        <button class="btn-edit" data-idx="${idx}" title="Modifica">✏️</button>
+        <button class="btn-edit" data-idx="${idx}" title="Modifica">✏</button>
         <button class="btn-price" data-idx="${idx}" title="Aggiorna prezzo">€</button>
         <button class="btn-del" data-idx="${idx}" title="Rimuovi">×</button>
       </div>
@@ -417,19 +453,32 @@ function render(){
   cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{
     const idx=parseInt(e.currentTarget.dataset.idx);
     const it=items[idx];
+    const qNum = parseQta(it.qta||'1');
     const attuale=prezziDB[normalize(it.nome)]?.slice(-1)[0]?.prezzo;
-    const prezzoStr=prompt(`Prezzo per ${it.nome}?${attuale?` (attuale ${attuale.toFixed(2).replace('.',',')}€)`:''} - es. 2,49`, attuale? String(attuale).replace('.',',') : "");
+    const attualeTot = attuale ? (attuale * qNum).toFixed(2).replace('.',',') : null;
+    
+    // FIX PRINCIPALE: chiedi TOTALE scontrino, non singolo
+    let promptTxt = `Quanto hai PAGATO IN TOTALE per ${it.nome} (${it.qta})?\n\n`;
+    promptTxt += `Scrivi quello che vedi sullo scontrino (es. 6,76)\n`;
+    if(attuale) promptTxt += `\nAttuale: ${attuale.toFixed(2).replace('.',',')}€ cad. = ${attualeTot}€ tot per ${it.qta}`;
+    if(qNum>1) promptTxt += `\nSe metti 6,76 con qta ${qNum}, salvo 1,69€ cad. da solo!`;
+    
+    const prezzoStr=prompt(promptTxt, attualeTot? attualeTot : (attuale? String(attuale).replace('.',',') : ""));
     if(prezzoStr===null) return;
-    const prezzo=parseFloat(prezzoStr.replace(',','.'));
-    if(isNaN(prezzo) || prezzo<=0) return alert("Prezzo non valido");
-    const nota=prompt("Nota (opzionale) es. 'con sconto', 'cannellini' - lascia vuoto se niente", "")||"";
+    const prezzoTot=parseFloat(prezzoStr.replace(',','.'));
+    if(isNaN(prezzoTot) || prezzoTot<=0) return alert("Prezzo non valido");
+    
+    // CALCOLO AUTOMATICO NONNA-PROOF
+    const prezzoUnit = prezzoTot / qNum;
+    
+    const nota=prompt(`Nota (opzionale)\nHo calcolato: ${prezzoTot.toFixed(2)}€ / ${qNum} = ${prezzoUnit.toFixed(2)}€ cad.\nVuoi aggiungere nota? es. 'con sconto'`, "")||`Tot scontrino ${prezzoTot.toFixed(2)}€ per ${qNum}pz`;
     const key=normalize(it.nome);
     if(!prezziDB[key]) prezziDB[key]=[];
-    prezziDB[key].push({nome:it.nome, prezzo, nota});
-    // Mantieni solo ultimi 5 prezzi per tipo
+    prezziDB[key].push({nome:it.nome, prezzo: prezzoUnit, nota, totale: prezzoTot, qta: qNum});
     if(prezziDB[key].length>5) prezziDB[key]=prezziDB[key].slice(-5);
     render();
     savePrezzi();
+    setStatus(`✓ Salvato: ${prezzoUnit.toFixed(2)}€ cad. (tot ${prezzoTot.toFixed(2)}€)`);
   });
 }
 
@@ -473,12 +522,25 @@ document.getElementById('inpNome').addEventListener('input', e=>{
   }
 });
 
-// Aggiungi
+// FIX ANTI-DUPLICATI su Aggiungi
 document.getElementById('btnAdd').onclick=()=>{
   const nome=document.getElementById('inpNome').value.trim();
   const qta=document.getElementById('inpQta').value.trim()||"1";
   if(!nome){ document.getElementById('inpNome').focus(); return; }
-  items.push({nome, qta});
+  
+  const norm = normalize(nome);
+  const existingIdx = findItemIndexByNorm(norm);
+  if(existingIdx!==-1){
+    // Esiste già: unisci quantità invece di duplicare
+    const qOld = parseQta(items[existingIdx].qta);
+    const qNew = parseQta(qta);
+    items[existingIdx].qta = String(qOld + qNew);
+    setStatus(`✓ Aggiornato "${items[existingIdx].nome}" - ora ${items[existingIdx].qta} pezzi (anti-duplicato)`);
+  } else {
+    items.push({nome, qta});
+    setStatus(`✓ Aggiunto ${nome}`);
+  }
+  
   document.getElementById('inpNome').value="";
   document.getElementById('inpQta').value="";
   document.getElementById('suggs').innerHTML="";
@@ -494,7 +556,6 @@ document.getElementById('inpQta').addEventListener('keydown', e=>{
   if(e.key==='Enter'){ e.preventDefault(); document.getElementById('btnAdd').click(); }
 });
 
-// Svuota
 document.getElementById('btnClear').onclick=()=>{
   if(items.length===0) return;
   if(confirm(`Svuotare tutta la lista? (${items.length} articoli)\nVerrà salvato un backup automatico.`)){
@@ -506,38 +567,36 @@ document.getElementById('btnClear').onclick=()=>{
   }
 };
 
-// Note
 document.getElementById('note').addEventListener('change', save);
 document.getElementById('note').addEventListener('blur', save);
 
-// WhatsApp
 document.getElementById('btnWA').onclick=()=>{
   if(items.length===0) return alert('Lista vuota!');
-  let txt="*Lista Spesa Holly & Rex* 🛒\\n";
-  txt+=`_${new Date().toLocaleDateString('it-IT')}_\\n\\n`;
+  let txt="*Lista Spesa Holly & Rex* 🛒\n";
+  txt+=`_${new Date().toLocaleDateString('it-IT')}_\n\n`;
   let totale=0;
   items.forEach(it=>{
     const key=normalize(it.nome);
     const storico=prezziDB[key];
     const ultimo=storico&&storico.length?storico[storico.length-1]:null;
-    const prezzoTxt=ultimo?` [${ultimo.prezzo.toFixed(2)}€]`:'';
-    if(ultimo) totale+=ultimo.prezzo * (parseFloat(it.qta)||1);
-    txt+=`• ${it.nome} (${it.qta})${prezzoTxt}\\n`;
+    const qNum=parseQta(it.qta||'1');
+    const prezzoTxt=ultimo?` [${(ultimo.prezzo*qNum).toFixed(2)}€ tot - ${ultimo.prezzo.toFixed(2)}€ cad.]`:'';
+    if(ultimo) totale+=ultimo.prezzo * qNum;
+    txt+=`• ${it.nome} (${it.qta})${prezzoTxt}\n`;
   });
-  if(totale>0) txt+=`\\n*Totale stimato: ${totale.toFixed(2)}€*\\n`;
+  if(totale>0) txt+=`\n*Totale stimato: ${totale.toFixed(2)}€*\n`;
   const n=document.getElementById('note').value;
-  if(n) txt+=`\\n_Note: ${n}_`;
+  if(n) txt+=`\n_Note: ${n}_`;
   window.open("https://wa.me/?text="+encodeURIComponent(txt), "_blank");
 };
 
-// Backup su file
 document.getElementById('btnSave').onclick=()=>{
   const data={
     items,
     note: document.getElementById('note').value,
     prezziDB,
     date: new Date().toISOString(),
-    version: "Holly&Rex 784+ con prezzi"
+    version: "Holly&Rex FIXED anti-duplicati + totale/qta"
   };
   const blob=new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -549,7 +608,6 @@ document.getElementById('btnSave').onclick=()=>{
   setStatus('✓ Backup scaricato');
 };
 
-// Voce
 let recognition=null;
 let listening=false;
 document.getElementById('btnVoice').onclick=()=>{
@@ -575,7 +633,6 @@ document.getElementById('btnVoice').onclick=()=>{
   recognition.onresult=(e)=>{
     const transcript=e.results[0][0].transcript;
     setStatus(`Hai detto: "${transcript}"`);
-    // Parsing semplice: ultimo token come quantità se contiene numeri
     const parts=transcript.trim().split(' ');
     let qta='1';
     let nome=transcript;
@@ -586,7 +643,6 @@ document.getElementById('btnVoice').onclick=()=>{
     }
     document.getElementById('inpNome').value=nome.charAt(0).toUpperCase()+nome.slice(1);
     document.getElementById('inpQta').value=qta;
-    // Trigger suggestions
     document.getElementById('inpNome').dispatchEvent(new Event('input'));
   };
   recognition.onerror=(e)=>{
@@ -602,8 +658,6 @@ document.getElementById('btnVoice').onclick=()=>{
   };
 };
 
-
-// --- CARICA BACKUP (mancava!) ---
 document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
 document.getElementById('fileInput').onchange=(e)=>{
   const f=e.target.files[0];
@@ -616,13 +670,12 @@ document.getElementById('fileInput').onchange=(e)=>{
       items=data.items||[];
       document.getElementById('note').value=data.note||"";
       if(data.prezziDB) {
-        // merge prezzi
         for(const k in data.prezziDB){
-          if(!prezziDB[k]) prezziDB[k]=data.prezziDB[k];
+          const nk = normalize(k);
+          if(!prezziDB[nk]) prezziDB[nk]=data.prezziDB[k];
           else {
-            // aggiungi solo se prezzo nuovo
             data.prezziDB[k].forEach(p=>{
-              if(!prezziDB[k].some(x=>x.prezzo===p.prezzo)) prezziDB[k].push(p);
+              if(!prezziDB[nk].some(x=>x.prezzo===p.prezzo)) prezziDB[nk].push(p);
             });
           }
         }
@@ -637,7 +690,6 @@ document.getElementById('fileInput').onchange=(e)=>{
   r.readAsText(f);
 };
 
-// --- REPARTI AUTOMATICI - invisibili, zero domande ---
 const repartoMap = {
   "insalata":1, "radicchio":1, "lattuga":1, "pomodori":1, "frutta":1, "banane":1, "mele":1, "uova":1, "verdura":1, "limoni":1, "zucchine":1,
   "pane":2, "panini":2, "focaccia":2,
@@ -656,7 +708,6 @@ const repartoNames = {1:"🥦 Frutta/Verdura",2:"🥖 Pane/Forno",3:"🥩 Carni"
 
 function renderWithGiro(){
   if(!document.getElementById('toggleGiro')?.checked){ render(); return; }
-  // ordinata per reparto
   const cont=document.getElementById('lista');
   if(items.length===0){ render(); return; }
   const sorted=[...items].map((it,i)=>({it, orig:i, rep:getReparto(it.nome)})).sort((a,b)=>a.rep-b.rep);
@@ -674,40 +725,42 @@ function renderWithGiro(){
     const key=normalize(it.nome);
     const storico=prezziDB[key]||[];
     const ultimo=storico.length?storico[storico.length-1]:null;
+    const qNum=parseQta(it.qta||'1');
+    const totRiga = ultimo ? (ultimo.prezzo * qNum).toFixed(2).replace('.',',') : null;
     const div=document.createElement('div');
     div.className='item';
-    div.innerHTML=`<div class="item-left"><span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}</div><div class="item-actions"><button class="btn-edit" data-idx="${idx}" title="Modifica">✏️</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div>`;
+    div.innerHTML=`<div class="item-left"><span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:''}</span>${ultimo?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}</div><div class="item-actions"><button class="btn-edit" data-idx="${idx}" title="Modifica">✏</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div>`;
     cont.appendChild(div);
   });
   document.getElementById('count').textContent=`${items.length} articoli • ordinati per giro`;
-  // riattacca eventi
   cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); if(confirm(`Rimuovere "${items[i].nome}"?`)){ items.splice(i,1); renderWithGiro(); save(); calcTotale(); } });
   cont.querySelectorAll('.btn-edit').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); editItem(i); });
   cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{
     const idx=parseInt(e.currentTarget.dataset.idx);
     const it=items[idx];
+    const qNum=parseQta(it.qta||'1');
     const attuale=prezziDB[normalize(it.nome)]?.slice(-1)[0]?.prezzo;
-    const prezzoStr=prompt(`Prezzo per ${it.nome}?`, attuale?String(attuale).replace('.',','):"");
-    if(prezzoStr===null) return; const prezzo=parseFloat(prezzoStr.replace(',','.')); if(isNaN(prezzo)||prezzo<=0) return;
-    const nota=prompt("Nota opzionale","")||""; const key=normalize(it.nome); if(!prezziDB[key]) prezziDB[key]=[]; prezziDB[key].push({nome:it.nome, prezzo, nota}); if(prezziDB[key].length>5) prezziDB[key]=prezziDB[key].slice(-5); renderWithGiro(); savePrezzi();
+    const attualeTot= attuale ? (attuale*qNum).toFixed(2).replace('.',',') : null;
+    let promptTxt = `Quanto hai PAGATO IN TOTALE per ${it.nome} (${it.qta})?\n\nScrivi quello che vedi sullo scontrino (es. 6,76)\n`;
+    if(attuale) promptTxt += `\nAttuale: ${attuale.toFixed(2).replace('.',',')}€ cad. = ${attualeTot}€ tot`;
+    if(qNum>1) promptTxt += `\nSe metti 6,76 con qta ${qNum}, salvo 1,69€ cad. da solo!`;
+    const prezzoStr=prompt(promptTxt, attualeTot? attualeTot : (attuale?String(attuale).replace('.',','):""));
+    if(prezzoStr===null) return; const prezzoTot=parseFloat(prezzoStr.replace(',','.')); if(isNaN(prezzoTot)||prezzoTot<=0) return;
+    const prezzoUnit=prezzoTot/qNum;
+    const nota=prompt(`Nota opzionale\nCalcolato: ${prezzoTot.toFixed(2)}€ / ${qNum} = ${prezzoUnit.toFixed(2)}€ cad.`, "")||`Tot scontrino ${prezzoTot.toFixed(2)}€ per ${qNum}pz`;
+    const key=normalize(it.nome); if(!prezziDB[key]) prezziDB[key]=[]; prezziDB[key].push({nome:it.nome, prezzo:prezzoUnit, nota, totale:prezzoTot, qta:qNum}); if(prezziDB[key].length>5) prezziDB[key]=prezziDB[key].slice(-5); renderWithGiro(); savePrezzi();
   });
 }
 document.getElementById('toggleGiro').onchange=()=>{ localStorage.setItem('giro_enabled', document.getElementById('toggleGiro').checked); renderWithGiro(); };
-// ripristina stato toggle
 const giroSaved=localStorage.getItem('giro_enabled')==='true';
 document.getElementById('toggleGiro').checked=giroSaved;
-// sovrascrivi render originale per chiamare quello con giro quando attivo
 window.editItemFromDom = (idx)=>editItem(idx);
 const origRender=render;
 render=function(){ if(document.getElementById('toggleGiro')?.checked) renderWithGiro(); else origRender(); };
 
-// Service worker
-
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
-
-// Previeni chiusura accidentale se ci sono articoli
 window.addEventListener('beforeunload', e=>{
   if(items.length>0){
     e.preventDefault();
