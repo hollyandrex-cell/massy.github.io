@@ -112,7 +112,7 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
   background: linear-gradient(135deg, #fbbf24, #f59e0b); color:#0f172a; width:100%; margin-top:10px;
   padding:12px; font-size:.85rem;
 }
-.small{ font-size:.78rem; color:#cbd5e1; text-align:center; margin-top:14px; line-height:1.5; font-weight:500; } .small b{color:#22c55e}
+.small{ font-size:.85rem; color:#f1f5f9; text-align:center; margin-top:18px; line-height:1.6; font-weight:500; background:#0f172a; padding:12px; border-radius:12px; border:1px solid #334155; } .small a{color:#fbbf24; text-decoration:none; font-weight:700; margin:0 8px;} .small a:hover{ text-decoration:underline; } .small b{color:#22c55e;}
 .status{ text-align:center; font-size:.78rem; color:#22c55e; margin-top:8px; min-height:18px; }
 .dot{ width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; margin-right:6px; animation:pulse 2s infinite; }
 @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.4} }
@@ -142,7 +142,7 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 
 <label class="note-label">📝 Note (opzionale):</label>
 <textarea id="note" placeholder="Es. Prendi le buste, controlla scadenza, passa dal fornaio..."></textarea>
-<label style="display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 6px;cursor:pointer;font-size:.85rem;color:#e2e8f0;font-weight:600;background:#0f172a;border:1px solid #334155;padding:10px 12px;border-radius:12px;">
+<label style="display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 6px;cursor:pointer;font-size:.88rem;color:#f1f5f9;font-weight:600;background:#0f172a;border:1px solid #334155;padding:10px 12px;border-radius:12px;">
 <input type="checkbox" id="toggleGiro" style="accent-color:#fbbf24;width:16px;height:16px;"> 🛒 Ordina per giro (automatico, per non tornare indietro)
 </label>
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
@@ -154,8 +154,8 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 <input type="file" id="fileInput" accept=".json" style="display:none;">
 <div class="status" id="status"></div>
 <div class="small">
-  <span id="count">0 articoli</span> • Prezzi salvati in Firebase • Tappa <b style="color:#22c55e">€</b> per aggiornare prezzo<br>
-  Scrivere <i>Insalata</i> propone: Radicchio 2,49€, Lattuga 0,99€ • <i>Lascia generico</i> = resta generico
+  <span id="count">0 articoli</span> • Prezzi salvati in Firebase • Tappa <b>€</b> per aggiornare prezzo<br>
+  Scrivere <i>Insalata</i> propone: Radicchio 2,49€, Lattuga 0,99€<br><br><a href="./privacy-policy.html" target="_blank">🔒 Privacy</a> • <a href="./cookie-policy.html" target="_blank">🍪 Cookie</a> • Gratis per sempre ❤ Holly & Rex
 </div>
 </div>
 
