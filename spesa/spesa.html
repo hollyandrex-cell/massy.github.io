@@ -142,9 +142,16 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 
 <label class="note-label">📝 Note (opzionale):</label>
 <textarea id="note" placeholder="Es. Prendi le buste, controlla scadenza, passa dal fornaio..."></textarea>
+<label style="display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 4px;cursor:pointer;font-size:.82rem;color:#94a3b8;font-weight:600;">
+<input type="checkbox" id="toggleGiro" style="accent-color:#fbbf24;width:16px;height:16px;"> 🛒 Ordina per giro (automatico, per non tornare indietro)
+</label>
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
 <button class="btn-clear" id="btnClear">🗑️ Svuota Lista</button>
-<button class="btn-save" id="btnSave">💾 Salva su File (Backup)</button>
+<div style="display:flex;gap:10px;margin-top:10px;">
+<button class="btn-save" id="btnSave" style="flex:1">💾 Salva su File (Backup)</button>
+<button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica Backup</button>
+</div>
+<input type="file" id="fileInput" accept=".json" style="display:none;">
 <div class="status" id="status"></div>
 <div class="small">
   <span id="count">0 articoli</span> • Prezzi salvati in Firebase • Tappa <b style="color:#22c55e">€</b> per aggiornare prezzo<br>
@@ -518,7 +525,105 @@ document.getElementById('btnVoice').onclick=()=>{
   };
 };
 
+
+// --- CARICA BACKUP (mancava!) ---
+document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
+document.getElementById('fileInput').onchange=(e)=>{
+  const f=e.target.files[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!confirm(`Caricare backup del ${new Date(data.date||Date.now()).toLocaleString('it-IT')} con ${ (data.items||[]).length } articoli?\nSovrascriverà la lista attuale.`)) return;
+      items=data.items||[];
+      document.getElementById('note').value=data.note||"";
+      if(data.prezziDB) {
+        // merge prezzi
+        for(const k in data.prezziDB){
+          if(!prezziDB[k]) prezziDB[k]=data.prezziDB[k];
+          else {
+            // aggiungi solo se prezzo nuovo
+            data.prezziDB[k].forEach(p=>{
+              if(!prezziDB[k].some(x=>x.prezzo===p.prezzo)) prezziDB[k].push(p);
+            });
+          }
+        }
+        await savePrezzi();
+      }
+      render();
+      await save();
+      setStatus(`✓ Backup caricato: ${items.length} articoli`);
+    }catch(err){ alert('File non valido: '+err.message); setStatus('Errore caricamento backup', false); }
+    e.target.value="";
+  };
+  r.readAsText(f);
+};
+
+// --- REPARTI AUTOMATICI - invisibili, zero domande ---
+const repartoMap = {
+  "insalata":1, "radicchio":1, "lattuga":1, "pomodori":1, "frutta":1, "banane":1, "mele":1, "uova":1, "verdura":1, "limoni":1, "zucchine":1,
+  "pane":2, "panini":2, "focaccia":2,
+  "costine":3, "carne":3, "fesa":3, "roast beef":3, "pollo":3, "prosciutto":3, "macinato":3, "salsiccia":3, "carne bau":3,
+  "mozzarelle":4, "latte":4, "yogurt":4, "burro":4, "formaggio":4, "tonno":4,
+  "pasta":5, "riso":5, "fagioli":5, "olio":5, "sugo":5,
+  "gelati":6, "ghiaccioli":6, "surge":6,
+  "occhi di bue":7, "biscotti":7, "merendine":7, "cioccolato":7
+};
+function getReparto(nome){
+  const n=normalize(nome);
+  for(const k in repartoMap){ if(n.includes(k)||k.includes(n)) return repartoMap[k]; }
+  return 99;
+}
+const repartoNames = {1:"🥦 Frutta/Verdura",2:"🥖 Pane/Forno",3:"🥩 Carni",4:"🥛 Frigo/Latticini",5:"🍝 Dispensa",6:"🧊 Surgelati",7:"🍪 Dolci",99:"🛒 Altro"};
+
+function renderWithGiro(){
+  if(!document.getElementById('toggleGiro')?.checked){ render(); return; }
+  // ordinata per reparto
+  const cont=document.getElementById('lista');
+  if(items.length===0){ render(); return; }
+  const sorted=[...items].map((it,i)=>({it, orig:i, rep:getReparto(it.nome)})).sort((a,b)=>a.rep-b.rep);
+  cont.innerHTML="";
+  let lastRep=null;
+  sorted.forEach(obj=>{
+    if(obj.rep!==lastRep){
+      lastRep=obj.rep;
+      const h=document.createElement('div');
+      h.style.cssText="font-size:.75rem;color:#fbbf24;font-weight:800;margin:10px 0 4px 4px;letter-spacing:.04em;";
+      h.textContent=repartoNames[lastRep]||"Altro";
+      cont.appendChild(h);
+    }
+    const it=obj.it; const idx=obj.orig;
+    const key=normalize(it.nome);
+    const storico=prezziDB[key]||[];
+    const ultimo=storico.length?storico[storico.length-1]:null;
+    const div=document.createElement('div');
+    div.className='item';
+    div.innerHTML=`<div class="item-left"><span class="item-name">${escapeHtml(it.nome)} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}</div><div class="item-actions"><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div>`;
+    cont.appendChild(div);
+  });
+  document.getElementById('count').textContent=`${items.length} articoli • ordinati per giro`;
+  // riattacca eventi
+  cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); if(confirm(`Rimuovere "${items[i].nome}"?`)){ items.splice(i,1); renderWithGiro(); save(); } });
+  cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{
+    const idx=parseInt(e.currentTarget.dataset.idx);
+    const it=items[idx];
+    const attuale=prezziDB[normalize(it.nome)]?.slice(-1)[0]?.prezzo;
+    const prezzoStr=prompt(`Prezzo per ${it.nome}?`, attuale?String(attuale).replace('.',','):"");
+    if(prezzoStr===null) return; const prezzo=parseFloat(prezzoStr.replace(',','.')); if(isNaN(prezzo)||prezzo<=0) return;
+    const nota=prompt("Nota opzionale","")||""; const key=normalize(it.nome); if(!prezziDB[key]) prezziDB[key]=[]; prezziDB[key].push({nome:it.nome, prezzo, nota}); if(prezziDB[key].length>5) prezziDB[key]=prezziDB[key].slice(-5); renderWithGiro(); savePrezzi();
+  });
+}
+document.getElementById('toggleGiro').onchange=()=>{ localStorage.setItem('giro_enabled', document.getElementById('toggleGiro').checked); renderWithGiro(); };
+// ripristina stato toggle
+const giroSaved=localStorage.getItem('giro_enabled')==='true';
+document.getElementById('toggleGiro').checked=giroSaved;
+// sovrascrivi render originale per chiamare quello con giro quando attivo
+const origRender=render;
+render=function(){ if(document.getElementById('toggleGiro')?.checked) renderWithGiro(); else origRender(); };
+
 // Service worker
+
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
