@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#0f172a">
-<title>Lista della Spesa - Holly & Rex FIXED</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Lista della Spesa - Holly & Rex</title>
+    <link rel="icon" type="image/x-icon" href="bau.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="bau-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="bau-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="bau-180.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Lista spesa sincronizzata di Holly & Rex Group">
 <style>
 /* Holly & Rex Group - Design identico originale 784 righe */
 * { box-sizing: border-box; margin:0; padding:0; }
@@ -30,7 +37,7 @@ h1 {
   display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:18px;
   background:#0f172a; padding:8px 12px; border-radius:12px; border:1px solid #1e293b;
 }
-.user img{width:26px;height:26px;border-radius:50%; border:2px solid #334155}
+.user img{width:32px;height:32px;border-radius:50%; border:2px solid #fbbf24; object-fit:cover}
 .user span{color:#cbd5e1; font-size:.85rem; font-weight:500}
 .inputs{ display:flex; gap:8px; margin-bottom:10px; }
 input {
@@ -151,8 +158,8 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 <body>
 <div class="card">
 <h1>Lista della Spesa</h1>
-<div class="sub">Holly & Rex Group - Sincronizzata FIXED</div>
-<div class="user"><img src="https://i.pravatar.cc/100?img=5"><span id="userEmail">tariffazione liguria</span><span class="dot" id="syncDot" style="margin-left:8px;"></span><small id="syncText" style="color:#22c55e">sync</small></div>
+<div class="sub">Holly & Rex Group - Sincronizzata</div>
+<div class="user"><img src="bau-192x192.png" id="userAvatar" alt="Holly & Rex"><span id="userEmail">tariffazione liguria</span><span class="dot" id="syncDot" style="margin-left:8px;"></span><small id="syncText" style="color:#22c55e">sync</small></div>
 
 <div class="inputs">
 <input id="inpNome" placeholder="Cosa ci serve? (es. Latte)" autocomplete="off" spellcheck="false">
@@ -209,23 +216,7 @@ const docRef = doc(db, 'liste', 'holly-rex-condivisa');
 const prezziRef = doc(db, 'liste', 'holly-rex-prezzi');
 
 let items = [];
-let prezziDB = {
-  "costine": [{nome:"Costine", prezzo:6.84, nota:"Ultimo - scontrino Luana"}],
-  "pane": [{nome:"Pane", prezzo:0.99, nota:"con sconto - Luana"}],
-  "fagioli": [{nome:"Fagioli cannellini", prezzo:0.49, nota:"cannellini"}],
-  "tonno": [{nome:"Tonno", prezzo:2.59, nota:""}],
-  "insalata": [
-    {nome:"Radicchio", prezzo:2.49, nota:""},
-    {nome:"Lattuga", prezzo:0.99, nota:""}
-  ],
-  "mozzarelle": [{nome:"Mozzarelle", prezzo:1.29, nota:""}],
-  "uova": [{nome:"Uova", prezzo:2.99, nota:""}],
-  "prosciutto cotto": [{nome:"Prosciutto cotto", prezzo:2.49, nota:""}],
-  "roast beef": [{nome:"Roast beef", prezzo:4.5, nota:""}],
-  "gelati": [{nome:"Gelati", prezzo:3.49, nota:""}],
-  "occhi di bue": [{nome:"Occhi di bue", prezzo:2.99, nota:""}],
-  "carne bau": [{nome:"Carne bau", prezzo:5.99, nota:""}]
-};
+let prezziDB = {};
 
 let isLocalChange = false;
 let statusTimeout = null;
@@ -242,13 +233,10 @@ function setStatus(msg, ok=true){
 function normalize(s){ 
   return s.toLowerCase().trim().replace(/\s+/g,' ').replace(/[^a-z0-9àèéìòù ]/g,'').trim(); 
 }
-
 function parseQta(qtaStr){
-  // estrae numero da stringhe tipo "4", "2L", "4 pezzi", "4x"
   const m = String(qtaStr||'1').replace(',','.').match(/(\d+(\.\d+)?)/);
   return m ? parseFloat(m[1]) : 1;
 }
-
 function findItemIndexByNorm(norm){
   return items.findIndex(it=> normalize(it.nome) === norm);
 }
@@ -268,7 +256,6 @@ async function save(){
     localStorage.setItem('spesa_backup_local', JSON.stringify({items, note: document.getElementById('note').value}));
   }
 }
-
 async function savePrezzi(){
   try{
     await setDoc(prezziRef, {
@@ -281,10 +268,12 @@ async function savePrezzi(){
   }
 }
 
-// Auth + Sync
 onAuthStateChanged(auth, async u=>{
   if(u){
     document.getElementById('userEmail').textContent=u.email;
+    if(u.photoURL){
+      document.getElementById('userAvatar').src = u.photoURL;
+    }
     setStatus('Connesso come '+u.email);
     initSync();
   } else {
@@ -363,18 +352,14 @@ function editItem(idx){
   if(!n) return;
   const vecchiaKey=normalize(it.nome);
   const nuovaKey=normalize(n);
-  
-  // FIX ANTI-DUPLICATI: se rinomini in un nome che esiste già, unisci e cancella vecchio
   if(vecchiaKey!==nuovaKey){
     const existingIdx = findItemIndexByNorm(nuovaKey);
     if(existingIdx!==-1 && existingIdx!==idx){
-      // già esiste altro item con stesso nome -> unisci quantità e cancella vecchio
       if(confirm(`"${n}" esiste già in lista. Unisco le quantità?`)){
         const qOld = parseQta(items[existingIdx].qta);
         const qNew = parseQta(it.qta);
         items[existingIdx].qta = String(qOld + qNew);
         items.splice(idx,1);
-        // sposta prezzo storico se serve
         if(prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
           prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
         }
@@ -388,7 +373,6 @@ function editItem(idx){
         return;
       }
     }
-    // sposta storico prezzo
     if(prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
       prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
     }
@@ -456,22 +440,15 @@ function render(){
     const qNum = parseQta(it.qta||'1');
     const attuale=prezziDB[normalize(it.nome)]?.slice(-1)[0]?.prezzo;
     const attualeTot = attuale ? (attuale * qNum).toFixed(2).replace('.',',') : null;
-    
-    // FIX PRINCIPALE: chiedi TOTALE scontrino, non singolo
-    let promptTxt = `Quanto hai PAGATO IN TOTALE per ${it.nome} (${it.qta})?\n\n`;
-    promptTxt += `Scrivi quello che vedi sullo scontrino (es. 6,76)\n`;
+    let promptTxt = `Quanto hai PAGATO IN TOTALE per ${it.nome} (${it.qta})?\n\nScrivi quello che vedi sullo scontrino (es. 6,76)\n`;
     if(attuale) promptTxt += `\nAttuale: ${attuale.toFixed(2).replace('.',',')}€ cad. = ${attualeTot}€ tot per ${it.qta}`;
     if(qNum>1) promptTxt += `\nSe metti 6,76 con qta ${qNum}, salvo 1,69€ cad. da solo!`;
-    
     const prezzoStr=prompt(promptTxt, attualeTot? attualeTot : (attuale? String(attuale).replace('.',',') : ""));
     if(prezzoStr===null) return;
     const prezzoTot=parseFloat(prezzoStr.replace(',','.'));
     if(isNaN(prezzoTot) || prezzoTot<=0) return alert("Prezzo non valido");
-    
-    // CALCOLO AUTOMATICO NONNA-PROOF
     const prezzoUnit = prezzoTot / qNum;
-    
-    const nota=prompt(`Nota (opzionale)\nHo calcolato: ${prezzoTot.toFixed(2)}€ / ${qNum} = ${prezzoUnit.toFixed(2)}€ cad.\nVuoi aggiungere nota? es. 'con sconto'`, "")||`Tot scontrino ${prezzoTot.toFixed(2)}€ per ${qNum}pz`;
+    const nota=prompt(`Nota (opzionale)\nHo calcolato: ${prezzoTot.toFixed(2)}€ / ${qNum} = ${prezzoUnit.toFixed(2)}€ cad.\nVuoi aggiungere nota?`, "")||`Tot scontrino ${prezzoTot.toFixed(2)}€ per ${qNum}pz`;
     const key=normalize(it.nome);
     if(!prezziDB[key]) prezziDB[key]=[];
     prezziDB[key].push({nome:it.nome, prezzo: prezzoUnit, nota, totale: prezzoTot, qta: qNum});
@@ -488,7 +465,6 @@ function escapeHtml(s){
   return d.innerHTML;
 }
 
-// Autocomplete prezzi
 document.getElementById('inpNome').addEventListener('input', e=>{
   const val=normalize(e.target.value);
   const sugCont=document.getElementById('suggs');
@@ -522,16 +498,13 @@ document.getElementById('inpNome').addEventListener('input', e=>{
   }
 });
 
-// FIX ANTI-DUPLICATI su Aggiungi
 document.getElementById('btnAdd').onclick=()=>{
   const nome=document.getElementById('inpNome').value.trim();
   const qta=document.getElementById('inpQta').value.trim()||"1";
   if(!nome){ document.getElementById('inpNome').focus(); return; }
-  
   const norm = normalize(nome);
   const existingIdx = findItemIndexByNorm(norm);
   if(existingIdx!==-1){
-    // Esiste già: unisci quantità invece di duplicare
     const qOld = parseQta(items[existingIdx].qta);
     const qNew = parseQta(qta);
     items[existingIdx].qta = String(qOld + qNew);
@@ -540,7 +513,6 @@ document.getElementById('btnAdd').onclick=()=>{
     items.push({nome, qta});
     setStatus(`✓ Aggiunto ${nome}`);
   }
-  
   document.getElementById('inpNome').value="";
   document.getElementById('inpQta').value="";
   document.getElementById('suggs').innerHTML="";
@@ -596,7 +568,7 @@ document.getElementById('btnSave').onclick=()=>{
     note: document.getElementById('note').value,
     prezziDB,
     date: new Date().toISOString(),
-    version: "Holly&Rex FIXED anti-duplicati + totale/qta"
+    version: "Holly&Rex FINAL con icone + anti-duplicati + totale/qta"
   };
   const blob=new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url=URL.createObjectURL(blob);
