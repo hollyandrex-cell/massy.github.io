@@ -121,22 +121,33 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 .empty{ text-align:center; padding:30px 20px; color:#64748b; }
 .empty span{ font-size:2rem; display:block; margin-bottom:8px; }
 
+.btn-edit{
+  background:#0f172a; color:#fbbf24; border:1px solid #334155; font-size:.9rem;
+  width:36px; height:36px; border-radius:9px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.btn-edit:hover{ background:#fbbf24; color:#0f172a; }
+.totale-box{
+  background: linear-gradient(135deg, #1e293b, #0f172a); border:2px solid #22c55e;
+  color:#fff; padding:14px 16px; border-radius:14px; margin:12px 0;
+  display:flex; justify-content:space-between; align-items:center;
+  font-weight:800; font-size:1.05rem; box-shadow:0 4px 15px rgba(34,197,94,.25);
+}
+.totale-box small{ color:#94a3b8; font-weight:500; font-size:.8rem; }
 @media (max-width: 400px){
   body{ padding:8px; }
   .card{ padding:16px 14px; border-radius:18px; }
   h1{ font-size:1.6rem; }
   .inputs{ flex-direction:column; gap:8px; }
-  #inpQta{ max-width:100%; }
-  .list{ max-height:280px; margin-bottom:12px; }
+  #inpQta{ max-width:100% !important; }
+  .list{ max-height:260px; margin-bottom:12px; }
   textarea{ min-height:60px; }
-  .btns{ gap:8px; margin-bottom:12px; }
-  .btn-wa, .btn-clear{ padding:12px; }
+  .small{ font-size:.82rem !important; color:#e2e8f0 !important; background:#0f172a; padding:12px; border-radius:12px; border:1px solid #334155; line-height:1.5; }
+  .small a{color:#fbbf24; text-decoration:none; font-weight:700; margin:0 8px;}
 }
-.small{ font-size:.82rem; color:#e2e8f0; text-align:center; margin-top:18px; line-height:1.5; font-weight:500; background:#0f172a; padding:12px; border-radius:12px; border:1px solid #334155; } 
+.small{ font-size:.85rem; color:#f1f5f9; text-align:center; margin-top:18px; line-height:1.6; font-weight:500; background:#0f172a; padding:12px; border-radius:12px; border:1px solid #334155; } 
 .small a{color:#fbbf24; text-decoration:none; font-weight:700; margin:0 8px;} 
 .small a:hover{ text-decoration:underline; } 
 .small b{color:#22c55e;}
-
 </style>
 </head>
 <body>
@@ -156,6 +167,7 @@ textarea:focus{ border-color:#fbbf24; outline:none; box-shadow:0 0 0 3px rgba(25
 </div>
 
 <div id="lista" class="list"></div>
+<div id="totaleBox" class="totale-box" style="display:none;"><span>💰 Totale Spesa: <span id="totaleVal">0,00€</span></span><small id="totaleDett">0 su 0 prezzati</small></div>
 
 <label class="note-label">📝 Note (opzionale):</label>
 <textarea id="note" placeholder="Es. Prendi le buste, controlla scadenza, passa dal fornaio..."></textarea>
@@ -317,11 +329,52 @@ function initSync(){
   });
 }
 
+function calcTotale(){
+  let tot=0, prezzati=0;
+  items.forEach(it=>{
+    const key=normalize(it.nome);
+    const stor=prezziDB[key];
+    const ult=stor&&stor.length?stor[stor.length-1]:null;
+    if(ult){ 
+      const q=parseFloat((it.qta||'1').toString().replace(',','.'))||1;
+      tot+=ult.prezzo*q; 
+      prezzati++; 
+    }
+  });
+  const box=document.getElementById('totaleBox');
+  if(items.length>0){ 
+    box.style.display='flex'; 
+    document.getElementById('totaleVal').textContent=tot.toFixed(2).replace('.',',')+'€';
+    document.getElementById('totaleDett').textContent=`${prezzati} su ${items.length} prezzati` + (prezzati<items.length ? ' • aggiungi € per totale preciso' : '');
+  } else { box.style.display='none'; }
+  return tot;
+}
+
+function editItem(idx){
+  const it=items[idx];
+  const nuovo=prompt(`Correggi descrizione:\n(era: "${it.nome}")`, it.nome);
+  if(nuovo===null) return;
+  const n=nuovo.trim();
+  if(!n) return;
+  const vecchiaKey=normalize(it.nome);
+  const nuovaKey=normalize(n);
+  // se cambi nome e aveva prezzi, copia ultimo prezzo su nuovo nome per non perderlo
+  if(vecchiaKey!==nuovaKey && prezziDB[vecchiaKey] && !prezziDB[nuovaKey]){
+    prezziDB[nuovaKey]=[...prezziDB[vecchiaKey]];
+    savePrezzi();
+  }
+  items[idx].nome=n;
+  render();
+  save();
+  setStatus(`✓ Corretto: ${n}`);
+}
+
 function render(){
   const cont=document.getElementById('lista');
   if(items.length===0){
     cont.innerHTML=`<div class="empty"><span>🛒</span>Lista vuota<br><small style="font-size:.8rem">Aggiungi qualcosa o ripristina backup</small></div>`;
     document.getElementById('count').textContent=`0 articoli`;
+    calcTotale();
     return;
   }
   cont.innerHTML="";
@@ -333,10 +386,11 @@ function render(){
     div.className='item';
     div.innerHTML=`
       <div class="item-left">
-        <span class="item-name">${escapeHtml(it.nome)} <small style="color:#94a3b8; font-weight:400">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>
+        <span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8; font-weight:400">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>
         ${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}
       </div>
       <div class="item-actions">
+        <button class="btn-edit" data-idx="${idx}" title="Modifica">✏️</button>
         <button class="btn-price" data-idx="${idx}" title="Aggiorna prezzo">€</button>
         <button class="btn-del" data-idx="${idx}" title="Rimuovi">×</button>
       </div>
@@ -344,6 +398,7 @@ function render(){
     cont.appendChild(div);
   });
   document.getElementById('count').textContent=`${items.length} articoli`;
+  calcTotale();
 
   cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{
     const i=parseInt(e.currentTarget.dataset.idx);
@@ -351,7 +406,12 @@ function render(){
       items.splice(i,1);
       render();
       save();
+      calcTotale();
     }
+  });
+  cont.querySelectorAll('.btn-edit').forEach(b=>b.onclick=e=>{
+    const i=parseInt(e.currentTarget.dataset.idx);
+    editItem(i);
   });
 
   cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{
@@ -616,12 +676,13 @@ function renderWithGiro(){
     const ultimo=storico.length?storico[storico.length-1]:null;
     const div=document.createElement('div');
     div.className='item';
-    div.innerHTML=`<div class="item-left"><span class="item-name">${escapeHtml(it.nome)} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}</div><div class="item-actions"><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div>`;
+    div.innerHTML=`<div class="item-left"><span class="item-name" style="cursor:pointer" title="Tappa per correggere" onclick="window.editItemFromDom(${idx})">${escapeHtml(it.nome)} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}</span>${ultimo?`<span class="badge-old">Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€ ${ultimo.nota?'- '+escapeHtml(ultimo.nota):''} ✓</span>`:''}</div><div class="item-actions"><button class="btn-edit" data-idx="${idx}" title="Modifica">✏️</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div>`;
     cont.appendChild(div);
   });
   document.getElementById('count').textContent=`${items.length} articoli • ordinati per giro`;
   // riattacca eventi
-  cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); if(confirm(`Rimuovere "${items[i].nome}"?`)){ items.splice(i,1); renderWithGiro(); save(); } });
+  cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); if(confirm(`Rimuovere "${items[i].nome}"?`)){ items.splice(i,1); renderWithGiro(); save(); calcTotale(); } });
+  cont.querySelectorAll('.btn-edit').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); editItem(i); });
   cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{
     const idx=parseInt(e.currentTarget.dataset.idx);
     const it=items[idx];
@@ -636,6 +697,7 @@ document.getElementById('toggleGiro').onchange=()=>{ localStorage.setItem('giro_
 const giroSaved=localStorage.getItem('giro_enabled')==='true';
 document.getElementById('toggleGiro').checked=giroSaved;
 // sovrascrivi render originale per chiamare quello con giro quando attivo
+window.editItemFromDom = (idx)=>editItem(idx);
 const origRender=render;
 render=function(){ if(document.getElementById('toggleGiro')?.checked) renderWithGiro(); else origRender(); };
 
