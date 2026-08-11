@@ -244,24 +244,33 @@ function render(){
       const it=obj; const idx=obj.origIdx;
       const qNum=parseQta(it.qta||'1');
       // cerca prezzo: se item ha sottocategoria
-      const sub = it.sottocategoria || '';
+      const sub = (it.sottocategoria && it.sottocategoria!=='_generico') ? it.sottocategoria : '';
       let ultimo=null;
       if(sub){ ultimo = getPrezzo(catName, sub); }
       if(!ultimo){ ultimo = getPrezzo(it.nome, it.nome); } // fallback vecchio
       if(!ultimo && it.categoria && it.sottocategoria){ ultimo = getPrezzo(it.categoria, it.sottocategoria); }
       const totRiga = ultimo ? (ultimo.prezzo * qNum).toFixed(2).replace('.',',') : null;
-      const displayName = it.sottocategoria ? `${escapeHtml(it.categoria)} - <b style="color:#22c55e">${escapeHtml(it.sottocategoria)}</b>` : escapeHtml(it.nome);
+      const isGeneric = !it.sottocategoria || it.sottocategoria==='_generico';
+      const displayName = it.sottocategoria && it.sottocategoria!=='_generico' ? `${escapeHtml(it.categoria)} - <b style="color:#22c55e">${escapeHtml(it.sottocategoria)}</b>` : escapeHtml(it.categoria||it.nome);
       const div=document.createElement('div');
       div.className='item';
       div.innerHTML=`
         <div class="item-left">
-          <span class="item-name">${displayName} <small style="color:#94a3b8">(${escapeHtml(it.qta||'1')})</small> ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:''}</span>
+          <span class="item-name">${displayName} ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:''}</span>
           ${ultimo?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}
+          ${isGeneric ? `<small style="color:#64748b;font-size:.7rem;">Generico - clicca ✏️ per specificare tipo (es. Albicocche)</small>` : ''}
         </div>
-        <div class="item-actions">
-          <button class="btn-edit" data-idx="${idx}">✏</button>
-          <button class="btn-price" data-idx="${idx}">€</button>
-          <button class="btn-del" data-idx="${idx}">×</button>
+        <div class="item-actions" style="flex-direction:column;gap:4px;">
+          <div style="display:flex;gap:4px;align-items:center;">
+            <button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button>
+            <span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span>
+            <button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <button class="btn-edit" data-idx="${idx}">✏</button>
+            <button class="btn-price" data-idx="${idx}">€</button>
+            <button class="btn-del" data-idx="${idx}">×</button>
+          </div>
         </div>
       `;
       cont.appendChild(div);
@@ -272,10 +281,24 @@ function render(){
   // bind
   cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{
     const i=parseInt(e.currentTarget.dataset.idx);
-    if(confirm(`Rimuovere "${items[i].nome}"?`)){ items.splice(i,1); render(); save(); }
+    if(confirm(`Rimuovere "${items[i].categoria||items[i].nome}${items[i].sottocategoria?' - '+items[i].sottocategoria:''}"?`)){ items.splice(i,1); render(); save(); }
   });
   cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); openPriceModal(i); });
   cont.querySelectorAll('.btn-edit').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); editItem(i); });
+  cont.querySelectorAll('.btn-qty').forEach(b=>b.onclick=e=>{
+    const i=parseInt(e.currentTarget.dataset.idx);
+    const act=e.currentTarget.dataset.act;
+    let q=parseQta(items[i].qta||'1');
+    if(act==='plus') q++;
+    else q--;
+    if(q<=0){
+      if(confirm(`Rimuovere "${items[i].categoria||items[i].nome}"? Quantità a zero.`)){ items.splice(i,1); }
+      else return;
+    } else {
+      items[i].qta=String(q);
+    }
+    render(); save();
+  });
 }
 
 function calcTotale(){
@@ -293,12 +316,54 @@ function calcTotale(){
 
 function editItem(idx){
   const it=items[idx];
-  const nuovo=prompt(`Correggi:`, it.sottocategoria ? `${it.categoria} - ${it.sottocategoria}` : it.nome);
+  const catCorrente = it.categoria || it.nome;
+  const subCorrente = it.sottocategoria && it.sottocategoria!=='_generico' ? it.sottocategoria : '';
+  const suggerimento = subCorrente ? `${catCorrente} - ${subCorrente}` : catCorrente;
+  const nuovo=prompt(`Modifica "${suggerimento}"\n\nPuoi scrivere:\n- Solo il tipo: es. "albicocche" -> diventa "${catCorrente} - albicocche"\n- Categoria + tipo: es. "frutta albicocche" o "frutta - albicocche"\n- Solo categoria per lasciare generico`, subCorrente || catCorrente);
   if(nuovo===null) return;
-  const parts=nuovo.split('-').map(s=>s.trim()).filter(Boolean);
-  if(parts.length>=2){ it.categoria=parts[0]; it.sottocategoria=parts.slice(1).join(' - '); it.nome=`${it.categoria} - ${it.sottocategoria}`; }
-  else { it.nome=nuovo.trim(); it.categoria=nuovo.trim(); delete it.sottocategoria; }
+  let raw = nuovo.trim();
+  if(!raw) return;
+  let newCat = catCorrente;
+  let newSub = '';
+  // se contiene " - " split
+  if(raw.includes('-')){
+    const p = raw.split('-').map(s=>s.trim()).filter(Boolean);
+    if(p.length>=2){ newCat = p[0]; newSub = p.slice(1).join(' - '); }
+    else { newCat = catCorrente; newSub = p[0]; }
+  } else if(raw.toLowerCase().startsWith(catCorrente.toLowerCase() + ' ')){
+    // "frutta albicocche" -> rimuovi categoria
+    newCat = catCorrente;
+    newSub = raw.slice(catCorrente.length).trim();
+  } else if(raw.toLowerCase() === catCorrente.toLowerCase()){
+    // lascia generico
+    newCat = catCorrente;
+    newSub = '';
+  } else {
+    // ha scritto solo "albicocche" -> mantieni categoria corrente
+    // se ha scritto una nuova categoria diversa senza spazio, diventa nuova categoria
+    if(raw.includes(' ')){
+      // prova a capire se è nuova categoria + sub
+      const words = raw.split(' ');
+      if(words.length>=2){
+        // se prima parola è diversa da categoria corrente, considera nuova categoria
+        // euristica: se scrive "pasta penne" mentre era in frutta, cambia categoria
+        newCat = words[0];
+        newSub = words.slice(1).join(' ');
+      } else {
+        newCat = catCorrente;
+        newSub = raw;
+      }
+    } else {
+      // singola parola: se categoria corrente è generica, diventa sottotipo
+      newCat = catCorrente;
+      newSub = raw;
+    }
+  }
+  it.categoria = newCat;
+  it.sottocategoria = newSub || '';
+  it.nome = newSub ? `${newCat} - ${newSub}` : newCat;
   render(); save();
+  setStatus(`✓ Modificato in ${it.nome}`);
 }
 
 // SUGGERIMENTI CATEGORIE
