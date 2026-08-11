@@ -435,14 +435,15 @@ document.getElementById('btnAdd').onclick=()=>{
     nomeFinale=categoria;
   }
   // anti-duplicato per categoria+sottocategoria
-  const existingIdx = items.findIndex(it=> normalize(it.categoria||it.nome)===normalize(categoria) && normalize(it.sottocategoria||'')===normalize(sottocategoria));
+  const isGeneric = !sottocategoria || sottocategoria==='_generico';
+  const existingIdx = isGeneric ? -1 : items.findIndex(it=> normalize(it.categoria||it.nome)===normalize(categoria) && normalize(it.sottocategoria||'')===normalize(sottocategoria));
   if(existingIdx!==-1){
     const qOld=parseQta(items[existingIdx].qta);
     items[existingIdx].qta=String(qOld+parseQta(qta));
     setStatus(`✓ Aggiornato ${nomeFinale} - qta ${items[existingIdx].qta}`);
   } else {
-    items.push({nome: nomeFinale, categoria, sottocategoria, qta});
-    setStatus(`✓ Aggiunto ${nomeFinale}`);
+    items.push({nome: nomeFinale, categoria, sottocategoria: sottocategoria||'', qta});
+    setStatus(isGeneric ? `✓ Aggiunto ${categoria} generico - ora modificalo in prosciutto/pancetta con ✏️` : `✓ Aggiunto ${nomeFinale}`);
   }
   document.getElementById('inpNome').value="";
   document.getElementById('inpQta').value="";
