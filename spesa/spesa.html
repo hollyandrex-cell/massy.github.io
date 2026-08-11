@@ -178,15 +178,40 @@ function initSync(){
 
 function migrateOldToNew(oldMap){
   const nuovo = {};
+  const knownCats = ["carne bau","frutta","pasta","salumi","verdura","carne","pane","gelati","salame","prosciutto"];
   for(const k in oldMap){
     const normK = normalize(k);
-    // vecchio "carne bau" -> lo mettiamo come categoria "carne bau" con sottotipo "generico" ? No, meglio sottotipo = k stesso per non perdere
-    // Euristica: se k contiene spazio, prova a splittare primo pezzo come categoria? No, manteniamo semplice: categoria = k, sottotipo = k (così quando cerchi "carne bau" lo trovi)
-    // Poi con nuova logica l'utente creerà sottotipi veri.
-    // Per non sporcare, se old key è "gelati", categoria "gelati" sottotipo "gelati"
-    if(!nuovo[normK]) nuovo[normK] = {};
-    const subKey = normK; // vecchio comportamento
-    nuovo[normK][subKey] = oldMap[k];
+    let cat = null, sub = null;
+    // cerca se inizia con categoria nota
+    for(const kc of knownCats){
+      if(normK.startsWith(kc + ' ')){
+        cat = kc;
+        sub = normK.slice(kc.length+1).trim();
+        break;
+      }
+    }
+    if(!cat){
+      // se ha spazio, prendi prima parola come categoria
+      if(normK.includes(' ')){
+        const parts = normK.split(' ');
+        // caso speciale "carne bau ..." -> categoria "carne bau"
+        if(parts[0]==='carne' && parts[1]==='bau'){
+          cat = 'carne bau';
+          sub = parts.slice(2).join(' ').trim();
+        } else {
+          cat = parts[0];
+          sub = parts.slice(1).join(' ').trim();
+        }
+      } else {
+        cat = normK;
+        sub = '_generico';
+      }
+    }
+    if(!sub) sub = '_generico';
+    if(!nuovo[cat]) nuovo[cat]={};
+    if(!nuovo[cat][sub]) nuovo[cat][sub]=[];
+    // unisci storico
+    nuovo[cat][sub] = nuovo[cat][sub].concat(oldMap[k]);
   }
   return nuovo;
 }
@@ -294,7 +319,7 @@ document.getElementById('inpNome').addEventListener('input', e=>{
         if(!ultimo) continue;
         const chip=document.createElement('span');
         chip.className='chip chip-sub';
-        const labelSub = subKey===catKey ? catKey : `${catKey} - ${subKey}`;
+        const isGen = subKey==='_generico'; const prettySub = isGen ? 'Generico' : subKey; const labelSub = (subKey===catKey || isGen) ? catKey : `${catKey} - ${prettySub}`;
         chip.textContent=`${labelSub} ${ultimo.prezzo.toFixed(2).replace('.',',')}€`;
         chip.onclick=()=>{
           document.getElementById('inpNome').value=catKey;
@@ -406,26 +431,37 @@ document.getElementById('modalOk').onclick=()=>{
 };
 
 document.getElementById('btnMigrate').onclick=async()=>{
-  if(!confirm('Vuoi davvero PULIRE e MIGRARE Firebase prezzi?\n\n- Vecchio formato piatto -> nuovo formato categorie\n- Eliminerà duplicati generici\n- Backup locale verrà creato\n\nContinuo?')) return;
-  const old = window._oldPrezziMap || prezziDB;
+  if(!confirm('Vuoi PULIRE davvero Firebase prezzi?\n\n- Vecchio "frutta ciuccio" diventa FRUTTA -> ciuccio\n- Vecchio "carne bau" diventa CARNE BAU -> Generico\n- Backup salvato in locale\n\nContinuo?')) return;
+  let old = window._oldPrezziMap || prezziDB;
+  // se old è già nuovo formato ma sporco, prendi backup se esiste
+  const firstVal = old && Object.keys(old).length ? old[Object.keys(old)[0]] : null;
+  const isFlat = firstVal && Array.isArray(firstVal);
+  if(!isFlat && window._oldPrezziMap){
+    old = window._oldPrezziMap; // forza uso vecchio per rimigrare bene
+  }
   localStorage.setItem('backup_prezzi_pre_migrate_'+Date.now(), JSON.stringify(old));
-  // Se old è ancora flat, migra
   let nuovo = {};
-  if(old && Object.keys(old).length>0){
-    const firstVal = old[Object.keys(old)[0]];
-    const isFlat = Array.isArray(firstVal);
-    if(isFlat){
+  if(old){
+    const fv = old[Object.keys(old)[0]];
+    if(fv && Array.isArray(fv)){
       nuovo = migrateOldToNew(old);
     } else {
-      nuovo = old; // già nuovo ma puliamo
+      // se è già nuovo, ri-normalizza per pulire chiavi doppie
+      nuovo = {};
+      for(const cat in old){
+        for(const sub in old[cat]){
+          const c = normalize(cat);
+          const s = normalize(sub);
+          if(!nuovo[c]) nuovo[c]={};
+          nuovo[c][s]=old[cat][sub];
+        }
+      }
     }
   }
-  // PULIZIA: rimuovi chiavi tipo "carne bau" che hanno solo se stessa come sottotipo e prezzo generico
-  // Lasciamo all'utente decidere, per ora teniamo tutto
   prezziDB = nuovo;
   await savePrezzi();
-  alert('Migrazione completata! Ora i prezzi sono organizzati per categorie.\nEs. frutta -> mele, pesche, anguria\n\nSe qualcosa non va, hai backup in localStorage.');
-  render();
+  alert('Fatto! Ora scrivi "frutta" e vedrai "Frutta - ciuccio 1,49€" + Generico.\nScrivi "carne" e vedrai "Carne Bau - Generico 5,99€"\n\nIl vecchio sporco è sparito.');
+  location.reload();
 };
 
 document.getElementById('btnClear').onclick=()=>{ if(items.length===0) return; if(confirm(`Svuotare lista (${items.length} art.)?`)){ localStorage.setItem('backup_pre_svuota_'+Date.now(), JSON.stringify({items})); items=[]; render(); save(); } };
