@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Lista della Spesa - Holly & Rex</title>
+    <link rel="icon" type="image/x-icon" href="bau.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+<style>
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; background: radial-gradient(ellipse at top, #1e293b 0%, #0f172a 100%); color: #f1f5f9; display:flex; justify-content:center; padding:16px; margin:0; min-height:100vh; }
+.card { background: #1e293b; padding:24px 20px; border-radius:24px; max-width:500px; width:100%; border:1px solid #334155; box-shadow: 0 20px 60px rgba(0,0,0,.5); align-self: flex-start; }
+h1 { color:#fbbf24; text-align:center; margin:0 0 6px; font-size:1.9rem; font-weight:800; }
+.sub { color:#94a3b8; text-align:center; font-size:.85rem; margin-bottom:18px; }
+.user { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:18px; background:#0f172a; padding:8px 12px; border-radius:12px; border:1px solid #1e293b; }
+.user img{width:32px;height:32px;border-radius:50%; border:2px solid #fbbf24; object-fit:cover}
+.user span{color:#cbd5e1; font-size:.85rem; font-weight:500}
+.inputs{ display:flex; gap:8px; margin-bottom:10px; }
+input { flex:1; padding:14px 14px; border-radius:12px; border:1.5px solid #475569; background:#0f172a; color:#fff; outline:none; font-size:.95rem; }
+input:focus{ border-color:#fbbf24; box-shadow:0 0 0 3px rgba(251,191,36,.15); }
+#inpQta{ max-width:115px; }
+.suggestions{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.chip{ background:#0f172a; border:1.5px solid #fbbf24; color:#fbbf24; padding:7px 12px; border-radius:20px; font-size:.82rem; cursor:pointer; font-weight:600; }
+.chip:hover{ background:#fbbf24; color:#0f172a; }
+.chip-generic{ border-color:#64748b; color:#94a3b8; }
+.chip-sub{ border-color:#22c55e; color:#22c55e; }
+.chip-sub:hover{ background:#22c55e; color:#fff; }
+.chip-cat{ border-color:#38bdf8; color:#38bdf8; font-weight:800; }
+.btns{ display:flex; gap:10px; margin-bottom:18px; }
+button{ flex:1; padding:14px; border:none; border-radius:12px; font-weight:700; cursor:pointer; font-size:.92rem; }
+.btn-add{ background: linear-gradient(135deg, #6366f1, #4f46e5); color:#fff; }
+.btn-voice{ background: linear-gradient(135deg, #ec4899, #db2777); color:#fff; }
+.list{ max-height:460px; overflow:auto; display:flex; flex-direction:column; gap:9px; margin-bottom:18px; }
+.item{ background: linear-gradient(135deg, #334155, #2d3748); padding:13px 14px; border-radius:14px; display:flex; justify-content:space-between; align-items:center; gap:10px; border:1px solid #3f4a5c; }
+.item-left{ display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
+.item-name{ font-weight:700; font-size:.95rem; }
+.badge-price{ background: linear-gradient(135deg, #22c55e, #16a34a); color:#fff; font-size:.73rem; padding:3px 8px; border-radius:7px; margin-left:7px; font-weight:800; }
+.badge-old{ background:#0f172a; color:#94a3b8; font-size:.72rem; padding:4px 8px; border-radius:8px; border:1px solid #1e293b; }
+.item-actions{ display:flex; gap:7px; align-items:center; }
+.btn-price{ background: linear-gradient(135deg, #22c55e, #16a34a); color:#fff; border:none; padding:7px 12px; border-radius:9px; cursor:pointer; font-weight:800; min-width:38px; }
+.btn-del{ background:#1e293b; color:#ef4444; border:1px solid #334155; font-size:1.1rem; width:36px; height:36px; border-radius:9px; cursor:pointer; }
+.btn-edit{ background:#0f172a; color:#fbbf24; border:1px solid #334155; width:36px; height:36px; border-radius:9px; cursor:pointer; }
+.totale-box{ background: linear-gradient(135deg, #1e293b, #0f172a); border:2px solid #22c55e; color:#fff; padding:14px 16px; border-radius:14px; margin:12px 0; display:flex; justify-content:space-between; align-items:center; font-weight:800; }
+textarea{ width:100%; padding:12px; border-radius:12px; border:1.5px solid #475569; background:#0f172a; color:#fff; min-height:80px; font-family:inherit; }
+.btn-wa{ background: linear-gradient(135deg, #22c55e, #16a34a); color:#fff; width:100%; margin-top:12px; padding:15px; }
+.btn-clear{ background: linear-gradient(135deg, #ef4444, #dc2626); color:#fff; width:100%; margin-top:10px; padding:13px; }
+.btn-save{ background: linear-gradient(135deg, #fbbf24, #f59e0b); color:#0f172a; width:100%; margin-top:10px; padding:12px; font-size:.85rem; }
+.small{ font-size:.85rem; color:#f1f5f9; text-align:center; margin-top:18px; line-height:1.6; background:#0f172a; padding:12px; border-radius:12px; border:1px solid #334155; } 
+.small a{color:#fbbf24; text-decoration:none; font-weight:700; margin:0 8px;} 
+.status{ text-align:center; font-size:.78rem; color:#22c55e; margin-top:8px; min-height:18px; }
+.dot{ width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; margin-right:6px; }
+.cat-header{ font-size:.78rem; color:#fbbf24; font-weight:800; margin:12px 0 4px 4px; letter-spacing:.04em; text-transform:uppercase; }
+.modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.7); display:flex; align-items:center; justify-content:center; z-index:999; padding:20px; }
+.modal{ background:#1e293b; border:1px solid #334155; border-radius:16px; padding:20px; width:100%; max-width:380px; }
+.modal h3{ color:#fbbf24; margin-bottom:10px; }
+.modal input{ width:100%; margin-bottom:10px; }
+.modal-btns{ display:flex; gap:10px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Lista della Spesa</h1>
+<div class="sub">Holly & Rex Group - Sincronizzata • Categorie</div>
+<div class="user"><img src="bau-192x192.png" id="userAvatar"><span id="userEmail">tariffazione liguria</span><span class="dot" id="syncDot" style="margin-left:8px;"></span><small id="syncText" style="color:#22c55e">sync</small></div>
+<div class="inputs">
+<input id="inpNome" placeholder="Categoria: es. Frutta, Carne bau, Pasta..." autocomplete="off">
+<input id="inpQta" placeholder="Qta (es. 4)">
+</div>
+<div id="suggs" class="suggestions"></div>
+<div class="btns">
+<button class="btn-add" id="btnAdd">+ Aggiungi</button>
+<button class="btn-voice" id="btnVoice">🎤 Parla</button>
+</div>
+<div id="lista" class="list"></div>
+<div id="totaleBox" class="totale-box" style="display:none;"><span>💰 Totale: <span id="totaleVal">0,00€</span></span><small id="totaleDett"></small></div>
+<label style="font-size:.82rem; color:#94a3b8; margin-bottom:6px; display:block;">📝 Note (opzionale):</label>
+<textarea id="note" placeholder="Es. Prendi le buste..."></textarea>
+<label style="display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 4px;cursor:pointer;font-size:.82rem;color:#94a3b8;font-weight:600;">
+<input type="checkbox" id="toggleGiro" style="accent-color:#fbbf24;width:16px;height:16px;"> 🛒 Ordina per giro
+</label>
+<button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
+<button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
+<div style="display:flex;gap:10px;margin-top:10px;">
+<button class="btn-save" id="btnSave" style="flex:1">💾 Salva Backup</button>
+<button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button>
+</div>
+<div style="display:flex;gap:10px;margin-top:10px;">
+<button class="btn-save" id="btnMigrate" style="flex:1;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">🧹 Pulisci/Migra Firebase Prezzi</button>
+</div>
+<input type="file" id="fileInput" accept=".json" style="display:none;">
+<div class="status" id="status"></div>
+<div class="small"><span id="count">0 articoli</span> • Categorie con sottotipi • Tappa € per prezzo<br><a href="./privacy-policy.html">🔒 Privacy</a> • <a href="./cookie-policy.html">🍪 Cookie</a></div>
+</div>
+
+<div id="priceModal" class="modal-bg" style="display:none;">
+<div class="modal">
+<h3 id="modalTitle">Che tipo hai preso?</h3>
+<p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p>
+<input id="modalSub" placeholder="Sottocategoria: es. Anguria, Pollo, Spaghetti...">
+<input id="modalPrice" placeholder="Prezzo TOTALE scontrino es. 2,44" inputmode="decimal">
+<div class="modal-btns">
+<button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button>
+<button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button>
+</div>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
+  authDomain: "holly-rex-spesa.firebaseapp.com",
+  projectId: "holly-rex-spesa",
+  storageBucket: "holly-rex-spesa.firebasestorage.app",
+  messagingSenderId: "450072023944",
+  appId: "1:450072023944:web:888af5555a5b50c599203d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+const docRef = doc(db, 'liste', 'holly-rex-condivisa');
+const prezziRef = doc(db, 'liste', 'holly-rex-prezzi');
+
+let items = [];
+let prezziDB = {}; // NUOVO: { "frutta": { "mele": [{prezzo, nota, data}], "pesche": [...] }, "carne bau": { "pollo": [...] } }
+let isLocalChange = false;
+
+function setStatus(msg, ok=true){
+  const el=document.getElementById('status');
+  el.textContent=msg;
+  el.style.color= ok ? '#22c55e' : '#ef4444';
+  setTimeout(()=>{ if(el.textContent===msg) el.textContent=''; }, 3500);
+}
+function normalize(s){ return s.toLowerCase().trim().replace(/\s+/g,' ').replace(/[^a-z0-9àèéìòù ]/g,'').trim(); }
+function parseQta(q){ const m=String(q||'1').replace(',','.').match(/(\d+(\.\d+)?)/); return m?parseFloat(m[1]):1; }
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+async function save(){
+  try{ isLocalChange=true; await setDoc(docRef, {items, note: document.getElementById('note').value, ultimoAggiornamento: new Date().toISOString(), count: items.length}, {merge:true}); setStatus(`✓ Salvato ${items.length} art.`); }catch(e){ setStatus('Errore save '+e.message,false); }
+}
+async function savePrezzi(){ try{ await setDoc(prezziRef, {map: prezziDB, aggiornato: new Date().toISOString(), version: 'v2-categorie'}, {merge:true}); setStatus('✓ Prezzi salvati (categorie)'); }catch(e){ setStatus('Errore prezzi '+e.message,false); } }
+
+// --- FIX ANTI-LOOP META AI (NOSTRO) ---
+const isInIframe = window.self !== window.top;
+
+function accediConGoogle(){
+  if (window.self !== window.top) {
+    console.log("Anteprima Meta AI - login bloccato");
+    return;
+  }
+  signInWithPopup(auth, provider).catch(e=>{
+    setStatus('Login richiesto: clicca Accedi', false);
+    console.error(e);
+  });
+}
+
+if (isInIframe) {
+  console.log("Anteprima in Meta AI - Firebase in pausa");
+  document.getElementById('userEmail').textContent = 'Anteprima (sync in pausa)';
+  document.getElementById('syncText').textContent = 'pausa anteprima';
+  // Non inizializzare auth / sync qui dentro!
+} else {
+  // SOLO fuori dall'iframe: ripristino sessione automatico, SENZA popup
+  onAuthStateChanged(auth, async u=>{
+    if(u){
+      document.getElementById('userEmail').textContent = u.email;
+      if(u.photoURL) document.getElementById('userAvatar').src = u.photoURL;
+      initSync();
+    } else {
+      document.getElementById('userEmail').textContent = 'Clicca Accedi per sincronizzare';
+      document.getElementById('syncText').textContent = 'non connesso';
+      // Mostra bottone Accedi se non loggato
+      const userDiv = document.querySelector('.user');
+      if(userDiv && !document.getElementById('btnAccedi')){
+        const btn = document.createElement('button');
+        btn.id = 'btnAccedi';
+        btn.textContent = '🔑 Accedi con Google';
+        btn.style.cssText = 'margin-left:10px;background:#fbbf24;color:#0f172a;border:none;padding:6px 10px;border-radius:8px;font-weight:800;cursor:pointer;';
+        btn.onclick = accediConGoogle;
+        userDiv.appendChild(btn);
+      }
+    }
+  });
+}
+
+function initSync(){
+  if (window.self !== window.top) { console.log('initSync bloccato in iframe'); return; }
+  onSnapshot(docRef, snap=>{ if(snap.exists()){ const d=snap.data(); if(isLocalChange){ isLocalChange=false; return; } items=d.items||[]; document.getElementById('note').value=d.note||""; render(); } else save(); });
+  onSnapshot(prezziRef, snap=>{
+    if(snap.exists()){
+      const data=snap.data();
+      if(data.map){
+        // MIGRAZIONE AUTOMATICA da vecchio flat a nuovo categorie
+        const firstKey = Object.keys(data.map)[0];
+        const firstVal = firstKey ? data.map[firstKey] : null;
+        const isOldFlat = firstVal && Array.isArray(firstVal) && firstVal.length>0 && firstVal[0].prezzo!==undefined;
+        if(isOldFlat || data.version!=='v2-categorie'){
+          console.log('Rilevato vecchio formato prezzi, mantengo per migrazione manuale');
+          // Non sovrascrivo subito, lascio vecchio ma avviso
+          // Se vuoi migrare automaticamente, clicca bottone
+          window._oldPrezziMap = data.map;
+          prezziDB = migrateOldToNew(data.map);
+        } else {
+          prezziDB = data.map;
+        }
+        render();
+      }
+    } else savePrezzi();
+  });
+}
+
+function migrateOldToNew(oldMap){
+  const nuovo = {};
+  const knownCats = ["carne bau","frutta","pasta","salumi","verdura","carne","pane","gelati","salame","prosciutto"];
+  for(const k in oldMap){
+    const normK = normalize(k);
+    let cat = null, sub = null;
+    // cerca se inizia con categoria nota
+    for(const kc of knownCats){
+      if(normK.startsWith(kc + ' ')){
+        cat = kc;
+        sub = normK.slice(kc.length+1).trim();
+        break;
+      }
+    }
+    if(!cat){
+      // se ha spazio, prendi prima parola come categoria
+      if(normK.includes(' ')){
+        const parts = normK.split(' ');
+        // caso speciale "carne bau ..." -> categoria "carne bau"
+        if(parts[0]==='carne' && parts[1]==='bau'){
+          cat = 'carne bau';
+          sub = parts.slice(2).join(' ').trim();
+        } else {
+          cat = parts[0];
+          sub = parts.slice(1).join(' ').trim();
+        }
+      } else {
+        cat = normK;
+        sub = '_generico';
+      }
+    }
+    if(!sub) sub = '_generico';
+    if(!nuovo[cat]) nuovo[cat]={};
+    if(!nuovo[cat][sub]) nuovo[cat][sub]=[];
+    // unisci storico
+    nuovo[cat][sub] = nuovo[cat][sub].concat(oldMap[k]);
+  }
+  return nuovo;
+}
+
+function getPrezzo(categoria, sottotipo){
+  const cat = prezziDB[normalize(categoria)];
+  if(!cat) return null;
+  const sub = cat[normalize(sottotipo)] || cat[normalize(categoria)] || cat['_generico'];
+  if(!sub || !sub.length) return null;
+  return sub[sub.length-1];
+}
+
+function render(){
+  const cont=document.getElementById('lista');
+  if(items.length===0){ cont.innerHTML=`<div style="text-align:center;padding:30px;color:#64748b;">🛒 Lista vuota</div>`; document.getElementById('count').textContent='0 articoli'; calcTotale(); return; }
+  // Raggruppa per categoria per visualizzazione
+  const gruppi = {};
+  items.forEach((it, idx)=>{
+    const cat = it.categoria || it.nome.split(' - ')[0] || it.nome;
+    if(!gruppi[cat]) gruppi[cat]=[];
+    gruppi[cat].push({...it, origIdx: idx});
+  });
+  cont.innerHTML="";
+  for(const catName in gruppi){
+    const header=document.createElement('div');
+    header.className='cat-header';
+    header.textContent = catName.toUpperCase();
+    cont.appendChild(header);
+    gruppi[catName].forEach(obj=>{
+      const it=obj; const idx=obj.origIdx;
+      const qNum=parseQta(it.qta||'1');
+      // cerca prezzo: se item ha sottocategoria
+      const sub = (it.sottocategoria && it.sottocategoria!=='_generico') ? it.sottocategoria : '';
+      let ultimo=null;
+      if(sub){ ultimo = getPrezzo(catName, sub); }
+      if(!ultimo){ ultimo = getPrezzo(it.nome, it.nome); } // fallback vecchio
+      if(!ultimo && it.categoria && it.sottocategoria){ ultimo = getPrezzo(it.categoria, it.sottocategoria); }
+      const totRiga = ultimo ? (ultimo.prezzo * qNum).toFixed(2).replace('.',',') : null;
+      const isGeneric = !it.sottocategoria || it.sottocategoria==='_generico';
+      const displayName = it.sottocategoria && it.sottocategoria!=='_generico' ? `${escapeHtml(it.categoria)} - <b style="color:#22c55e">${escapeHtml(it.sottocategoria)}</b>` : escapeHtml(it.categoria||it.nome);
+      const div=document.createElement('div');
+      div.className='item';
+      div.innerHTML=`
+        <div class="item-left">
+          <span class="item-name">${displayName} ${ultimo?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:''}</span>
+          ${ultimo?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:''}
+          ${isGeneric ? `<small style="color:#64748b;font-size:.7rem;">Generico - clicca ✏️ per specificare tipo (es. Albicocche)</small>` : ''}
+        </div>
+        <div class="item-actions" style="flex-direction:column;gap:4px;">
+          <div style="display:flex;gap:4px;align-items:center;">
+            <button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button>
+            <span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span>
+            <button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button>
+          </div>
+          <div style="display:flex;gap:4px;">
+            <button class="btn-edit" data-idx="${idx}">✏</button>
+            <button class="btn-price" data-idx="${idx}">€</button>
+            <button class="btn-del" data-idx="${idx}">×</button>
+          </div>
+        </div>
+      `;
+      cont.appendChild(div);
+    });
+  }
+  document.getElementById('count').textContent=`${items.length} articoli`;
+  calcTotale();
+  // bind
+  cont.querySelectorAll('.btn-del').forEach(b=>b.onclick=e=>{
+    const i=parseInt(e.currentTarget.dataset.idx);
+    if(confirm(`Rimuovere "${items[i].categoria||items[i].nome}${items[i].sottocategoria?' - '+items[i].sottocategoria:''}"?`)){ items.splice(i,1); render(); save(); }
+  });
+  cont.querySelectorAll('.btn-price').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); openPriceModal(i); });
+  cont.querySelectorAll('.btn-edit').forEach(b=>b.onclick=e=>{ const i=parseInt(e.currentTarget.dataset.idx); editItem(i); });
+  cont.querySelectorAll('.btn-qty').forEach(b=>b.onclick=e=>{
+    const i=parseInt(e.currentTarget.dataset.idx);
+    const act=e.currentTarget.dataset.act;
+    let q=parseQta(items[i].qta||'1');
+    if(act==='plus') q++;
+    else q--;
+    if(q<=0){
+      if(confirm(`Rimuovere "${items[i].categoria||items[i].nome}"? Quantità a zero.`)){ items.splice(i,1); }
+      else return;
+    } else {
+      items[i].qta=String(q);
+    }
+    render(); save();
+  });
+}
+
+function calcTotale(){
+  let tot=0, prezzati=0;
+  items.forEach(it=>{
+    const cat = it.categoria || it.nome.split(' - ')[0] || it.nome;
+    const sub = it.sottocategoria || it.nome;
+    const storico = prezziDB[normalize(cat)]?.[normalize(sub)] || prezziDB[normalize(it.nome)]?.[normalize(it.nome)];
+    const ultimo = storico ? storico[storico.length-1] : null;
+    if(ultimo){ tot+= ultimo.prezzo * parseQta(it.qta||'1'); prezzati++; }
+  });
+  const box=document.getElementById('totaleBox');
+  if(items.length>0){ box.style.display='flex'; document.getElementById('totaleVal').textContent=tot.toFixed(2).replace('.',',')+'€'; document.getElementById('totaleDett').textContent=`${prezzati} su ${items.length} prezzati`; } else box.style.display='none';
+}
+
+function editItem(idx){
+  const it=items[idx];
+  const catCorrente = it.categoria || it.nome;
+  const subCorrente = it.sottocategoria && it.sottocategoria!=='_generico' ? it.sottocategoria : '';
+  const suggerimento = subCorrente ? `${catCorrente} - ${subCorrente}` : catCorrente;
+  const nuovo=prompt(`Modifica "${suggerimento}"\n\nPuoi scrivere:\n- Solo il tipo: es. "albicocche" -> diventa "${catCorrente} - albicocche"\n- Categoria + tipo: es. "frutta albicocche" o "frutta - albicocche"\n- Solo categoria per lasciare generico`, subCorrente || catCorrente);
+  if(nuovo===null) return;
+  let raw = nuovo.trim();
+  if(!raw) return;
+  let newCat = catCorrente;
+  let newSub = '';
+  // se contiene " - " split
+  if(raw.includes('-')){
+    const p = raw.split('-').map(s=>s.trim()).filter(Boolean);
+    if(p.length>=2){ newCat = p[0]; newSub = p.slice(1).join(' - '); }
+    else { newCat = catCorrente; newSub = p[0]; }
+  } else if(raw.toLowerCase().startsWith(catCorrente.toLowerCase() + ' ')){
+    // "frutta albicocche" -> rimuovi categoria
+    newCat = catCorrente;
+    newSub = raw.slice(catCorrente.length).trim();
+  } else if(raw.toLowerCase() === catCorrente.toLowerCase()){
+    // lascia generico
+    newCat = catCorrente;
+    newSub = '';
+  } else {
+    // ha scritto solo "albicocche" -> mantieni categoria corrente
+    // se ha scritto una nuova categoria diversa senza spazio, diventa nuova categoria
+    if(raw.includes(' ')){
+      // prova a capire se è nuova categoria + sub
+      const words = raw.split(' ');
+      if(words.length>=2){
+        // se prima parola è diversa da categoria corrente, considera nuova categoria
+        // euristica: se scrive "pasta penne" mentre era in frutta, cambia categoria
+        newCat = words[0];
+        newSub = words.slice(1).join(' ');
+      } else {
+        newCat = catCorrente;
+        newSub = raw;
+      }
+    } else {
+      // singola parola: se categoria corrente è generica, diventa sottotipo
+      newCat = catCorrente;
+      newSub = raw;
+    }
+  }
+  it.categoria = newCat;
+  it.sottocategoria = newSub || '';
+  it.nome = newSub ? `${newCat} - ${newSub}` : newCat;
+  render(); save();
+  setStatus(`✓ Modificato in ${it.nome}`);
+}
+
+// SUGGERIMENTI CATEGORIE
+document.getElementById('inpNome').addEventListener('input', e=>{
+  const raw=e.target.value;
+  const val=normalize(raw);
+  const sugCont=document.getElementById('suggs');
+  sugCont.innerHTML="";
+  if(val.length<2) return;
+  // cerca categorie che contengono val
+  for(const catKey in prezziDB){
+    if(catKey.includes(val) || val.includes(catKey)){
+      const catObj = prezziDB[catKey];
+      // mostra ogni sottotipo come chip
+      for(const subKey in catObj){
+        const storico = catObj[subKey];
+        const ultimo = storico[storico.length-1];
+        if(!ultimo) continue;
+        const chip=document.createElement('span');
+        chip.className='chip chip-sub';
+        const isGen = subKey==='_generico'; const prettySub = isGen ? 'Generico' : subKey; const labelSub = (subKey===catKey || isGen) ? catKey : `${catKey} - ${prettySub}`;
+        chip.textContent=`${labelSub} ${ultimo.prezzo.toFixed(2).replace('.',',')}€`;
+        chip.onclick=()=>{
+          document.getElementById('inpNome').value=catKey;
+          // memorizza scelta temporanea
+          sugCont.dataset.chosenCat=catKey;
+          sugCont.dataset.chosenSub=subKey;
+          // mostra conferma
+          sugCont.innerHTML="";
+          const chosen=document.createElement('span');
+          chosen.className='chip chip-cat';
+          chosen.textContent=`✓ ${labelSub} selezionato - ora qta e Aggiungi`;
+          sugCont.appendChild(chosen);
+          document.getElementById('inpQta').focus();
+        };
+        sugCont.appendChild(chip);
+      }
+    }
+  }
+  // sempre aggiungi generico
+  const gen=document.createElement('span');
+  gen.className='chip chip-generic';
+  gen.textContent= raw ? `${raw} - Generico (senza prezzo)` : 'Lascia generico';
+  gen.onclick=()=>{
+    sugCont.innerHTML="";
+    sugCont.dataset.chosenCat="";
+    sugCont.dataset.chosenSub="";
+    document.getElementById('inpQta').focus();
+  };
+  sugCont.appendChild(gen);
+});
+
+document.getElementById('btnAdd').onclick=()=>{
+  const rawNome=document.getElementById('inpNome').value.trim();
+  if(!rawNome){ document.getElementById('inpNome').focus(); return; }
+  const qta=document.getElementById('inpQta').value.trim()||"1";
+  const sugCont=document.getElementById('suggs');
+  const chosenCat = sugCont.dataset.chosenCat;
+  const chosenSub = sugCont.dataset.chosenSub;
+  let categoria, sottocategoria, nomeFinale;
+  if(chosenCat){
+    categoria=chosenCat;
+    sottocategoria=chosenSub===chosenCat ? '' : chosenSub;
+    nomeFinale = sottocategoria ? `${categoria} - ${sottocategoria}` : categoria;
+  } else {
+    // generico: l'utente ha scritto "frutta" e vuole generico
+    categoria=rawNome;
+    sottocategoria='';
+    nomeFinale=categoria;
+  }
+  // anti-duplicato per categoria+sottocategoria
+  const isGeneric = !sottocategoria || sottocategoria==='_generico';
+  const existingIdx = isGeneric ? -1 : items.findIndex(it=> normalize(it.categoria||it.nome)===normalize(categoria) && normalize(it.sottocategoria||'')===normalize(sottocategoria));
+  if(existingIdx!==-1){
+    const qOld=parseQta(items[existingIdx].qta);
+    items[existingIdx].qta=String(qOld+parseQta(qta));
+    setStatus(`✓ Aggiornato ${nomeFinale} - qta ${items[existingIdx].qta}`);
+  } else {
+    items.push({nome: nomeFinale, categoria, sottocategoria: sottocategoria||'', qta});
+    setStatus(isGeneric ? `✓ Aggiunto ${categoria} generico - ora modificalo in prosciutto/pancetta con ✏️` : `✓ Aggiunto ${nomeFinale}`);
+  }
+  document.getElementById('inpNome').value="";
+  document.getElementById('inpQta').value="";
+  document.getElementById('suggs').innerHTML="";
+  document.getElementById('suggs').dataset.chosenCat="";
+  document.getElementById('suggs').dataset.chosenSub="";
+  render(); save(); document.getElementById('inpNome').focus();
+};
+
+// MODAL PREZZO CON SOTTOCATEGORIA
+function openPriceModal(idx){
+  const it=items[idx];
+  const modal=document.getElementById('priceModal');
+  const qNum=parseQta(it.qta||'1');
+  const cat = it.categoria || it.nome;
+  document.getElementById('modalTitle').textContent=`Prezzo per ${cat}`;
+  document.getElementById('modalDesc').textContent=`Stai prezzando "${it.nome}" (${it.qta}). Che ${cat} hai preso esattamente? Es. per frutta scrivi Anguria, per carne bau scrivi Pollo.`;
+  document.getElementById('modalSub').value=it.sottocategoria||'';
+  document.getElementById('modalPrice').value='';
+  modal.style.display='flex';
+  document.getElementById('modalSub').focus();
+  window._modalIdx=idx;
+}
+document.getElementById('modalCancel').onclick=()=>{ document.getElementById('priceModal').style.display='none'; };
+document.getElementById('modalOk').onclick=()=>{
+  const idx=window._modalIdx;
+  const it=items[idx];
+  const subRaw=document.getElementById('modalSub').value.trim();
+  const priceRaw=document.getElementById('modalPrice').value.trim().replace(',','.');
+  const prezzoTot=parseFloat(priceRaw);
+  if(isNaN(prezzoTot) || prezzoTot<=0){ alert('Prezzo non valido'); return; }
+  const qNum=parseQta(it.qta||'1');
+  const prezzoUnit=prezzoTot / qNum;
+  const categoria = it.categoria || it.nome.split(' - ')[0] || it.nome;
+  const sottocategoria = subRaw || it.sottocategoria || '_generico';
+  const normCat=normalize(categoria);
+  const normSub=normalize(sottocategoria);
+  if(!prezziDB[normCat]) prezziDB[normCat]={};
+  if(!prezziDB[normCat][normSub]) prezziDB[normCat][normSub]=[];
+  prezziDB[normCat][normSub].push({nome: sottocategoria, prezzo: prezzoUnit, totale: prezzoTot, qta: qNum, data: new Date().toISOString()});
+  if(prezziDB[normCat][normSub].length>5) prezziDB[normCat][normSub]=prezziDB[normCat][normSub].slice(-5);
+  // aggiorna item in lista
+  if(subRaw){
+    it.categoria=categoria;
+    it.sottocategoria=subRaw;
+    it.nome=`${categoria} - ${subRaw}`;
+  }
+  document.getElementById('priceModal').style.display='none';
+  render(); savePrezzi(); save();
+  setStatus(`✓ Salvato ${categoria} - ${sottocategoria}: ${prezzoUnit.toFixed(2)}€ cad.`);
+};
+
+document.getElementById('btnMigrate').onclick=async()=>{
+  if(!confirm('Vuoi PULIRE davvero Firebase prezzi?\n\n- Vecchio "frutta ciuccio" diventa FRUTTA -> ciuccio\n- Vecchio "carne bau" diventa CARNE BAU -> Generico\n- Backup salvato in locale\n\nContinuo?')) return;
+  let old = window._oldPrezziMap || prezziDB;
+  // se old è già nuovo formato ma sporco, prendi backup se esiste
+  const firstVal = old && Object.keys(old).length ? old[Object.keys(old)[0]] : null;
+  const isFlat = firstVal && Array.isArray(firstVal);
+  if(!isFlat && window._oldPrezziMap){
+    old = window._oldPrezziMap; // forza uso vecchio per rimigrare bene
+  }
+  localStorage.setItem('backup_prezzi_pre_migrate_'+Date.now(), JSON.stringify(old));
+  let nuovo = {};
+  if(old){
+    const fv = old[Object.keys(old)[0]];
+    if(fv && Array.isArray(fv)){
+      nuovo = migrateOldToNew(old);
+    } else {
+      // se è già nuovo, ri-normalizza per pulire chiavi doppie
+      nuovo = {};
+      for(const cat in old){
+        for(const sub in old[cat]){
+          const c = normalize(cat);
+          const s = normalize(sub);
+          if(!nuovo[c]) nuovo[c]={};
+          nuovo[c][s]=old[cat][sub];
+        }
+      }
+    }
+  }
+  prezziDB = nuovo;
+  await savePrezzi();
+  alert('Fatto! Ora scrivi "frutta" e vedrai "Frutta - ciuccio 1,49€" + Generico.\nScrivi "carne" e vedrai "Carne Bau - Generico 5,99€"\n\nIl vecchio sporco è sparito.');
+  location.reload();
+};
+
+document.getElementById('btnClear').onclick=()=>{ if(items.length===0) return; if(confirm(`Svuotare lista (${items.length} art.)?`)){ localStorage.setItem('backup_pre_svuota_'+Date.now(), JSON.stringify({items})); items=[]; render(); save(); } };
+document.getElementById('note').addEventListener('change', save);
+document.getElementById('btnWA').onclick=()=>{
+  if(items.length===0) return alert('Lista vuota!');
+  let txt="*Lista Spesa Holly & Rex* 🛒\n"; items.forEach(it=>{ txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`; }); window.open("https://wa.me/?text="+encodeURIComponent(txt), "_blank");
+};
+document.getElementById('btnSave').onclick=()=>{
+  const data={items, note: document.getElementById('note').value, prezziDB, date: new Date().toISOString(), version: "v2-categorie"};
+  const blob=new Blob([JSON.stringify(data,null,2)], {type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Lista_Spesa_v2_${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(url);
+};
+document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
+document.getElementById('fileInput').onchange=(e)=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=async ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!confirm(`Caricare backup con ${data.items?.length||0} art.?`)) return;
+      items=data.items||[]; document.getElementById('note').value=data.note||"";
+      if(data.prezziDB){
+        // merge intelligente
+        for(const cat in data.prezziDB){
+          if(!prezziDB[cat]) prezziDB[cat]=data.prezziDB[cat];
+          else{
+            for(const sub in data.prezziDB[cat]){
+              if(!prezziDB[cat][sub]) prezziDB[cat][sub]=data.prezziDB[cat][sub];
+            }
+          }
+        }
+        await savePrezzi();
+      }
+      render(); await save();
+    }catch(err){ alert('File non valido '+err.message); }
+  };
+  r.readAsText(f);
+};
+</script>
+</body>
+</html>
