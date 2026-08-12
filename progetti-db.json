@@ -9,8 +9,8 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Oggi Rex riposa 💤",
-    "attivo": false,
+    "stato": "Lavora a Same Wave",
+    "attivo": true,
     "link": "artists-announce.html"
   },
   {
@@ -23,8 +23,8 @@
   {
     "nome": "Luna 🌙",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "stato": "Oggi riposa 💤",
-    "attivo": false,
+    "stato": "Oggi lavora a Same Wave",
+    "attivo": true,
     "link": ""
   },
   {
