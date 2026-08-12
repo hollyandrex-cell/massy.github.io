@@ -146,12 +146,51 @@ async function save(){
 }
 async function savePrezzi(){ try{ await setDoc(prezziRef, {map: prezziDB, aggiornato: new Date().toISOString(), version: 'v2-categorie'}, {merge:true}); setStatus('✓ Prezzi salvati (categorie)'); }catch(e){ setStatus('Errore prezzi '+e.message,false); } }
 
-onAuthStateChanged(auth, async u=>{
-  if(u){ document.getElementById('userEmail').textContent=u.email; if(u.photoURL) document.getElementById('userAvatar').src=u.photoURL; initSync(); }
-  else{ try{ await signInWithPopup(auth, provider); }catch{ setTimeout(()=>signInWithPopup(auth, provider).catch(()=>{}),1500); } }
-});
+// --- FIX ANTI-LOOP META AI (NOSTRO) ---
+const isInIframe = window.self !== window.top;
+
+function accediConGoogle(){
+  if (window.self !== window.top) {
+    console.log("Anteprima Meta AI - login bloccato");
+    return;
+  }
+  signInWithPopup(auth, provider).catch(e=>{
+    setStatus('Login richiesto: clicca Accedi', false);
+    console.error(e);
+  });
+}
+
+if (isInIframe) {
+  console.log("Anteprima in Meta AI - Firebase in pausa");
+  document.getElementById('userEmail').textContent = 'Anteprima (sync in pausa)';
+  document.getElementById('syncText').textContent = 'pausa anteprima';
+  // Non inizializzare auth / sync qui dentro!
+} else {
+  // SOLO fuori dall'iframe: ripristino sessione automatico, SENZA popup
+  onAuthStateChanged(auth, async u=>{
+    if(u){
+      document.getElementById('userEmail').textContent = u.email;
+      if(u.photoURL) document.getElementById('userAvatar').src = u.photoURL;
+      initSync();
+    } else {
+      document.getElementById('userEmail').textContent = 'Clicca Accedi per sincronizzare';
+      document.getElementById('syncText').textContent = 'non connesso';
+      // Mostra bottone Accedi se non loggato
+      const userDiv = document.querySelector('.user');
+      if(userDiv && !document.getElementById('btnAccedi')){
+        const btn = document.createElement('button');
+        btn.id = 'btnAccedi';
+        btn.textContent = '🔑 Accedi con Google';
+        btn.style.cssText = 'margin-left:10px;background:#fbbf24;color:#0f172a;border:none;padding:6px 10px;border-radius:8px;font-weight:800;cursor:pointer;';
+        btn.onclick = accediConGoogle;
+        userDiv.appendChild(btn);
+      }
+    }
+  });
+}
 
 function initSync(){
+  if (window.self !== window.top) { console.log('initSync bloccato in iframe'); return; }
   onSnapshot(docRef, snap=>{ if(snap.exists()){ const d=snap.data(); if(isLocalChange){ isLocalChange=false; return; } items=d.items||[]; document.getElementById('note').value=d.note||""; render(); } else save(); });
   onSnapshot(prezziRef, snap=>{
     if(snap.exists()){
