@@ -9,7 +9,7 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Lavora a Same Wave",
+    "stato": "Lavora a Same Waves, Same Sky",
     "attivo": true,
     "link": "artists-announce.html"
   },
@@ -23,15 +23,15 @@
   {
     "nome": "Luna 🌙",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "stato": "Oggi lavora a Same Wave",
-    "attivo": true,
+    "stato": "Nova riposa 💤",
+    "attivo": false,
     "link": ""
   },
   {
     "nome": "Nova ⭐",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "stato": "Nova riposa 💤",
-    "attivo": false,
+    "stato": "Lavora Same Waves, Same Sky",
+    "attivo": true,
     "link": "artists-announce.html"
   }
 ]

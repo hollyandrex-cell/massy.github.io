@@ -1,38 +1,38 @@
 [
   {
-    "nome": "Lucia",
+    "nome": "Chiara",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "messaggio": "Summer Night mi ha fatto davvero sognare",
+    "messaggio": "Summer Night mi ha fatto ballare come non mai",
     "data": "8 Agosto 2026"
   },
   {
-    "nome": "Andrea",
+    "nome": "ludovica",
     "avatar": "immagini/miniature/holly-miniatura.jpg",
-    "messaggio": "Boing Boing Bau... anche la mia Bau la sta ballando",
-    "data": "22 Giugno 2026"
+    "messaggio": "Boing Boing Bau... i miei bau l'adorano",
+    "data": "22 Luglio 2026"
   },
   {
     "nome": "Sara",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "messaggio": "Summer Night stupenda, da ascoltare e riascoltare",
+    "messaggio": "Ma tu chi sei, melodia incredibile",
     "data": "30 Luglio 2026"
   },
   {
     "nome": "Marco",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "messaggio": "Genova resta sempre Genova",
-    "data": "01 Luglio 2026"
+    "messaggio": "Genova che bei ricordi",
+    "data": "01 Agosto 2026"
   },
   {
     "nome": "Francesca",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "messaggio": "Fate una diretta vi prego !!!",
+    "messaggio": "Mi mandate il testo di Summer Night",
     "data": "12 luglio 2026"
   },
   {
-    "nome": "Martina",
+    "nome": "Maria",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
     "messaggio": "Vi amoooooooooooo",
-    "data": "05 Luglio 2026"
+    "data": "05 Agosto 2026"
   }
 ]
