@@ -1,20 +1,36 @@
 {
-  "name": "Holly & Rex Bilancio",
-  "short_name": "H&R Bilancio",
-  "start_url": "bilancio.html",
+  "name": "Lista Spesa - Holly & Rex",
+  "short_name": "H&R Spesa",
+  "start_url": "./spesa.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
+  "description": "Lista della spesa sincronizzata di Holly & Rex Group - anti-scontrino + anti-doppioni",
   "icons": [
     {
-      "src": "img/icona_app.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "bau-32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "img/icona_app.png",
+      "src": "bau-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "bau-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "bau-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
