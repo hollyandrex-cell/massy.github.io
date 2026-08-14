@@ -1,12 +1,12 @@
 {
-  "name": "Lista Spesa - Holly & Rex",
-  "short_name": "H&R Spesa",
+  "name": "Holly & Rex - Bilancio",
+  "short_name": "H&R Bilancio",
   "start_url": "./spesa.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
-  "description": "Lista della spesa sincronizzata di Holly & Rex Group - anti-scontrino + anti-doppioni",
+  "description": "Console di bilancio di Holly & Rex Group",
   "icons": [
     {
       "src": "bau-32.png",
