@@ -516,10 +516,9 @@ window.addEventListener('DOMContentLoaded', () => {
     caricaDati();
     controllaSpeseFisseAutomatiche(); // Avvia il controllo automatico
 });
-
 // === PWA SERVICE WORKER ===
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(e => console.log('SW fail:', e));
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(e => console.log('SW fail:', e));
 }
 </script>
     <!-- ... Tutto il resto del codice HTML sopra rimane uguale ... -->
