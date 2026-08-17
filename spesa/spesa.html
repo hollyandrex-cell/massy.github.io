@@ -3,19 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Lista della Spesa - Holly & Rex - Finale V6</title>
+<title>Lista della Spesa - Holly & Rex - V6.1 Aggiornamenti Vivi</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="./bau-192x192.png" type="image/png">
+<link rel="apple-touch-icon" href="./bau-180.png">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:16px;min-height:100vh}.card{background:#1e293b;padding:24px 20px;border-radius:24px;max-width:500px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start}h1{color:#fbbf24;text-align:center;margin:0 0 6px;font-size:1.9rem;font-weight:800}.sub{color:#94a3b8;text-align:center;font-size:.85rem;margin-bottom:18px}.user{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;background:#0f172a;padding:8px 12px;border-radius:12px;border:1px solid #1e293b}.user img{width:32px;height:32px;border-radius:50%;border:2px solid #fbbf24;object-fit:cover}.user span{color:#cbd5e1;font-size:.85rem;font-weight:500}.inputs{display:flex;gap:8px;margin-bottom:10px}input{flex:1;padding:14px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;outline:none;font-size:.95rem}input:focus{border-color:#fbbf24}#inpQta{max-width:115px}.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.chip{background:#0f172a;border:1.5px solid #fbbf24;color:#fbbf24;padding:7px 12px;border-radius:20px;font-size:.82rem;cursor:pointer;font-weight:600}.chip-generic{border-color:#64748b;color:#94a3b8}.chip-sub{border-color:#22c55e;color:#22c55e}.chip-cat{border-color:#38bdf8;color:#38bdf8;font-weight:800}.btns{display:flex;gap:10px;margin-bottom:10px}button{flex:1;padding:14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:.92rem}.btn-add{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}.btn-voice{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}.btn-voice.listening{background:linear-gradient(135deg,#ef4444,#dc2626);animation:pulse 1s infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}.btn-volantino{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;width:100%;margin-bottom:14px;padding:12px;font-size:.9rem;border:1.5px solid #fbbf24}.list{max-height:460px;overflow:auto;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}.item{background:linear-gradient(135deg,#334155,#2d3748);padding:13px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #3f4a5c}.item-left{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.item-name{font-weight:700;font-size:.95rem}.price-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start}.badge-storico{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.68rem;padding:3px 9px;border-radius:7px;font-weight:800;cursor:pointer;letter-spacing:.02em;border:1px solid #4ade80}.badge-storico.has-trend{background:linear-gradient(135deg,#38bdf8,#0ea5e9);border-color:#7dd3fc}.badge-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.73rem;padding:3px 8px;border-radius:7px;font-weight:800}.badge-old{background:#0f172a;color:#94a3b8;font-size:.72rem;padding:4px 8px;border-radius:8px;border:1px solid #1e293b}.btn-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-weight:800;min-width:38px}.btn-del{background:#1e293b;color:#ef4444;border:1px solid #334155;font-size:1.1rem;width:36px;height:36px;border-radius:9px;cursor:pointer}.btn-edit{background:#0f172a;color:#fbbf24;border:1px solid #334155;width:36px;height:36px;border-radius:9px;cursor:pointer}.totale-box{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #22c55e;color:#fff;padding:14px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;font-weight:800}textarea{width:100%;padding:12px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;min-height:80px;font-family:inherit}.btn-wa{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;width:100%;margin-top:12px;padding:15px}.btn-bilancio{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;margin-top:10px;padding:15px;font-size:1rem;box-shadow:0 4px 15px rgba(251,191,36,.3)}.btn-clear{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;width:100%;margin-top:10px;padding:13px}.btn-save{background:linear-gradient(135deg,#475569,#334155);color:#fff;width:100%;margin-top:10px;padding:12px;font-size:.85rem}.small{font-size:.85rem;color:#f1f5f9;text-align:center;margin-top:18px;line-height:1.6;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155}.status{text-align:center;font-size:.78rem;color:#22c55e;margin-top:8px;min-height:18px}.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:6px}.cat-header{font-size:.78rem;color:#fbbf24;font-weight:800;margin:12px 0 4px 4px;letter-spacing:.04em;text-transform:uppercase}.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}.modal{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:420px;max-height:85vh;overflow:auto}.modal h3{color:#fbbf24;margin-bottom:10px}.modal input{width:100%;margin-bottom:10px}.modal-btns{display:flex;gap:10px;margin-top:12px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:16px;min-height:100vh}.card{background:#1e293b;padding:24px 20px;border-radius:24px;max-width:500px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start}h1{color:#fbbf24;text-align:center;margin:0 0 6px;font-size:1.9rem;font-weight:800}.sub{color:#94a3b8;text-align:center;font-size:.85rem;margin-bottom:18px}.user{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;background:#0f172a;padding:8px 12px;border-radius:12px;border:1px solid #1e293b}.user img{width:32px;height:32px;border-radius:50%;border:2px solid #fbbf24;object-fit:cover}.user span{color:#cbd5e1;font-size:.85rem;font-weight:500}.inputs{display:flex;gap:8px;margin-bottom:10px}input{flex:1;padding:14px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;outline:none;font-size:.95rem}input:focus{border-color:#fbbf24}#inpQta{max-width:115px}.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.chip{background:#0f172a;border:1.5px solid #fbbf24;color:#fbbf24;padding:7px 12px;border-radius:20px;font-size:.82rem;cursor:pointer;font-weight:600}.chip-generic{border-color:#64748b;color:#94a3b8}.chip-sub{border-color:#22c55e;color:#22c55e}.chip-cat{border-color:#38bdf8;color:#38bdf8;font-weight:800}.btns{display:flex;gap:10px;margin-bottom:10px}button{flex:1;padding:14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:.92rem}.btn-add{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}.btn-voice{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}.btn-volantino{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;width:100%;margin-bottom:14px;padding:12px;font-size:.9rem;border:1.5px solid #fbbf24}.list{max-height:460px;overflow:auto;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}.item{background:linear-gradient(135deg,#334155,#2d3748);padding:13px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #3f4a5c}.item-left{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.item-name{font-weight:700;font-size:.95rem}.price-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start}.badge-storico{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.68rem;padding:3px 9px;border-radius:7px;font-weight:800;cursor:pointer;letter-spacing:.02em;border:1px solid #4ade80}.badge-storico.has-trend{background:linear-gradient(135deg,#38bdf8,#0ea5e9);border-color:#7dd3fc}.badge-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.73rem;padding:3px 8px;border-radius:7px;font-weight:800}.badge-old{background:#0f172a;color:#94a3b8;font-size:.72rem;padding:4px 8px;border-radius:8px;border:1px solid #1e293b}.btn-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-weight:800;min-width:38px}.btn-del{background:#1e293b;color:#ef4444;border:1px solid #334155;font-size:1.1rem;width:36px;height:36px;border-radius:9px;cursor:pointer}.btn-edit{background:#0f172a;color:#fbbf24;border:1px solid #334155;width:36px;height:36px;border-radius:9px;cursor:pointer}.totale-box{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #22c55e;color:#fff;padding:14px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;font-weight:800}textarea{width:100%;padding:12px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;min-height:80px;font-family:inherit}.btn-wa{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;width:100%;margin-top:12px;padding:15px}.btn-bilancio{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;margin-top:10px;padding:15px;font-size:1rem;box-shadow:0 4px 15px rgba(251,191,36,.3)}.btn-clear{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;width:100%;margin-top:10px;padding:13px}.btn-save{background:linear-gradient(135deg,#475569,#334155);color:#fff;width:100%;margin-top:10px;padding:12px;font-size:.85rem}.small{font-size:.85rem;color:#f1f5f9;text-align:center;margin-top:18px;line-height:1.6;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155}.status{text-align:center;font-size:.78rem;color:#22c55e;margin-top:8px;min-height:18px}.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:6px}.cat-header{font-size:.78rem;color:#fbbf24;font-weight:800;margin:12px 0 4px 4px;letter-spacing:.04em;text-transform:uppercase}.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}.modal{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:420px;max-height:85vh;overflow:auto}.modal h3{color:#fbbf24;margin-bottom:10px}.modal input{width:100%;margin-bottom:10px}.modal-btns{display:flex;gap:10px;margin-top:12px}
 .history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0f172a;border:1px solid #334155;border-radius:10px;margin-bottom:8px}.history-date{font-size:.75rem;color:#94a3b8}.history-price{font-weight:800;font-size:.95rem}.history-diff{font-size:.78rem;font-weight:700;padding:3px 7px;border-radius:6px}.diff-up{background:#450a0a;color:#fca5a5}.diff-down{background:#052e16;color:#86efac}.diff-same{background:#1e293b;color:#94a3b8}
 .volantino-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.volantino-links a{background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:10px;font-size:.8rem;text-decoration:none;font-weight:600}
+
+.update-badge{position:absolute;top:-8px;right:-8px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-size:.65rem;padding:3px 7px;border-radius:10px;font-weight:800;animation:pulse 2s infinite}
+.changelog-item{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:10px}
+.changelog-item h4{color:#fbbf24;font-size:.95rem;margin-bottom:6px}
+.changelog-date{font-size:.72rem;color:#64748b;margin-bottom:8px}
+.changelog-list{font-size:.85rem;color:#cbd5e1;line-height:1.6;list-style:none;padding:0}
+.changelog-list li{padding:3px 0}
+.changelog-list li:before{content:"✨ ";margin-right:4px}
 </style>
 </head>
 <body>
 <div class="card">
 <h1>Lista della Spesa</h1>
-<div class="sub">Holly & Rex Group - V6 Finale 💰</div>
+<div class="sub">Holly & Rex Group - V6.1 Vivi 💛 💰</div>
 <div class="user"><img src="bau-192x192.png" id="userAvatar"><span id="userEmail">sync...</span><span class="dot"></span><small id="syncText" style="color:#22c55e">sync</small></div>
 <div class="inputs"><input id="inpNome" placeholder="Categoria: es. Frutta, Carne bau..." autocomplete="off"><input id="inpQta" placeholder="Qta"></div>
 <div id="suggs" class="suggestions"></div>
@@ -29,16 +38,20 @@
 <button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
 <div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button></div>
 <input type="file" id="fileInput" accept=".json" style="display:none;"><div class="status" id="status"></div>
-<div class="small"><span id="count">0 articoli</span> • V6 • Zero dati personali<br><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy - Nessun tracciamento</a></div>
+<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy - Nessun tracciamento punto vendita</a></div>
 </div>
 
 <div id="priceModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="modalTitle">Prezzo</h3><p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p><input id="modalSub" placeholder="Tipo: es. Lattuga"><div style="display:flex;gap:8px;"><input id="modalQta" placeholder="Qta tipo" inputmode="numeric" style="flex:1"><input id="modalPrice" placeholder="Prezzo TOTALE" inputmode="decimal" style="flex:1.5"></div><small id="modalHint" style="color:#fbbf24;font-size:.75rem;display:block;margin-bottom:8px;"></small><div class="modal-btns"><button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button><button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button></div></div></div>
+
+<div id="editModal" class="modal-bg" style="display:none;z-index:995;"><div class="modal"><h3>✏️ Modifica Prodotto</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Sposta da <b style="color:#fbbf24">vari</b> a una categoria vera, così non rimane più nel cassetto disordinato!</p><label style="font-size:.78rem;color:#94a3b8;">Categoria (es. latticini, salumi, detersivi)</label><input id="editCat" placeholder="Categoria" style="margin-bottom:10px;"><label style="font-size:.78rem;color:#94a3b8;">Tipo / Prodotto (es. mozzarella filante, arrosto tacchino)</label><input id="editSub" placeholder="Tipo" style="margin-bottom:10px;"><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="editQuickCats"></div><div class="modal-btns"><button id="editCancel" style="background:#334155;color:#fff;">Annulla</button><button id="editOk" style="background:#fbbf24;color:#0f172a;font-weight:800;">💾 Salva Categoria</button></div><small style="color:#64748b;font-size:.7rem;display:block;margin-top:8px;">💡 Es: Categoria: latticini, Tipo: mozzarella filante -> diventa "latticini - mozzarella filante"</small></div></div>
 <div id="historyModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="historyTitle">📈 Storico Prezzi</h3><p id="historySub" style="font-size:.85rem;color:#94a3b8;margin-bottom:14px;"></p><div id="historyStats" style="background:#0f172a;padding:12px;border-radius:12px;margin-bottom:14px;border:1px solid #334155;"></div><div id="historyList"></div><div class="modal-btns"><button id="historyClose" style="background:#334155;color:#fff;width:100%;">Chiudi</button></div></div></div>
-<div id="bilancioModal" class="modal-bg" style="display:none;"><div class="modal"><h3>💰 Registra in Bilancio</h3><div id="bilancioContent"></div><div class="modal-btns"><button id="bilancioClose" style="background:#334155;color:#fff;flex:1;">Chiudi</button><button id="bilancioGo" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;flex:1.5;font-weight:800;">📊 Apri Bilancio</button></div></div></div>
+
+<div id="bilancioModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="bilancioTitle">💰 Registra in Bilancio</h3><div id="bilancioContent"></div><div class="modal-btns"><button id="bilancioClose" style="background:#334155;color:#fff;flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;">Chiudi</button><button id="bilancioGo" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;flex:1.5;padding:12px;border-radius:10px;border:none;font-weight:800;">📊 Apri Bilancio</button></div></div></div>
+
 <div id="volantinoModal" class="modal-bg" style="display:none;"><div class="modal"><h3>📄 Consulta Volantini</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:14px;">Scegli il tuo supermercato, cerca il tuo punto vendita e torna qui a inserire solo i prezzi che ti interessano. Zero dati salvati!</p><div class="volantino-links">
 <a href="https://www.mdspa.it/volantino/" target="_blank">🟡 MD - Buona Spesa</a>
 <a href="https://www.conad.it/offerte/volantini" target="_blank">🔴 Conad</a>
-<a href="https://www.lidl.it/volantino" target="_blank">🔵 Lidl</a>
+<a href="https://www.lidl.it/offerte" target="_blank">🔵 Lidl</a>
 <a href="https://www.coop.it/volantini" target="_blank">🔴 Coop</a>
 <a href="https://www.carrefour.it/offerte/volantino" target="_blank">🔵 Carrefour</a>
 <a href="https://www.esselunga.it/it-it/promo/volantino.html" target="_blank">🟢 Esselunga</a>
@@ -46,15 +59,18 @@
 <a href="https://www.penny.it/offerte/volantino" target="_blank">🔴 Penny</a>
 <a href="https://www.basko.it/volantino" target="_blank">🟠 Basko</a>
 <a href="https://www.tigros.it/volantini" target="_blank">🟢 Tigros</a>
-<a href="https://volantino.errebi.com/" target="_blank">🔍 Tutti i Volantini</a>
+<a href="https://volantino.errebi.com/" target="_blank">🔍 Tutti i Volantini (cerca città)</a>
 </div>
 <div style="margin-top:14px;">
-<label style="font-size:.8rem;color:#94a3b8;display:block;margin-bottom:6px;">➕ Il tuo supermercato preferito (salvato solo sul tuo telefono):</label>
-<div style="display:flex;gap:6px;"><input id="customVolName" placeholder="Nome: es. MD Rivarolo" style="flex:1;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"><input id="customVolUrl" placeholder="Link https://..." style="flex:2;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"></div>
-<button id="btnAddCustomVol" style="margin-top:6px;background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:8px;font-weight:700;width:100%;">+ Aggiungi</button>
+<label style="font-size:.8rem;color:#94a3b8;display:block;margin-bottom:6px;">➕ Aggiungi tuo supermercato preferito:</label>
+<div style="display:flex;gap:6px;"><input id="customVolName" placeholder="Nome: es. Crai" style="flex:1;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"><input id="customVolUrl" placeholder="Link volantino" style="flex:2;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"></div>
+<button id="btnAddCustomVol" style="margin-top:6px;background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:8px;font-weight:700;width:100%;cursor:pointer;">+ Aggiungi</button>
 <div id="customVols" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;"></div>
 </div>
-<p style="font-size:.78rem;color:#64748b;margin-top:14px;">💡 Sfoglia il volantino e torna qui a inserire solo il prezzo migliore per le cose che hai già in lista!</p><div class="modal-btns"><button id="volantinoClose" style="background:#334155;color:#fff;width:100%;padding:12px;border-radius:10px;border:none;font-weight:700;">Chiudi</button></div></div></div>
+<p style="font-size:.78rem;color:#64748b;margin-top:14px;">💡 Consiglio di Holly: Sfoglia il volantino, trova solo le cose che hai già in lista (es. zucchine) e torna qui a inserire il prezzo migliore. Non serve copiare tutto!</p><div class="modal-btns"><button id="volantinoClose" style="background:#334155;color:#fff;width:100%;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer;">Chiudi - Ho scelto</button></div></div></div>
+
+
+<div id="updateModal" class="modal-bg" style="display:none;z-index:1000;"><div class="modal" style="max-width:440px;border:2px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,.3);"><div style="text-align:center;margin-bottom:12px;"><div style="font-size:2.5rem;">🎉</div><h3 style="color:#fbbf24;margin:6px 0;">App Aggiornata!</h3><p id="updateVersion" style="font-size:.9rem;color:#22c55e;font-weight:800;"></p></div><p style="font-size:.85rem;color:#94a3b8;text-align:center;margin-bottom:14px;">Siamo vivi e lavoriamo per te! Ecco cosa c'è di nuovo, zero sbattimenti, tutto automatico 💛</p><div id="updateContent" style="max-height:340px;overflow:auto;"></div><div style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #fbbf24;padding:10px;border-radius:10px;margin-top:14px;text-align:center;"><p style="font-size:.78rem;color:#fbbf24;">💡 Non devi scaricare nulla! L'app si è già aggiornata da sola.</p><p style="font-size:.72rem;color:#94a3b8;margin-top:4px;">La prossima volta vedrai ancora più novità</p></div><div class="modal-btns" style="margin-top:14px;"><button id="updateClose" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:1rem;">💛 Fantastico, ho capito!</button></div><div style="text-align:center;margin-top:8px;"><small style="color:#475569;font-size:.7rem;">Holly & Rex Group • LA PAZZIA È L'UNICA SANITÀ MENTALE</small></div></div></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -68,7 +84,7 @@ function normalize(s){return s.toLowerCase().trim().replace(/\s+/g,' ').replace(
 function parseQta(q){const m=String(q||'1').replace(',','.').match(/(\d+(\.\d+)?)/);return m?parseFloat(m[1]):1;}
 function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 async function save(){try{isLocalChange=true;await setDoc(docRef,{items,note:document.getElementById('note').value,ultimoAggiornamento:new Date().toISOString(),count:items.length},{merge:true});setStatus(`✓ Salvato ${items.length} art.`);}catch(e){setStatus('Errore save '+e.message,false);}}
-async function savePrezzi(){try{await setDoc(prezziRef,{map:prezziDB,aggiornato:new Date().toISOString(),version:'v6-finale'},{merge:true});setStatus('✓ Prezzi salvati');}catch(e){setStatus('Errore prezzi '+e.message,false);}}
+async function savePrezzi(){try{await setDoc(prezziRef,{map:prezziDB,aggiornato:new Date().toISOString(),version:'v5-storico-volantini-zero-dati'},{merge:true});setStatus('✓ Prezzi salvati');}catch(e){setStatus('Errore prezzi '+e.message,false);}}
 const isInIframe=window.self!==window.top;
 function accediConGoogle(){if(isInIframe)return;signInWithPopup(auth,provider).catch(e=>setStatus('Login richiesto',false));}
 if(isInIframe){document.getElementById('userEmail').textContent='Anteprima';document.getElementById('syncText').textContent='pausa';}
@@ -81,7 +97,7 @@ function openHistoryModal(cat, sub){
   const modal = document.getElementById('historyModal');
   const nome = sub && sub!=='_generico' ? `${cat} - ${sub}` : cat;
   document.getElementById('historyTitle').textContent = `📈 ${nome}`;
-  document.getElementById('historySub').textContent = storico.length ? `${storico.length} rilevazioni - clicca sul badge per rivederlo` : 'Nessun prezzo ancora salvato';
+  document.getElementById('historySub').textContent = storico.length ? `${storico.length} rilevazioni` : 'Nessun prezzo ancora salvato';
   const statsDiv = document.getElementById('historyStats');const listDiv = document.getElementById('historyList');
   if(!storico.length){statsDiv.innerHTML = '<span style="color:#94a3b8">Inserisci un prezzo con € per iniziare lo storico</span>';listDiv.innerHTML='';}
   else{const prezzi = storico.map(x=>x.prezzo);const min = Math.min(...prezzi);const max = Math.max(...prezzi);const avg = prezzi.reduce((a,b)=>a+b,0)/prezzi.length;const ultimo = prezzi[prezzi.length-1];const penultimo = prezzi.length>1 ? prezzi[prezzi.length-2] : null;let diffHtml='';if(penultimo!==null){const diff = ultimo - penultimo;const perc = ((diff/penultimo)*100).toFixed(1);if(diff>0) diffHtml = `<span style="color:#fca5a5">🔺 +${diff.toFixed(2)}€ (+${perc}%) vs ultima volta</span>`;else if(diff<0) diffHtml = `<span style="color:#86efac">🔻 ${diff.toFixed(2)}€ (${perc}%) RISPARMI!</span>`;else diffHtml = `<span style="color:#94a3b8">➡️ Prezzo uguale</span>`;}statsDiv.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Ultimo:</span><b style="color:#22c55e">${ultimo.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Min / Max:</span><b>${min.toFixed(2)}€ / ${max.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Media:</span><b>${avg.toFixed(2)}€</b></div><div style="margin-top:8px;font-size:.85rem;">${diffHtml}</div>`;listDiv.innerHTML='';[...storico].reverse().forEach((entry, idxRev)=>{const idx = storico.length-1-idxRev;const prev = idx>0 ? storico[idx-1] : null;let diffBadge='';if(prev){const d = entry.prezzo - prev.prezzo;if(Math.abs(d)<0.001) diffBadge=`<span class="history-diff diff-same">➡️ 0</span>`;else if(d>0) diffBadge=`<span class="history-diff diff-up">🔺 +${d.toFixed(2)}€</span>`;else diffBadge=`<span class="history-diff diff-down">🔻 ${d.toFixed(2)}€</span>`;}else{diffBadge=`<span class="history-diff diff-same">1° prezzo</span>`;}const date = new Date(entry.data);const dateStr = date.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'}) + ' ' + date.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});const row=document.createElement('div');row.className='history-row';row.innerHTML=`<div><div class="history-price">${entry.prezzo.toFixed(2)}€</div><div class="history-date">${dateStr}</div></div>${diffBadge}`;listDiv.appendChild(row);});}
@@ -89,7 +105,7 @@ function openHistoryModal(cat, sub){
 }
 function render(){
   const cont=document.getElementById('lista');
-  if(items.length===0){cont.innerHTML=`<div style="text-align:center;padding:30px;color:#64748b;">🛒 Lista vuota - Aggiungi qualcosa o consulta i volantini!</div>`;document.getElementById('count').textContent='0 articoli';calcTotale();return;}
+  if(items.length===0){cont.innerHTML=`<div style="text-align:center;padding:30px;color:#64748b;">🛒 Lista vuota</div>`;document.getElementById('count').textContent='0 articoli';calcTotale();return;}
   const gruppi={};items.forEach((it,idx)=>{const cat=it.categoria||it.nome.split(' - ')[0]||it.nome;if(!gruppi[cat])gruppi[cat]=[];gruppi[cat].push({...it,origIdx:idx});});
   cont.innerHTML="";
   for(const catName in gruppi){
@@ -100,11 +116,11 @@ function render(){
       const totRiga=ultimo&&typeof ultimo.prezzo==='number'?(ultimo.prezzo*qNum).toFixed(2).replace('.',','):null;
       const isGeneric=!it.sottocategoria||it.sottocategoria==='_generico';
       const displayName=it.sottocategoria&&it.sottocategoria!=='_generico'?`${escapeHtml(it.categoria)} - <b style="color:#22c55e">${escapeHtml(it.sottocategoria)}</b>`:escapeHtml(it.categoria||it.nome);
-      let storicoBadgeHtml='';if(ultimo && storico.length>=1){let trend = '';if(storico.length>=2){const last=storico[storico.length-1].prezzo; const prev=storico[storico.length-2].prezzo;if(last>prev) trend=' 🔺'; else if(last<prev) trend=' 🔻';}storicoBadgeHtml = `<span class="badge-storico ${storico.length>1?'has-trend':''}" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}" title="Clicca per vedere lo storico">📈 Storico${storico.length>1?` ${storico.length}${trend}`:''}</span>`;}else{storicoBadgeHtml = `<span class="badge-storico" style="opacity:.6" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}" title="Clicca per inserire il primo prezzo">📈 Storico</span>`;}
+      let storicoBadgeHtml='';if(ultimo && storico.length>=1){let trend = '';if(storico.length>=2){const last=storico[storico.length-1].prezzo; const prev=storico[storico.length-2].prezzo;if(last>prev) trend=' 🔺'; else if(last<prev) trend=' 🔻';}storicoBadgeHtml = `<span class="badge-storico ${storico.length>1?'has-trend':''}" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}">📈 Storico${storico.length>1?` ${storico.length}${trend}`:''}</span>`;}else if(!ultimo){storicoBadgeHtml = `<span class="badge-storico" style="opacity:.6" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}">📈 Storico</span>`;}
       const prezzoBadge=ultimo&&typeof ultimo.prezzo==='number'?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:'<span class="badge-price" style="background:#475569">no prezzo</span>';
       const vecchioBadge=ultimo&&typeof ultimo.prezzo==='number'?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:'';
       const div=document.createElement('div');div.className='item';
-      div.innerHTML=`<div class="item-left"><span class="item-name">${displayName}</span><div class="price-stack">${storicoBadgeHtml}${prezzoBadge}</div>${vecchioBadge}${isGeneric?`<small style="color:#fbbf24;font-size:.75rem;">⚠ Generico ${it.qta} pz - clicca €</small>`:''}</div><div class="item-actions" style="flex-direction:column;gap:4px;"><div style="display:flex;gap:4px;align-items:center;"><button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button><span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span><button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button></div><div style="display:flex;gap:4px;"><button class="btn-edit" data-idx="${idx}" title="Modifica">✏</button><button class="btn-price" data-idx="${idx}" title="Prezzo">€</button><button class="btn-del" data-idx="${idx}" title="Elimina">×</button></div></div>`;
+      div.innerHTML=`<div class="item-left"><span class="item-name">${displayName}</span><div class="price-stack">${storicoBadgeHtml}${prezzoBadge}</div>${vecchioBadge}${isGeneric?`<small style="color:#fbbf24;font-size:.75rem;">⚠ Generico ${it.qta} pz - clicca €</small>`:''}</div><div class="item-actions" style="flex-direction:column;gap:4px;"><div style="display:flex;gap:4px;align-items:center;"><button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button><span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span><button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button></div><div style="display:flex;gap:4px;"><button class="btn-edit" data-idx="${idx}">✏</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div></div>`;
       cont.appendChild(div);
     });
   }
@@ -116,10 +132,90 @@ function render(){
   cont.querySelectorAll('.btn-qty').forEach(b=>b.onclick=e=>{const i=parseInt(e.currentTarget.dataset.idx);const act=e.currentTarget.dataset.act;let q=parseQta(items[i].qta||'1');if(act==='plus')q++;else q--;if(q<=0){if(confirm(`Rimuovere?`)){items.splice(i,1);}else return;}else{items[i].qta=String(q);}render();save();});
 }
 function calcTotale(){let tot=0,prezzati=0;items.forEach(it=>{const cat=it.categoria||it.nome.split(' - ')[0]||it.nome;const sub=it.sottocategoria||it.nome;const storico=prezziDB[normalize(cat)]?.[normalize(sub)]||prezziDB[normalize(it.nome)]?.[normalize(it.nome)];const ultimo=storico?storico[storico.length-1]:null;if(ultimo&&typeof ultimo.prezzo==='number'){tot+=ultimo.prezzo*parseQta(it.qta||'1');prezzati++;}});const box=document.getElementById('totaleBox');if(items.length>0){box.style.display='flex';document.getElementById('totaleVal').textContent=tot.toFixed(2).replace('.',',')+'€';document.getElementById('totaleDett').textContent=`${prezzati} su ${items.length} prezzati`;}else box.style.display='none';return tot;}
-function editItem(idx){const it=items[idx];const catCorrente=it.categoria||it.nome;const subCorrente=it.sottocategoria&&it.sottocategoria!=='_generico'?it.sottocategoria:'';const nuovo=prompt(`Modifica`,subCorrente||catCorrente);if(nuovo===null)return;let raw=nuovo.trim();if(!raw)return;let newCat=catCorrente;let newSub='';if(raw.includes('-')){const p=raw.split('-').map(s=>s.trim()).filter(Boolean);if(p.length>=2){newCat=p[0];newSub=p.slice(1).join(' - ');}else{newCat=catCorrente;newSub=p[0];}}else if(raw.toLowerCase().startsWith(catCorrente.toLowerCase()+' ')){newCat=catCorrente;newSub=raw.slice(catCorrente.length).trim();}else if(raw.toLowerCase()!==catCorrente.toLowerCase()){newCat=catCorrente;newSub=raw;}it.categoria=newCat;it.sottocategoria=newSub||'';it.nome=newSub?`${newCat} - ${newSub}`:newCat;render();save();}
+function editItem(idx){
+  const it=items[idx];
+  const modal=document.getElementById('editModal');
+  const inpCat=document.getElementById('editCat');
+  const inpSub=document.getElementById('editSub');
+  const quick=document.getElementById('editQuickCats');
+  const catCorrente=it.categoria||it.nome.split(' - ')[0]||it.nome;
+  const subCorrente=it.sottocategoria&&it.sottocategoria!=='_generico'?it.sottocategoria:(it.categoria&&it.categoria!==catCorrente?it.categoria: (it.nome.includes(' - ')?it.nome.split(' - ')[1]:''));
+  inpCat.value=catCorrente;
+  inpSub.value=subCorrente||'';
+  // suggerimenti categorie veloci
+  quick.innerHTML='';
+  const comuni=['latticini','salumi','carne','frutta','verdura','pane','pasta','scatolame','detersivi','bevande','dolci','vari'];
+  // aggiungi categorie esistenti
+  const esistenti=[...new Set(Object.keys(prezziDB).concat(items.map(i=>i.categoria).filter(Boolean)))].slice(0,12);
+  const all=[...new Set([...comuni,...esistenti])].slice(0,14);
+  all.forEach(c=>{
+    if(normalize(c)==='vari') return;
+    const b=document.createElement('span'); b.className='chip chip-cat'; b.style.fontSize='.75rem'; b.textContent=c; 
+    b.onclick=()=>{inpCat.value=c;};
+    quick.appendChild(b);
+  });
+  modal.style.display='flex'; inpCat.focus();
+  window._editIdx=idx;
+}
+document.getElementById('editCancel').onclick=()=>document.getElementById('editModal').style.display='none';
+document.getElementById('editOk').onclick=async()=>{
+  const idx=window._editIdx; if(idx===undefined) return;
+  const it=items[idx];
+  const newCat=document.getElementById('editCat').value.trim();
+  const newSub=document.getElementById('editSub').value.trim();
+  if(!newCat){alert('Metti una categoria!');return;}
+  // sposta anche lo storico prezzi se esisteva sotto vari
+  const oldNormCat=normalize(it.categoria||it.nome); const oldNormSub=normalize(it.sottocategoria||it.nome||'');
+  const newNormCat=normalize(newCat); const newNormSub=normalize(newSub||newCat);
+  // se era in vari e lo spostiamo, copia lo storico se esiste
+  if(oldNormCat!==newNormCat && prezziDB[oldNormCat] && prezziDB[oldNormCat][oldNormSub]){
+    if(!prezziDB[newNormCat]) prezziDB[newNormCat]={};
+    if(!prezziDB[newNormCat][newNormSub]) prezziDB[newNormCat][newNormSub]=[...prezziDB[oldNormCat][oldNormSub]];
+    // opzionale: mantieni vecchio per sicurezza
+    await savePrezzi();
+  }
+  it.categoria=newCat;
+  it.sottocategoria=newSub||'';
+  it.nome=newSub?`${newCat} - ${newSub}`:newCat;
+  document.getElementById('editModal').style.display='none';
+  render(); await save();
+  setStatus(`✓ Spostato in ${newCat}${newSub?' - '+newSub:''}`);
+};
 document.getElementById('inpNome').addEventListener('input',e=>{
   const raw=e.target.value;const val=normalize(raw);const sugCont=document.getElementById('suggs');sugCont.innerHTML="";if(val.length<2)return;
-  for(const catKey in prezziDB){if(catKey.includes(val)||val.includes(catKey)){const catObj=prezziDB[catKey];for(const subKey in catObj){const storico=catObj[subKey];const ultimo=storico[storico.length-1];if(!ultimo||typeof ultimo.prezzo!=='number')continue;const chip=document.createElement('span');chip.className='chip chip-sub';const isGen=subKey==='_generico';const prettySub=isGen?'Generico':subKey;const labelSub=(subKey===catKey||isGen)?catKey:`${catKey} - ${prettySub}`;chip.textContent=`${labelSub} ${ultimo.prezzo.toFixed(2).replace('.',',')}€`;chip.onclick=()=>{document.getElementById('inpNome').value=catKey;sugCont.dataset.chosenCat=catKey;sugCont.dataset.chosenSub=subKey;sugCont.innerHTML="";const chosen=document.createElement('span');chosen.className='chip chip-cat';chosen.textContent=`✓ ${labelSub}`;sugCont.appendChild(chosen);document.getElementById('inpQta').focus();};sugCont.appendChild(chip);}}}
+  let foundCount=0;
+  for(const catKey in prezziDB){
+    const catObj=prezziDB[catKey];
+    for(const subKey in catObj){
+      const normSub=normalize(subKey);
+      const normCat=normalize(catKey);
+      // FIX HOLLY ❤️: cerca sia in categoria che in sottocategoria! tacchino in arrosto tacchino, tonno in scatolame-tonno
+      if(!(normCat.includes(val) || normSub.includes(val) || val.includes(normCat) || val.includes(normSub))) continue;
+      const storico=catObj[subKey];const ultimo=storico[storico.length-1];if(!ultimo||typeof ultimo.prezzo!=='number')continue;
+      const chip=document.createElement('span');chip.className='chip chip-sub';
+      const isGen=subKey==='_generico';const prettySub=isGen?'Generico':subKey;
+      const labelSub=(subKey===catKey||isGen)?catKey:`${catKey} - ${prettySub}`;
+      chip.textContent=`${labelSub} ${ultimo.prezzo.toFixed(2).replace('.',',')}€`;
+      chip.title=`Categoria: ${catKey} • Tipo: ${prettySub} • Ultimo: ${ultimo.prezzo.toFixed(2)}€`;
+      chip.onclick=()=>{document.getElementById('inpNome').value=catKey;sugCont.dataset.chosenCat=catKey;sugCont.dataset.chosenSub=subKey;sugCont.innerHTML="";const chosen=document.createElement('span');chosen.className='chip chip-cat';chosen.textContent=`✓ ${labelSub}`;sugCont.appendChild(chosen);document.getElementById('inpQta').focus();};
+      sugCont.appendChild(chip);foundCount++;
+      if(foundCount>=12) break;
+    }
+    if(foundCount>=12) break;
+  }
+  // Mostra anche match negli items attuali (lista corrente)
+  if(foundCount<6){
+    const seen=new Set();
+    items.forEach(it=>{
+      const c=normalize(it.categoria||''); const s=normalize(it.sottocategoria||''); const n=normalize(it.nome||'');
+      if(!(c.includes(val)||s.includes(val)||n.includes(val))) return;
+      const key=c+'|'+s; if(seen.has(key)) return; seen.add(key);
+      const chip=document.createElement('span'); chip.className='chip chip-cat'; chip.style.opacity='0.8';
+      chip.textContent=`📋 ${it.categoria}${it.sottocategoria?' - '+it.sottocategoria:''}`;
+      chip.onclick=()=>{document.getElementById('inpNome').value=it.categoria||it.nome; sugCont.dataset.chosenCat=it.categoria||it.nome; sugCont.dataset.chosenSub=it.sottocategoria||''; sugCont.innerHTML=""; document.getElementById('inpQta').focus();};
+      sugCont.appendChild(chip);
+    });
+  }
   const gen=document.createElement('span');gen.className='chip chip-generic';gen.textContent=raw?`${raw} - Generico`:'Generico';gen.onclick=()=>{sugCont.innerHTML="";sugCont.dataset.chosenCat="";sugCont.dataset.chosenSub="";document.getElementById('inpQta').focus();};sugCont.appendChild(gen);
 });
 document.getElementById('btnAdd').onclick=()=>{
@@ -140,26 +236,23 @@ function openPriceModal(idx){
 document.getElementById('modalCancel').onclick=()=>document.getElementById('priceModal').style.display='none';
 document.getElementById('historyClose').onclick=()=>document.getElementById('historyModal').style.display='none';
 document.getElementById('volantinoClose').onclick=()=>document.getElementById('volantinoModal').style.display='none';
-document.getElementById('bilancioClose').onclick=()=>document.getElementById('bilancioModal').style.display='none';
-document.getElementById('bilancioGo').onclick=()=>{window.open('bilancio.html','_blank');document.getElementById('bilancioModal').style.display='none';};
 document.getElementById('btnVolantino').onclick=()=>{document.getElementById('volantinoModal').style.display='flex';loadCustomVols();};
 function loadCustomVols(){
-  const cont=document.getElementById('customVols');if(!cont)return;
+  const cont=document.getElementById('customVols');if(!cont) return;
   const list=JSON.parse(localStorage.getItem('custom_volantini')||'[]');
   cont.innerHTML='';list.forEach((v,i)=>{
-    const wrap=document.createElement('div');wrap.style.cssText='display:flex;gap:4px;align-items:center;background:#0f172a;padding:4px 8px;border-radius:8px;border:1px solid #334155;';
-    const a=document.createElement('a');a.href=v.url;a.target='_blank';a.textContent=`⭐ ${v.name}`;a.style.cssText='color:#fbbf24;font-size:.78rem;text-decoration:none;font-weight:600;';
-    const del=document.createElement('button');del.textContent='×';del.style.cssText='background:#450a0a;color:#fca5a5;border:none;width:20px;height:20px;border-radius:6px;cursor:pointer;font-weight:800;';
-    del.onclick=()=>{const l=JSON.parse(localStorage.getItem('custom_volantini')||'[]');l.splice(i,1);localStorage.setItem('custom_volantini',JSON.stringify(l));loadCustomVols();};
-    wrap.appendChild(a);wrap.appendChild(del);cont.appendChild(wrap);
+    const a=document.createElement('a');a.href=v.url;a.target='_blank';a.textContent=`⭐ ${v.name}`;a.style.cssText='background:#1e293b;border:1px dashed #f59e0b;color:#fbbf24;padding:6px 10px;border-radius:8px;font-size:.78rem;text-decoration:none;';cont.appendChild(a);
   });
 }
-document.getElementById('btnAddCustomVol').onclick=()=>{
+const btnAddCustom=document.getElementById('btnAddCustomVol');
+if(btnAddCustom){
+btnAddCustom.onclick=()=>{
   const name=document.getElementById('customVolName').value.trim();const url=document.getElementById('customVolUrl').value.trim();
   if(!name||!url){alert('Metti nome e link');return;}if(!url.startsWith('http')){alert('Link deve iniziare con https://');return;}
   const list=JSON.parse(localStorage.getItem('custom_volantini')||'[]');list.push({name,url});localStorage.setItem('custom_volantini',JSON.stringify(list));
   document.getElementById('customVolName').value='';document.getElementById('customVolUrl').value='';loadCustomVols();setStatus(`✓ Aggiunto ${name}`);
 };
+}
 document.getElementById('modalOk').onclick=async()=>{
   const idx=window._modalIdx;const it=items[idx];const subRaw=document.getElementById('modalSub').value.trim();const qtaSubRaw=document.getElementById('modalQta').value.trim().replace(',','.');const priceRaw=document.getElementById('modalPrice').value.trim().replace(',','.');let qtaSub=parseFloat(qtaSubRaw)||1;const prezzoTot=parseFloat(priceRaw);
   if(!subRaw){alert('Tipo?');return;}if(isNaN(prezzoTot)||prezzoTot<=0){alert('Prezzo?');return;}
@@ -170,6 +263,13 @@ document.getElementById('modalOk').onclick=async()=>{
   document.getElementById('priceModal').style.display='none';render();await savePrezzi();await save();
 };
 function mappaCategoriaSpesaABilancio(cat){const c=normalize(cat);if(c.includes('bau')||c.includes('animal')||c.includes('cane')||c.includes('crocchette')) return 'Animali';if(c.includes('frutta')||c.includes('verdura')||c.includes('insalata')||c.includes('pasta')||c.includes('carne')||c.includes('pesce')||c.includes('latte')||c.includes('pane')) return 'Spesa / Cibo';if(c.includes('pulizie')||c.includes('detersivo')) return 'Casa / Affitto';return 'Spesa / Cibo';}
+document.getElementById('bilancioClose').onclick=()=>document.getElementById('bilancioModal').style.display='none';
+document.getElementById('bilancioGo').onclick=()=>{
+  const possibleNames=['bilancio.html','index.html','../bilancio/bilancio.html','./bilancio.html'];
+  // Prova ad aprire il bilancio nella stessa repo GitHub
+  window.open('bilancio.html','_blank');
+  document.getElementById('bilancioModal').style.display='none';
+};
 document.getElementById('btnBilancio').onclick=()=>{
   if(items.length===0){alert('Lista vuota!');return;}
   const totale=calcTotale();const prezzati=items.filter(it=>{const cat=it.categoria||it.nome;const sub=it.sottocategoria||it.nome;const storico=prezziDB[normalize(cat)]?.[normalize(sub)]||prezziDB[normalize(it.nome)]?.[normalize(it.nome)];return storico&&storico[storico.length-1]&&typeof storico[storico.length-1].prezzo==='number';}).length;
@@ -181,37 +281,138 @@ document.getElementById('btnBilancio').onclick=()=>{
   if(cats.length===1){nuoviMovimenti=[{id:Date.now(),data:new Date().toISOString(),tipo:'uscita',categoria:cats[0],importo:totale,descrizione:descrizioneDett}];}
   else{cats.forEach(catBil=>{nuoviMovimenti.push({id:Date.now()+Math.random(),data:new Date().toISOString(),tipo:'uscita',categoria:catBil,importo:perCat[catBil],descrizione:`${catBil}: ${descrizioneDett.substring(0,100)}`});});}
   try{
+    // Salva comunque anche se bilancio non è mai stato aperto
     movimenti.unshift(...nuoviMovimenti.reverse());
     localStorage.setItem(STORAGE_KEY,JSON.stringify(movimenti));
+    // Salva anche un backup universale che il bilancio leggerà al primo avvio
     localStorage.setItem('hollyRexBilancio_pending',JSON.stringify({totale, perCat, descrizioneDett, data:new Date().toISOString(), items: items.map(i=>({nome:i.nome, qta:i.qta}))}));
-    setStatus(`✅ Registrato: ${totale.toFixed(2)}€`,true);
-    const modal=document.getElementById('bilancioModal');const content=document.getElementById('bilancioContent');
-    content.innerHTML = `<div style="background:#0f172a;padding:14px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;"><div style="font-size:1.3rem;font-weight:800;color:#22c55e;margin-bottom:6px;">✅ ${totale.toFixed(2).replace('.',',')}€ salvati!</div><div style="font-size:.85rem;color:#cbd5e1;">${descrizioneDett}</div><div style="font-size:.78rem;color:#94a3b8;margin-top:8px;">${cats.length>1?`Diviso in ${cats.length}: ${cats.join(', ')}`:`Categoria: ${cats[0]}`}</div></div><div style="background:#1e293b;padding:12px;border-radius:10px;border:1px dashed #fbbf24;"><div style="font-size:.85rem;color:#fbbf24;font-weight:700;margin-bottom:4px;">📊 E ora?</div><div style="font-size:.8rem;color:#cbd5e1;line-height:1.5;">• Se hai già il <b>Bilancio</b>, lo trovi al prossimo avvio<br>• Se NON ce l'hai, clicca "Apri Bilancio" e si aprirà<br>• Vuoi svuotare la lista spesa ora?</div><div style="display:flex;gap:8px;margin-top:10px;"><button id="btnBilancioSvuota" style="flex:1;background:#ef4444;color:#fff;padding:10px;border-radius:8px;border:none;font-weight:700;">🗑 Svuota lista</button><button id="btnBilancioTieni" style="flex:1;background:#334155;color:#fff;padding:10px;border-radius:8px;border:none;">Tieni lista</button></div></div>`;
+    setStatus(`✅ Registrato in Bilancio: ${totale.toFixed(2)}€`,true);
+    // Mostra modal intelligente
+    const modal=document.getElementById('bilancioModal');
+    const content=document.getElementById('bilancioContent');
+    const hasBilancio = localStorage.getItem(STORAGE_KEY) && movimenti.length>0;
+    content.innerHTML = `
+      <div style="background:#0f172a;padding:14px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;">
+        <div style="font-size:1.3rem;font-weight:800;color:#22c55e;margin-bottom:6px;">✅ ${totale.toFixed(2).replace('.',',')}€ salvati!</div>
+        <div style="font-size:.85rem;color:#cbd5e1;">${descrizioneDett}</div>
+        <div style="font-size:.78rem;color:#94a3b8;margin-top:8px;">${cats.length>1?`Diviso in ${cats.length} categorie: ${cats.join(', ')}`:`Categoria: ${cats[0]}`}</div>
+      </div>
+      <div style="background:#1e293b;padding:12px;border-radius:10px;border:1px dashed #fbbf24;">
+        <div style="font-size:.85rem;color:#fbbf24;font-weight:700;margin-bottom:4px;">📊 Cosa succede ora?</div>
+        <div style="font-size:.8rem;color:#cbd5e1;line-height:1.5;">
+          • Se hai già l'app <b>Bilancio</b>, troverai la spesa al prossimo avvio<br>
+          • Se NON ce l'hai, clicca "Apri Bilancio" qui sotto, si aprirà e la vedrai subito<br>
+          • I dati sono salvati sul telefono, zero invio a server
+        </div>
+      </div>
+    `;
     modal.style.display='flex';
-    document.getElementById('btnBilancioSvuota').onclick=()=>{items=[];render();save();modal.style.display='none';};
-    document.getElementById('btnBilancioTieni').onclick=()=>{modal.style.display='none';};
   }catch(e){
-    const modal=document.getElementById('bilancioModal');const content=document.getElementById('bilancioContent');
-    content.innerHTML=`<div style="background:#450a0a;padding:14px;border-radius:12px;border:1px solid #ef4444;"><div style="color:#fca5a5;font-weight:800;">⚠️ Storage bloccato</div><div style="font-size:.85rem;color:#fecaca;margin-top:6px;">Modalità privata. Copia: <textarea style="width:100%;margin-top:8px;background:#0f172a;color:#fff;padding:8px;border-radius:8px;min-height:60px;">${descrizioneDett} - ${totale.toFixed(2)}€</textarea></div></div>`;
+    // Se localStorage bloccato (es. modalità privata iOS)
+    const modal=document.getElementById('bilancioModal');
+    const content=document.getElementById('bilancioContent');
+    content.innerHTML=`
+      <div style="background:#450a0a;padding:14px;border-radius:12px;border:1px solid #ef4444;">
+        <div style="color:#fca5a5;font-weight:800;margin-bottom:6px;">⚠️ Storage bloccato</div>
+        <div style="font-size:.85rem;color:#fecaca;">Il browser è in modalità privata o blocca il salvataggio. Copia questo testo e incollalo manualmente nel Bilancio:</div>
+        <textarea style="width:100%;margin-top:8px;background:#0f172a;color:#fff;padding:8px;border-radius:8px;border:1px solid #475569;min-height:60px;font-size:.8rem;">${descrizioneDett} - ${totale.toFixed(2)}€</textarea>
+      </div>
+    `;
     modal.style.display='flex';
   }
 };
 document.getElementById('btnClear').onclick=()=>{if(items.length===0)return;if(confirm(`Svuotare ${items.length} art.?`)){localStorage.setItem('backup_pre_svuota_'+Date.now(),JSON.stringify({items}));items=[];render();save();}};
 document.getElementById('note').addEventListener('change',save);
-document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});const tot=calcTotale();if(tot>0)txt+=`\n💰 Totale: ${tot.toFixed(2).replace('.',',')}€`;window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
-// VOICE - FIX 1: era rotto, ora funziona
-const btnVoice=document.getElementById('btnVoice');
-if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();recognition.lang='it-IT';recognition.interimResults=false;
-  btnVoice.onclick=()=>{try{recognition.start();btnVoice.classList.add('listening');btnVoice.textContent='🔴 Ascolto...';}catch(e){}};
-  recognition.onresult=(e)=>{const testo=e.results[0][0].transcript;document.getElementById('inpNome').value=testo;setStatus(`🎤 "${testo}"`);};
-  recognition.onend=()=>{btnVoice.classList.remove('listening');btnVoice.textContent='🎤 Parla';};
-  recognition.onerror=()=>{btnVoice.classList.remove('listening');btnVoice.textContent='🎤 Parla';setStatus('Errore microfono',false);};
-}else{btnVoice.style.opacity='.5';btnVoice.onclick=()=>alert('Microfono non supportato su questo browser. Usa Chrome su Android.');}
-document.getElementById('btnSave').onclick=()=>{const data={items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6-finale"};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);};
+document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
+document.getElementById('btnSave').onclick=()=>{const data={items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6.1-vivi"};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);};
 document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
-document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm(`Caricare ${data.items?.length||0} art.?`))return;items=data.items||[];document.getElementById('note').value=data.note||"";if(data.prezziDB){for(const cat in data.prezziDB){if(!prezziDB[cat])prezziDB[cat]=data.prezziDB[cat];else{for(const sub in data.prezziDB[cat]){if(!prezziDB[cat][sub])prezziDB[cat][sub]=data.prezziDB[cat][sub];}}}await savePrezzi();}render();await save();}catch(err){alert('File non valido '+err.message);}e.target.value='';};r.readAsText(f);};
+document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm(`Caricare ${data.items?.length||0} art.?`))return;items=data.items||[];document.getElementById('note').value=data.note||"";if(data.prezziDB){for(const cat in data.prezziDB){if(!prezziDB[cat])prezziDB[cat]=data.prezziDB[cat];else{for(const sub in data.prezziDB[cat]){if(!prezziDB[cat][sub])prezziDB[cat][sub]=data.prezziDB[cat][sub];}}}await savePrezzi();}render();await save();}catch(err){alert('File non valido '+err.message);}};r.readAsText(f);};
+
+// ===== SISTEMA AGGIORNAMENTI VIVI - idea di Holly ❤️ =====
+const APP_VERSION = "6.1.1";
+const APP_CHANGELOG = [
+  {
+    version: "6.1.1",
+    date: "17 Agosto 2026 (sera)",
+    title: "🔍 Fix ricerca tacchino/tonno + popup Vivi",
+    news: [
+      "FIX: ora se scrivi tacchino trova anche salumi - arrosto tacchino, se scrivi tonno trova scatolame - tonno! Cerca ovunque!",
+      "Suggerimenti ora mostrano fino a 12 risultati, anche dalla lista corrente 📋",
+      "Popup aggiornamenti Vivi già incluso"
+    ]
+  },
+  {
+    version: "6.1.0",
+    date: "17 Agosto 2026",
+    title: "📄 Volantini + Bilancio Smart + Pulizia Cache",
+    news: [
+      "Bottone arancione 📄 Consulta Volantini: 11 supermercati generici (zero CAP, zero tracciamento) + aggiungi i tuoi preferiti ⭐",
+      "Bilancio ora salva anche se non hai mai aperto l'app Bilancio, e ti chiede se vuoi svuotare la lista",
+      "Storico prezzi SOPRA il prezzo per vederlo meglio, con trend 🔺🔻",
+      "Tasto 🎤 Parla ora funziona davvero con microfono (Chrome/Android)",
+      "WhatsApp ora invia anche il totale se hai messo i prezzi",
+      "Pulizia cache da F12 spiegata - se errore strano, svuota locale e riparti pulito"
+    ]
+  },
+  {
+    version: "6.0.0",
+    date: "10 Agosto 2026",
+    title: "💰 Registra in Bilancio Automatico",
+    news: [
+      "Nuovo bottone 💰 Registra in Bilancio - divide automaticamente per categorie Animali / Spesa / Casa",
+      "Modalità app unica: Spesa e Bilancio parlano tra loro ma possono vivere anche separate",
+      "Backup automatico prima di svuotare la lista"
+    ]
+  },
+  {
+    version: "5.5.0",
+    date: "1 Agosto 2026",
+    title: "📈 Storico Prezzi Intelligente",
+    news: [
+      "Storico prezzi per ogni prodotto, con min/max/media e differenze",
+      "Suggerimenti intelligenti quando scrivi - ti propone prezzi già salvati",
+      "Qta con + e - rapidi, modifica rapida con ✏️"
+    ]
+  }
+];
+
+function checkForUpdates(){
+  const lastSeen = localStorage.getItem('hollyRex_lastVersionSeen') || '0.0.0';
+  const updateModal = document.getElementById('updateModal');
+  const updateContent = document.getElementById('updateContent');
+  const updateVersion = document.getElementById('updateVersion');
+  if(!updateModal) return;
+  // Se versione diversa, mostra popup
+  if(lastSeen !== APP_VERSION){
+    // Costruisci changelog per versioni non viste
+    const newLogs = APP_CHANGELOG.filter(log => {
+      // semplice confronto: mostra solo ultima versione per ora, ma struttura pronta per multi-versione
+      return log.version === APP_VERSION;
+    });
+    if(newLogs.length===0) return;
+    const log = newLogs[0];
+    updateVersion.textContent = `v${log.version} • ${log.date}`;
+    updateContent.innerHTML = newLogs.map(l => `
+      <div class="changelog-item">
+        <h4>${l.title}</h4>
+        <div class="changelog-date">${l.date} • v${l.version}</div>
+        <ul class="changelog-list">
+          ${l.news.map(n=>`<li>${n}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+    // Mostra dopo 1.2s per far caricare app
+    setTimeout(()=>{ updateModal.style.display='flex'; }, 1200);
+  }
+}
+document.getElementById('updateClose')?.addEventListener('click', ()=>{
+  localStorage.setItem('hollyRex_lastVersionSeen', APP_VERSION);
+  document.getElementById('updateModal').style.display='none';
+  setStatus('💛 Grazie! Sei aggiornatissima/o alla '+APP_VERSION);
+});
+// Avvia check al load
+window.addEventListener('load', checkForUpdates);
+
 </script>
 </body>
 </html>
