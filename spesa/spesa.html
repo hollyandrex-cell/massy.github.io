@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista della Spesa - Holly & Rex - V6.1.2 Pinch Zoom</title>
+<title>Lista della Spesa - Holly & Rex - V6.1.4 Backup Choice</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-180.png">
@@ -36,9 +36,19 @@
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
 <button class="btn-bilancio" id="btnBilancio">💰 Registra in Bilancio</button>
 <button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
-<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button></div>
+<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button><button class="btn-save" id="btnBackupChoice" style="flex:1;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">☁️ Dove salvare?</button></div>
+<div id="backupChoiceBox" style="display:none;background:#0f172a;border:1px solid #f59e0b;border-radius:12px;padding:12px;margin-top:10px">
+<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">☁️ Scegli dove fare il backup</h4>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px"><b>Firebase</b> (nostro) è già attivo per sincronizzazione dispositivi e storico prezzi. Il <b>backup extra</b> è una copia di sicurezza in più, scegli tu dove!</p>
+<div style="display:flex;flex-direction:column;gap:8px">
+<button class="btn-save" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="doBackupDevice()">📱💻 Scarica su questo dispositivo (cell/PC) - JSON</button>
+<button class="btn-save" style="background:linear-gradient(135deg,#4285F4,#2a64d0);color:#fff" onclick="doBackupDrive()">💾 Google Drive - file privato tuo (appDataFolder)</button>
+<button class="btn-save" style="background:#1e293b;border:1px solid #334155" onclick="document.getElementById('backupChoiceBox').style.display='none'">Annulla</button>
+</div>
+<div id="driveBackupStatus" style="font-size:.75rem;color:#86efac;margin-top:8px"></div>
+</div>
 <input type="file" id="fileInput" accept=".json" style="display:none;"><div class="status" id="status"></div>
-<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy - Nessun tracciamento punto vendita</a><br><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
+<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><div style="display:flex;gap:10px;justify-content:center;margin:6px 0;flex-wrap:wrap"><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy</a><span style="color:#334155">|</span><a href="./cookie-policy.html" style="color:#fbbf24;text-decoration:none;">Cookie Policy</a><span style="color:#334155">|</span><a href="./privacy-policy.html" style="color:#94a3b8;text-decoration:none;font-size:.75rem">Nessun tracciamento</a></div><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
 </div>
 
 <div id="priceModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="modalTitle">Prezzo</h3><p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p><input id="modalSub" placeholder="Tipo: es. Lattuga"><div style="display:flex;gap:8px;"><input id="modalQta" placeholder="Qta tipo" inputmode="numeric" style="flex:1"><input id="modalPrice" placeholder="Prezzo TOTALE" inputmode="decimal" style="flex:1.5"></div><small id="modalHint" style="color:#fbbf24;font-size:.75rem;display:block;margin-bottom:8px;"></small><div class="modal-btns"><button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button><button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button></div></div></div>
@@ -74,6 +84,8 @@
 <div id="feedbackModal" class="modal-bg" style="display:none;z-index:996;"><div class="modal" style="border:1px solid #38bdf8;"><h3 style="color:#38bdf8;">💡 Dicci la tua - Anonimo!</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Usi la bacheca Google Moduli che già usate per il sito! Zero mail, zero tracciamento, anonimo al 100% come piace a noi. Leggete le risposte giorno per giorno.</p><div style="background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;"><p style="font-size:.82rem;color:#cbd5e1;margin-bottom:8px;"><b>Come funziona:</b><br>• Clicchi "Apri Modulo"<br>• Si apre il Google Modulo (quello della foto che mi hai mandato)<br>• Scrivi idea/bug, invii, fine. Non chiede mail!<br>• Noi leggiamo dalla bacheca come già fate</p></div><div style="display:flex;flex-direction:column;gap:8px;"><a id="btnOpenForm" href="https://docs.google.com/forms/d/e/INSERISCI_QUI_IL_TUO_ID/viewform" target="_blank" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#0f172a;padding:14px;border-radius:12px;text-align:center;font-weight:800;text-decoration:none;">📝 Apri Modulo Google (anonimo)</a><button id="btnCopyIdea" style="background:#0f172a;border:1px dashed #fbbf24;color:#fbbf24;padding:12px;border-radius:10px;">📋 Copia idea per WhatsApp</button></div><div class="modal-btns"><button id="feedbackClose" style="background:#334155;color:#fff;width:100%;">Chiudi</button></div><small style="color:#475569;font-size:.7rem;display:block;margin-top:8px;text-align:center;">Holly & Rex - Zero dati personali, anche qui!</small></div></div>
 
 <div id="updateModal" class="modal-bg" style="display:none;z-index:1000;"><div class="modal" style="max-width:440px;border:2px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,.3);"><div style="text-align:center;margin-bottom:12px;"><div style="font-size:2.5rem;">🎉</div><h3 style="color:#fbbf24;margin:6px 0;">App Aggiornata!</h3><p id="updateVersion" style="font-size:.9rem;color:#22c55e;font-weight:800;"></p></div><p style="font-size:.85rem;color:#94a3b8;text-align:center;margin-bottom:14px;">Siamo vivi e lavoriamo per te! Ecco cosa c'è di nuovo, zero sbattimenti, tutto automatico 💛</p><div id="updateContent" style="max-height:340px;overflow:auto;"></div><div style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #fbbf24;padding:10px;border-radius:10px;margin-top:14px;text-align:center;"><p style="font-size:.78rem;color:#fbbf24;">💡 Non devi scaricare nulla! L'app si è già aggiornata da sola.</p><p style="font-size:.72rem;color:#94a3b8;margin-top:4px;">La prossima volta vedrai ancora più novità</p></div><div class="modal-btns" style="margin-top:14px;"><button id="updateClose" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:1rem;">💛 Fantastico, ho capito!</button></div><div style="text-align:center;margin-top:8px;"><small style="color:#475569;font-size:.7rem;">Holly & Rex Group • LA PAZZIA È L'UNICA SANITÀ MENTALE</small></div></div></div>
+
+<div id="localWarningModalSpesa" class="modal-bg" style="display:none;z-index:1001;"><div class="modal" style="border:2px solid #ef4444;max-width:400px"><h3 style="color:#ef4444;text-align:center">⚠️ Attenzione - Solo sul dispositivo?</h3><p style="font-size:.9rem;color:#f1f5f9;line-height:1.6;margin:12px 0">Stai usando <b>solo il salvataggio locale</b>?<br><br>👉 Se <b>cancelli cache, cambi browser, perdi il telefono</b>, la lista e lo storico prezzi <b style="color:#fca5a5">andranno persi!</b><br><br>💛 <b>Consiglio da tesoro:</b> fai sempre <b>Backup</b> con il bottone 💾 qui sotto! Ci metti 2 secondi ed è al sicuro!</p><div style="display:flex;gap:10px;margin-top:14px"><button id="localWarnContinue" style="flex:1;background:#334155;color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;">Ho capito</button><button id="localWarnBackup" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:800;">💾 Fai Backup ora</button></div><div style="text-align:center;margin-top:10px"><label style="font-size:.75rem;color:#94a3b8;cursor:pointer"><input type="checkbox" id="dontShowLocalSpesa"> Non mostrare più</label></div></div></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -326,8 +338,72 @@ document.getElementById('btnBilancio').onclick=()=>{
 };
 document.getElementById('btnClear').onclick=()=>{if(items.length===0)return;if(confirm(`Svuotare ${items.length} art.?`)){localStorage.setItem('backup_pre_svuota_'+Date.now(),JSON.stringify({items}));items=[];render();save();}};
 document.getElementById('note').addEventListener('change',save);
-document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
-document.getElementById('btnSave').onclick=()=>{const data={items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6.1-vivi"};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);};
+document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});const tot=calcTotale();if(tot>0) txt+=`\n💰 Totale: ${tot.toFixed(2)}€\n`;window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
+// ===== BACKUP LOGICA NUOVA - scelta dispositivo vs Drive =====
+function getBackupData(){return {items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6.1.3-backup-choice"};}
+function doBackupDevice(){
+  const data=getBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);
+  document.getElementById('backupChoiceBox').style.display='none';
+  setStatus('💾 Backup scaricato su dispositivo!');
+}
+document.getElementById('btnSave').onclick=()=>doBackupDevice();
+document.getElementById('btnBackupChoice').onclick=()=>{const box=document.getElementById('backupChoiceBox');box.style.display=box.style.display==='none'?'block':'none';};
+let gSpesaToken = localStorage.getItem('hollyRex_spesa_gDriveToken')||null;
+async function loadGisSpesa(){
+  return new Promise((resolve, reject)=>{
+    if(window.google && window.google.accounts) return resolve();
+    const s=document.createElement('script'); s.src='https://accounts.google.com/gsi/client'; s.onload=resolve; s.onerror=reject; document.head.appendChild(s);
+  });
+}
+async function doBackupDrive(){
+  const statusEl=document.getElementById('driveBackupStatus');
+  if(!gSpesaToken){
+    try{
+      await loadGisSpesa();
+      const clientId = prompt('Incolla il tuo Google OAuth Client ID (lo stesso di Firebase):\nDeve avere origine autorizzata: '+window.location.origin);
+      if(!clientId) return;
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file',
+        callback: async (resp)=>{
+          if(resp.access_token){
+            gSpesaToken = resp.access_token;
+            localStorage.setItem('hollyRex_spesa_gDriveToken', gSpesaToken);
+            statusEl.textContent='✅ Login ok, salvo su Drive...';
+            await doBackupDriveActual();
+          }
+        }
+      });
+      tokenClient.requestAccessToken();
+      return;
+    }catch(e){ statusEl.textContent='❌ Errore login: '+e.message; return; }
+  }
+  await doBackupDriveActual();
+}
+async function doBackupDriveActual(){
+  const statusEl=document.getElementById('driveBackupStatus');
+  statusEl.textContent='⏳ Salvataggio su Drive privato...';
+  try{
+    const data=getBackupData();
+    const fileContent=JSON.stringify(data);
+    const searchRes = await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27holly_rex_spesa.json%27&fields=files(id,name)', { headers:{ Authorization:'Bearer '+gSpesaToken } });
+    const searchJson = await searchRes.json();
+    let fileId = searchJson.files && searchJson.files[0] ? searchJson.files[0].id : null;
+    if(fileId){
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`, { method:'PATCH', headers:{ Authorization:'Bearer '+gSpesaToken }, body: fileContent });
+    } else {
+      const metadata = { name:'holly_rex_spesa.json', parents:['appDataFolder'] };
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(metadata)], {type:'application/json'}));
+      form.append('file', new Blob([fileContent], {type:'application/json'}));
+      const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', { method:'POST', headers:{ Authorization:'Bearer '+gSpesaToken }, body: form });
+      const json = await res.json();
+      fileId = json.id;
+    }
+    statusEl.textContent='✅ Salvato su Drive privato! ID:'+fileId.substring(0,8)+'... (invisibile, sicuro)';
+    setStatus('✅ Backup su Drive ok!');
+  }catch(err){ statusEl.textContent='❌ Errore Drive: '+err.message; }
+}
 document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
 document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm(`Caricare ${data.items?.length||0} art.?`))return;items=data.items||[];document.getElementById('note').value=data.note||"";if(data.prezziDB){for(const cat in data.prezziDB){if(!prezziDB[cat])prezziDB[cat]=data.prezziDB[cat];else{for(const sub in data.prezziDB[cat]){if(!prezziDB[cat][sub])prezziDB[cat][sub]=data.prezziDB[cat][sub];}}}await savePrezzi();}render();await save();}catch(err){alert('File non valido '+err.message);}};r.readAsText(f);};
 
@@ -356,8 +432,28 @@ document.getElementById('btnCopyIdea')?.addEventListener('click', ()=>{
 // Poi prendi il link "Invia" -> copia link e incollalo sopra in btnOpenForm href
 
 // ===== SISTEMA AGGIORNAMENTI VIVI - idea di Holly ❤️ =====
-const APP_VERSION = "6.1.2";
+const APP_VERSION = "6.1.4";
 const APP_CHANGELOG = [
+  {
+    version: "6.1.4",
+    date: "18 Agosto 2026 (notte)",
+    title: "☁️ Backup scelta dove salvare - idea tesoro GENIALE",
+    news: [
+      "Firebase resta d'obbligo per sincronizzazione dispositivi e storico prezzi (altrimenti non funziona multi-cell)",
+      "NUOVO: bottone 'Dove salvare?' → scegli: 📱 Scarica su cell/PC (JSON) o 💾 Google Drive privato tuo (appDataFolder invisibile)",
+      "Massima libertà: l'utente decide dove il backup extra, Firebase resta base per sync"
+    ]
+  },
+  {
+    version: "6.1.3",
+    date: "18 Agosto 2026 (sera)",
+    title: "⚠️ Popup avvertimento locale - idea tesoro",
+    news: [
+      "Nuovo popup se usi solo locale senza Backup: ti avvisa che se perdi il cell perdi tutto! Con bottone Backup immediato 💾",
+      "Checkbox 'Non mostrare più' per chi sa cosa fa",
+      "Stessa filosofia di Pet Diary: massima libertà, ma avvisiamo con amore 💛"
+    ]
+  },
   {
     version: "6.1.2",
     date: "18 Agosto 2026 (mattina)",
@@ -447,8 +543,27 @@ document.getElementById('updateClose')?.addEventListener('click', ()=>{
   document.getElementById('updateModal').style.display='none';
   setStatus('💛 Grazie! Sei aggiornatissima/o alla '+APP_VERSION);
 });
+// ===== AVVERTIMENTO LOCALE SPESA - idea tesoro 💛 =====
+function checkLocalWarningSpesa(){
+  if(localStorage.getItem('hollyRex_dontShowLocalSpesa')==='1') return;
+  // Se Firebase non è connesso (user anonimo) e ha articoli, avvisa una volta
+  const hasItems = (items && items.length>0);
+  const isAnonymous = !auth.currentUser; // se non loggato con Google, è solo locale/cache
+  if(hasItems && isAnonymous){
+    setTimeout(()=>{ document.getElementById('localWarningModalSpesa').style.display='flex'; }, 2000);
+  }
+}
+document.getElementById('localWarnContinue')?.addEventListener('click', ()=>{
+  if(document.getElementById('dontShowLocalSpesa').checked) localStorage.setItem('hollyRex_dontShowLocalSpesa','1');
+  document.getElementById('localWarningModalSpesa').style.display='none';
+});
+document.getElementById('localWarnBackup')?.addEventListener('click', ()=>{
+  if(document.getElementById('dontShowLocalSpesa').checked) localStorage.setItem('hollyRex_dontShowLocalSpesa','1');
+  document.getElementById('localWarningModalSpesa').style.display='none';
+  document.getElementById('btnSave')?.click();
+});
 // Avvia check al load
-window.addEventListener('load', checkForUpdates);
+window.addEventListener('load', ()=>{ checkForUpdates(); setTimeout(checkLocalWarningSpesa, 2500); });
 
 </script>
 </body>
