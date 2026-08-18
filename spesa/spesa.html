@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista della Spesa - Holly & Rex - V6.1.4 Backup Choice</title>
+<title>Lista della Spesa - Holly & Rex - V6.1.5 Bruschette Fix</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-180.png">
@@ -24,7 +24,7 @@
 <body>
 <div class="card">
 <h1>Lista della Spesa</h1>
-<div class="sub">Holly & Rex Group - V6.1 Vivi 💛 💰</div>
+<div class="sub">Holly & Rex Group - V6.1.5 Vivi 💛 💰</div>
 <div class="user"><img src="bau-192x192.png" id="userAvatar"><span id="userEmail">sync...</span><span class="dot"></span><small id="syncText" style="color:#22c55e">sync</small></div>
 <div class="inputs"><input id="inpNome" placeholder="Categoria: es. Frutta, Carne bau..." autocomplete="off"><input id="inpQta" placeholder="Qta"></div>
 <div id="suggs" class="suggestions"></div>
@@ -462,8 +462,19 @@ document.getElementById('btnCopyIdea')?.addEventListener('click', ()=>{
 // Poi prendi il link "Invia" -> copia link e incollalo sopra in btnOpenForm href
 
 // ===== SISTEMA AGGIORNAMENTI VIVI - idea di Holly ❤️ =====
-const APP_VERSION = "6.1.4";
+const APP_VERSION = "6.1.5";
 const APP_CHANGELOG = [
+  {
+    version: "6.1.5",
+    date: "18 Agosto 2026 (pomeriggio)",
+    title: "🧹 Fix bruschette - pulizia doppioni",
+    news: [
+      "FIX: se modifichi categoria da vari a pane, ora cancella automaticamente il vecchio storico (niente più vari - pane bruschette e pane - pane bruschette)",
+      "Pulizia automatica all'avvio: cancella vecchi doppioni di pane bruschetta/bruschette",
+      "Titolo aggiornato a V6.1.5 così vedi che è la versione giusta!"
+    ]
+  },
+
   {
     version: "6.1.4",
     date: "18 Agosto 2026 (notte)",
