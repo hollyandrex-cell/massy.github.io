@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Lista della Spesa - Holly & Rex - V6.1 Aggiornamenti Vivi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista della Spesa - Holly & Rex - V6.1.2 Pinch Zoom</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-180.png">
@@ -38,7 +38,7 @@
 <button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
 <div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button></div>
 <input type="file" id="fileInput" accept=".json" style="display:none;"><div class="status" id="status"></div>
-<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy - Nessun tracciamento punto vendita</a></div>
+<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy - Nessun tracciamento punto vendita</a><br><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
 </div>
 
 <div id="priceModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="modalTitle">Prezzo</h3><p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p><input id="modalSub" placeholder="Tipo: es. Lattuga"><div style="display:flex;gap:8px;"><input id="modalQta" placeholder="Qta tipo" inputmode="numeric" style="flex:1"><input id="modalPrice" placeholder="Prezzo TOTALE" inputmode="decimal" style="flex:1.5"></div><small id="modalHint" style="color:#fbbf24;font-size:.75rem;display:block;margin-bottom:8px;"></small><div class="modal-btns"><button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button><button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button></div></div></div>
@@ -69,6 +69,9 @@
 </div>
 <p style="font-size:.78rem;color:#64748b;margin-top:14px;">💡 Consiglio di Holly: Sfoglia il volantino, trova solo le cose che hai già in lista (es. zucchine) e torna qui a inserire il prezzo migliore. Non serve copiare tutto!</p><div class="modal-btns"><button id="volantinoClose" style="background:#334155;color:#fff;width:100%;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer;">Chiudi - Ho scelto</button></div></div></div>
 
+
+
+<div id="feedbackModal" class="modal-bg" style="display:none;z-index:996;"><div class="modal" style="border:1px solid #38bdf8;"><h3 style="color:#38bdf8;">💡 Dicci la tua - Anonimo!</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Usi la bacheca Google Moduli che già usate per il sito! Zero mail, zero tracciamento, anonimo al 100% come piace a noi. Leggete le risposte giorno per giorno.</p><div style="background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;"><p style="font-size:.82rem;color:#cbd5e1;margin-bottom:8px;"><b>Come funziona:</b><br>• Clicchi "Apri Modulo"<br>• Si apre il Google Modulo (quello della foto che mi hai mandato)<br>• Scrivi idea/bug, invii, fine. Non chiede mail!<br>• Noi leggiamo dalla bacheca come già fate</p></div><div style="display:flex;flex-direction:column;gap:8px;"><a id="btnOpenForm" href="https://docs.google.com/forms/d/e/INSERISCI_QUI_IL_TUO_ID/viewform" target="_blank" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#0f172a;padding:14px;border-radius:12px;text-align:center;font-weight:800;text-decoration:none;">📝 Apri Modulo Google (anonimo)</a><button id="btnCopyIdea" style="background:#0f172a;border:1px dashed #fbbf24;color:#fbbf24;padding:12px;border-radius:10px;">📋 Copia idea per WhatsApp</button></div><div class="modal-btns"><button id="feedbackClose" style="background:#334155;color:#fff;width:100%;">Chiudi</button></div><small style="color:#475569;font-size:.7rem;display:block;margin-top:8px;text-align:center;">Holly & Rex - Zero dati personali, anche qui!</small></div></div>
 
 <div id="updateModal" class="modal-bg" style="display:none;z-index:1000;"><div class="modal" style="max-width:440px;border:2px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,.3);"><div style="text-align:center;margin-bottom:12px;"><div style="font-size:2.5rem;">🎉</div><h3 style="color:#fbbf24;margin:6px 0;">App Aggiornata!</h3><p id="updateVersion" style="font-size:.9rem;color:#22c55e;font-weight:800;"></p></div><p style="font-size:.85rem;color:#94a3b8;text-align:center;margin-bottom:14px;">Siamo vivi e lavoriamo per te! Ecco cosa c'è di nuovo, zero sbattimenti, tutto automatico 💛</p><div id="updateContent" style="max-height:340px;overflow:auto;"></div><div style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #fbbf24;padding:10px;border-radius:10px;margin-top:14px;text-align:center;"><p style="font-size:.78rem;color:#fbbf24;">💡 Non devi scaricare nulla! L'app si è già aggiornata da sola.</p><p style="font-size:.72rem;color:#94a3b8;margin-top:4px;">La prossima volta vedrai ancora più novità</p></div><div class="modal-btns" style="margin-top:14px;"><button id="updateClose" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:1rem;">💛 Fantastico, ho capito!</button></div><div style="text-align:center;margin-top:8px;"><small style="color:#475569;font-size:.7rem;">Holly & Rex Group • LA PAZZIA È L'UNICA SANITÀ MENTALE</small></div></div></div>
 
@@ -328,9 +331,43 @@ document.getElementById('btnSave').onclick=()=>{const data={items,note:document.
 document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
 document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm(`Caricare ${data.items?.length||0} art.?`))return;items=data.items||[];document.getElementById('note').value=data.note||"";if(data.prezziDB){for(const cat in data.prezziDB){if(!prezziDB[cat])prezziDB[cat]=data.prezziDB[cat];else{for(const sub in data.prezziDB[cat]){if(!prezziDB[cat][sub])prezziDB[cat][sub]=data.prezziDB[cat][sub];}}}await savePrezzi();}render();await save();}catch(err){alert('File non valido '+err.message);}};r.readAsText(f);};
 
+
+// ===== FEEDBACK ANONIMO VIA GOOGLE MODULI - idea di Holly ❤️ =====
+document.getElementById('linkFeedback')?.addEventListener('click', (e)=>{
+  e.preventDefault();
+  document.getElementById('feedbackModal').style.display='flex';
+});
+document.getElementById('feedbackClose')?.addEventListener('click', ()=>{
+  document.getElementById('feedbackModal').style.display='none';
+});
+document.getElementById('btnCopyIdea')?.addEventListener('click', ()=>{
+  const testo = `[Feedback Lista Spesa v${APP_VERSION}]\nScrivo da: ${window.location.href}\nIdea/bug: \n`;
+  navigator.clipboard.writeText(testo).then(()=>{
+    setStatus('📋 Copiato! Incollalo su WhatsApp a Holly & Rex', true);
+    document.getElementById('feedbackModal').style.display='none';
+  });
+});
+// ISTRUZIONI PER HOLLY: crea un nuovo modulo Google con questi campi:
+// Titolo: Holly & Rex - Feedback Lista Spesa (Anonimo)
+// 1) Tipo (scelta multipla): 🐛 Bug / 💡 Idea / ❓ Non capisco / ❤️ Complimento
+// 2) Messaggio (paragrafo lungo) - obbligatorio
+// 3) Versione app (testo breve) - opzionale, default v6.1.1
+// Impostazioni modulo: NON raccogliere indirizzi email, NON richiedere login
+// Poi prendi il link "Invia" -> copia link e incollalo sopra in btnOpenForm href
+
 // ===== SISTEMA AGGIORNAMENTI VIVI - idea di Holly ❤️ =====
-const APP_VERSION = "6.1.1";
+const APP_VERSION = "6.1.2";
 const APP_CHANGELOG = [
+  {
+    version: "6.1.2",
+    date: "18 Agosto 2026 (mattina)",
+    title: "🤏 Pinch to Zoom sbloccato - per Maria e tutti",
+    news: [
+      "FIX: ora puoi ingrandire con 2 dita come su Bilancio e Chef Ling! Era bloccato da maximum-scale=1, ora libero! 🤏📱",
+      "Su richiesta di te tesoro - accessibilità migliorata per chi ha bisogno di vedere più grande 💛",
+      "Idea di Maria: dettatura vocale + zoom = perfetto per chi fatica a scrivere/vedere"
+    ]
+  },
   {
     version: "6.1.1",
     date: "17 Agosto 2026 (sera)",
