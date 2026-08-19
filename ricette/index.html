@@ -123,10 +123,12 @@
             { id: 'verdure', label: 'Verdure', icon: '🥬', type: 'complex', options: ['Zucchine', 'Melanzane', 'Pomodori', 'Insalata', 'Cipolle', 'Peperoni', 'Spinaci', 'Altro'] },
             { id: 'legumi', label: 'Legumi', icon: '🫘', type: 'complex', options: ['Fagioli', 'Piselli', 'Lenticchie', 'Ceci', 'Altro'] },
             { id: 'uova', label: 'Uova', icon: '🥚', type: 'simple' },
-            { id: 'formaggio', label: 'Formaggio', icon: '🧀', type: 'simple' },
-            { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'simple' },
-            { id: 'pane', label: 'Pane', icon: '🍞', type: 'simple' },
-            { id: 'latticini', label: 'Latte/Yogurt', icon: '🥛', type: 'simple' }
+            { id: 'formaggio', label: 'Formaggio', icon: '🧀', type: 'complex', options: ['Stagionato', 'Molle', 'Pasta dura', 'Mozzarella', 'Stracchino', 'Altro'] },
+            { id: 'salumi', label: 'Salumi', icon: '🥓', type: 'complex', options: ['Insaccati', 'Prosciutto crudo', 'Prosciutto cotto', 'Speck', 'Mortadella', 'Altro'] },
+            { id: 'pane', label: 'Pane', icon: '🍞', type: 'complex', options: ['Ai cereali', 'Integrale', 'Focaccia', 'Grissini', 'Piadina', 'Altro'] },
+            { id: 'latticini', label: 'Latte/Yogurt', icon: '🥛', type: 'complex', options: ['Latte intero', 'Latte scremato', 'Yogurt greco', 'Yogurt magro', 'Besciamella', 'Panna', 'Altro'] },
+            { id: 'condimenti', label: 'Grassi & Condimenti', icon: '🧈', type: 'complex', options: ['Olio EVO', 'Burro', 'Strutto', 'Aceto Balsamico', 'Limone', 'Salsa di Soia', 'Altro'] },
+            { id: 'aromi', label: 'Aromi & Spezie', icon: '🌿', type: 'complex', options: ['Erbe Fresche', 'Spezie Secche', 'Aglio/Cipolla', 'Pepe/Sale', 'Altro'] }
         ];
         const grid = document.getElementById('grid');
         let selectionState = {}; 
