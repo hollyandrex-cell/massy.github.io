@@ -7,8 +7,6 @@
     <link rel="icon" href="./bau-192x192.png" type="image/png">
     <link rel="apple-touch-icon" href="./bau-180.png">
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="./bau-32.png">
-<link rel="shortcut icon" href="./bau.ico">
     <style>
         :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --pink: #ec4899; --gold: #f59e0b; --green: #22c55e; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
@@ -116,6 +114,7 @@
     <script>
         const URL_CHEF = "https://chat.qwen.ai/c/65c8a1e9-38cb-4d82-a77c-b4c9dd980808";
         // FIX ICONE - ORA TUTTE CON EMOJI
+        // Griglia perfetta 4x3 = 12 - idea di Chef Ling tesoro!
         const ingredients = [
             { id: 'pasta', label: 'Pasta', icon: '🍝', type: 'complex', options: ['Corta', 'Lunga', 'Riso', 'Orzo', 'Altro'] },
             { id: 'carne', label: 'Carne', icon: '🥩', type: 'complex', options: ['Pollo', 'Manzo', 'Maiale', 'Tacchino', 'Macinato', 'Bistecca', 'Altro'] },
@@ -138,17 +137,23 @@
             const btn = document.createElement('div');
             btn.className = 'btn-ing'; btn.id = `btn-${ing.id}`;
             btn.innerHTML = `<span class="icon">${ing.icon}</span><span id="label-${ing.id}">${ing.label}</span>`;
+            // Inizializza come array per multi-selezione
+            selectionState[ing.id] = [];
             btn.onclick = () => {
                 if (ing.type === 'simple') {
                     btn.classList.toggle('active');
-                    selectionState[ing.id] = btn.classList.contains('active') ? ing.label : null;
+                    selectionState[ing.id] = btn.classList.contains('active') ? [ing.label] : [];
                     document.querySelectorAll('.submenu').forEach(sub => sub.classList.remove('show'));
                 } else {
                     const submenu = document.getElementById(`sub-${ing.id}`);
                     const isOpen = submenu.classList.contains('show');
                     document.querySelectorAll('.submenu').forEach(s => s.classList.remove('show'));
                     if (!isOpen) { submenu.classList.add('show'); btn.classList.add('active'); }
-                    else { btn.classList.remove('active'); if(selectionState[ing.id]) btn.classList.add('selected-specific'); }
+                    else { 
+                        submenu.classList.remove('show');
+                        btn.classList.remove('active'); 
+                        if(selectionState[ing.id] && selectionState[ing.id].length>0) btn.classList.add('selected-specific'); 
+                    }
                 }
             };
             if (ing.type === 'complex') {
@@ -156,10 +161,36 @@
                 ing.options.forEach(opt => {
                     const subBtn = document.createElement('button'); subBtn.className = 'sub-btn'; subBtn.innerText = opt;
                     subBtn.onclick = (e) => {
-                        e.stopPropagation(); subMenuDiv.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('selected')); subBtn.classList.add('selected');
-                        selectionState[ing.id] = `${ing.label}: ${opt}`; document.getElementById(`label-${ing.id}`).innerText = `${opt} ✅`;
-                        btn.classList.add('selected-specific'); btn.classList.remove('active');
-                        setTimeout(() => { subMenuDiv.classList.remove('show'); }, 200);
+                        e.stopPropagation(); 
+                        const key = `${ing.label}: ${opt}`;
+                        if(!Array.isArray(selectionState[ing.id])) selectionState[ing.id]=[];
+                        const idx = selectionState[ing.id].indexOf(key);
+                        if(idx>-1){
+                            // Deseleziona
+                            selectionState[ing.id].splice(idx,1);
+                            subBtn.classList.remove('selected');
+                        } else {
+                            // Seleziona multiplo!
+                            selectionState[ing.id].push(key);
+                            subBtn.classList.add('selected');
+                        }
+                        // Aggiorna UI
+                        const count = selectionState[ing.id].length;
+                        const labelEl = document.getElementById(`label-${ing.id}`);
+                        if(count===0){
+                            labelEl.innerText = ing.label;
+                            btn.classList.remove('selected-specific');
+                            btn.classList.remove('active');
+                        } else if(count===1){
+                            // mostra il singolo scelto
+                            const singleOpt = selectionState[ing.id][0].split(': ')[1];
+                            labelEl.innerText = `${singleOpt} ✅`;
+                            btn.classList.add('selected-specific');
+                        } else {
+                            labelEl.innerText = `${count} scelte ✅`;
+                            btn.classList.add('selected-specific');
+                        }
+                        // NON chiudere subito così puoi scegliere pomodori E zucchine!
                     }; subMenuDiv.appendChild(subBtn);
                 });
                 container.prepend(subMenuDiv);
@@ -172,12 +203,95 @@
             const r = new SR(); r.lang='it-IT';
             r.onresult = e => { const t = e.results[0][0].transcript; document.getElementById('extra').value += (document.getElementById('extra').value?", ":"") + t; }; r.start();
         }
+        // ===== SANTO GRAAL SICUREZZA PET - Idea Massy + Chef Ling 💎 =====
+        const TOXIC_MAP = {
+            'cipolla': 'CIPOLLA', 'cipolle': 'CIPOLLA',
+            'aglio': 'AGLIO', 'aglio/cipolla': 'AGLIO/CIPOLLA',
+            'cioccolato': 'CIOCCOLATO', 'cacao': 'CIOCCOLATO',
+            'xilitolo': 'XILITOLO', 'uvetta': 'UVETTA', 'uva': 'UVA',
+            'avocado': 'AVOCADO', 'macadamia': 'NOCI MACADAMIA',
+            'alcol': 'ALCOL', 'caffè': 'CAFFEINA', 'caffe': 'CAFFEINA',
+            'noci': 'NOCI', 'pepe': 'PEPE' // pepe non tossico grave ma meglio avvisare
+        };
+        function getPetMemory() {
+            try {
+                const hasPets = localStorage.getItem('userHasPets') === 'true';
+                if(!hasPets) return null;
+                const profile = JSON.parse(localStorage.getItem('userPetProfile') || '{}');
+                return { hasPets, name: profile.name || 'il tuo peloso', type: profile.type || 'cane', breed: profile.breed || '' };
+            } catch(e){ return null; }
+        }
+        function checkToxicIngredients(items) {
+            const found = [];
+            const lowerItems = items.join(' ').toLowerCase();
+            for(const key in TOXIC_MAP){
+                if(lowerItems.includes(key)){
+                    if(!found.includes(TOXIC_MAP[key])) found.push(TOXIC_MAP[key]);
+                }
+            }
+            return found;
+        }
+        // Controllo allergie custom tipo "intollerante al pollo"
+        function checkCustomAllergy(petProfile, items){
+            try{
+                const raw = (petProfile.allergiesRaw || petProfile.tastes || '').toLowerCase();
+                if(!raw) return [];
+                const lowItems = items.join(' ').toLowerCase();
+                const triggers = [];
+                // se nelle note c'è "pollo" e negli ingredienti c'è "pollo" -> allergia rilevata
+                const keywords = raw.split(/[,;.\n]+/).map(s=>s.trim()).filter(s=>s.length>2);
+                keywords.forEach(k=>{
+                    // estrai parola chiave rilevante (es. da "intollerante al pollo" estraiamo "pollo")
+                    const words = k.split(/\s+/);
+                    words.forEach(w=>{
+                        w = w.replace(/[^a-zàèéìòù]/gi,'');
+                        if(w.length>=3 && lowItems.includes(w) && !['alla','alle','intollerante','allergia','allergico','no','non','per','con','sono','sono'].includes(w)){
+                            if(!triggers.includes(w)) triggers.push(w);
+                        }
+                    });
+                });
+                return triggers;
+            }catch(e){ return []; }
+        }
         function buildMsg() {
-            let selectedItems = Object.values(selectionState).filter(val => val !== null && val !== undefined);
+            // Appiattisci tutti gli array per supportare multi-selezione
+            let selectedItems = [];
+            Object.values(selectionState).forEach(val => {
+                if(Array.isArray(val)){
+                    selectedItems = selectedItems.concat(val);
+                } else if(val){
+                    selectedItems.push(val);
+                }
+            });
+            selectedItems = selectedItems.filter(v => v && v.length>0);
             let extra = document.getElementById('extra').value.trim(); let mood = document.getElementById('mood').value;
             if(extra) selectedItems.push(extra);
             if(selectedItems.length === 0) return "Aiutami tu Chef! Ho il frigo vuoto!";
-            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n Mood: ${mood}\n\nCosa cuciniamo? Sorprendimi! ❤`;
+            
+            // --- SANTO GRAAL: Controllo sicurezza pet anche per ricette umane ---
+            let petWarning = '';
+            const petMem = getPetMemory();
+            if(petMem){
+                const toxics = checkToxicIngredients(selectedItems.concat([extra]));
+                // Leggi profilo completo per allergie custom
+                let fullProfile = {};
+                try{ fullProfile = JSON.parse(localStorage.getItem('userPetProfile')||'{}'); }catch(e){}
+                fullProfile.name = petMem.name;
+                fullProfile.allergiesRaw = fullProfile.tastes || '';
+                const customAllerg = checkCustomAllergy(fullProfile, selectedItems.concat([extra]));
+                
+                if(toxics.length>0){
+                    petWarning = `\n\n⚠️ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nSo che hai ${petMem.type} di nome ${petMem.name}. Questa ricetta contiene: ${toxics.join(', ')} che è TOSSICO/PERICOLOSO per lui!\n👉 Per favore avvisami nella ricetta: "Tieni piatto e ingredienti fuori dalla portata di ${petMem.name}! Anche piccole quantità possono essere pericolose." Vale oro!`;
+                    if(customAllerg.length>0){
+                        petWarning += `\n\n🚫 Inoltre ${petMem.name} è intollerante a: ${customAllerg.join(', ')} (nota tua: "${fullProfile.tastes}") -> Avvisami di NON darglielo!`;
+                    }
+                } else if(customAllerg.length>0){
+                    petWarning = `\n\n🚫 NOTA ALLERGIA PET:\n${petMem.name} è intollerante a: ${customAllerg.join(', ')} (tua nota: "${fullProfile.tastes}").\nQuesta ricetta contiene proprio questi ingredienti! Avvisami: "NON dare a ${petMem.name}, è intollerante!"`;
+                } else {
+                    petWarning = `\n\n🐾 CONTESTO FAMIGLIA: Ho anche ${petMem.type} di nome ${petMem.name} in casa. Se nella ricetta umana ci sono passaggi pericolosi per lui (es. ossa cotte, avanzi), ricordami di stare attento!`;
+                }
+            }
+            return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n Mood: ${mood}${petWarning}\n\nCosa cuciniamo? Sorprendimi! ❤`;
         }
         function showResult() {
             const msg = buildMsg(); if(msg.includes("frigo vuoto")) { alert("Seleziona almeno un ingrediente!"); return; }
@@ -213,12 +327,35 @@
             if (!chkPets.checked) { alert(" Aspetta tesoro!\n\nQuesto pulsante è dedicato ai tuoi amici pelosi! 🐾\n\nPer usarlo devi prima spuntare 'Ho animali domestici in casa' qui sotto."); document.getElementById('petProfileContainer').scrollIntoView({ behavior: 'smooth', block: 'center' }); return false; }
             const petType = document.getElementById('selPetType').value; const petName = document.getElementById('txtPetName').value.trim(); const petSize = document.getElementById('selPetSize').value;
             if (!petType || !petName || !petSize) { alert("⚠️ Quasi fatto!\n\nPer creare la ricetta perfetta ho bisogno di:\n1. Tipo di animale \n2. Nome 🏷\n3. Taglia ⚖\n\nCompila questi campi obbligatori!"); return false; }
+            // --- FIX: Prendi anche gli ingredienti selezionati (multi) ---
+            let selectedItems = [];
+            Object.values(selectionState).forEach(val => {
+                if(Array.isArray(val)){ selectedItems = selectedItems.concat(val); }
+                else if(val){ selectedItems.push(val); }
+            });
+            selectedItems = selectedItems.filter(v => v && v.length>0);
+            let extra = document.getElementById('extra').value.trim();
+            if(extra) selectedItems.push(extra);
+            let mood = document.getElementById('mood') ? document.getElementById('mood').value : 'Veloce';
+            if(selectedItems.length===0){
+                alert("Seleziona almeno un ingrediente per il tuo amico! 🐾\nEs. Manzo, Zucchine...");
+                return false;
+            }
             const petWeight = document.getElementById('numPetWeight').value; const petAge = document.getElementById('selPetAge').value; const petBreed = document.getElementById('txtPetBreed').value.trim(); const tastes = document.getElementById('txtTastes').value.trim();
             const PUBLIC_QWEN_URL = "https://chat.qwen.ai/c/65c8a1e9-38cb-4d82-a77c-b4c9dd980808";
-            let message = "Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per il mio amico.\n\n"; message += ` MEMORIA PET:\n`; message += `- Animale: ${petType} di nome ${petName}\n`; message += `- Taglia: ${petSize}`; if(petWeight) message += ` (Peso: ${petWeight}kg)`; message += `\n`; if(petAge) message += `- Fase vita: ${petAge}\n`; if(petBreed) message += `- Razza: ${petBreed}\n`; if(tastes) { message += `\n❤️ VINCOLI E GUSTI: ${tastes}\n`; } message += `\nAdatta la magia alla sua realtà! Ricorda avvisi Zampa Sicura!`;
+            let message = "Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per il mio amico.\n\n";
+            message += ` Ingredienti Disponibili:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n`;
+            message += ` Mood: ${mood}\n\n`;
+            message += ` MEMORIA PET:\n`;
+            message += `- Animale: ${petType} di nome ${petName}\n`;
+            message += `- Taglia: ${petSize}`; if(petWeight) message += ` (Peso: ${petWeight}kg)`; message += `\n`;
+            if(petAge) message += `- Fase vita: ${petAge}\n`;
+            if(petBreed) message += `- Razza: ${petBreed}\n`;
+            if(tastes) { message += `\n❤️ VINCOLI E GUSTI / ALLERGIE: ${tastes}\n`; }
+            message += `\nAdatta la magia alla sua realtà! Ingredienti sicuri per cani, niente cipolla/aglio eccessivo, niente sale. Ricorda avvisi Zampa Sicura!`;
             navigator.clipboard.writeText(message).then(() => {
                 const btn = document.getElementById('btnInspire'); const originalHTML = btn.innerHTML;
-                btn.innerHTML = "✅ Messaggio copiato! Incollalo in Qwen"; btn.style.background = "#22c55e"; btn.style.transform = "scale(1.02)";
+                btn.innerHTML = "✅ Messaggio Pet copiato con ingredienti! Incollalo in Qwen"; btn.style.background = "#22c55e"; btn.style.transform = "scale(1.02)";
                 setTimeout(() => { window.open(PUBLIC_QWEN_URL, '_blank'); setTimeout(() => { btn.innerHTML = originalHTML; btn.style.background = ""; btn.style.transform = ""; }, 3000); }, 1200);
             }).catch(err => { alert("Impossibile copiare. Copia questo testo:\n\n" + message); });
         }
