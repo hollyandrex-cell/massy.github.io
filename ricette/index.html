@@ -74,31 +74,33 @@
                 <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px; line-height: 1.4;">Clicca → Incolla nella barra <strong>"Cosa vorresti esplorare?"</strong> di Qwen<br>(Funziona anche senza account!)</p>
             </div>
             <div id="petProfileContainer" class="pet-form-container">
-                <h3 style="color: var(--gold); margin: 0 0 12px 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; justify-content: center;">🛡️ Profilo Sicurezza & Gusti <span style="font-size: 0.7rem; color: #94a3b8; font-weight: normal; text-transform: none;">(Salvato sul tuo dispositivo)</span></h3>
+                <h3 style="color: var(--gold); margin: 0 0 12px 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; justify-content: center;">🛡️ Profilo Sicurezza & Gusti MULTI-PET <span style="font-size: 0.7rem; color: #94a3b8; font-weight: normal; text-transform: none;">(Salvato locale)</span></h3>
                 <div style="margin-bottom: 12px;">
                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: #f8fafc; font-size: 0.95rem; font-weight: 500; justify-content: center;">
                         <input type="checkbox" id="chkPets" onchange="togglePetFields()" style="width: 18px; height: 18px; accent-color: var(--pink); cursor: pointer;">Ho animali domestici in casa
                     </label>
                 </div>
                 <div id="petFields" style="display: none; animation: slideDown 0.3s ease;">
+                    <!-- LISTA PET SALVATI -->
+                    <div id="petList" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;justify-content:center"></div>
                     <div class="form-row">
                         <div class="form-col"><select id="selPetType"><option value="">Tipo animale...</option><option value="Cane">🐶 Cane</option><option value="Gatto">🐱 Gatto</option><option value="Altro">🐰 Altro</option></select></div>
-                        <div class="form-col"><input type="text" id="txtPetName" placeholder="Nome (es. Pluto)"></div>
+                        <div class="form-col"><input type="text" id="txtPetName" placeholder="Nome (es. Rex, Holly)"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-col"><select id="selPetSize"><option value="">Taglia...</option><option value="Piccola (fino a 10kg)">🐾 Piccola</option><option value="Media (10-25kg)">🦮 Media</option><option value="Grande (oltre 25kg)">🐕‍🦺 Grande</option></select></div>
-                        <div class="form-col"><input type="number" id="numPetWeight" placeholder="Peso kg (opz.)"></div>
+                        <div class="form-col"><input type="number" id="numPetWeight" placeholder="Peso kg (es. 38)"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-col"><select id="selPetAge"><option value="">Età/Fase...</option><option value="Cucciolo">🍼 Cucciolo</option><option value="Adulto">🐾 Adulto</option><option value="Anziano">👴 Anziano</option></select></div>
-                        <div class="form-col"><input type="text" id="txtPetBreed" placeholder="Razza (opz.)"></div>
+                        <div class="form-col"><input type="text" id="txtPetBreed" placeholder="Razza (es. Pastore tedesco)"></div>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; color: #94a3b8; font-size: 0.85rem; margin-bottom: 6px; font-weight: 500; text-align: left;">Allergie, Condizioni Mediche o Gusti:</label>
-                        <textarea id="txtTastes" rows="3" placeholder="Es. No lattosio, pancreatite, odia il pesce..." style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; font-size: 0.9rem; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
+                        <textarea id="txtTastes" rows="3" placeholder="Es. intollerante al pollo, no lattosio..." style="width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 10px; font-size: 0.9rem; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
                     </div>
-                    <button onclick="saveUserProfile()" class="btn-save">💾 Salva Profilo Locale</button>
-                    <p id="saveFeedback" style="color: var(--green); font-size: 0.8rem; margin-top: 8px; text-align: center; display: none; font-weight: 500;">✅ Profilo salvato! Ora "Chef Ling for Pet" userà questi dati.</p>
+                    <button onclick="saveUserProfile()" class="btn-save">💾 Aggiungi / Aggiorna Pet</button>
+                    <p id="saveFeedback" style="color: var(--green); font-size: 0.8rem; margin-top: 8px; text-align: center; display: none; font-weight: 500;"></p>
                 </div>
             </div>
             <div class="site-footer"><p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p><p><a href="privacy-policy.html">Privacy Policy</a> | <a href="cookie-policy.html">Cookie Policy</a></p></div>
@@ -203,49 +205,80 @@
             const r = new SR(); r.lang='it-IT';
             r.onresult = e => { const t = e.results[0][0].transcript; document.getElementById('extra').value += (document.getElementById('extra').value?", ":"") + t; }; r.start();
         }
-        // ===== SANTO GRAAL SICUREZZA PET - Idea Massy + Chef Ling 💎 =====
+        // ===== SANTO GRAAL SICUREZZA PET MULTI-PET - Rex 38kg + Holly 25kg 💎 =====
         const TOXIC_MAP = {
             'cipolla': 'CIPOLLA', 'cipolle': 'CIPOLLA',
             'aglio': 'AGLIO', 'aglio/cipolla': 'AGLIO/CIPOLLA',
             'cioccolato': 'CIOCCOLATO', 'cacao': 'CIOCCOLATO',
             'xilitolo': 'XILITOLO', 'uvetta': 'UVETTA', 'uva': 'UVA',
             'avocado': 'AVOCADO', 'macadamia': 'NOCI MACADAMIA',
-            'alcol': 'ALCOL', 'caffè': 'CAFFEINA', 'caffe': 'CAFFEINA',
-            'noci': 'NOCI', 'pepe': 'PEPE' // pepe non tossico grave ma meglio avvisare
+            'alcol': 'ALCOL', 'caffè': 'CAFFEINA', 'caffe': 'CAFFEINA'
         };
-        function getPetMemory() {
-            try {
-                const hasPets = localStorage.getItem('userHasPets') === 'true';
-                if(!hasPets) return null;
-                const profile = JSON.parse(localStorage.getItem('userPetProfile') || '{}');
-                return { hasPets, name: profile.name || 'il tuo peloso', type: profile.type || 'cane', breed: profile.breed || '' };
-            } catch(e){ return null; }
+        function parseWeight(w){ if(!w) return 0; const m=String(w).match(/(\d+(\.\d+)?)/); return m?parseFloat(m[1]):0; }
+        // Leggi tutti i pet: prima da chefLing_pets (nuovo multi), poi fallback a hollyRex_pets e userPetProfile
+        function getAllPetsDetailed(){
+            let all=[];
+            try{
+                const chefPets = JSON.parse(localStorage.getItem('chefLing_pets')||'[]');
+                chefPets.forEach(p=> all.push({...p, source:'chefLing'}));
+            }catch(e){}
+            // Se vuoto, prova a leggere vecchio diario
+            if(all.length===0){
+                try{
+                    const diaryPets = JSON.parse(localStorage.getItem('hollyRex_pets')||'[]');
+                    diaryPets.forEach(p=> all.push({name:p.nome, type:p.specie||'Cane', size:'', weight:p.peso||'', weightNum:parseWeight(p.peso), breed:p.razza||'', age:'', tastes:p.allergie||'', source:'diary'}));
+                }catch(e){}
+            }
+            // Fallback vecchio singolo
+            if(all.length===0){
+                try{
+                    const prof = JSON.parse(localStorage.getItem('userPetProfile')||'{}');
+                    if(prof.name) all.push({name:prof.name, type:prof.type||'Cane', size:prof.size||'', weight:prof.weight||'', weightNum:parseWeight(prof.weight), breed:prof.breed||'', age:prof.age||'', tastes:prof.tastes||'', source:'single'});
+                }catch(e){}
+            }
+            // deduplica per nome
+            const seen=new Set(); const uniq=[];
+            all.forEach(p=>{ const k=(p.name||'').toLowerCase(); if(k && !seen.has(k)){ seen.add(k); uniq.push(p); } });
+            return uniq;
+        }
+        function getPetMemory(){
+            const all=getAllPetsDetailed();
+            if(all.length===0) return null;
+            return {hasPets:true, name:all[0].name, type:all[0].type, breed:all[0].breed, allPets:all};
+        }
+        function getChefLingPets(){ try{ return JSON.parse(localStorage.getItem('chefLing_pets')||'[]'); }catch(e){ return []; } }
+        function saveChefLingPets(pets){ localStorage.setItem('chefLing_pets', JSON.stringify(pets)); localStorage.setItem('userHasPets','true'); }
+        function renderPetList(){
+            const listEl=document.getElementById('petList');
+            if(!listEl) return;
+            const pets=getChefLingPets();
+            // se vuoto mostra anche quelli da diario per debug
+            const all=getAllPetsDetailed();
+            const display = pets.length>0 ? pets : all;
+            if(display.length===0){ listEl.innerHTML='<span style="color:#64748b;font-size:0.8rem">Nessun pet salvato ancora - aggiungi Rex e Holly!</span>'; return; }
+            listEl.innerHTML=display.map((p,idx)=>`
+                <div style="background:#0f172a;border:1px solid ${p.name.toLowerCase().includes('rex')?'#38bdf8':'#fbbf24'};color:#fff;padding:6px 10px;border-radius:20px;font-size:0.85rem;display:flex;align-items:center;gap:6px">
+                    <span>${p.type==='Cane'?'🐶':'🐱'} <b>${p.name}</b> ${p.weight? p.weight+'kg':''} ${p.breed? '('+p.breed+')':''}</span>
+                    <button onclick="editPet('${p.name}')" style="background:#334155;border:none;color:#fbbf24;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:0.7rem">✏️</button>
+                    <button onclick="deletePet('${p.name}')" style="background:#450a0a;border:none;color:#fca5a5;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:0.7rem">×</button>
+                </div>
+            `).join('');
         }
         function checkToxicIngredients(items) {
-            const found = [];
-            const lowerItems = items.join(' ').toLowerCase();
-            for(const key in TOXIC_MAP){
-                if(lowerItems.includes(key)){
-                    if(!found.includes(TOXIC_MAP[key])) found.push(TOXIC_MAP[key]);
-                }
-            }
+            const found = []; const lowerItems = items.join(' ').toLowerCase();
+            for(const key in TOXIC_MAP){ if(lowerItems.includes(key)){ if(!found.includes(TOXIC_MAP[key])) found.push(TOXIC_MAP[key]); } }
             return found;
         }
-        // Controllo allergie custom tipo "intollerante al pollo"
         function checkCustomAllergy(petProfile, items){
             try{
-                const raw = (petProfile.allergiesRaw || petProfile.tastes || '').toLowerCase();
-                if(!raw) return [];
-                const lowItems = items.join(' ').toLowerCase();
-                const triggers = [];
-                // se nelle note c'è "pollo" e negli ingredienti c'è "pollo" -> allergia rilevata
+                const raw = (petProfile.tastes || petProfile.allergiesRaw || '').toLowerCase(); if(!raw) return [];
+                const lowItems = items.join(' ').toLowerCase(); const triggers=[];
                 const keywords = raw.split(/[,;.\n]+/).map(s=>s.trim()).filter(s=>s.length>2);
                 keywords.forEach(k=>{
-                    // estrai parola chiave rilevante (es. da "intollerante al pollo" estraiamo "pollo")
                     const words = k.split(/\s+/);
                     words.forEach(w=>{
-                        w = w.replace(/[^a-zàèéìòù]/gi,'');
-                        if(w.length>=3 && lowItems.includes(w) && !['alla','alle','intollerante','allergia','allergico','no','non','per','con','sono','sono'].includes(w)){
+                        w=w.replace(/[^a-zàèéìòù]/gi,'');
+                        if(w.length>=3 && lowItems.includes(w) && !['alla','alle','intollerante','allergia','allergico','no','non','per','con'].includes(w)){
                             if(!triggers.includes(w)) triggers.push(w);
                         }
                     });
@@ -254,41 +287,33 @@
             }catch(e){ return []; }
         }
         function buildMsg() {
-            // Appiattisci tutti gli array per supportare multi-selezione
             let selectedItems = [];
             Object.values(selectionState).forEach(val => {
-                if(Array.isArray(val)){
-                    selectedItems = selectedItems.concat(val);
-                } else if(val){
-                    selectedItems.push(val);
-                }
+                if(Array.isArray(val)){ selectedItems = selectedItems.concat(val); }
+                else if(val){ selectedItems.push(val); }
             });
             selectedItems = selectedItems.filter(v => v && v.length>0);
             let extra = document.getElementById('extra').value.trim(); let mood = document.getElementById('mood').value;
             if(extra) selectedItems.push(extra);
             if(selectedItems.length === 0) return "Aiutami tu Chef! Ho il frigo vuoto!";
-            
-            // --- SANTO GRAAL: Controllo sicurezza pet anche per ricette umane ---
             let petWarning = '';
-            const petMem = getPetMemory();
-            if(petMem){
+            const allPets = getAllPetsDetailed();
+            if(allPets.length>0){
                 const toxics = checkToxicIngredients(selectedItems.concat([extra]));
-                // Leggi profilo completo per allergie custom
-                let fullProfile = {};
-                try{ fullProfile = JSON.parse(localStorage.getItem('userPetProfile')||'{}'); }catch(e){}
-                fullProfile.name = petMem.name;
-                fullProfile.allergiesRaw = fullProfile.tastes || '';
-                const customAllerg = checkCustomAllergy(fullProfile, selectedItems.concat([extra]));
-                
+                const petListStr = allPets.map(p=> `${p.name} (${p.weight||'?'}kg ${p.breed||''})`).join(', ');
                 if(toxics.length>0){
-                    petWarning = `\n\n⚠️ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nSo che hai ${petMem.type} di nome ${petMem.name}. Questa ricetta contiene: ${toxics.join(', ')} che è TOSSICO/PERICOLOSO per lui!\n👉 Per favore avvisami nella ricetta: "Tieni piatto e ingredienti fuori dalla portata di ${petMem.name}! Anche piccole quantità possono essere pericolose." Vale oro!`;
-                    if(customAllerg.length>0){
-                        petWarning += `\n\n🚫 Inoltre ${petMem.name} è intollerante a: ${customAllerg.join(', ')} (nota tua: "${fullProfile.tastes}") -> Avvisami di NON darglielo!`;
-                    }
-                } else if(customAllerg.length>0){
-                    petWarning = `\n\n🚫 NOTA ALLERGIA PET:\n${petMem.name} è intollerante a: ${customAllerg.join(', ')} (tua nota: "${fullProfile.tastes}").\nQuesta ricetta contiene proprio questi ingredienti! Avvisami: "NON dare a ${petMem.name}, è intollerante!"`;
+                    petWarning = `\n\n⚠️ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nIn casa ho ${allPets.length} pelosi: ${petListStr}. Questa ricetta UMANA contiene: ${toxics.join(', ')} che è TOSSICO!\n👉 Avvisami: "Tieni fuori dalla portata di ${allPets.map(p=>p.name).join(' e ')}!"`;
                 } else {
-                    petWarning = `\n\n🐾 CONTESTO FAMIGLIA: Ho anche ${petMem.type} di nome ${petMem.name} in casa. Se nella ricetta umana ci sono passaggi pericolosi per lui (es. ossa cotte, avanzi), ricordami di stare attento!`;
+                    let allergyWarnings=[];
+                    allPets.forEach(pet=>{
+                        const allerg = checkCustomAllergy(pet, selectedItems.concat([extra]));
+                        if(allerg.length>0) allergyWarnings.push(`- ${pet.name} intollerante a: ${allerg.join(', ')} (nota: ${pet.tastes}) -> NON dargli!`);
+                    });
+                    if(allergyWarnings.length>0){
+                        petWarning = `\n\n🚫 ALLERGIE MULTI-PET:\n${petListStr}\n${allergyWarnings.join('\n')}`;
+                    } else {
+                        petWarning = `\n\n🐾 CONTESTO FAMIGLIA: Ho ${petListStr} in casa. Ricordami attenzioni per loro!`;
+                    }
                 }
             }
             return `Ciao Chef Ling! Sono Massy.\n\n Ingredienti Precisi:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n Mood: ${mood}${petWarning}\n\nCosa cuciniamo? Sorprendimi! ❤`;
@@ -304,30 +329,74 @@
         }
         function togglePetFields() {
             const chk = document.getElementById('chkPets'); const fields = document.getElementById('petFields');
-            if (chk.checked) { fields.style.display = 'block'; fields.style.opacity = '0'; setTimeout(() => { fields.style.transition = 'opacity 0.3s ease'; fields.style.opacity = '1'; }, 10); }
-            else { fields.style.display = 'none'; document.getElementById('selPetType').value = ""; document.getElementById('txtPetName').value = ""; document.getElementById('selPetSize').value = ""; document.getElementById('numPetWeight').value = ""; document.getElementById('selPetAge').value = ""; document.getElementById('txtPetBreed').value = ""; localStorage.setItem('userHasPets', 'false'); }
+            if (chk.checked) { 
+                fields.style.display = 'block'; fields.style.opacity = '0'; 
+                setTimeout(() => { fields.style.transition = 'opacity 0.3s ease'; fields.style.opacity = '1'; }, 10);
+                renderPetList();
+            }
+            else { fields.style.display = 'none'; localStorage.setItem('userHasPets', 'false'); }
         }
         function saveUserProfile() {
-            const hasPets = document.getElementById('chkPets').checked;
-            const profile = { type: document.getElementById('selPetType').value, name: document.getElementById('txtPetName').value.trim(), size: document.getElementById('selPetSize').value, weight: document.getElementById('numPetWeight').value, age: document.getElementById('selPetAge').value, breed: document.getElementById('txtPetBreed').value.trim(), tastes: document.getElementById('txtTastes').value.trim() };
-            localStorage.setItem('userHasPets', hasPets); localStorage.setItem('userPetProfile', JSON.stringify(profile));
-            const feedback = document.getElementById('saveFeedback'); feedback.style.display = 'block'; setTimeout(() => { feedback.style.display = 'none'; }, 3000);
+            const type = document.getElementById('selPetType').value; 
+            const name = document.getElementById('txtPetName').value.trim();
+            const size = document.getElementById('selPetSize').value; 
+            const weight = document.getElementById('numPetWeight').value.trim(); 
+            const age = document.getElementById('selPetAge').value; 
+            const breed = document.getElementById('txtPetBreed').value.trim(); 
+            const tastes = document.getElementById('txtTastes').value.trim();
+            if(!name){ alert('Metti il nome! Es. Rex o Holly'); return; }
+            if(!type){ alert('Scegli tipo!'); return; }
+            let pets = getChefLingPets();
+            const existingIdx = pets.findIndex(p=> p.name.toLowerCase()===name.toLowerCase());
+            const profile = { type, name, size, weight, weightNum:parseWeight(weight), age, breed, tastes };
+            if(existingIdx>=0){ pets[existingIdx]=profile; }
+            else{ pets.push(profile); }
+            saveChefLingPets(pets);
+            // Mantieni compatibilità vecchio singolo per app vecchie
+            localStorage.setItem('userPetProfile', JSON.stringify(profile));
+            localStorage.setItem('userHasPets','true');
+            const feedback = document.getElementById('saveFeedback'); 
+            feedback.textContent=`✅ ${name} salvato! Ora hai ${pets.length} pet: ${pets.map(p=>p.name).join(', ')} - Rex non sparirà più!`;
+            feedback.style.display = 'block'; 
+            renderPetList();
+            // Pulisci campi nome per prossimo inserimento
+            document.getElementById('txtPetName').value=''; 
+            setTimeout(() => { feedback.style.display = 'none'; }, 4000);
+        }
+        function editPet(name){
+            const pets=getChefLingPets();
+            const p=pets.find(x=>x.name.toLowerCase()===name.toLowerCase());
+            if(!p) return;
+            document.getElementById('selPetType').value=p.type||'';
+            document.getElementById('txtPetName').value=p.name||'';
+            document.getElementById('selPetSize').value=p.size||'';
+            document.getElementById('numPetWeight').value=p.weight||'';
+            document.getElementById('selPetAge').value=p.age||'';
+            document.getElementById('txtPetBreed').value=p.breed||'';
+            document.getElementById('txtTastes').value=p.tastes||'';
+            document.getElementById('petFields').scrollIntoView({behavior:'smooth'});
+        }
+        function deletePet(name){
+            if(!confirm(`Eliminare ${name}?`)) return;
+            let pets=getChefLingPets();
+            pets=pets.filter(p=> p.name.toLowerCase()!==name.toLowerCase());
+            saveChefLingPets(pets);
+            renderPetList();
         }
         window.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('userHasPets') === 'true') {
                 document.getElementById('chkPets').checked = true; togglePetFields();
-                const savedProfile = JSON.parse(localStorage.getItem('userPetProfile') || '{}');
-                if(savedProfile) {
-                    document.getElementById('selPetType').value = savedProfile.type || ''; document.getElementById('txtPetName').value = savedProfile.name || ''; document.getElementById('selPetSize').value = savedProfile.size || ''; document.getElementById('numPetWeight').value = savedProfile.weight || ''; document.getElementById('selPetAge').value = savedProfile.age || ''; document.getElementById('txtPetBreed').value = savedProfile.breed || ''; document.getElementById('txtTastes').value = savedProfile.tastes || '';
-                }
             }
+            renderPetList();
         });
         function goToPublicQwen() {
             const chkPets = document.getElementById('chkPets');
             if (!chkPets.checked) { alert(" Aspetta tesoro!\n\nQuesto pulsante è dedicato ai tuoi amici pelosi! 🐾\n\nPer usarlo devi prima spuntare 'Ho animali domestici in casa' qui sotto."); document.getElementById('petProfileContainer').scrollIntoView({ behavior: 'smooth', block: 'center' }); return false; }
-            const petType = document.getElementById('selPetType').value; const petName = document.getElementById('txtPetName').value.trim(); const petSize = document.getElementById('selPetSize').value;
-            if (!petType || !petName || !petSize) { alert("⚠️ Quasi fatto!\n\nPer creare la ricetta perfetta ho bisogno di:\n1. Tipo di animale \n2. Nome 🏷\n3. Taglia ⚖\n\nCompila questi campi obbligatori!"); return false; }
-            // --- FIX: Prendi anche gli ingredienti selezionati (multi) ---
+            const allPets = getAllPetsDetailed();
+            if(allPets.length===0){
+                alert("Aggiungi almeno un pet! Rex o Holly");
+                return false;
+            }
             let selectedItems = [];
             Object.values(selectionState).forEach(val => {
                 if(Array.isArray(val)){ selectedItems = selectedItems.concat(val); }
@@ -341,21 +410,31 @@
                 alert("Seleziona almeno un ingrediente per il tuo amico! 🐾\nEs. Manzo, Zucchine...");
                 return false;
             }
-            const petWeight = document.getElementById('numPetWeight').value; const petAge = document.getElementById('selPetAge').value; const petBreed = document.getElementById('txtPetBreed').value.trim(); const tastes = document.getElementById('txtTastes').value.trim();
             const PUBLIC_QWEN_URL = "https://chat.qwen.ai/c/65c8a1e9-38cb-4d82-a77c-b4c9dd980808";
-            let message = "Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per il mio amico.\n\n";
+            let message = "Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per i miei amici pelosi.\n\n";
             message += ` Ingredienti Disponibili:\n${selectedItems.map(i => '- ' + i).join('\n')}\n\n`;
             message += ` Mood: ${mood}\n\n`;
-            message += ` MEMORIA PET:\n`;
-            message += `- Animale: ${petType} di nome ${petName}\n`;
-            message += `- Taglia: ${petSize}`; if(petWeight) message += ` (Peso: ${petWeight}kg)`; message += `\n`;
-            if(petAge) message += `- Fase vita: ${petAge}\n`;
-            if(petBreed) message += `- Razza: ${petBreed}\n`;
-            if(tastes) { message += `\n❤️ VINCOLI E GUSTI / ALLERGIE: ${tastes}\n`; }
-            message += `\nAdatta la magia alla sua realtà! Ingredienti sicuri per cani, niente cipolla/aglio eccessivo, niente sale. Ricorda avvisi Zampa Sicura!`;
+            message += ` MEMORIA PET MULTI-PROFILO (${allPets.length} pelosi):\n`;
+            allPets.forEach((p,idx)=>{
+                message += `${idx+1}. ${p.name} - ${p.type} ${p.breed||''} - Peso: ${p.weight||'?'}kg - Allergie/Note: ${p.tastes||'nessuna'}\n`;
+            });
+            message += `\n👉 ADATTA QUANTITÀ IN BASE AL PESO:\n`;
+            allPets.forEach(p=>{
+                const portion = p.weightNum ? Math.round(p.weightNum * 25) : 0;
+                message += `- ${p.name} (${p.weight||'?'}kg): porzione ~${portion>0?portion+'g':'calcola tu'} - ${p.tastes? 'ATTENZIONE: '+p.tastes : 'nessuna allergia'}\n`;
+            });
+            let allergyBlocks=[];
+            allPets.forEach(pet=>{
+                const blocks = checkCustomAllergy(pet, selectedItems);
+                if(blocks.length>0) allergyBlocks.push(`⚠️ ${pet.name} NON può mangiare: ${blocks.join(', ')} (allergia: ${pet.tastes}) -> Escludilo!`);
+            });
+            if(allergyBlocks.length>0){
+                message += `\n🚫 ALLERGENI RILEVATI:\n${allergyBlocks.join('\n')}\n`;
+            }
+            message += `\nAdatta la magia alla loro realtà! Ingredienti sicuri, niente cipolla/aglio, niente sale. Se un ingrediente è off-limits per Holly ma ok per Rex, specifica: "Ok per Rex, NO per Holly". Ricorda Zampa Sicura per ogni pet!`;
             navigator.clipboard.writeText(message).then(() => {
                 const btn = document.getElementById('btnInspire'); const originalHTML = btn.innerHTML;
-                btn.innerHTML = "✅ Messaggio Pet copiato con ingredienti! Incollalo in Qwen"; btn.style.background = "#22c55e"; btn.style.transform = "scale(1.02)";
+                btn.innerHTML = "✅ Messaggio Multi-Pet copiato! Incollalo in Qwen"; btn.style.background = "#22c55e"; btn.style.transform = "scale(1.02)";
                 setTimeout(() => { window.open(PUBLIC_QWEN_URL, '_blank'); setTimeout(() => { btn.innerHTML = originalHTML; btn.style.background = ""; btn.style.transform = ""; }, 3000); }, 1200);
             }).catch(err => { alert("Impossibile copiare. Copia questo testo:\n\n" + message); });
         }
