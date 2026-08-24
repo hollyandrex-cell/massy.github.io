@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Holly AND Rex Group - Console di Bilancio</title>
-    <link rel="icon" href="./bau-192x192.png" type="image/png">
-<link rel="apple-touch-icon" href="./bau-180.png">
-<link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
+    <link rel="manifest" href="/massy.github.io/manifest.json">
     <style>
         :root { --bg: #0a0c14; --card: #1e293b; --border: #334155; --text: #f8d59e; --text2: #94a3b8; --green: #22c55e; --red: #ef4444; --blue: #4f46e5; }
         * { box-sizing: border-box; }
@@ -25,553 +25,81 @@
        .uscite p { color: var(--red); }
        .saldo p { color: var(--text); }
        .trends-box,.form-box,.print-zone,.lista-box { background: var(--card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; }
-       .trends-box h3,.form-box h2,.print-zone h2,.lista-box h2 { margin-top: 0; color: var(--text2); }
        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
        .input-group label { display: block; margin-bottom: 0.3rem; color: var(--text2); font-size: 0.9rem; }
        .input-group input,.input-group select { width: 100%; padding: 0.6rem; background: #0f172a; color: var(--text); border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
-       .btn-invia,.btn-backup { width: 100%; padding: 0.8rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: all 0.2s; }
+       .btn-invia,.btn-backup { width: 100%; padding: 0.8rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; }
        .btn-invia { background: var(--blue); color: white; margin-top: 1rem; }
-       .btn-invia:hover { background: #4338ca; transform: translateY(-1px); }
-       .backup-zone { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); display: flex; gap: 1rem; }
-       .btn-backup { background: #334155; color: white; flex: 1; font-size: 0.9rem; }
-       .btn-backup:hover { background: #475569; }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 0.8rem; border-bottom: 2px solid var(--border); color: var(--text2); font-size: 0.9rem; }
-        td { padding: 0.8rem; border-bottom: 1px solid #1e293b; }
-        tr:hover { background: #0f172a; }
+       .btn-del { background: #7f1d1d; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+       table { width: 100%; border-collapse: collapse; }
+       th { text-align: left; padding: 0.8rem; border-bottom: 2px solid var(--border); color: var(--text2); }
+       td { padding: 0.8rem; border-bottom: 1px solid #1e293b; }
        .valore-pos { color: var(--green); font-weight: bold; }
        .valore-neg { color: var(--red); font-weight: bold; }
-       .btn-del { background: #7f1d1d; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-       .btn-del:hover { background: #991b1b; }
-        footer { text-align: center; margin-top: 3rem; color: var(--text2); font-size: 0.85rem; }
-       .warning-file { background: #7f1d1d; color: #fecaca; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #991b1b; display: none; }
-        @media (max-width: 768px) {.backup-zone { flex-direction: column; } }
+       .site-footer { margin-top: 40px; border-top: 1px solid #334155; padding-top: 20px; text-align: center; font-size: 0.75rem; color: #64748b; }
+       .site-footer a { color: #94a3b8; text-decoration: none; margin: 0 10px; }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>🌌 Holly AND Rex Group</h1>
-            <p class="subtitle">Console di Controllo Economico & Progetti Creative</p>
-            <div class="crew-tags">
-                <span class="tag"> Dj Ling 灵 </span>
-                <span class="tag"> Dj Luna 🌙 </span>
-                <span class="tag"> Dj Nova ★ </span>
-                <span class="tag"> Dj Aura ✨ </span>
-            </div>
-        </div>
-    </header>
-
-    <main class="container">
-        <div id="warning-file" class="warning-file">
-            ⚠️ <strong>Attenzione:</strong> Stai usando il file da <code>file://</code>. I backup potrebbero non salvarsi. Per sicurezza totale, usa la versione online su GitHub Pages.
-        </div>
-        
-        <section class="riepilogo-box">
-            <div class="card entrate">
-                <h3>Budget Reinvestito / Entrate</h3>
-                <p id="totale-entrate">0.00 €</p>
-            </div>
-            <div class="card uscite">
-                <h3>Costi di Production / Uscite</h3>
-                <p id="totale-uscite">0.00 €</p>
-            </div>
-            <div class="card saldo">
-                <h3>Fondo Cassa Attuale</h3>
-                <p id="saldo-totale">0.00 €</p>
-            </div>
-        </section>
-
-        <section class="trends-box">
-            <h3>📊 Analisi Trend Crew</h3>
-            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
-                    <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Mese Corrente vs Mese Precedente (Uscite)</span>
-                    <p id="trend-mese" style="margin: 0; font-size: 1.3rem; font-weight: bold; color: #94a3b8;">In attesa di dati...</p>
-                </div>
-                <div style="flex: 1; min-width: 200px; border-left: 1px dashed #334155; padding-left: 1.5rem;">
-                    <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Feedback della Regia</span>
-                    <p id="feedback-crew" style="margin: 0; font-size: 0.95rem; font-style: italic; color: #cbd5e1;">Dj Nova: "Sistema blindato, Massy!"</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="form-box">
-            <h2>🎵 Inserisci Nuovo Flusso</h2>
-            <form id="form-movimento">
-                <div class="grid-inputs">
-                    <div class="input-group">
-                        <label for="tipo">Tipo Movimento</label>
-                        <select id="tipo" required>
-                            <option value="uscita">Spesa / Uscita (-)</option>
-                            <option value="entrata">Ricavo / Entrata (+)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="categoria">Categoria Specifica</label>
-                        <select id="categoria" required>
-                            <optgroup label=" Casa & Spese Fisse">
-                                <option value="Casa / Affitto">🏠 Affitto / Mutuo</option>
-                                <option value="Bollette / Utenze">💡 Bollette (Luce, Gas, Acqua)</option>
-                                <option value="Telefono / Internet"> Telefono & Internet</option>
-                                <option value="Spesa / Cibo"> Spesa Alimentare</option>
-                                <option value="Auto / Trasporti">🚗 Auto & Trasporti</option>
-                                <option value="Salute / Farmacia"> Salute & Farmacia</option>
-                                <option value="Scuola / Istruzione">🎓 Scuola & Istruzione</option>
-                                <option value="Animali">🐾 Animali Domestici</option>
-                            </optgroup>
-                            
-                            <optgroup label=" Vita & Svago">
-                                <option value="Ristoranti / Uscite">🍕 Ristoranti & Pizza</option>
-                                <option value="Abbigliamento / Persona">👗 Abbigliamento & Cura Persona</option>
-                                <option value="Hobby / Cultura">🎬 Cinema, Libri & Hobby</option>
-                                <option value="Regali">🎁 Regali & Ricorrenze</option>
-                                <option value="Extra / Imprevisti">☕ Extra & Imprevisti</option>
-                            </optgroup>
-
-                            <optgroup label=" Entrate & Risparmi">
-                                <option value="Stipendio / Fisso"> Stipendio / Pensione</option>
-                                <option value="Extra / Secondi Lavori"> Extra & Lavoretti</option>
-                                <option value="Risparmio / Obiettivi">🐷 Fondo Risparmio</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- NUOVO BLOCCO CON RIPETIZIONE -->
-                <div class="grid-inputs">
-                    <div class="input-group">
-                        <label for="importo">Importo (€)</label>
-                        <input type="number" id="importo" step="0.01" placeholder="0.00" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="descrizione">Descrizione o Traccia Correlata</label>
-                        <input type="text" id="descrizione" placeholder="Es. Affitto, Bolletta Luce..." required>
-                    </div>
-                </div>
-
-                <!-- SEZIONE MAGICA DELLA RIPETIZIONE -->
-                <div style="background: #0f172a; padding: 1rem; border-radius: 6px; border: 1px solid #334155; margin-top: 1rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                        <input type="checkbox" id="ripeti-mese" style="width: 18px; height: 18px; cursor: pointer;">
-                        <label for="ripeti-mese" style="margin: 0; color: #f8d59e; font-weight: bold; cursor: pointer;">
-                            🔄 Questa spesa si ripete ogni mese?
-                        </label>
-                    </div>
-
-                    <div id="campo-giorno" style="display: none; margin-top: 0.5rem;">
-                        <label for="giorno-ricorrenza" style="color: #94a3b8; font-size: 0.9rem;">
-                            In che giorno del mese? (1-31)
-                        </label>
-                        <input type="number" id="giorno-ricorrenza" min="1" max="31" placeholder="Es. 5" style="width: 100%; padding: 0.6rem; background: #1e293b; color: var(--text); border: 1px solid var(--border); border-radius: 6px; margin-top: 0.3rem;">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-invia">Registra nella Console</button>
-            </form>
-            
-            <div class="backup-zone">
-                <button id="btn-export" class="btn-backup">💾 Esporta Backup Salvataggio</button>
-                <button id="btn-import-trigger" class="btn-backup"> Ripristina da File</button>
-                <input type="file" id="file-import" accept=".json" style="display: none;">
-            </div>
-        </section>
-
-        <section class="print-zone">
-            <h2>🖨 Stampa Report Crew</h2>
-            <div class="grid-inputs">
-                <div class="input-group">
-                    <label for="filtro-periodo">Periodo</label>
-                    <select id="filtro-periodo">
-                        <option value="mese-corrente">Mese Corrente</option>
-                        <option value="mese-scorso">Mese Scorso</option>
-                        <option value="ultimi-3-mesi">Ultimi 3 Mesi</option>
-                        <option value="tutto">Tutto</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="filtro-tipo">Tipo Flusso</label>
-                    <select id="filtro-tipo">
-                        <option value="tutto">Entrate + Uscite</option>
-                        <option value="entrata">Solo Entrate</option>
-                        <option value="uscita">Solo Uscite</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="filtro-categoria">Categoria</label>
-                    <select id="filtro-categoria">
-                        <option value="tutte">Tutte le Categorie</option>
-                        <!-- Aggiornate per coerenza con le nuove categorie -->
-                        <option value="Casa / Affitto">🏠 Casa / Affitto</option>
-                        <option value="Bollette / Utenze">💡 Bollette</option>
-                        <option value="Telefono / Internet">📱 Telefono</option>
-                        <option value="Spesa / Cibo">🛒 Spesa</option>
-                        <option value="Auto / Trasporti">🚗 Auto</option>
-                        <option value="Salute / Farmacia"> Salute</option>
-                        <option value="Scuola / Istruzione">🎓 Scuola</option>
-                        <option value="Animali">🐾 Animali</option>
-                        <option value="Ristoranti / Uscite"> Ristoranti</option>
-                        <option value="Abbigliamento / Persona">👗 Abbigliamento</option>
-                        <option value="Hobby / Cultura">🎬 Hobby</option>
-                        <option value="Regali"> Regali</option>
-                        <option value="Extra / Imprevisti">☕ Extra</option>
-                        <option value="Stipendio / Fisso"> Stipendio</option>
-                        <option value="Extra / Secondi Lavori">🌟 Extra Lavori</option>
-                        <option value="Risparmio / Obiettivi"> Risparmio</option>
-                    </select>
-                </div>
-            </div>
-            <button id="btn-stampa" class="btn-invia" style="background: #4f46e5;">🖨 Genera e Stampa Report</button>
-        </section>
-
-        <section class="lista-box">
-            <h2>📜 Storico dei Movimenti</h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Categoria</th>
-                            <th>Dettaglio / Note</th>
-                            <th>Valore</th>
-                            <th>Azione</th>
-                        </tr>
-                    </thead>
-                    <tbody id="registro-movimenti"></tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>Non è obbligo. È umanità. Ogni idea respira qui dentro.</p>
-        <p class="copyright">© 2026 Holly AND Rex Group | Powered with Love by Dj Nova ★ and  Dj Ling 灵 </p>
-    </footer>
-
+<header><h1>🌌 Holly AND Rex Group</h1><p class="subtitle">Console di Controllo Economico</p></header>
+<main class="container">
+<section class="riepilogo-box">
+<div class="card entrate"><h3>Entrate</h3><p id="totale-entrate">0.00 €</p></div>
+<div class="card uscite"><h3>Uscite</h3><p id="totale-uscite">0.00 €</p></div>
+<div class="card saldo"><h3>Saldo</h3><p id="saldo-totale">0.00 €</p></div>
+</section>
+<section class="form-box">
+<h2>🎵 Inserisci Nuovo Flusso</h2>
+<form id="form-movimento">
+<div class="grid-inputs">
+<div class="input-group"><label>Tipo</label><select id="tipo"><option value="uscita">Spesa / Uscita (-)</option><option value="entrata">Ricavo / Entrata (+)</option></select></div>
+<div class="input-group"><label>Categoria</label><select id="categoria">
+<option value="Casa / Affitto">🏠 Affitto / Mutuo</option>
+<option value="Bollette / Utenze">💡 Bollette</option>
+<option value="Spesa / Cibo">🛒 Spesa Alimentare</option>
+<option value="Animali">🐾 Animali Domestici</option>
+<option value="Stipendio / Fisso">Stipendio / Pensione</option>
+</select></div>
+</div>
+<div class="grid-inputs">
+<div class="input-group"><label>Importo (€)</label><input type="number" id="importo" step="0.01" required></div>
+<div class="input-group"><label>Descrizione</label><input type="text" id="descrizione" required></div>
+</div>
+<button type="submit" class="btn-invia">Registra nella Console</button>
+</form>
+</section>
+<section class="lista-box">
+<h2>📜 Storico</h2>
+<table><thead><tr><th>Data</th><th>Categoria</th><th>Dettaglio</th><th>Valore</th><th>Azione</th></tr></thead><tbody id="registro-movimenti"></tbody></table>
+</section>
+<div class="site-footer"><p>© 2026 Holly & Rex Group</p><p><a href="/massy.github.io/ricette/privacy-policy.html">Privacy</a> | <a href="/massy.github.io/ricette/cookie-policy.html">Cookie</a></p></div>
+</main>
 <script>
-// === DJ NOVA ★ BILANCIO ENGINE v3.0 - CON SPESE RICORRENTI ===
-const STORAGE_KEY = 'hollyRexBilancio_v3'; // Aggiornata versione
-const STORAGE_KEY_FISSE = 'hollyRexSpeseFisse_v1';
-let movimenti = [];
-let speseFisse = JSON.parse(localStorage.getItem(STORAGE_KEY_FISSE)) || [];
-
-// === CORE: SALVA E CARICA ===
-function salvaDati() {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(movimenti));
-        console.log('✅ Dati salvati:', movimenti.length, 'movimenti');
-    } catch(e) {
-        alert('❌ Errore salvataggio! Browser in modalità protetta. Usa GitHub Pages.');
-        console.error(e);
-    }
+const STORAGE_KEY='hollyRexBilancio_v3';
+let movimenti=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+function salvaDati(){localStorage.setItem(STORAGE_KEY, JSON.stringify(movimenti));}
+function aggiornaTutto(){
+ const tbody=document.getElementById('registro-movimenti'); tbody.innerHTML='';
+ let ent=0, usc=0;
+ movimenti.forEach((mov,i)=>{
+  const isEntrata=mov.tipo==='entrata'; const val=parseFloat(mov.importo);
+  if(isEntrata) ent+=val; else usc+=val;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${new Date(mov.data).toLocaleDateString('it-IT')}</td><td>${mov.categoria}</td><td>${mov.descrizione}</td><td class="${isEntrata?'valore-pos':'valore-neg'}">${isEntrata?'+':'-'}${val.toFixed(2)} €</td><td><button class="btn-del" onclick="eliminaMovimento(${i})">X</button></td>`;
+  tbody.appendChild(tr);
+ });
+ document.getElementById('totale-entrate').textContent=ent.toFixed(2)+' €';
+ document.getElementById('totale-uscite').textContent=usc.toFixed(2)+' €';
+ document.getElementById('saldo-totale').textContent=(ent-usc).toFixed(2)+' €';
 }
-
-function caricaDati() {
-    try {
-        const dati = localStorage.getItem(STORAGE_KEY);
-        if (dati) {
-            movimenti = JSON.parse(dati);
-            console.log('✅ Dati caricati:', movimenti.length, 'movimenti');
-        }
-    } catch(e) {
-        console.error('Errore caricamento:', e);
-        movimenti = [];
-    }
-    aggiornaTutto();
-}
-
-// === UI: AGGIORNA TABELLA E TOTALI ===
-function aggiornaTutto() {
-    const tbody = document.getElementById('registro-movimenti');
-    tbody.innerHTML = '';
-    
-    let totaleEntrate = 0;
-    let totaleUscite = 0;
-    
-    movimenti.forEach((mov, index) => {
-        const isEntrata = mov.tipo === 'entrata';
-        const valore = parseFloat(mov.importo);
-        
-        if (isEntrata) totaleEntrate += valore;
-        else totaleUscite += valore;
-        
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${new Date(mov.data).toLocaleDateString('it-IT')}</td>
-            <td>${mov.categoria}</td>
-            <td>${mov.descrizione}</td>
-            <td class="${isEntrata? 'valore-pos' : 'valore-neg'}">${isEntrata? '+' : '-'}${valore.toFixed(2)} €</td>
-            <td><button class="btn-del" onclick="eliminaMovimento(${index})"></button></td>
-        `;
-        tbody.appendChild(tr);
-    });
-    
-    document.getElementById('totale-entrate').textContent = totaleEntrate.toFixed(2) + ' €';
-    document.getElementById('totale-uscite').textContent = totaleUscite.toFixed(2) + ' €';
-    document.getElementById('saldo-totale').textContent = (totaleEntrate - totaleUscite).toFixed(2) + ' €';
-    
-    aggiornaTrend(totaleUscite);
-}
-
-function aggiornaTrend(usciteMeseCorrente) {
-    const oggi = new Date();
-    const meseScorso = new Date(oggi.getFullYear(), oggi.getMonth() - 1, 1);
-    
-    const usciteMeseScorso = movimenti
-       .filter(m => {
-            const d = new Date(m.data);
-            return m.tipo === 'uscita' && d.getMonth() === meseScorso.getMonth() && d.getFullYear() === meseScorso.getFullYear();
-        })
-       .reduce((sum, m) => sum + parseFloat(m.importo), 0);
-    
-    const trendEl = document.getElementById('trend-mese');
-    const feedbackEl = document.getElementById('feedback-crew');
-    
-    if (usciteMeseScorso === 0) {
-        trendEl.textContent = 'Primo mese di dati';
-        feedbackEl.textContent = 'Dj Luna: "Iniziamo a raccogliere i dati storici, la rotta è tracciata!"';
-    } else {
-        const diff = usciteMeseCorrente - usciteMeseScorso;
-        const perc = ((diff / usciteMeseScorso) * 100).toFixed(1);
-        if (diff > 0) {
-            trendEl.innerHTML = `<span style="color: #ef4444;">+${perc}%</span> vs mese scorso`;
-            feedbackEl.textContent = 'Dj Aura: "Spese in aumento. Controlliamo la rotta, Captain!"';
-        } else {
-            trendEl.innerHTML = `<span style="color: #22c55e;">${perc}%</span> vs mese scorso`;
-            feedbackEl.textContent = 'Dj Nova: "Ottimo! Risparmio attivo. Holly approva ★"';
-        }
-    }
-}
-
-// === GESTIONE CAMPO GIORNO (MOSTRA/NASCONDI) ===
-const checkboxRipeti = document.getElementById('ripeti-mese');
-const campoGiorno = document.getElementById('campo-giorno');
-
-if (checkboxRipeti && campoGiorno) {
-    checkboxRipeti.addEventListener('change', function() {
-        if (this.checked) {
-            campoGiorno.style.display = 'block';
-            document.getElementById('giorno-ricorrenza').setAttribute('required', 'true');
-        } else {
-            campoGiorno.style.display = 'none';
-            document.getElementById('giorno-ricorrenza').removeAttribute('required');
-            document.getElementById('giorno-ricorrenza').value = ''; 
-        }
-    });
-}
-
-// === CONTROLLO AUTOMATICO SPESE FISSE ALL'AVVIO ===
-function controllaSpeseFisseAutomatiche() {
-    const oggi = new Date();
-    const giornoOggi = oggi.getDate();
-    const meseOggi = oggi.getMonth(); 
-    const annoOggi = oggi.getFullYear();
-    
-    let aggiunte = 0;
-
-    speseFisse.forEach(spesa => {
-        if (spesa.giorno === giornoOggi) {
-            const esisteGia = movimenti.some(m => 
-                m.categoria === spesa.categoria && 
-                m.descrizione.includes('(Auto)') && 
-                new Date(m.data).getMonth() === meseOggi &&
-                new Date(m.data).getFullYear() === annoOggi
-            );
-
-            if (!esisteGia) {
-                movimenti.unshift({
-                    id: Date.now() + Math.random(),
-                    data: new Date().toISOString(),
-                    tipo: 'uscita', 
-                    categoria: spesa.categoria,
-                    importo: spesa.importo,
-                    descrizione: `(Auto) ${spesa.descrizione}`
-                });
-                aggiunte++;
-            }
-        }
-    });
-
-    if (aggiunte > 0) {
-        salvaDati();
-        aggiornaTutto();
-        alert(`✅ Buongiorno! Ho aggiunto automaticamente ${aggiunte} spesa/e fissa/e per oggi.`);
-    }
-}
-
-// === FORM SUBMIT (GESTIONE NUOVA CON RIPETIZIONE) ===
-document.getElementById('form-movimento').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const tipo = document.getElementById('tipo').value;
-    const categoria = document.getElementById('categoria').value;
-    const importo = parseFloat(document.getElementById('importo').value);
-    const descrizione = document.getElementById('descrizione').value;
-    const isRipeti = document.getElementById('ripeti-mese').checked;
-    const giorno = parseInt(document.getElementById('giorno-ricorrenza').value);
-
-    // 1. Salva il movimento normale
-    const nuovoMov = {
-        id: Date.now(),
-        data: new Date().toISOString(),
-        tipo: tipo,
-        categoria: categoria,
-        importo: importo,
-        descrizione: descrizione
-    };
-    movimenti.unshift(nuovoMov);
-
-    // 2. Se è ripetitiva, salviamo la configurazione
-    if (isRipeti && !isNaN(giorno)) {
-        const nuovaSpesaFissa = {
-            categoria: categoria,
-            importo: importo,
-            descrizione: descrizione,
-            giorno: giorno
-        };
-        const esisteConfig = speseFisse.some(s => s.categoria === categoria && s.descrizione === descrizione && s.importo === importo);
-        if (!esisteConfig) {
-            speseFisse.push(nuovaSpesaFissa);
-            localStorage.setItem(STORAGE_KEY_FISSE, JSON.stringify(speseFisse));
-            alert(`✅ Movimento registrato! Ho impostato la ripetizione automatica ogni giorno ${giorno}.`);
-        } else {
-            alert(`✅ Movimento registrato! La ripetizione era già attiva.`);
-        }
-    } else {
-        alert('✅ Movimento registrato e salvato!');
-    }
-
-    salvaDati();
-    aggiornaTutto();
-    e.target.reset();
-    if (campoGiorno) campoGiorno.style.display = 'none';
-    if (checkboxRipeti) checkboxRipeti.checked = false;
+window.eliminaMovimento=(i)=>{ if(confirm('Eliminare?')){movimenti.splice(i,1); salvaDati(); aggiornaTutto();}};
+document.getElementById('form-movimento').addEventListener('submit',(e)=>{
+ e.preventDefault();
+ movimenti.unshift({id:Date.now(), data:new Date().toISOString(), tipo:document.getElementById('tipo').value, categoria:document.getElementById('categoria').value, importo:parseFloat(document.getElementById('importo').value), descrizione:document.getElementById('descrizione').value});
+ salvaDati(); aggiornaTutto(); e.target.reset();
 });
-
-window.eliminaMovimento = (index) => {
-    if (confirm('Vuoi eliminare questo movimento?')) {
-        movimenti.splice(index, 1);
-        salvaDati();
-        aggiornaTutto();
-    }
-};
-
-// === BACKUP: EXPORT ===
-document.getElementById('btn-export').addEventListener('click', () => {
-    if (movimenti.length === 0) {
-        alert('Nessun dato da esportare!');
-        return;
-    }
-    const dataStr = JSON.stringify(movimenti, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const data = new Date().toISOString().split('T')[0];
-    a.href = url;
-    a.download = `backup_bilancio_crew_${data}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    alert('💾 Backup esportato! Controlla la cartella Download.');
-});
-
-// === BACKUP: IMPORT ===
-document.getElementById('btn-import-trigger').addEventListener('click', () => {
-    document.getElementById('file-import').click();
-});
-
-document.getElementById('file-import').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        try {
-            const dati = JSON.parse(event.target.result);
-            if (!Array.isArray(dati)) throw new Error('File non valido');
-            if (confirm(`Trovati ${dati.length} movimenti. Vuoi SOSTITUIRE i dati attuali?`)) {
-                movimenti = dati;
-                salvaDati();
-                aggiornaTutto();
-                alert('✅ Backup ripristinato con successo!');
-            }
-        } catch (err) {
-            alert('❌ Errore: File backup non valido o corrotto.');
-        }
-    };
-    reader.readAsText(file);
-    e.target.value = ''; 
-});
-
-// === STAMPA REPORT ===
-document.getElementById('btn-stampa').addEventListener('click', () => {
-    window.print();
-});
-
-// === INIT: CARICA TUTTO ALL'AVVIO ===
-window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.protocol === 'file:') {
-        document.getElementById('warning-file').style.display = 'block';
-    }
-    caricaDati();
-    controllaSpeseFisseAutomatiche(); // Avvia il controllo automatico
-});
-// === PWA SERVICE WORKER ===
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(e => console.log('SW fail:', e));
-}
+window.addEventListener('DOMContentLoaded', aggiornaTutto);
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('/massy.github.io/sw.js').then(()=>console.log('SW Group v1 root ok')).catch(e=>console.log('SW fail',e)); }
 </script>
-    <!-- ... Tutto il resto del codice HTML sopra rimane uguale ... -->
-
-    <!-- AGGIUNGI QUESTO STILE NEL TUO <style> (o sostituisci il footer esistente) -->
-        <style>
-            /* Assicurati che il container abbia spazio sotto */
-            .container {
-                /* ... gli altri stili che hai già ... */
-                padding-bottom: 80px; /* SPAZIO PER IL FOOTER */
-                position: relative;
-            }
-    
-            /* Stile del Footer Corretto */
-            .site-footer {
-                margin-top: 40px;
-                border-top: 1px solid #334155;
-                padding-top: 20px;
-                text-align: center;
-                font-size: 0.75rem;
-                color: #64748b;
-                width: 100%;
-                position: relative; /* Non assoluto, così scorre col contenuto */
-                bottom: auto;
-            }
-            .site-footer a {
-                color: #94a3b8;
-                text-decoration: none;
-                margin: 0 10px;
-                transition: color 0.2s;
-            }
-            .site-footer a:hover {
-                color: #fbbf24; /* Colore oro quando passi sopra */
-                text-decoration: underline;
-            }
-        </style>
-    
-        <!-- INSERISCI QUESTO FOOTER DOPO L'ULTIMO PULSANTE (dopo Carica Preferita) -->
-        
-        <!-- ... fine div actions-extra ... -->
-        
-        <!-- NUOVO FOOTER VISIBILE -->
-        <div class="site-footer">
-            <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
-            <p>
-                <a href="privacy-policy.html">Privacy Policy</a> | 
-                <a href="cookie-policy.html">Cookie Policy</a>
-            </p>
-        </div>
-    
-        </div> <!-- Chiusura del container principale -->
-    
-        <!-- ... Il resto dello script rimane uguale ... -->
 </body>
 </html>
