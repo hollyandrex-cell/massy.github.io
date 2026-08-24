@@ -1,7 +1,7 @@
 const CACHE_NAME = 'chef-ling-v3';
 const urlsToCache = [
   './',
-  './index.html',
+  './spesa.html',
   './manifest.json',
   './bau-32.png',
   './bau-192x192.png',
