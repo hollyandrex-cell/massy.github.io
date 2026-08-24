@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex Pet Diary V0.6.2 Final - Fixed Base 4.1 + Clinical + QR + Pensione + Vocale</title>
+<title>Holly & Rex Pet Diary - Il Diario del Peloso 🐾 V0.6 Drive Fixed - ClientID integrato by Nova+Aura+Luna</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -18,7 +18,7 @@ h1{color:#fbbf24;text-align:center;margin:0 0 6px;font-size:1.9rem;font-weight:8
 .pet-tab img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid currentColor}
 .btn-add-pet{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;padding:10px 14px;border-radius:14px;font-weight:700;cursor:pointer}
 .section{background:#0f172a;border:1px solid #334155;border-radius:14px;padding:14px;margin-bottom:12px}
-.section h3{color:#fbbf24;font-size:.95rem;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.section h3{color:#fbbf24;font-size:.95rem;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1.5px solid #475569;background:#1e293b;color:#fff;outline:none;font-size:.9rem;font-family:inherit}
 input:focus,select:focus,textarea:focus{border-color:#fbbf24}
@@ -28,8 +28,6 @@ textarea{min-height:70px}
 .btn-secondary{background:linear-gradient(135deg,#334155,#475569);color:#fff}
 .btn-success{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff}
 .btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
-.btn-blue{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff}
-.btn-pink{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}
 .diary-item{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:8px}
 .diary-date{font-size:.72rem;color:#94a3b8}
 .diary-text{font-size:.9rem;margin-top:4px;line-height:1.5}
@@ -38,25 +36,19 @@ textarea{min-height:70px}
 .tag-comportamento{background:#422006;color:#fcd34d}
 .tag-pasto{background:#052e16;color:#86efac}
 .tag-generale{background:#1e1b4b;color:#a5b4fc}
-.tag-vocale{background:#312e81;color:#c7d2fe}
 .reminder{display:flex;justify-content:space-between;align-items:center;background:#1e293b;border:1px solid #334155;padding:10px 12px;border-radius:10px;margin-bottom:8px}
+.reminder-left{display:flex;flex-direction:column}
+.reminder-title{font-weight:700;font-size:.88rem}
+.reminder-when{font-size:.75rem;color:#94a3b8}
 .small{font-size:.8rem;color:#94a3b8;text-align:center;margin-top:14px;line-height:1.5}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
 .modal{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:460px;max-height:85vh;overflow:auto}
 .storage-option{background:#0f172a;border:1.5px solid #475569;padding:14px;border-radius:12px;margin-bottom:10px;cursor:pointer;transition:0.2s;text-align:left}
 .storage-option:hover{border-color:#fbbf24;transform:translateY(-1px)}
-.clinical-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:10px;margin-bottom:10px;display:flex;gap:10px}
-.clinical-card img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:#0f172a}
-.vet-card{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.badge-mb{font-size:.65rem;padding:2px 6px;border-radius:20px;background:#422006;color:#fcd34d;border:1px solid #f59e0b}
-.qr-box{background:#fff;padding:12px;border-radius:12px;display:inline-block;margin:10px auto}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-<!-- MODAL SCELTA SPAZIO - COME V0.4.1 ORIGINALE -->
 <div id="storageModal" class="modal-bg" style="display:none;z-index:1002">
 <div class="modal" style="text-align:center;border:2px solid #fbbf24">
 <h3 style="color:#fbbf24;margin-bottom:8px">🐾 Scegli il tuo spazio dati</h3>
@@ -73,7 +65,6 @@ textarea{min-height:70px}
 <strong style="color:#f59e0b">📱 Solo su questo Dispositivo (Locale)</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">I dati restano offline sul tuo browser/telefono. Veloce, ma se perdi il cell perdi tutto (ti avvisiamo!).</div>
 </div>
-<div style="margin-top:10px;font-size:.72rem;color:#64748b">File unico: <b>Pet_diary.json</b> - Anti-doppioni Luna 💛</div>
 </div>
 </div>
 
@@ -86,8 +77,7 @@ Se cambi telefono, formatti la memoria o cancelli i dati del browser, <b style="
 <span style="display:block;background:#1e293b;border:1px dashed #f59e0b;border-radius:10px;padding:10px;margin:10px 0;font-size:.82rem;color:#fde68a">
 📦 <b>Limite tecnico modalità locale:</b> il browser può salvare max <b style="color:#fbbf24">5-10 MB</b> circa.<br>
 Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio si riempie in fretta!<br>
-💡 <b>Soluzione:</b> con tante immagini usa <b style="color:#4285F4">Google Drive</b> (15GB gratis) o <b style="color:#fbbf24">Firebase Cloud</b> — spazio illimitato per le cartelle cliniche di Holly & Rex!<br><br>
-File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
+💡 <b>Soluzione:</b> con tante immagini usa <b style="color:#4285F4">Google Drive</b> (15GB gratis) o <b style="color:#fbbf24">Firebase Cloud</b> — spazio illimitato per le cartelle cliniche di Holly & Rex!
 </span>
 💛 Consiglio da tesoro: esporta periodicamente un backup o scegli Cloud!
 </p>
@@ -99,43 +89,16 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
 </div>
 </div>
 
-<div id="voiceModal" class="modal-bg" style="display:none;z-index:1004">
-<div class="modal" style="text-align:center;border:2px solid #8b5cf6">
-<h3 style="color:#a78bfa">🎤 Vocale per Veterinario</h3>
-<p id="voiceStatus" style="margin:10px 0">Tieni premuto per registrare (max 15 sec)</p>
-<button class="btn btn-pink" style="padding:20px;font-size:1.2rem" onmousedown="startRec()" ontouchstart="startRec()" onmouseup="stopRec()" ontouchend="stopRec()">🎤 Tieni premuto</button>
-<div id="voicePreview" style="display:none;margin-top:12px">
-<audio id="voiceAudio" controls style="width:100%"></audio>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="btn btn-blue" onclick="sendVoiceToVet()" style="flex:1">📤 Invia al Vet</button>
-<button class="btn btn-secondary" onclick="closeVoiceModal()" style="flex:1">Annulla</button>
-</div>
-<small style="color:#94a3b8;display:block;margin-top:8px">Dopo invio cancellato dal cell, resta solo su WhatsApp!</small>
-</div>
-</div>
-</div>
-
-<div id="qrModal" class="modal-bg" style="display:none;z-index:1005">
-<div class="modal" style="text-align:center;border:2px solid #22c55e">
-<h3 style="color:#22c55e">🏷️ QR Collare - Emergenza</h3>
-<p style="font-size:.85rem;color:#94a3b8;margin:8px 0">Stampa per <span id="qrPetName">Rex</span></p>
-<div id="qrcode" class="qr-box"></div>
-<div id="qrText" style="font-size:.75rem;color:#cbd5e1;text-align:left;background:#0f172a;padding:10px;border-radius:10px;margin-top:10px;white-space:pre-wrap"></div>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-success" onclick="printQR()" style="flex:1">🖨️ Stampa</button><button class="btn btn-secondary" onclick="closeQRModal()" style="flex:1">Chiudi</button></div>
-</div>
-</div>
-
 <div class="card">
 <h1>🐾 Holly & Rex Pet Diary</h1>
-<div class="sub">Il Diario del Peloso Senza Confini<br>Profilo • Salute • Scadenze • Report Vet<br>V0.6.2 Final Fixed Base 4.1 + Clinical + QR + Pensione by Nova + Aura + Luna + Tesoro</div>
-<span class="badge-free">Zero Pubblicità • Zero Abbonamenti • 100% Nostro 💛 <span id="storageBadge"></span></span>
+<div class="sub">Il Diario del Peloso Senza Confini<br>Profilo • Salute • Scadenze • Report Vet<br>V0.6 Drive Fixed - ClientID integrato by Nova + Aura + Luna + Tesoro</div>
+<span class="badge-free">Zero Pubblicità • Zero Abbonamenti • 100% Nostro 💛</span>
 
 <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
-<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()">💾 Pet_diary.json</button>
+<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()">💾 Backup JSON</button>
 <button class="btn-add-pet" style="background:linear-gradient(135deg,#f59e0b,#d97706);font-size:.8rem" onclick="document.getElementById('importFile').click()">📥 Ripristina</button>
 <input type="file" id="importFile" style="display:none" accept=".json" onchange="importBackup(event)">
-<button class="btn-add-pet" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);font-size:.8rem" onclick="toggleCloudPanel()">☁ Cloud</button>
-<button class="btn-add-pet" style="background:linear-gradient(135deg,#ef4444,#dc2626);font-size:.75rem" onclick="resetTotale()">🗑️ Reset Totale</button>
+<button class="btn-add-pet" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);font-size:.8rem" onclick="toggleCloudPanel()">☁ Cloud (Firebase / Drive)</button>
 </div>
 
 <div id="cloudPanel" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:12px">
@@ -144,8 +107,9 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
 <button id="tabDrive" class="btn-add-pet" style="flex:1;background:#0f172a;border:1px solid #4285F4;color:#4285F4" onclick="showTab('drive')">💾 Drive</button>
 </div>
 <div id="panelFb">
-<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase - Famiglia</h4>
-<textarea id="fbConfig" placeholder='Incolla firebaseConfig { apiKey:... }' style="min-height:80px;font-size:.7rem"></textarea>
+<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase - Servizio Holly & Rex (Consigliato per famiglia)</h4>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">Sincronizzazione tempo reale. Se uno in famiglia annota "Rex zoppica" arriva a tutti!</p>
+<textarea id="fbConfig" placeholder='Incolla qui il firebaseConfig { apiKey:..., authDomain:... }' style="min-height:80px;font-size:.7rem"></textarea>
 <input id="fbFamilyId" placeholder="ID Famiglia: es. holly-rex-famiglia-rossi" style="margin-top:8px">
 <div style="display:flex;gap:8px;margin-top:8px">
 <button class="btn btn-secondary" style="flex:1;font-size:.8rem" onclick="saveFirebaseConfig()">💾 Salva Config</button>
@@ -155,7 +119,8 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
 <div id="fbStatus" style="font-size:.75rem;color:#22c55e;margin-top:6px"></div>
 </div>
 <div id="panelDrive" style="display:none">
-<h4 style="color:#4285F4;font-size:.9rem;margin-bottom:8px">💾 Google Drive</h4>
+<h4 style="color:#4285F4;font-size:.9rem;margin-bottom:8px">💾 Google Drive - 100% Tuo, Privato</h4>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">File JSON privato in appDataFolder invisibile. Nessun dato sui nostri server!</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 <button class="btn" style="background:#fff;color:#000;flex:1" onclick="googleLogin()">🔑 Login Google</button>
 <button class="btn btn-secondary" style="flex:1" onclick="saveToDrive()">☁ Salva su Drive</button>
@@ -166,7 +131,7 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
 </div>
 
 <div style="text-align:right;margin-bottom:8px">
-<button onclick="resetStorageChoice()" style="background:none;border:none;color:#94a3b8;font-size:.72rem;cursor:pointer;text-decoration:underline">⚙ Cambia modalità salvataggio (<span id="currentStorageMode">-</span>) • Usati: <span id="usageLabel">0MB</span> • Backup: <span id="usageBackup">mai</span></button>
+<button onclick="resetStorageChoice()" style="background:none;border:none;color:#94a3b8;font-size:.72rem;cursor:pointer;text-decoration:underline">⚙ Cambia modalità salvataggio (<span id="currentStorageMode">-</span>)</button>
 </div>
 
 <div class="pet-tabs" id="petTabs"></div>
@@ -184,39 +149,10 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
       <div><small style="color:#94a3b8">Nascita</small><div id="vNascita"></div></div>
     </div>
     <div style="margin-top:8px"><small style="color:#94a3b8">Allergie / Note</small><div id="vAllergie" style="font-size:.85rem;margin-top:2px"></div></div>
-    <div id="petPhotoPreview" style="margin-top:10px;text-align:center"></div>
   </div>
-
-  <div class="section" style="border-color:#3b82f6">
-    <h3>👨‍⚕️ I miei Veterinari <button class="btn btn-blue" style="width:auto;padding:4px 10px;font-size:.7rem;margin:0" onclick="openVetModal()">+ Aggiungi</button></h3>
-    <div id="vetList"></div>
-    <small style="color:#94a3b8">Fino a 3: base, chirurgo, specialista. Servono per invio rapido + PDF pensione.</small>
-  </div>
-
-  <div class="section" style="border-color:#22c55e">
-    <h3>🩻 Cartella Clinica <span class="badge-mb" id="clinicalSize">0 file</span> <button class="btn btn-success" style="width:auto;padding:4px 10px;font-size:.7rem;margin:0" onclick="openClinicalModal()">+ Esame / RX / Video</button></h3>
-    <div id="clinicalList"></div>
-    <small style="color:#94a3b8">Foto esami, RX, video zoppia... In locale max 5-10MB totali! File unico Pet_diary.json.</small>
-  </div>
-
-  <div class="section" style="border-color:#ec4899">
-    <h3>🎤 Vocale Rapido al Vet <span style="font-size:.7rem;color:#a78bfa">temporaneo</span></h3>
-    <p style="font-size:.8rem;color:#94a3b8;margin-bottom:8px">Registra 10 sec e invia diretto al vet. Dopo invio si cancella dal cell, resta solo su WhatsApp!</p>
-    <button class="btn btn-pink" onclick="openVoiceModal()">🎤 Registra vocale per vet</button>
-  </div>
-
-  <div class="section" style="border-color:#f59e0b">
-    <h3>🏷️ Emergenza & Pensione</h3>
-    <div class="grid2">
-    <button class="btn btn-success" onclick="openQRModal()">🏷️ QR Collare Smarrito</button>
-    <button class="btn btn-primary" onclick="generatePensionPDF()">✈️ PDF Pensione</button>
-    </div>
-    <small style="color:#94a3b8;display:block;margin-top:8px">QR: chi trova il bau scansiona e ti chiama. PDF: per pensione/dog sitter, invii su WhatsApp con 1 tap! File unico Pet_diary.json anti-doppioni.</small>
-  </div>
-
   <div class="section">
     <h3>📝 Diario Salute in Tempo Reale</h3>
-    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento">🧠 Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option><option value="vocale">🎤 Vocale inviato</option></select>
+    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento">🧠 Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option></select>
     <textarea id="diaryText" placeholder="Es: Rex zoppica leggermente..."></textarea>
     <button class="btn btn-primary" onclick="addDiary()">+ Annota ora → Sincronizza</button>
     <div id="diaryList" style="margin-top:12px;max-height:280px;overflow:auto"></div>
@@ -232,48 +168,26 @@ File unico: <b>Pet_diary.json</b> sovrascrive sempre, niente doppioni!
     <div id="remList" style="margin-top:12px"></div>
   </div>
   <div class="section">
-    <h3>🩺 Report & Invio Vet</h3>
-    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:10px">Riepilogo profilo + vet + clinica + ultimi 30gg + scadenze</p>
+    <h3>🩺 Report per Veterinario</h3>
+    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:10px">Riepilogo profilo + ultimi 30gg + scadenze, pronto per WhatsApp!</p>
     <div class="grid2">
       <button class="btn btn-success" onclick="generateReport()">📄 Genera Report</button>
-      <button class="btn btn-secondary" onclick="shareToVet()">💬 Invia a Vet</button>
+      <button class="btn btn-secondary" onclick="shareWhatsApp()">💬 WhatsApp</button>
     </div>
-    <div style="margin-top:10px"><select id="sendVetSelect"></select></div>
     <pre id="reportPreview" style="background:#1e293b;border:1px solid #334155;padding:10px;border-radius:10px;font-size:.75rem;white-space:pre-wrap;margin-top:10px;max-height:260px;overflow:auto;display:none"></pre>
   </div>
 </div>
-<div class="small">Ideato da Nova (Meta) + Dj AURA (Gemini) + Luna (ChatGPT) + Tesoro ❤<br>Holly & Rex Group - Zero pubblicità, massima libertà.<br>Modalità attiva: <span id="footerModeText">-</span> | Storage: <span id="storageDetails"></span><br><span style="font-size:.7rem;color:#64748b">V0.6.2 Final: base 4.1 fixed + clinical + QR + pensione + vocale + Pet_diary.json unico + reset totale</span><br>Spazio: <span id="spaceSmall">0MB</span> • Backup: <span id="backupSmall">mai</span></div>
+<div class="small">Ideato da Nova (Meta) + Dj AURA (Gemini) + Luna (ChatGPT) + Tesoro ❤<br>Holly & Rex Group - Zero pubblicità, massima libertà.<br>Modalità attiva: <span id="footerModeText">-</span> | Storage: <span id="storageDetails"></span><br><span style="font-size:.7rem;color:#64748b">V0.4.1 Fix: debounce sync + no double-read + toast</span></div>
 </div>
 
-<div id="petModal" class="modal-bg" style="display:none"><div class="modal"><h3 id="petModalTitle">🐾 Nuovo Peloso</h3>
-<div class="grid2"><input id="pNome" placeholder="Nome* es Rex"><select id="pSpecie"><option>Cane</option><option>Gatto</option><option>Altro</option></select></div>
-<div class="grid2" style="margin-top:8px"><input id="pRazza" placeholder="Razza es Pastore tedesco"><input id="pPeso" placeholder="Peso es 38"><input id="pChip" placeholder="Microchip"></div>
-<div class="grid2" style="margin-top:8px"><input type="date" id="pNascita"><input id="pFoto" placeholder="Foto URL (opzionale)"></div>
-<div style="margin-top:8px"><label style="font-size:.8rem;color:#fbbf24">📷 Foto profilo (da file)</label>
-<div style="display:flex;gap:8px;margin-top:4px"><input type="file" id="pFotoFile" accept="image/*" style="display:none" onchange="handlePhotoUpload(event)"><button class="btn btn-secondary" style="width:auto;padding:8px 12px;font-size:.8rem" onclick="document.getElementById('pFotoFile').click()">📷 Scegli / Scatta</button><button class="btn btn-secondary" style="width:auto;padding:8px 12px;font-size:.8rem" onclick="clearPetPhoto()">✕</button></div>
-<div id="pFotoPreview" style="margin-top:8px;text-align:center"></div></div>
-<textarea id="pAllergie" placeholder="Allergie, note..."></textarea>
-<div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-secondary" onclick="closePetModal()" style="flex:1">Annulla</button><button class="btn btn-primary" onclick="savePet()" style="flex:1">💾 Salva</button></div></div></div>
-
-<div id="vetModal" class="modal-bg" style="display:none"><div class="modal"><h3>👨‍⚕️ Veterinario</h3>
-<input id="vNome" placeholder="Nome es Dott. Bianchi" style="margin-top:10px"><div class="grid2" style="margin-top:8px"><select id="vRuolo"><option value="Base">Base</option><option value="Chirurgo">Chirurgo</option><option value="Specialista">Specialista</option><option value="Emergenza">Emergenza</option></select><input id="vTel" placeholder="Tel es 333..."></div><input id="vNote" placeholder="Note" style="margin-top:8px">
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-secondary" onclick="closeVetModal()" style="flex:1">Annulla</button><button class="btn btn-blue" onclick="saveVet()" style="flex:1">Salva Vet</button></div></div></div>
-
-<div id="clinicalModal" class="modal-bg" style="display:none"><div class="modal"><h3>🩻 Cartella Clinica</h3>
-<div class="grid2" style="margin-top:10px"><select id="cType"><option value="RX">RX</option><option value="Esame">Esame</option><option value="Eco">Eco</option><option value="Foto">Foto</option><option value="Video">Video</option><option value="Ricetta">Ricetta</option></select><input type="date" id="cDate"></div>
-<input id="cTitle" placeholder="Titolo es RX anca dx" style="margin-top:8px"><textarea id="cNote" placeholder="Note" style="margin-top:8px"></textarea>
-<div style="margin-top:8px"><label style="font-size:.8rem;color:#22c55e">📎 Allega (consigliato &lt;3MB in locale)</label><input type="file" id="cFile" accept="image/*,video/*,.pdf" style="margin-top:4px"><div id="cFilePreview" style="margin-top:8px"></div></div>
-<div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-secondary" onclick="closeClinicalModal()" style="flex:1">Annulla</button><button class="btn btn-success" onclick="saveClinical()" style="flex:1">Salva Esame</button></div></div></div>
+<div id="petModal" class="modal-bg" style="display:none"><div class="modal"><h3 id="petModalTitle">🐾 Nuovo Peloso</h3><div class="grid2"><input id="pNome" placeholder="Nome"><select id="pSpecie"><option>Cane</option><option>Gatto</option><option>Altro</option></select></div><input id="pRazza" placeholder="Razza" style="margin-top:8px"><div class="grid2" style="margin-top:8px"><input id="pPeso" placeholder="Peso"><input id="pChip" placeholder="Microchip"></div><div class="grid2" style="margin-top:8px"><input type="date" id="pNascita"><input id="pFoto" placeholder="Foto URL"></div><textarea id="pAllergie" placeholder="Allergie, note..."></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-secondary" onclick="closePetModal()" style="flex:1">Annulla</button><button class="btn btn-primary" onclick="savePet()" style="flex:1">💾 Salva</button></div></div></div>
 
 <script>
 let storageMode = localStorage.getItem('hollyRex_storageMode') || null;
-let pets = [];
-let currentPetId = null;
+let pets = JSON.parse(localStorage.getItem('hollyRex_pets')||'[]');
+let currentPetId = localStorage.getItem('hollyRex_currentPet')||null;
 let editingPetId = null;
-let firebaseSyncTimeout = null;
-let pendingClinicalFile=null;
-let pendingPhotoFile=null;
-let mediaRecorder=null; let audioChunks=[]; let voiceBlob=null;
+let firebaseSyncTimeout = null; // FIX Luna #3 debounce
 
 function checkStorageConfig(){
   if(!storageMode){
@@ -284,330 +198,313 @@ function checkStorageConfig(){
     render();
   }
 }
-function updateStorageUI(){
-  const labels={firebase:'Firebase Cloud', drive:'Drive / File Personale', local:'Locale'};
-  const shortLabels={firebase:'Firebase', drive:'Drive', local:'Locale'};
-  const badge=document.getElementById('storageBadge');
-  if(badge) badge.textContent = storageMode ? ' • '+ (shortLabels[storageMode]||storageMode).toUpperCase() : '';
-  const cur=document.getElementById('currentStorageMode'); if(cur) cur.textContent=shortLabels[storageMode]||'-';
-  const foot=document.getElementById('footerModeText'); if(foot) foot.textContent=labels[storageMode]||'Non definita';
-  const hasFb=!!localStorage.getItem('hollyRex_fbConfigStr');
-  const hasDrive=!!localStorage.getItem('hollyRex_gDriveToken');
-  const det=document.getElementById('storageDetails'); if(det) det.textContent=`Fb:${hasFb?'ok':'no'} Drive:${hasDrive?'ok':'no'}`;
-  const data=JSON.stringify(localStorage); const mb=(new Blob([data]).size/1024/1024).toFixed(2);
-  const usage=document.getElementById('usageLabel'); if(usage) usage.textContent=mb+'MB';
-  const space=document.getElementById('spaceSmall'); if(space) space.textContent=mb+'MB';
-  const last=localStorage.getItem('hollyRex_lastBackup'); const txt=last? new Date(last).toLocaleString() : 'mai';
-  const ub=document.getElementById('usageBackup'); if(ub) ub.textContent=txt;
-  const bs=document.getElementById('backupSmall'); if(bs) bs.textContent=txt;
-}
 function selectStorage(mode){
-  if(mode==='local'){
-    const hide=localStorage.getItem('hollyRex_hideLocalWarning')==='true';
-    if(!hide){document.getElementById('storageModal').style.display='none';document.getElementById('localWarningModal').style.display='flex';return;}
+  if(mode === 'local'){
+    if(localStorage.getItem('hollyRex_dontShowLocalWarn')==='1'){
+      confirmLocalStorage();
+    } else {
+      document.getElementById('storageModal').style.display='none';
+      document.getElementById('localWarningModal').style.display='flex';
+    }
+  } else {
+    storageMode = mode;
+    localStorage.setItem('hollyRex_storageMode', storageMode);
+    localStorage.setItem('hollyRex_storagePref', mode);
+    document.getElementById('storageModal').style.display='none';
+    updateStorageUI();
+    render();
+    if(mode!=='local') setTimeout(()=>toggleCloudPanel(true), 600);
   }
-  if(mode==='firebase'){ /* per ora lascia passare ma avvisa */ }
-  if(mode==='drive'){ /* lascia */ }
-  storageMode=mode; localStorage.setItem('hollyRex_storageMode',mode); document.getElementById('storageModal').style.display='none'; saveAll(); checkStorageConfig();
+}
+function backToStorageChoice(){
+  document.getElementById('localWarningModal').style.display='none';
+  document.getElementById('storageModal').style.display='flex';
 }
 function confirmLocalStorage(){
-  const chk=document.getElementById('dontShowAgain'); if(chk && chk.checked) localStorage.setItem('hollyRex_hideLocalWarning','true');
-  storageMode='local'; localStorage.setItem('hollyRex_storageMode','local');
-  document.getElementById('localWarningModal').style.display='none'; saveAll(); checkStorageConfig();
+  if(document.getElementById('dontShowAgain')?.checked) localStorage.setItem('hollyRex_dontShowLocalWarn','1');
+  storageMode = 'local';
+  localStorage.setItem('hollyRex_storageMode', storageMode);
+  document.getElementById('localWarningModal').style.display='none';
+  updateStorageUI();
+  render();
 }
-function backToStorageChoice(){document.getElementById('localWarningModal').style.display='none';document.getElementById('storageModal').style.display='flex';}
-function resetStorageChoice(){localStorage.removeItem('hollyRex_storageMode'); storageMode=null; checkStorageConfig();}
-function toggleCloudPanel(){const p=document.getElementById('cloudPanel'); p.style.display=p.style.display==='none'?'block':'none';}
-function showTab(which){document.getElementById('panelFb').style.display=which==='fb'?'block':'none'; document.getElementById('panelDrive').style.display=which==='drive'?'block':'none';}
-function loadPets(){
-  try{
-    pets=JSON.parse(localStorage.getItem('hollyRex_pets')||'[]');
-    const cur=localStorage.getItem('hollyRex_currentPet');
-    currentPetId = cur ? (isNaN(cur) ? cur.replace(/"/g,'') : cur) : null;
-    if(currentPetId && !isNaN(currentPetId)) currentPetId=String(currentPetId);
-    storageMode=localStorage.getItem('hollyRex_storageMode')||null;
-  }catch(e){pets=[]; currentPetId=null;}
-  pets.forEach(p=>{ if(!p.vets) p.vets=[]; if(!p.clinicalDocs) p.clinicalDocs=[]; if(!p.fotoData) p.fotoData=''; });
+function resetStorageChoice(){
+  if(confirm('Vuoi cambiare modalità di salvataggio? I dati locali restano, ma dovrai riconfigurare cloud se vuoi.')){
+    localStorage.removeItem('hollyRex_storageMode');
+    storageMode = null;
+    checkStorageConfig();
+  }
+}
+function updateStorageUI(){
+  const labels = { firebase: 'Firebase Cloud (Consigliato)', drive: 'Google Drive Privato', local: 'Solo Dispositivo (Locale)' };
+  const shortLabels = { firebase: 'Firebase', drive: 'Drive', local: 'Locale' };
+  document.getElementById('currentStorageMode').textContent = shortLabels[storageMode] || storageMode;
+  document.getElementById('footerModeText').textContent = labels[storageMode] || 'Non definita';
+  const hasFb = !!localStorage.getItem('hollyRex_fbConfigStr');
+  const hasDrive = !!localStorage.getItem('hollyRex_gDriveToken');
+  document.getElementById('storageDetails').textContent = `Fb:${hasFb?'ok':'no'} Drive:${hasDrive?'ok':'no'}`;
 }
 function saveAll(){
-  try{
-    localStorage.setItem('hollyRex_pets', JSON.stringify(pets));
-    if(currentPetId) localStorage.setItem('hollyRex_currentPet', String(currentPetId));
-    if(storageMode) localStorage.setItem('hollyRex_storageMode', storageMode);
-  }catch(err){
-    if(err.name==='QuotaExceededError' || err.message.includes('quota')){
-      alert('⚠️ Spazio locale pieno! (5-10MB max)\n\nHai troppe foto RX/video grandi in locale.\n\nSoluzioni:\n1. Cancella qualche esame clinico grande\n2. Usa Drive/Firebase (spazio illimitato)\n3. Esporta Pet_diary.json e fai Reset Totale\n\nIl salvataggio attuale non è andato a buon fine!');
-    } else { alert('Errore salvataggio: '+err.message); }
-    return;
+  localStorage.setItem('hollyRex_pets', JSON.stringify(pets));
+  if(currentPetId) localStorage.setItem('hollyRex_currentPet', currentPetId);
+  render();
+  // FIX Luna #3: debounce sync invece di scrittura immediata
+  if(storageMode==='firebase' && localStorage.getItem('hollyRex_fbConfigStr')){
+    if(firebaseSyncTimeout) clearTimeout(firebaseSyncTimeout);
+    firebaseSyncTimeout = setTimeout(()=>{ syncToFirebase(true); }, 2500);
   }
-  render(); updateStorageUI();
+}
+function toggleCloudPanel(forceOpen){
+  const panel=document.getElementById('cloudPanel');
+  if(forceOpen) panel.style.display='block';
+  else panel.style.display = panel.style.display==='none'?'block':'none';
+  const pref = localStorage.getItem('hollyRex_storagePref') || storageMode || 'fb';
+  showTab(pref==='firebase'?'fb':pref);
+}
+function showTab(which){
+  const mode = which==='fb'?'firebase':which;
+  localStorage.setItem('hollyRex_storagePref', mode==='fb'?'firebase':mode);
+  document.getElementById('panelFb').style.display = which==='fb' ? 'block':'none';
+  document.getElementById('panelDrive').style.display = which==='drive' ? 'block':'none';
+  document.getElementById('tabFb').style.background = which==='fb' ? '#f59e0b' : '#0f172a';
+  document.getElementById('tabFb').style.color = which==='fb' ? '#0f172a' : '#f59e0b';
+  document.getElementById('tabDrive').style.background = which==='drive' ? '#4285F4' : '#0f172a';
+  document.getElementById('tabDrive').style.color = which==='drive' ? '#fff' : '#4285F4';
 }
 function exportBackup(){
-  const data={pets, currentPetId, storageMode, date:new Date().toISOString(), version:'v0.6.2-final'};
+  const data={pets, currentPetId, storageMode, date:new Date().toISOString(), version:'pet-diary-v0.4.1-fixed'};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='Pet_diary.json'; a.click(); URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Pet_diary.json`; a.click(); URL.revokeObjectURL(url);
+  // Aggiorna badge ultimo backup per fix Luna anti-doppioni
   localStorage.setItem('hollyRex_lastBackup', new Date().toISOString());
-  updateStorageUI();
-  alert('✅ Backup salvato come Pet_diary.json - file unico! Sovrascrive il precedente, niente doppioni.');
 }
 function importBackup(e){
   const f=e.target.files[0]; if(!f) return; const r=new FileReader();
-  r.onload=ev=>{try{const data=JSON.parse(ev.target.result); if(!confirm(`Caricare ${data.pets?.length||0} pelosi da ${data.date||''}?`)) return; pets=data.pets||[]; currentPetId=data.currentPetId|| (pets[0]?.id||null); storageMode=data.storageMode||storageMode; saveAll();}catch(err){alert('File non valido '+err.message);}};
+  r.onload=ev=>{try{const data=JSON.parse(ev.target.result); if(!confirm(`Caricare ${data.pets?.length||0} pelosi?`)) return; pets=data.pets||[]; currentPetId=data.currentPetId|| (pets[0]?.id||null); saveAll();}catch(err){alert('File non valido '+err.message);}};
   r.readAsText(f);
 }
-async function resetTotale(){
-  if(!confirm('⚠️ RESET TOTALE\n\nCancello TUTTO: locale, IndexedDB Firebase, session?\n\nHai backup Pet_diary.json?')) return;
-  localStorage.clear(); sessionStorage.clear();
-  if(window.indexedDB && indexedDB.databases){
-    try{ const dbs=await indexedDB.databases(); dbs.forEach(db=>{ indexedDB.deleteDatabase(db.name); }); }catch(e){}
-  }
-  try{ indexedDB.deleteDatabase('firebaseLocalStorageDb'); }catch(e){}
-  try{ indexedDB.deleteDatabase('firebase-heartbeat-database'); }catch(e){}
-  try{ indexedDB.deleteDatabase('firebase-installations-database'); }catch(e){}
-  alert('✅ Tutto cancellato! Ricarico pulito.'); location.reload();
+function saveFirebaseConfig(){
+  const cfgStr=document.getElementById('fbConfig').value.trim();
+  const fam=document.getElementById('fbFamilyId').value.trim()||'default-family';
+  localStorage.setItem('hollyRex_fbConfigStr', cfgStr);
+  localStorage.setItem('hollyRex_familyId', fam);
+  document.getElementById('fbStatus').textContent='✅ Config salvata! Ora Sincronizza.';
+}
+async function syncToFirebase(silent){
+  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
+  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
+  if(!cfgStr){ if(!silent) alert('Incolla config Firebase!'); return; }
+  if(!silent) document.getElementById('fbStatus').textContent='⏳ Sync Firebase...';
+  try{
+    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    let cfg; try{ cfg = (new Function('return '+cfgStr))(); } catch{ cfg = JSON.parse(cfgStr); }
+    let app;
+    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(cfg, 'petDiaryFb'); }
+    const db = getFirestore(app);
+    await setDoc(doc(db, 'petDiaryFamilies', familyId), { pets, currentPetId, updatedAt: new Date().toISOString() }, { merge:true });
+    if(!silent) document.getElementById('fbStatus').textContent='✅ Sincronizzato! Famiglia: '+familyId;
+  }catch(err){ if(!silent) document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
 }
 
-// PHOTO
-function handlePhotoUpload(ev){
-  const file=ev.target.files[0]; if(!file) return;
-  if(file.size>2*1024*1024) alert('Foto >2MB: in locale occupa tanto!');
-  const reader=new FileReader(); reader.onload=e=>{ pendingPhotoFile=e.target.result; document.getElementById('pFotoPreview').innerHTML='<img src="'+pendingPhotoFile+'" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #fbbf24">'; }; reader.readAsDataURL(file);
+// FIX Luna #2 - Una sola lettura, pulito!
+async function loadFromFirebase(){
+  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
+  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
+  if(!cfgStr){ alert('Config mancante'); return; }
+  document.getElementById('fbStatus').textContent='⏳ Carico da Firebase...';
+  try{
+    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    let cfg; try{ cfg = (new Function('return '+cfgStr))(); } catch{ cfg = JSON.parse(cfgStr); }
+    let app;
+    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(cfg, 'petDiaryFb'); }
+    const db = getFirestore(app);
+    // FIX: una sola lettura, non due!
+    const snap = await getDoc(doc(db,'petDiaryFamilies',familyId));
+    if(!snap.exists()){ document.getElementById('fbStatus').textContent='⚠ Nessun dato su cloud per questa famiglia'; return; }
+    const data=snap.data();
+    if(!confirm(`Trovato backup Firebase del ${data.updatedAt} con ${data.pets?.length||0} pelosi. Caricare?`)) return;
+    pets=data.pets||[]; currentPetId=data.currentPetId||null; 
+    localStorage.setItem('hollyRex_pets', JSON.stringify(pets));
+    if(currentPetId) localStorage.setItem('hollyRex_currentPet', currentPetId);
+    render();
+    document.getElementById('fbStatus').textContent='✅ Caricato da Firebase!';
+  }catch(err){ document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
 }
-function clearPetPhoto(){ pendingPhotoFile=null; document.getElementById('pFoto').value=''; document.getElementById('pFotoPreview').innerHTML=''; }
-
-// PET MODAL
-function openPetModal(edit){
+let gAccessToken = localStorage.getItem('hollyRex_gDriveToken')||null;
+function loadGis(){
+  return new Promise((resolve, reject)=>{
+    if(window.google && window.google.accounts) return resolve();
+    const s=document.createElement('script'); s.src='https://accounts.google.com/gsi/client'; s.onload=resolve; s.onerror=reject; document.head.appendChild(s);
+  });
+}
+async function googleLogin(){
+  try{
+    await loadGis();
+    const clientId = '312141109786-aahbkamgrdtrmg6iv6nka4f6olmi56m9.apps.googleusercontent.com';
+    // Client ID fisso Holly & Rex Group - non serve più prompt
+    localStorage.setItem('hollyRex_gClientId', clientId);
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file',
+      callback: (resp)=>{
+        if(resp.access_token){
+          gAccessToken = resp.access_token;
+          localStorage.setItem('hollyRex_gDriveToken', gAccessToken);
+          document.getElementById('driveStatus').textContent='✅ Login ok! Ora salva/carica.';
+          updateStorageUI();
+        } else {
+          document.getElementById('driveStatus').textContent='❌ Login fallito, token mancante';
+        }
+      }
+    });
+    tokenClient.requestAccessToken();
+  }catch(e){ alert('Errore: '+e.message); }
+}
+async function saveToDrive(){
+  if(!gAccessToken){ alert('Fai login prima!'); return; }
+  document.getElementById('driveStatus').textContent='⏳ Salvo su Drive...';
+  try{
+    const fileContent = JSON.stringify({pets, currentPetId, date:new Date().toISOString()});
+    const searchRes = await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27holly_rex_pet_diary.json%27&fields=files(id,name)', { headers:{ Authorization:'Bearer '+gAccessToken } });
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
+    const searchJson = await searchRes.json();
+    let fileId = searchJson.files && searchJson.files[0] ? searchJson.files[0].id : null;
+    if(fileId){
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`, { method:'PATCH', headers:{ Authorization:'Bearer '+gAccessToken }, body: fileContent });
+    } else {
+      const metadata = { name:'holly_rex_pet_diary.json', parents:['appDataFolder'] };
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(metadata)], {type:'application/json'}));
+      form.append('file', new Blob([fileContent], {type:'application/json'}));
+      const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', { method:'POST', headers:{ Authorization:'Bearer '+gAccessToken }, body: form });
+      const json = await res.json(); fileId=json.id;
+    }
+    document.getElementById('driveStatus').textContent='✅ Salvato su Drive! ID:'+fileId.substring(0,8);
+  }catch(err){ document.getElementById('driveStatus').textContent='❌ Errore: '+err.message; }
+}
+async function loadFromDrive(){
+  if(!gAccessToken){ alert('Login prima'); return; }
+  document.getElementById('driveStatus').textContent='⏳ Carico da Drive...';
+  try{
+    const searchRes = await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27holly_rex_pet_diary.json%27&fields=files(id,name)', { headers:{ Authorization:'Bearer '+gAccessToken } });
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); updateStorageUI(); return; }
+    const searchJson = await searchRes.json();
+    if(!searchJson.files || !searchJson.files.length){ document.getElementById('driveStatus').textContent='⚠ Nessun backup'; return; }
+    const fileId = searchJson.files[0].id;
+    const fileRes = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, { headers:{ Authorization:'Bearer '+gAccessToken } });
+    if(fileRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
+    const data = await fileRes.json();
+    if(!confirm(`Backup Drive ${data.date} con ${data.pets?.length||0} pelosi. Caricare?`)) return;
+    pets=data.pets||[]; currentPetId=data.currentPetId||null; saveAll();
+    document.getElementById('driveStatus').textContent='✅ Caricato da Drive!';
+  }catch(err){ document.getElementById('driveStatus').textContent='❌ Errore: '+err.message; }
+}
+function openPetModal(edit=false){
   if(edit && currentPetId){
-    const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-    editingPetId=pet.id;
+    const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
+    editingPetId = pet.id;
     document.getElementById('petModalTitle').textContent='✏ Modifica '+pet.nome;
-    document.getElementById('pNome').value=pet.nome; document.getElementById('pSpecie').value=pet.specie; document.getElementById('pRazza').value=pet.razza||''; document.getElementById('pPeso').value=pet.peso||''; document.getElementById('pChip').value=pet.chip||''; document.getElementById('pNascita').value=pet.nascita||''; document.getElementById('pFoto').value=pet.foto||''; document.getElementById('pAllergie').value=pet.allergie||'';
-    pendingPhotoFile=pet.fotoData||''; if(pendingPhotoFile) document.getElementById('pFotoPreview').innerHTML='<img src="'+pendingPhotoFile+'" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #fbbf24">';
+    pNome.value=pet.nome; pSpecie.value=pet.specie; pRazza.value=pet.razza||''; pPeso.value=pet.peso||''; pChip.value=pet.chip||''; pNascita.value=pet.nascita||''; pFoto.value=pet.foto||''; pAllergie.value=pet.allergie||'';
   } else {
     editingPetId=null;
     document.getElementById('petModalTitle').textContent='🐾 Nuovo Peloso';
-    document.querySelectorAll('#petModal input, #petModal textarea').forEach(el=>el.value=''); pendingPhotoFile=''; document.getElementById('pFotoPreview').innerHTML='';
+    document.querySelectorAll('#petModal input, #petModal textarea').forEach(el=>el.value='');
   }
   document.getElementById('petModal').style.display='flex';
 }
 function closePetModal(){document.getElementById('petModal').style.display='none';}
 function savePet(){
-  const nome=document.getElementById('pNome').value.trim(); if(!nome) return alert('Nome?');
-  const data={id: editingPetId || Date.now(), nome, specie:document.getElementById('pSpecie').value, razza:document.getElementById('pRazza').value.trim(), peso:document.getElementById('pPeso').value.trim(), chip:document.getElementById('pChip').value.trim(), nascita:document.getElementById('pNascita').value, foto:document.getElementById('pFoto').value.trim(), fotoData:pendingPhotoFile||'', allergie:document.getElementById('pAllergie').value.trim(), diary:[], reminders:[], vets:[], clinicalDocs:[]};
+  const nome = pNome.value.trim(); if(!nome) return alert('Nome?');
+  const data = {id: editingPetId||Date.now(), nome, specie: pSpecie.value, razza: pRazza.value.trim(), peso: pPeso.value.trim(), chip: pChip.value.trim(), nascita: pNascita.value, foto: pFoto.value.trim(), allergie: pAllergie.value.trim(), diary: [], reminders: []};
   if(editingPetId){
-    const idx=pets.findIndex(p=>String(p.id)===String(editingPetId));
-    data.diary=pets[idx].diary||[]; data.reminders=pets[idx].reminders||[]; data.vets=pets[idx].vets||[]; data.clinicalDocs=pets[idx].clinicalDocs||[];
-    if(!data.fotoData) data.fotoData=pets[idx].fotoData||'';
+    const idx = pets.findIndex(p=>p.id==editingPetId);
+    data.diary = pets[idx].diary||[]; data.reminders = pets[idx].reminders||[];
     pets[idx]=data;
   } else {
     pets.push(data);
-    currentPetId=String(data.id);
+    currentPetId=data.id;
   }
   closePetModal(); saveAll();
 }
-
-// VET
-function openVetModal(){document.getElementById('vNome').value='';document.getElementById('vTel').value='';document.getElementById('vNote').value='';document.getElementById('vetModal').style.display='flex';}
-function closeVetModal(){document.getElementById('vetModal').style.display='none';}
-function saveVet(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  const nome=document.getElementById('vNome').value.trim(); if(!nome) return alert('Nome vet?');
-  const tel=document.getElementById('vTel').value.trim(); if(!tel) return alert('Tel?');
-  pet.vets=pet.vets||[]; if(pet.vets.length>=3) return alert('Max 3 vet!');
-  pet.vets.push({id:Date.now(), nome, ruolo:document.getElementById('vRuolo').value, tel, note:document.getElementById('vNote').value.trim()});
-  closeVetModal(); saveAll();
-}
-function delVet(id){const pet=pets.find(p=>String(p.id)===String(currentPetId)); pet.vets=pet.vets.filter(v=>String(v.id)!==String(id)); saveAll();}
-
-// CLINICAL
-function openClinicalModal(){document.getElementById('cTitle').value='';document.getElementById('cNote').value='';document.getElementById('cDate').valueAsDate=new Date();pendingClinicalFile=null;document.getElementById('cFilePreview').innerHTML='';document.getElementById('clinicalModal').style.display='flex';}
-function closeClinicalModal(){document.getElementById('clinicalModal').style.display='none';}
-document.getElementById('cFile').addEventListener('change', e=>{
-  const file=e.target.files[0]; if(!file) return;
-  if(file.size>4*1024*1024) alert('File >4MB: in locale rischi limite 5-10MB!');
-  const reader=new FileReader(); reader.onload=ev=>{
-    pendingClinicalFile={data:ev.target.result, name:file.name, type:file.type, size:file.size};
-    if(file.type.startsWith('image/')) document.getElementById('cFilePreview').innerHTML='<img src="'+pendingClinicalFile.data+'" style="width:100%;max-height:200px;object-fit:contain;border-radius:10px"><br><small>'+file.name+' - '+(file.size/1024).toFixed(0)+'KB</small>';
-    else document.getElementById('cFilePreview').innerHTML='📎 '+file.name+' ('+(file.size/1024).toFixed(0)+'KB) pronto';
-  }; reader.readAsDataURL(file);
-});
-function saveClinical(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  const title=document.getElementById('cTitle').value.trim(); if(!title) return alert('Titolo?');
-  pet.clinicalDocs=pet.clinicalDocs||[];
-  pet.clinicalDocs.push({id:Date.now(), date:document.getElementById('cDate').value||new Date().toISOString().slice(0,10), type:document.getElementById('cType').value, title, note:document.getElementById('cNote').value.trim(), file:pendingClinicalFile});
-  closeClinicalModal(); saveAll();
-}
-function delClinical(id){const pet=pets.find(p=>String(p.id)===String(currentPetId)); pet.clinicalDocs=pet.clinicalDocs.filter(c=>String(c.id)!==String(id)); saveAll();}
-async function shareClinical(id){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); const c=(pet.clinicalDocs||[]).find(x=>String(x.id)===String(id)); if(!c) return;
-  const vetId=document.getElementById('sendVetSelect').value; const vet=(pet.vets||[]).find(v=>String(v.id)===String(vetId));
-  let text=`🐾 ${pet.nome} - ${c.type}: ${c.title}\nData: ${c.date}\nNote: ${c.note||''}\n`;
-  try{
-    if(c.file && c.file.data){
-      const res=await fetch(c.file.data); const blob=await res.blob(); const file=new File([blob], c.file.name||'esame.jpg', {type:blob.type});
-      if(navigator.canShare && navigator.canShare({files:[file]})){
-        await navigator.share({files:[file], title: text, text}); return;
-      }
-    }
-    if(navigator.share){ await navigator.share({title: pet.nome+' - '+c.title, text}); return; }
-  }catch(e){}
-  const wa=encodeURIComponent(text); const tel=vet? vet.tel.replace(/[^0-9]/g,'') : ''; if(tel) window.open('https://wa.me/'+tel+'?text='+wa,'_blank'); else window.open('https://wa.me/?text='+wa,'_blank');
-}
-
-// VOICE
-function openVoiceModal(){document.getElementById('voiceModal').style.display='flex'; document.getElementById('voicePreview').style.display='none'; document.getElementById('voiceStatus').textContent='Tieni premuto per registrare (max 15 sec)'; voiceBlob=null;}
-function closeVoiceModal(){ if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop(); document.getElementById('voiceModal').style.display='none'; voiceBlob=null; audioChunks=[]; }
-async function startRec(){
-  try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    mediaRecorder=new MediaRecorder(stream); audioChunks=[];
-    mediaRecorder.ondataavailable=e=>{audioChunks.push(e.data);};
-    mediaRecorder.onstop=()=>{
-      voiceBlob=new Blob(audioChunks,{type:'audio/webm'});
-      const url=URL.createObjectURL(voiceBlob);
-      document.getElementById('voiceAudio').src=url;
-      document.getElementById('voicePreview').style.display='block';
-      document.getElementById('voiceStatus').textContent='✅ Registrato! Ora invia al vet';
-    };
-    mediaRecorder.start(); document.getElementById('voiceStatus').innerHTML='<span>🔴 Registrazione in corso... rilascia per stop</span>';
-  }catch(err){alert('Microfono non disponibile: '+err.message);}
-}
-function stopRec(){ if(mediaRecorder && mediaRecorder.state==='recording'){mediaRecorder.stop(); mediaRecorder.stream.getTracks().forEach(t=>t.stop());}}
-async function sendVoiceToVet(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  if(!voiceBlob) return alert('Registra prima!');
-  const vetId=document.getElementById('sendVetSelect').value; const vet=(pet.vets||[]).find(v=>String(v.id)===String(vetId))||(pet.vets||[])[0];
-  if(!vet) return alert('Aggiungi un vet!');
-  try{
-    const file=new File([voiceBlob], 'vocale_'+pet.nome+'.webm', {type:'audio/webm'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title: pet.nome+' - Vocale', text: '🐾 '+pet.nome+' - Vocale del '+new Date().toLocaleString()});
-      closeVoiceModal();
-      setTimeout(()=>{
-        if(confirm('✅ Vocale inviato a '+vet.nome+'!\n\nVuoi tenere traccia nel diario di '+pet.nome+'?\nSì = salva nota testuale\nNo = cancella tutto, resta solo su WhatsApp')){
-          pet.diary=pet.diary||[]; pet.diary.push({id:Date.now(), date:new Date().toISOString(), text:'🎤 Vocale inviato a '+vet.nome+' ('+vet.tel+') il '+new Date().toLocaleString()+' - File vocale su WhatsApp. Ricorda backup Pet_diary.json!', tag:'vocale', author:'Io'}); saveAll();
-        }
-      },500); return;
-    }
-  }catch(e){}
-  const waText=encodeURIComponent('🐾 '+pet.nome+' - Vocale registrato'); window.open('https://wa.me/'+vet.tel.replace(/[^0-9]/g,'')+'?text='+waText,'_blank'); closeVoiceModal();
-}
-function openQRModal(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet){ alert('Aggiungi prima un peloso!'); return; }
-  document.getElementById('qrPetName').textContent=pet.nome;
-  const info='🐾 SMARRITO: '+pet.nome+'\nSpecie: '+pet.specie+' '+(pet.razza||'')+'\nPeso: '+(pet.peso||'-')+'\nChip: '+(pet.chip||'-')+'\nAllergie: '+(pet.allergie||'nessuna')+'\nVet: '+((pet.vets||[]).map(v=>v.nome+' '+v.tel).join(' / ')||'non inserito')+'\n\nHolly & Rex Pet Diary';
-  document.getElementById('qrText').textContent=info;
-  document.getElementById('qrcode').innerHTML='';
-  try{ new QRCode(document.getElementById('qrcode'), {text: info, width:180, height:180}); }catch(e){ document.getElementById('qrcode').innerHTML='QR non disponibile offline'; }
-  document.getElementById('qrModal').style.display='flex';
-}
-function closeQRModal(){document.getElementById('qrModal').style.display='none';}
-function printQR(){ window.print(); }
-function generatePensionPDF(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  try{
-    const {jsPDF}=window.jspdf; const doc=new jsPDF();
-    doc.setFontSize(16); doc.text('Holly & Rex - Passaporto Pensione',10,15);
-    doc.setFontSize(11); doc.text('Pet: '+pet.nome+' - '+pet.specie+' '+(pet.razza||''),10,25);
-    doc.text('Peso: '+(pet.peso||'-')+' - Chip: '+(pet.chip||'-')+' - Nascita: '+(pet.nascita||'-'),10,32);
-    doc.text('Allergie: '+(pet.allergie||'nessuna'),10,39);
-    let y=50; doc.setFontSize(12); doc.text('Veterinari:',10,y); y+=8;
-    (pet.vets||[]).forEach(v=>{ doc.setFontSize(10); doc.text('- '+v.nome+' ('+v.ruolo+') Tel:'+v.tel+' - '+(v.note||''),10,y); y+=6; });
-    y+=6; doc.text('Scadenze:',10,y); y+=8;
-    (pet.reminders||[]).slice(0,12).forEach(r=>{ doc.text(r.date+' - '+r.type+' - '+r.note,10,y); y+=5; });
-    y+=6; doc.text('Cartella clinica recente:',10,y); y+=8;
-    (pet.clinicalDocs||[]).slice(-6).forEach(c=>{ doc.text(c.date+' '+c.type+' '+c.title+' - '+(c.note||''),10,y); y+=5; });
-    y+=10; doc.setFontSize(8); doc.text('Generato da Holly & Rex V0.6.2 - Pet_diary.json unico - '+new Date().toLocaleString(),10,y);
-    doc.save('Passaporto_'+pet.nome+'_Pensione.pdf');
-    alert('✅ PDF Passaporto generato! Invia su WhatsApp alla pensione/dog sitter.');
-  }catch(e){ alert('PDF: libreria non caricata, controlla connessione. Usa Report Testuale.'); }
-}
-
 function render(){
-  const tabs=document.getElementById('petTabs'); tabs.innerHTML='';
+  const tabs = document.getElementById('petTabs'); tabs.innerHTML='';
   if(pets.length===0){
     document.getElementById('noPets').style.display='block';
     document.getElementById('petView').style.display='none';
-    updateStorageUI();
     return;
   }
   document.getElementById('noPets').style.display='none';
   document.getElementById('petView').style.display='block';
-  if(!currentPetId) currentPetId=String(pets[0].id);
-  // FIX: assicurati che currentPetId esista davvero
-  if(!pets.find(p=>String(p.id)===String(currentPetId))) currentPetId=String(pets[0].id);
-
+  if(!currentPetId) currentPetId=pets[0].id;
   pets.forEach(p=>{
-    const b=document.createElement('button'); b.className='pet-tab'+(String(p.id)===String(currentPetId)?' active':'');
-    const imgSrc=p.fotoData||p.foto; b.innerHTML=(imgSrc?`<img src="${imgSrc}">`: (p.specie==='Gatto'?'🐱':'🐶'))+' '+p.nome;
-    b.onclick=()=>{currentPetId=String(p.id); saveAll();};
+    const b=document.createElement('button'); b.className='pet-tab'+(p.id==currentPetId?' active':'');
+    const img = p.foto ? `<img src="${p.foto}" onerror="this.style.display='none'">` : (p.specie==='Gatto'?'🐱':'🐶');
+    b.innerHTML=`${p.foto?`<img src="${p.foto}">`:img} ${p.nome}`;
+    b.onclick=()=>{currentPetId=p.id; saveAll();};
     tabs.appendChild(b);
   });
   const addBtn=document.createElement('button'); addBtn.className='btn-add-pet'; addBtn.textContent='+ Nuovo'; addBtn.onclick=()=>openPetModal(false); tabs.appendChild(addBtn);
-
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
+  const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
   document.getElementById('petNameTitle').textContent='- '+pet.nome;
   document.getElementById('vSpecie').textContent=(pet.specie||'')+' '+(pet.razza||'');
   document.getElementById('vPeso').textContent=pet.peso||'-';
   document.getElementById('vChip').textContent=pet.chip||'Non inserito';
   document.getElementById('vNascita').textContent=pet.nascita||'-';
   document.getElementById('vAllergie').textContent=pet.allergie||'Nessuna nota';
-  const photoDiv=document.getElementById('petPhotoPreview'); if(pet.fotoData) photoDiv.innerHTML='<img src="'+pet.fotoData+'" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #fbbf24">'; else if(pet.foto) photoDiv.innerHTML='<img src="'+pet.foto+'" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #fbbf24" onerror="this.style.display=\'none\'">'; else photoDiv.innerHTML='';
-
-  const vetList=document.getElementById('vetList'); vetList.innerHTML=''; (pet.vets||[]).forEach(v=>{const div=document.createElement('div'); div.className='vet-card'; div.innerHTML='<div><b>'+v.nome+'</b> <small>('+v.ruolo+')</small><br>📞 '+v.tel+'<br><small style="color:#94a3b8">'+(v.note||'')+'</small></div><div><button onclick="delVet('+v.id+')" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:28px;height:28px;border-radius:8px">✕</button></div>'; vetList.appendChild(div);});
-  const sel=document.getElementById('sendVetSelect'); if(sel){ sel.innerHTML=''; (pet.vets||[]).forEach(v=>{const o=document.createElement('option'); o.value=v.id; o.textContent=v.nome+' - '+v.tel; sel.appendChild(o);}); }
-
-  const clinList=document.getElementById('clinicalList'); clinList.innerHTML=''; let total=0; (pet.clinicalDocs||[]).slice().reverse().forEach(c=>{ if(c.file&&c.file.size) total+=c.file.size; const div=document.createElement('div'); div.className='clinical-card'; const thumb=c.file&&c.file.data&&c.file.data.startsWith('data:image')?'<img src="'+c.file.data+'">':'<div style="width:64px;height:64px;background:#0f172a;border-radius:10px;display:flex;align-items:center;justify-content:center">'+(c.type==='Video'?'🎥':'📄')+'</div>'; div.innerHTML=thumb+'<div style="flex:1"><b style="font-size:.85rem;color:#22c55e">'+c.type+': '+c.title+'</b><br><span style="font-size:.75rem;color:#94a3b8">📅 '+c.date+'</span><br><span style="font-size:.8rem">'+(c.note||'')+'</span><br><small style="color:#64748b">'+(c.file?c.file.name+' • '+(c.file.size/1024).toFixed(0)+'KB':'nessun allegato')+'</small></div><div><button onclick="delClinical('+c.id+')" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:28px;height:28px;border-radius:8px">✕</button><br><button onclick="shareClinical('+c.id+')" style="margin-top:4px;background:#3b82f6;border:none;color:#fff;width:28px;height:28px;border-radius:8px">↗</button></div>'; clinList.appendChild(div); });
-  const cs=document.getElementById('clinicalSize'); if(cs) cs.textContent=(pet.clinicalDocs||[]).length+' file • '+(total/1024/1024).toFixed(1)+'MB';
-
-  const dl=document.getElementById('diaryList'); dl.innerHTML=''; (pet.diary||[]).slice().reverse().forEach(d=>{const div=document.createElement('div'); div.className='diary-item'; const tagClass=d.tag==='sintomo'?'tag-sintomo':d.tag==='comportamento'?'tag-comportamento':d.tag==='pasto'?'tag-pasto':d.tag==='vocale'?'tag-vocale':'tag-generale'; div.innerHTML='<div class="diary-date">'+new Date(d.date).toLocaleString()+' • '+(d.author||'Famiglia')+'</div><div class="diary-text">'+d.text+'</div><span class="diary-tag '+tagClass+'">'+d.tag+'</span>'; dl.appendChild(div);});
-  const rl=document.getElementById('remList'); rl.innerHTML=''; (pet.reminders||[]).sort((a,b)=> new Date(a.date)-new Date(b.date)).forEach(r=>{const div=document.createElement('div'); div.className='reminder'; const isPast=new Date(r.date)<new Date(); div.style.borderColor=isPast?'#ef4444':'#334155'; div.innerHTML='<div><span style="font-weight:700;font-size:.88rem">'+r.type+': '+(r.note||'')+'</span><br><span style="font-size:.75rem;color:#94a3b8">📅 '+r.date+' '+(isPast?'⚠ SCADUTO':'')+'</span></div><button onclick="delReminder('+r.id+')" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:32px;height:32px;border-radius:8px">✕</button>'; rl.appendChild(div);});
-  updateStorageUI();
+  const dl=document.getElementById('diaryList'); dl.innerHTML='';
+  (pet.diary||[]).slice().reverse().forEach(d=>{
+    const div=document.createElement('div'); div.className='diary-item';
+    const tagClass = d.tag==='sintomo'?'tag-sintomo':d.tag==='comportamento'?'tag-comportamento':d.tag==='pasto'?'tag-pasto':'tag-generale';
+    div.innerHTML=`<div class="diary-date">${new Date(d.date).toLocaleString()} • ${d.author||'Famiglia'}</div><div class="diary-text">${d.text}</div><span class="diary-tag ${tagClass}">${d.tag}</span>`;
+    dl.appendChild(div);
+  });
+  const rl=document.getElementById('remList'); rl.innerHTML='';
+  (pet.reminders||[]).sort((a,b)=> new Date(a.date)-new Date(b.date)).forEach(r=>{
+    const div=document.createElement('div'); div.className='reminder';
+    const isPast = new Date(r.date) < new Date(); const isSoon = (new Date(r.date)-new Date())/86400000 < 7;
+    div.style.borderColor = isPast ? '#ef4444' : isSoon ? '#fbbf24' : '#334155';
+    div.innerHTML=`<div class="reminder-left"><span class="reminder-title">${r.type}: ${r.note||''}</span><span class="reminder-when">📅 ${r.date} ${isPast?'⚠ SCADUTO':isSoon?'⏰ A BREVE':''}</span></div><button onclick="delReminder(${r.id})" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:32px;height:32px;border-radius:8px;cursor:pointer">✕</button>`;
+    rl.appendChild(div);
+  });
 }
 function addDiary(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  const text=document.getElementById('diaryText').value.trim(); if(!text) return alert('Scrivi qualcosa!');
-  const tag=document.getElementById('diaryTag').value;
-  pet.diary=pet.diary||[]; pet.diary.push({id:Date.now(), date:new Date().toISOString(), text, tag, author:'Io'});
+  const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
+  const text = document.getElementById('diaryText').value.trim(); if(!text) return alert('Scrivi qualcosa!');
+  const tag = document.getElementById('diaryTag').value;
+  pet.diary = pet.diary||[]; pet.diary.push({id:Date.now(), date:new Date().toISOString(), text, tag, author:'Io'});
   document.getElementById('diaryText').value='';
   if(navigator.vibrate) navigator.vibrate(100);
   saveAll();
 }
 function addReminder(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  const type=document.getElementById('remType').value;
-  const date=document.getElementById('remDate').value; if(!date) return alert('Data?');
-  const note=document.getElementById('remNote').value.trim();
-  pet.reminders=pet.reminders||[]; pet.reminders.push({id:Date.now(), type, date, note});
+  const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
+  const type = document.getElementById('remType').value;
+  const date = document.getElementById('remDate').value; if(!date) return alert('Data?');
+  const note = document.getElementById('remNote').value.trim();
+  pet.reminders = pet.reminders||[]; pet.reminders.push({id:Date.now(), type, date, note});
   document.getElementById('remNote').value=''; document.getElementById('remDate').value='';
   saveAll();
 }
-function delReminder(id){const pet=pets.find(p=>String(p.id)===String(currentPetId)); pet.reminders=pet.reminders.filter(r=>String(r.id)!==String(id)); saveAll();}
+function delReminder(id){
+  const pet = pets.find(p=>p.id==currentPetId); pet.reminders = pet.reminders.filter(r=>r.id!=id); saveAll();
+}
 function generateReport(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); if(!pet) return;
-  const last30=(pet.diary||[]).filter(d=> (new Date()-new Date(d.date))/86400000 <=30);
-  let txt=`🐾 HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- VETERINARI ---\n`; (pet.vets||[]).forEach(v=>{txt+=`- ${v.nome} (${v.ruolo}) Tel:${v.tel} ${v.note||''}\n`;});
-  txt+=`\n--- CARTELLA CLINICA (${(pet.clinicalDocs||[]).length} file) ---\n`; (pet.clinicalDocs||[]).forEach(c=>{txt+=`- ${c.date} | ${c.type} | ${c.title} | ${c.note||''} | file:${c.file?c.file.name:'no'}\n`;});
-  txt+=`\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
+  const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
+  const last30 = (pet.diary||[]).filter(d=> (new Date()-new Date(d.date))/86400000 <=30);
+  let txt = `🐾 HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
   txt+=`\n--- ULTIMI 30GG ---\n`; last30.forEach(d=>{txt+=`${new Date(d.date).toLocaleString()} [${d.tag}] ${d.text}\n`;});
-  txt+=`\nHolly & Rex Pet Diary V0.6.2 Final by Nova+Aura+Luna+Tesoro 💛\nModalità: ${storageMode}\nFile unico: Pet_diary.json\n`;
-  const pre=document.getElementById('reportPreview'); pre.textContent=txt; pre.style.display='block';
+  txt+=`\n--- STORICO ---\n`; (pet.diary||[]).forEach(d=>{txt+=`${new Date(d.date).toLocaleDateString()} ${d.tag}: ${d.text}\n`;});
+  txt+=`\nHolly & Rex Pet Diary V0.6 Drive Fixed - ClientID integrato by Nova+Aura+Luna 💛\nModalità: ${storageMode}\n`;
+  const pre = document.getElementById('reportPreview'); pre.textContent=txt; pre.style.display='block';
 }
-async function shareToVet(){
-  const pet=pets.find(p=>String(p.id)===String(currentPetId)); const vetId=document.getElementById('sendVetSelect').value; const vet=(pet.vets||[]).find(v=>String(v.id)===String(vetId))||(pet.vets||[])[0]; if(!vet) return alert('Aggiungi vet!');
-  const lastDiary=(pet.diary||[]).slice(-2).map(d=>d.text).join('\n'); let text='🐾 '+pet.nome+' - Richiesta Vet '+vet.nome+'\n\n'+lastDiary;
-  try{ if(navigator.share){ await navigator.share({title: pet.nome, text}); return; } }catch(e){}
-  window.open('https://wa.me/'+vet.tel.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(text),'_blank');
+function shareWhatsApp(){
+  const pre = document.getElementById('reportPreview'); if(pre.style.display==='none') generateReport();
+  const txt = encodeURIComponent(pre.textContent.substring(0,3500));
+  window.open('https://wa.me/?text='+txt,'_blank');
 }
-function saveFirebaseConfig(){ /* stub */ const cfg=document.getElementById('fbConfig').value.trim(); const fam=document.getElementById('fbFamilyId').value.trim()||'default-family'; localStorage.setItem('hollyRex_fbConfigStr',cfg); localStorage.setItem('hollyRex_familyId',fam); document.getElementById('fbStatus').textContent='✅ Config salvata'; }
-function syncToFirebase(){ alert('Firebase: usa per ora backup Pet_diary.json - config futura'); }
-function loadFromFirebase(){ alert('Firebase: usa per ora backup Pet_diary.json'); }
-function googleLogin(){ alert('Drive: usa per ora backup Pet_diary.json'); }
-function saveToDrive(){ alert('Drive: usa per ora backup Pet_diary.json'); }
-function loadFromDrive(){ alert('Drive: usa per ora backup Pet_diary.json'); }
-
-loadPets(); checkStorageConfig();
+checkStorageConfig();
 </script>
 </body>
 </html>
