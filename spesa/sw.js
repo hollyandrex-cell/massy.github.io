@@ -3,11 +3,11 @@ const urlsToCache = [
   './',
   './spesa.html',
   './manifest.json',
-  './bau-32.png',
-  './bau-192x192.png',
-  './bau-512x512.png',
-  './bau-180.png',
-  './bau.ico'
+  '../bau-32.png',
+  '../bau-192x192.png',
+  '../bau-512x512.png',
+  '../bau-180.png',
+  '../bau.ico'
 ];
 
 self.addEventListener('install', event => {
