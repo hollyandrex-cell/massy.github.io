@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Chef Ling - Detail Perfect v3.2.2</title>
+<link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
+<link rel="manifest" href="/massy.github.io/manifest.json">
+<link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
+<style>
+:root { --bg:#0f172a; --card:#1e293b; --text:#f8fafc; --pink:#ec4899; --gold:#f59e0b; --green:#22c55e; --blue:#3b82f6; --red:#ef4444; }
+body { font-family: sans-serif; background:var(--bg); color:var(--text); margin:0; padding:20px; display:flex; justify-content:center; min-height:100vh; }
+.app { background:var(--card); padding:20px; border-radius:20px; width:100%; max-width:460px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.5); position:relative; overflow:hidden; display:flex; flex-direction:column; }
+h1 { color:var(--pink); margin:0 0 5px 0; font-size:1.8rem; }
+p { color:#94a3b8; font-size:0.9rem; margin-bottom:12px; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:15px; }
+.btn-ing { background:#334155; border:1px solid #475569; color:white; padding:12px 5px; border-radius:12px; font-size:0.85rem; display:flex; flex-direction:column; align-items:center; cursor:pointer; transition:all 0.2s; position:relative; }
+.btn-ing.active { background:var(--pink); border-color:var(--pink); transform:scale(1.05); box-shadow:0 0 10px rgba(236,72,153,0.4); }
+.btn-ing.selected-specific { background:var(--green); border-color:var(--green); }
+.icon { font-size:1.5rem; margin-bottom:4px; }
+.submenu { display:none; grid-template-columns:repeat(2,1fr); gap:5px; margin-top:8px; background:#0f172a; padding:8px; border-radius:10px; border:1px solid #475569; animation:slideDown 0.3s ease; }
+.submenu.show { display:grid; }
+.sub-btn { background:#334155; border:none; color:white; padding:6px; border-radius:6px; font-size:0.75rem; cursor:pointer; }
+.sub-btn.selected { background:var(--gold); color:black; font-weight:bold; }
+@keyframes slideDown { from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
+textarea, select, input[type="number"], input[type="text"] { width:100%; padding:12px; background:#0f172a; border:1px solid #475569; color:white; border-radius:10px; margin-bottom:10px; font-size:1rem; box-sizing:border-box; }
+textarea { resize:vertical; }
+.btn-main { background:linear-gradient(135deg,var(--pink),#db2777); color:white; border:none; padding:15px; width:100%; border-radius:50px; font-size:1.1rem; font-weight:bold; cursor:pointer; box-shadow:0 5px 15px rgba(236,72,153,0.4); margin-top:10px;}
+#resultScreen { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:var(--card); padding:20px; box-sizing:border-box; flex-direction:column; justify-content:center; z-index:20; border-radius:20px; }
+#finalText { background:#0f172a; color:#fff; padding:15px; border-radius:10px; font-size:0.95rem; margin-bottom:20px; text-align:left; white-space:pre-wrap; border:1px solid var(--gold); max-height:40%; overflow-y:auto; }
+.btn-action { background:var(--gold); color:#000; border:none; padding:15px; width:100%; border-radius:12px; font-weight:bold; margin-bottom:10px; font-size:1.1rem; cursor:pointer; }
+.btn-back { background:transparent; color:#94a3b8; border:1px solid #475569; }
+.blink-box { margin-top:20px; padding:15px; border-radius:15px; background:rgba(245,158,11,0.15); border:2px solid var(--gold); }
+.site-footer { margin-top:20px; padding-top:15px; border-top:1px solid #334155; text-align:center; font-size:0.75rem; color:#64748b; }
+.site-footer a { color:#94a3b8; text-decoration:none; margin:0 8px; }
+.pet-form-container { margin-top:15px; padding:16px; background:rgba(30,41,59,0.7); border-radius:16px; border:1px solid #475569; }
+.btn-pet { background:linear-gradient(135deg,#ec4899,#f59e0b); color:white; border:none; padding:14px; width:100%; border-radius:50px; font-size:1.05rem; font-weight:bold; cursor:pointer; margin-bottom:10px; }
+.btn-save { background:linear-gradient(135deg,var(--green),#16a34a); color:white; border:none; padding:12px; border-radius:12px; font-size:0.95rem; cursor:pointer; width:100%; font-weight:bold; }
+.form-row { display:flex; gap:10px; margin-bottom:10px; } .form-col{ flex:1; }
+.backup-row { display:flex; gap:8px; margin:12px 0; flex-wrap:wrap; justify-content:center; }
+.backup-btn { background:#334155; border:1px solid #475569; color:#e2e8f0; padding:8px 12px; border-radius:20px; font-size:0.8rem; cursor:pointer; }
+.backup-btn.gold { background:rgba(245,158,11,0.15); border-color:var(--gold); color:var(--gold); }
+.backup-btn.green { background:rgba(34,197,94,0.15); border-color:var(--green); color:var(--green); }
+.backup-btn.blue { background:rgba(59,130,246,0.15); border-color:var(--blue); color:var(--blue); }
+.pet-badge { background:#0f172a; border:1px solid #475569; color:#fff; padding:6px 10px; border-radius:20px; font-size:0.85rem; display:flex; align-items:center; gap:6px; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:100; align-items:center; justify-content:center; padding:20px; }
+.modal-overlay.show { display:flex; }
+.modal-box { background:#1e293b; border:2px solid var(--gold); border-radius:20px; padding:20px; width:100%; max-width:400px; text-align:left; animation:slideDown 0.3s ease; }
+.modal-box.warn { border-color:var(--red); }
+.modal-option { background:#0f172a; border:1px solid #334155; border-radius:12px; padding:12px; margin:10px 0; cursor:pointer; transition:all 0.2s; }
+.modal-option:hover { border-color:var(--gold); transform:scale(1.02); }
+.modal-option.selected { border-color:var(--gold); background:rgba(245,158,11,0.1); }
+.import-banner { background:rgba(34,197,94,0.12); border:1px solid var(--green); border-radius:12px; padding:10px; margin-bottom:12px; font-size:0.85rem; display:none; }
+</style>
+</head>
+<body>
+<div class="app">
+<div id="mainScreen">
+<h1>👩🍳 Chef Ling</h1>
+<p>Holly & Rex Group - v3.2.2 Fusione Perfect <span style="font-size:0.7rem; background:#22c55e; color:#000; padding:2px 6px; border-radius:10px; font-weight:bold;">MULTI + BACKUP</span></p>
+<div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI? (Clicca per dettagli)</div>
+<div class="grid" id="grid"></div>
+<textarea id="extra" rows="2" placeholder="Qualcos'altro di specifico? (Es. zafferano, tartufo...)"></textarea>
+<div style="text-align:left;"><button class="backup-btn" onclick="startDict()">🎤 Detta Altro</button></div>
+<div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
+<select id="mood"><option value="Veloce">⚡ Veloce (Poco tempo)</option><option value="Romantica">❤ Romantica</option><option value="Sfiziosa">😋 Sfiziosa</option><option value="Leggera">🥗 Leggera</option><option value="Svuotafrigo">🧹 Svuota Frigo</option></select>
+<button class="btn-main" onclick="showResult()">PREPARA MESSAGGIO</button>
+<div style="margin-top:15px; text-align:center;">
+<button id="btnInspire" class="btn-pet" onclick="goToPublicQwen()">Chef Ling for Pet 🐾</button>
+<p style="color:#94a3b8; font-size:0.8rem; margin-top:6px; line-height:1.3;">Clicca → Incolla in "Cosa vorresti esplorare?" di Qwen<br>Accedi gratis in 10s con Google! ✨</p>
+<div id="customLinkBox" style="margin-top:10px; background:rgba(59,130,246,0.1); border:1px dashed #3b82f6; border-radius:12px; padding:10px;">
+<div style="font-size:0.8rem; color:#93c5fd; text-align:left; margin-bottom:6px;">📌 Hai già una chat Chef Ling? Salva il link per accesso diretto:</div>
+<div style="display:flex; gap:6px;">
+<input type="text" id="myChefLink" placeholder="https://chat.qwen.ai/c/..." style="margin-bottom:0; font-size:0.8rem; padding:8px;">
+<button onclick="saveCustomLink()" style="background:var(--blue); color:white; border:none; border-radius:8px; padding:0 12px; font-weight:bold; cursor:pointer;">💾</button>
+</div>
+<div id="customLinkStatus" style="font-size:0.7rem; color:var(--green); margin-top:4px; display:none;"></div>
+</div>
+</div>
+<div id="petProfileContainer" class="pet-form-container">
+<h3 style="color:var(--gold); margin:0 0 8px 0; font-size:1rem; display:flex; align-items:center; gap:8px; justify-content:center;">🛡 Profilo Sicurezza & Gusti MULTI-PET</h3>
+<div class="backup-row">
+<button class="backup-btn gold" onclick="exportBackup()">💾 Backup JSON</button>
+<button class="backup-btn green" onclick="document.getElementById('importFile').click()">📥 Ripristina JSON</button>
+<button class="backup-btn blue" onclick="openStorageModal()">☁ Spazio Dati</button>
+</div>
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)">
+<button onclick="openLingRestore()" style="background:linear-gradient(135deg,#3b82f6,#6366f1); color:white; border:none; padding:12px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; margin-bottom:12px; font-size:0.95rem;">🔄 Recupera dati dalla Chat di Ling<br><span style="font-size:0.75rem; font-weight:normal; opacity:0.9;">Hai perso tutto? Ling se li ricorda nella chat!</span></button>
+<div id="diaryImportBanner" class="import-banner">
+<span id="diaryImportText"></span><br>
+<button class="backup-btn green" style="margin-top:8px;" onclick="importFromDiary()">📥 Importa ora</button>
+<button class="backup-btn" style="margin-top:8px;" onclick="hideDiaryBanner()">✕ Non ora</button>
+</div>
+<div style="margin-bottom:12px;"><label style="display:flex; align-items:center; gap:10px; cursor:pointer; color:#f8fafc; font-size:0.95rem; font-weight:500; justify-content:center;"><input type="checkbox" id="chkPets" onchange="togglePetFields()" style="width:18px; height:18px; accent-color:var(--pink);">Ho animali domestici in casa</label></div>
+<div id="petFields" style="display:none;">
+<div id="petList" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; justify-content:center"></div>
+<div class="form-row"><div class="form-col"><select id="selPetType"><option value="">Tipo animale...</option><option value="Cane">🐶 Cane</option><option value="Gatto">🐱 Gatto</option><option value="Altro">🐰 Altro</option></select></div><div class="form-col"><input type="text" id="txtPetName" placeholder="Nome (es. Rex, Holly)" autocomplete="off"></div></div>
+<div class="form-row"><div class="form-col"><select id="selPetSize"><option value="">Taglia...</option><option value="Piccola (fino a 10kg)">🐾 Piccola</option><option value="Media (10-25kg)">🦮 Media</option><option value="Grande (oltre 25kg)">🐕🦺 Grande</option></select></div><div class="form-col"><input type="number" id="numPetWeight" placeholder="Peso kg (es. 38)"></div></div>
+<div class="form-row"><div class="form-col"><select id="selPetAge"><option value="">Età/Fase...</option><option value="Cucciolo">🍼 Cucciolo</option><option value="Adulto">🐾 Adulto</option><option value="Anziano">👴 Anziano</option></select></div><div class="form-col"><input type="text" id="txtPetBreed" placeholder="Razza (es. Pastore tedesco)"></div></div>
+<div style="margin-bottom:10px; text-align:left;"><label style="display:block; color:#94a3b8; font-size:0.85rem; margin-bottom:6px;">Allergie, Condizioni o Gusti:</label><textarea id="txtTastes" rows="2" placeholder="Es. intollerante al pollo, no lattosio..." autocomplete="off"></textarea></div>
+<button onclick="saveUserProfile()" class="btn-save">💾 Aggiungi / Aggiorna Pet</button>
+<p id="saveFeedback" style="color:var(--green); font-size:0.8rem; margin-top:8px; text-align:center; display:none;"></p>
+</div>
+</div>
+<div class="site-footer"><p>© 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p><p style="margin-top:6px;"><a href="./privacy.html">Privacy</a> | <a href="./cookies.html">Cookie</a> | <a href="./termini.html">Termini</a></p><p style="font-size:0.65rem; margin-top:8px; opacity:0.7;">Zero Pubblicità · Zero Abbonamenti · 100% Nostro ♡</p></div>
+</div>
+<div id="resultScreen"><h2 style="color:var(--gold); margin-top:0;">Messaggio Pronto!</h2><div id="finalText"></div><button class="btn-action" onclick="copyAndGo()">COPIA E APRI CHAT</button><button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button><div class="blink-box"><h3>📝 Cosa fare ora:</h3><div>1. Clicca copia e apri chat</div><div>2. Accedi gratis in 10s con Google se è la prima volta</div><div>3. Incolla</div><div>4. Invia a Chef Ling!</div></div></div>
+</div>
+<div id="storageModal" class="modal-overlay" onclick="if(event.target===this) closeStorageModal()">
+<div class="modal-box">
+<h3 style="color:var(--gold); text-align:center; margin:0 0 10px 0;">🐾 Scegli il tuo spazio dati</h3>
+<p style="font-size:0.85rem; text-align:center; color:#cbd5e1; margin:0 0 12px 0;">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro ♡</p>
+<div class="modal-option" onclick="selectStorage('firebase')"><div style="color:var(--gold); font-weight:bold;">☁ Firebase Cloud (Consigliato)</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Sincronizzazione in tempo reale.</div></div>
+<div class="modal-option" onclick="selectStorage('drive')"><div style="color:var(--blue); font-weight:bold;">📁 Google Drive / File Personale</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">100% tuo, privato.</div></div>
+<div class="modal-option" onclick="selectStorage('locale')"><div style="color:var(--gold); font-weight:bold;">📱 Solo su questo Dispositivo (Locale)</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Veloce, offline.</div></div>
+<div id="currentChoice" style="text-align:center; font-size:0.8rem; color:var(--green); margin-top:12px;"></div>
+<button class="btn-action btn-back" style="margin-top:12px;" onclick="closeStorageModal()">Chiudi</button>
+</div>
+</div>
+<div id="localWarnModal" class="modal-overlay" onclick="if(event.target===this) closeLocalWarn(false)">
+<div class="modal-box warn">
+<h3 style="color:var(--red); margin:0 0 10px 0;">⚠ Attenzione alla modalità locale</h3>
+<p style="font-size:0.9rem; color:#f1f5f9;">Stai scegliendo di salvare i dati <b>solo su questo dispositivo</b>.</p>
+<p style="font-size:0.9rem; color:#f1f5f9; margin-top:10px;">Se cambi telefono o cancelli i dati, <b style="color:#fca5a5;">perderai tutto</b>.</p>
+<div style="display:flex; gap:10px; margin-top:16px;">
+<button class="btn-action btn-back" style="flex:1;" onclick="closeLocalWarn(false)">Indietro</button>
+<button class="btn-action" style="flex:1; background:var(--red); color:white;" onclick="closeLocalWarn(true)">Ho capito, procedi</button>
+</div>
+<div style="text-align:center; margin-top:10px;"><label style="font-size:0.8rem; color:#94a3b8; cursor:pointer;"><input type="checkbox" id="chkHideWarn"> Non mostrare più questo avviso</label></div>
+</div>
+</div>
+<div id="lingModal" class="modal-overlay" onclick="if(event.target===this) closeLingModal()">
+<div class="modal-box" style="border-color:var(--blue);">
+<h3 style="color:var(--blue); text-align:center; margin:0 0 10px 0;">🧠 Ripristina da Ling</h3>
+<p style="font-size:0.85rem; color:#cbd5e1;">Ling si ricorda dei tuoi pelosi!</p>
+<button class="btn-action" style="background:var(--blue); color:white;" onclick="askLing()">💬 Chiedi a Ling il backup</button>
+<textarea id="lingPaste" rows="6" placeholder="Incolla qui la risposta di Ling..." style="margin-top:10px;"></textarea>
+<button class="btn-action" style="background:var(--green); color:white;" onclick="restoreFromLingPaste()">✅ Ho incollato, ripristina ora</button>
+<p id="lingFeedback" style="font-size:0.8rem; text-align:center; display:none; margin-top:8px;"></p>
+<button class="btn-action btn-back" onclick="closeLingModal()">Chiudi</button>
+</div>
+</div>
+<div id="welcomeModal" class="modal-overlay">
+<div class="modal-box" style="border-color:var(--pink); text-align:center;">
+<h3 style="color:var(--pink); margin:0 0 10px 0;">Ciao! 👋 Benvenuto da Chef Ling ❤</h3>
+<p style="font-size:0.95rem; color:#f1f5f9; line-height:1.4;">Per proteggere i dati dei tuoi pelosi e salvare le tue ricette, Chef Ling richiede un accesso gratuito a Qwen!</p>
+<p style="font-size:0.9rem; color:#cbd5e1; margin-top:10px;">Clicca <b>"Accedi"</b> o <b>"Registrati"</b> nella pagina che si apre.<br>Ci vuole 10 secondi con Google!</p>
+<p style="font-size:0.9rem; color:var(--gold); margin-top:10px;">Una volta dentro, incolla il messaggio che l'app ha preparato per te... e la magia inizia! ✨</p>
+<button class="btn-action" style="background:linear-gradient(135deg,var(--pink),#db2777); color:white; margin-top:14px;" onclick="confirmWelcome()">Ho capito, portami da Chef Ling! 🚀</button>
+</div>
+</div>
+<script>
+const GENERIC_QWEN_URL = "https://chat.qwen.ai/";
+function getChefUrl(){
+  const custom = localStorage.getItem('chefLing_customChatUrl');
+  return custom && custom.includes('chat.qwen.ai/c/') ? custom : GENERIC_QWEN_URL;
+}
+let URL_CHEF = getChefUrl();
+const ingredients = [
+{ id:'pasta', label:'Pasta', icon:'🍝', type:'complex', options:['Corta','Lunga','Riso','Orzo','Altro'] },
+{ id:'carne', label:'Carne', icon:'🥩', type:'complex', options:['Pollo','Manzo','Maiale','Tacchino','Macinato','Bistecca','Altro'] },
+{ id:'pesce', label:'Pesce', icon:'🐟', type:'complex', options:['Tonno (scatola)','Salmone','Gamberi','Pesce Bianco','Molluschi','Altro'] },
+{ id:'verdure', label:'Verdure', icon:'🥬', type:'complex', options:['Zucchine','Melanzane','Pomodori','Insalata','Cipolle','Peperoni','Spinaci','Altro'] },
+{ id:'legumi', label:'Legumi', icon:'🫘', type:'complex', options:['Fagioli','Piselli','Lenticchie','Ceci','Altro'] },
+{ id:'uova', label:'Uova', icon:'🥚', type:'simple' },
+{ id:'formaggio', label:'Formaggio', icon:'🧀', type:'complex', options:['Stagionato','Molle','Pasta dura','Mozzarella','Stracchino','Altro'] },
+{ id:'salumi', label:'Salumi', icon:'🥓', type:'complex', options:['Insaccati','Prosciutto crudo','Prosciutto cotto','Speck','Mortadella','Altro'] },
+{ id:'pane', label:'Pane', icon:'🍞', type:'complex', options:['Ai cereali','Integrale','Focaccia','Grissini','Piadina','Altro'] },
+{ id:'latticini', label:'Latte/Yogurt', icon:'🥛', type:'complex', options:['Latte intero','Latte scremato','Yogurt greco','Yogurt magro','Besciamella','Panna','Altro'] },
+{ id:'condimenti', label:'Grassi & Condimenti', icon:'🧈', type:'complex', options:['Olio EVO','Burro','Strutto','Aceto Balsamico','Limone','Salsa di Soia','Altro'] },
+{ id:'aromi', label:'Aromi & Spezie', icon:'🌿', type:'complex', options:['Erbe Fresche','Spezie Secche','Aglio/Cipolla','Pepe/Sale','Altro'] }
+];
+const grid=document.getElementById('grid'); let selectionState={};
+ingredients.forEach(ing=>{ const container=document.createElement('div'); container.style.display='flex'; container.style.flexDirection='column'; container.style.width='100%'; const btn=document.createElement('div'); btn.className='btn-ing'; btn.id=`btn-${ing.id}`; btn.innerHTML=`<span class="icon">${ing.icon}</span><span id="label-${ing.id}">${ing.label}</span>`; selectionState[ing.id]=[]; btn.onclick=()=>{ if(ing.type==='simple'){ btn.classList.toggle('active'); selectionState[ing.id]=btn.classList.contains('active')?[ing.label]:[]; document.querySelectorAll('.submenu').forEach(sub=>sub.classList.remove('show')); } else { const submenu=document.getElementById(`sub-${ing.id}`); const isOpen=submenu.classList.contains('show'); document.querySelectorAll('.submenu').forEach(s=>s.classList.remove('show')); if(!isOpen){ submenu.classList.add('show'); btn.classList.add('active'); } else { submenu.classList.remove('show'); btn.classList.remove('active'); if(selectionState[ing.id]&&selectionState[ing.id].length>0) btn.classList.add('selected-specific'); } } }; if(ing.type==='complex'){ const subMenuDiv=document.createElement('div'); subMenuDiv.className='submenu'; subMenuDiv.id=`sub-${ing.id}`; ing.options.forEach(opt=>{ const subBtn=document.createElement('button'); subBtn.className='sub-btn'; subBtn.innerText=opt; subBtn.onclick=(e)=>{ e.stopPropagation(); const key=`${ing.label}: ${opt}`; if(!Array.isArray(selectionState[ing.id])) selectionState[ing.id]=[]; const idx=selectionState[ing.id].indexOf(key); if(idx>-1){ selectionState[ing.id].splice(idx,1); subBtn.classList.remove('selected'); } else { selectionState[ing.id].push(key); subBtn.classList.add('selected'); } const count=selectionState[ing.id].length; const labelEl=document.getElementById(`label-${ing.id}`); if(count===0){ labelEl.innerText=ing.label; btn.classList.remove('selected-specific'); btn.classList.remove('active'); } else if(count===1){ labelEl.innerText=`${selectionState[ing.id][0].split(': ')[1]} ✅`; btn.classList.add('selected-specific'); } else { labelEl.innerText=`${count} scelte ✅`; btn.classList.add('selected-specific'); } }; subMenuDiv.appendChild(subBtn); }); container.prepend(subMenuDiv); } container.appendChild(btn); grid.appendChild(container); });
+function startDict(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return alert("Usa Chrome per la dettatura!"); const r=new SR(); r.lang='it-IT'; r.onresult=e=>{ const t=e.results[0][0].transcript; document.getElementById('extra').value+=(document.getElementById('extra').value?", ":"")+t; }; r.start(); }
+const TOXIC_MAP={'cipolla':'CIPOLLA','cipolle':'CIPOLLA','aglio':'AGLIO','aglio/cipolla':'AGLIO/CIPOLLA','cioccolato':'CIOCCOLATO','cacao':'CIOCCOLATO','xilitolo':'XILITOLO','uvetta':'UVETTA','uva':'UVA','avocado':'AVOCADO','macadamia':'NOCI MACADAMIA','alcol':'ALCOL','caffè':'CAFFEINA','caffe':'CAFFEINA'};
+function parseWeight(w){ if(!w) return 0; const m=String(w).match(/(\d+(\.\d+)?)/); return m?parseFloat(m[1]):0; }
+function getAllPetsDetailed(){ let all=[]; try{ const chefPets=JSON.parse(localStorage.getItem('chefLing_pets')||'[]'); chefPets.forEach(p=>all.push({...p, source:'chefLing'})); }catch(e){} if(all.length===0){ try{ const diaryPets=JSON.parse(localStorage.getItem('hollyRex_pets')||'[]'); diaryPets.forEach(p=>all.push({name:p.nome, type:p.specie||'Cane', size:'', weight:p.peso||'', weightNum:parseWeight(p.peso), breed:p.razza||'', age:'', tastes:p.allergie||'', source:'diary'})); }catch(e){} } if(all.length===0){ try{ const prof=JSON.parse(localStorage.getItem('userPetProfile')||'{}'); if(prof.name) all.push({name:prof.name, type:prof.type||'Cane', size:prof.size||'', weight:prof.weight||'', weightNum:parseWeight(prof.weight), breed:prof.breed||'', age:prof.age||'', tastes:prof.tastes||'', source:'single'}); }catch(e){} } const seen=new Set(); const uniq=[]; all.forEach(p=>{ const k=(p.name||'').toLowerCase(); if(k && !seen.has(k)){ seen.add(k); uniq.push(p);} }); return uniq; }
+function getChefLingPets(){ try{ return JSON.parse(localStorage.getItem('chefLing_pets')||'[]'); }catch(e){ return []; } }
+function saveChefLingPets(pets){ localStorage.setItem('chefLing_pets', JSON.stringify(pets)); localStorage.setItem('userHasPets', pets.length>0?'true':'false'); }
+function renderPetList(){ const listEl=document.getElementById('petList'); if(!listEl) return; const pets=getChefLingPets(); const all=getAllPetsDetailed(); const display=pets.length>0?pets:all; if(display.length===0){ listEl.innerHTML='<span style="color:#64748b;font-size:0.8rem">Nessun pet salvato ancora - aggiungi Rex e Holly!</span>'; return; } listEl.innerHTML=display.map(p=>{ const safeName=encodeURIComponent(p.name); return `<div class="pet-badge" style="border-color:${(p.name||'').toLowerCase().includes('rex')?'#38bdf8':'#fbbf24'}"><span>${p.type==='Cane'?'🐶':'🐱'} <b>${escapeHtml(p.name)}</b> ${p.weight?escapeHtml(p.weight)+'kg':''} ${p.breed?'('+escapeHtml(p.breed)+')':''}</span><button onclick="editPetByName('${safeName}')" style="background:#334155;border:none;color:#fbbf24;width:20px;height:20px;border-radius:50%;cursor:pointer;">✏</button><button onclick="deletePetByName('${safeName}')" style="background:#450a0a;border:none;color:#fca5a5;width:20px;height:20px;border-radius:50%;cursor:pointer;">×</button></div>`; }).join(''); }
+function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function editPetByName(enc){ const name=decodeURIComponent(enc); const pets=getChefLingPets(); const p=pets.find(x=>x.name.toLowerCase()===name.toLowerCase()); if(!p){ const all=getAllPetsDetailed(); const p2=all.find(x=>x.name.toLowerCase()===name.toLowerCase()); if(!p2) return; document.getElementById('selPetType').value=p2.type||''; document.getElementById('txtPetName').value=p2.name||''; document.getElementById('selPetSize').value=p2.size||''; document.getElementById('numPetWeight').value=p2.weight||''; document.getElementById('selPetAge').value=p2.age||''; document.getElementById('txtPetBreed').value=p2.breed||''; document.getElementById('txtTastes').value=p2.tastes||''; return; } document.getElementById('selPetType').value=p.type||''; document.getElementById('txtPetName').value=p.name||''; document.getElementById('selPetSize').value=p.size||''; document.getElementById('numPetWeight').value=p.weight||''; document.getElementById('selPetAge').value=p.age||''; document.getElementById('txtPetBreed').value=p.breed||''; document.getElementById('txtTastes').value=p.tastes||''; document.getElementById('petFields').scrollIntoView({behavior:'smooth'}); }
+function deletePetByName(enc){ const name=decodeURIComponent(enc); if(!confirm(`Eliminare ${name}?`)) return; let pets=getChefLingPets(); pets=pets.filter(p=>p.name.toLowerCase()!==name.toLowerCase()); saveChefLingPets(pets); renderPetList(); if(pets.length===0){ document.getElementById('chkPets').checked=false; togglePetFields(); } }
+function checkToxicIngredients(items){ const found=[]; const lower=items.join(' ').toLowerCase(); for(const k in TOXIC_MAP){ if(lower.includes(k)){ if(!found.includes(TOXIC_MAP[k])) found.push(TOXIC_MAP[k]); } } return found; }
+function checkCustomAllergy(petProfile, items){ try{ const raw=(petProfile.tastes||'').toLowerCase(); if(!raw) return []; const low=items.join(' ').toLowerCase(); const triggers=[]; const kws=raw.split(/[,;.\n]+/).map(s=>s.trim()).filter(s=>s.length>2); kws.forEach(k=>{ k.split(/\s+/).forEach(w=>{ w=w.replace(/[^a-zàèéìòù]/gi,''); if(w.length>=3 && low.includes(w) && !['alla','alle','intollerante','allergia','allergico','no','non','per','con'].includes(w)){ if(!triggers.includes(w)) triggers.push(w); } }); }); return triggers; }catch(e){ return []; } }
+function buildMsg(){ let selectedItems=[]; Object.values(selectionState).forEach(val=>{ if(Array.isArray(val)) selectedItems=selectedItems.concat(val); else if(val) selectedItems.push(val); }); selectedItems=selectedItems.filter(v=>v&&v.length>0); let extra=document.getElementById('extra').value.trim(); let mood=document.getElementById('mood').value; if(extra) selectedItems.push(extra); if(selectedItems.length===0) return "Aiutami tu Chef! Ho il frigo vuoto!"; let petWarning=''; const allPets=getAllPetsDetailed(); if(allPets.length>0){ const toxics=checkToxicIngredients(selectedItems.concat([extra])); const petListStr=allPets.map(p=>`${p.name} (${p.weight||'?'}kg ${p.breed||''})`).join(', '); if(toxics.length>0){ petWarning=`\n\n⚠ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nIn casa ho ${allPets.length} pelosi: ${petListStr}. Questa ricetta UMANA contiene: ${toxics.join(', ')} che è TOSSICO!\n👉 Avvisami: "Tieni fuori dalla portata di ${allPets.map(p=>p.name).join(' e ')}!"`; } else { let allergyWarnings=[]; allPets.forEach(pet=>{ const allerg=checkCustomAllergy(pet, selectedItems.concat([extra])); if(allerg.length>0) allergyWarnings.push(`- ${pet.name} intollerante a: ${allerg.join(', ')} (nota: ${pet.tastes}) -> NON dargli!`); }); if(allergyWarnings.length>0){ petWarning=`\n\n🚫 ALLERGIE MULTI-PET:\n${petListStr}\n${allergyWarnings.join('\n')}`; } else { petWarning=`\n\n🐾 CONTESTO FAMIGLIA: Ho ${petListStr} in casa. Ricordami attenzioni per loro!`; } } } return `Ciao Chef Ling! Sono un amico di Holly & Rex Group.\n\n Ingredienti Precisi:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n Mood: ${mood}${petWarning}\n\nCosa cuciniamo? Sorprendimi! ❤`; }
+function showResult(){ const msg=buildMsg(); if(msg.includes("frigo vuoto")){ alert("Seleziona almeno un ingrediente!"); return; } document.getElementById('finalText').innerText=msg; document.getElementById('mainScreen').style.display='none'; document.getElementById('resultScreen').style.display='flex'; }
+function goBack(){ document.getElementById('mainScreen').style.display='block'; document.getElementById('resultScreen').style.display='none'; }
+async function copyAndGo(){ const msg=document.getElementById('finalText').innerText; URL_CHEF = getChefUrl(); try{ await navigator.clipboard.writeText(msg); window.location.href=URL_CHEF; }catch(err){ alert("Copia fallita. Copia manualmente."); } }
+function togglePetFields(){ const chk=document.getElementById('chkPets'); const fields=document.getElementById('petFields'); if(chk.checked){ fields.style.display='block'; renderPetList(); checkDiary(); } else { fields.style.display='none'; localStorage.setItem('userHasPets','false'); } }
+function saveUserProfile(){ const type=document.getElementById('selPetType').value; const name=document.getElementById('txtPetName').value.trim(); const size=document.getElementById('selPetSize').value; const weight=document.getElementById('numPetWeight').value.trim(); const age=document.getElementById('selPetAge').value; const breed=document.getElementById('txtPetBreed').value.trim(); const tastes=document.getElementById('txtTastes').value.trim(); if(!name){ alert('Metti il nome! Es. Rex o Holly'); return; } if(!type){ alert('Scegli tipo!'); return; } let pets=getChefLingPets(); const existingIdx=pets.findIndex(p=>p.name.toLowerCase()===name.toLowerCase()); const profile={type,name,size,weight,weightNum:parseWeight(weight),age,breed,tastes}; if(existingIdx>=0){ pets[existingIdx]=profile; } else { pets.push(profile); } saveChefLingPets(pets); localStorage.setItem('userPetProfile', JSON.stringify(profile)); localStorage.setItem('userHasPets','true'); const feedback=document.getElementById('saveFeedback'); feedback.textContent=`✅ ${name} salvato! Ora hai ${pets.length} pet: ${pets.map(p=>p.name).join(', ')}`; feedback.style.display='block'; renderPetList(); document.getElementById('txtPetName').value=''; document.getElementById('numPetWeight').value=''; document.getElementById('txtPetBreed').value=''; document.getElementById('txtTastes').value=''; document.getElementById('selPetType').value=''; document.getElementById('selPetSize').value=''; document.getElementById('selPetAge').value=''; setTimeout(()=>{ feedback.style.display='none'; },4000); }
+function checkDiary(){ try{ const chefPets=getChefLingPets(); if(chefPets.length>0) return; const diary=JSON.parse(localStorage.getItem('hollyRex_pets')||'[]'); if(diary.length>0){ const banner=document.getElementById('diaryImportBanner'); const txt=document.getElementById('diaryImportText'); txt.textContent=`🐾 Abbiamo trovato ${diary.length} pelosi nel tuo Pet Diary (${diary.map(d=>d.nome).join(', ')})! Vuoi importarli qui?`; banner.style.display='block'; } }catch(e){} }
+function importFromDiary(){ try{ const diary=JSON.parse(localStorage.getItem('hollyRex_pets')||'[]'); if(diary.length===0) return; let pets=getChefLingPets(); diary.forEach(d=>{ const profile={type:d.specie||'Cane', name:d.nome, size:'', weight:d.peso||'', weightNum:parseWeight(d.peso), age:'', breed:d.razza||'', tastes:d.allergie||''}; if(!pets.some(p=>p.name.toLowerCase()===profile.name.toLowerCase())) pets.push(profile); }); saveChefLingPets(pets); renderPetList(); hideDiaryBanner(); alert(`✅ Importati ${diary.length} pelosi dal Diario!`); }catch(e){ alert('Errore import Diario'); } }
+function hideDiaryBanner(){ document.getElementById('diaryImportBanner').style.display='none'; localStorage.setItem('chefLing_hideDiaryBanner','true'); }
+function exportBackup(){ const pets=getChefLingPets(); if(pets.length===0){ alert('Nessun pet da salvare! Aggiungi almeno un pet prima.'); return; } const customLink = localStorage.getItem('chefLing_customChatUrl') || ''; const data={chefLing_pets:pets, chefLing_customChatUrl: customLink, version:'v3.2.2', backupDate:new Date().toISOString().slice(0,10), philosophy:'Zero Pubblicità, Zero Abbonamenti, 100% Nostro'}; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`chef-ling-pets-backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(url); }
+function importBackup(input){ const file=input.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=e=>{ try{ const data=JSON.parse(e.target.result); let pets=null; if(data.chefLing_pets) pets=data.chefLing_pets; else if(Array.isArray(data)) pets=data; else if(data.pets) pets=data.pets; if(!pets||pets.length===0) throw 'vuoto'; pets=pets.map(p=>({type:p.type||'Cane', name:p.name||p.nome, size:p.size||'', weight:p.weight||p.peso||'', weightNum:parseWeight(p.weight||p.peso), age:p.age||'', breed:p.breed||p.razza||'', tastes:p.tastes||p.allergie||''})); saveChefLingPets(pets); if(data.chefLing_customChatUrl && data.chefLing_customChatUrl.includes('chat.qwen.ai/c/')){ localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl); document.getElementById('myChefLink').value = data.chefLing_customChatUrl; } renderPetList(); document.getElementById('chkPets').checked=true; togglePetFields(); alert(`✅ Ripristinati ${pets.length} pelosi! ${pets.map(p=>p.name).join(', ')}`); }catch(err){ alert('File non valido! Usa un backup di Chef Ling o Pet Diary.'); } }; reader.readAsText(file); input.value=''; }
+function openLingRestore(){ 
+  // FUSIONE PERFETTA: resetta a FASE 1
+  document.getElementById('lingPhase1').style.display='block';
+  document.getElementById('lingPhase2').style.display='none';
+  document.getElementById('lingModalTitle').innerText='🧠 Hai perso i pelosi? Ling se li ricorda!';
+  document.getElementById('lingFeedback').style.display='none';
+  document.getElementById('lingPaste').value='';
+  document.getElementById('lingModal').classList.add('show'); 
+}
+function closeLingModal(){ document.getElementById('lingModal').classList.remove('show'); }
+function askLing(){ 
+  const promptText="Ling, dammi il backup dei miei pelosi per Chef Ling";
+  navigator.clipboard.writeText(promptText).then(()=>{
+    // MAGIA: mostra FASE 2
+    document.getElementById('lingPhase1').style.display='none';
+    document.getElementById('lingPhase2').style.display='block';
+    document.getElementById('lingModalTitle').innerText='🔄 Ora incolla il codice di Ling:';
+    window.open(getChefUrl(),'_blank');
+  }).catch(()=>{
+    document.getElementById('lingPhase1').style.display='none';
+    document.getElementById('lingPhase2').style.display='block';
+    document.getElementById('lingModalTitle').innerText='🔄 Ora incolla il codice di Ling:';
+    window.open(getChefUrl(),'_blank');
+  });
+}
+function restoreFromLingPaste(){ const txt=document.getElementById('lingPaste').value.trim(); if(!txt){ alert('Incolla prima la risposta di Ling!'); return; } try{ const match=txt.match(/\{[\s\S]*"chefLing_pets"[\s\S]*\}/); const jsonStr=match?match[0]:txt; const data=JSON.parse(jsonStr); let pets=data.chefLing_pets||data.pets; if(!pets) throw 'no pets'; pets=pets.map(p=>({type:p.type||'Cane', name:p.name||p.nome, size:p.size||'', weight:p.weight||p.peso||'', weightNum:parseWeight(p.weight||p.peso), age:p.age||'', breed:p.breed||p.razza||'', tastes:p.tastes||p.allergie||''})); saveChefLingPets(pets); if(data.chefLing_customChatUrl && data.chefLing_customChatUrl.includes('chat.qwen.ai/c/')){ localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl); } renderPetList(); document.getElementById('chkPets').checked=true; togglePetFields(); document.getElementById('lingFeedback').textContent=`✅ Perfetto! Ritrovati ${pets.map(p=>p.name).join(' e ')}! Chiuso al sicuro.`; document.getElementById('lingFeedback').style.display='block'; document.getElementById('lingFeedback').style.color='#22c55e'; setTimeout(()=>{ closeLingModal(); },1500); }catch(e){ document.getElementById('lingFeedback').textContent='❌ Non riesco a leggere il ricordo. Assicurati di aver copiato tutto il blocco { ... } di Ling.'; document.getElementById('lingFeedback').style.display='block'; document.getElementById('lingFeedback').style.color='#ef4444'; } }
+function openStorageModal(){ const choice=localStorage.getItem('chefLing_storageChoice')||'locale'; document.getElementById('currentChoice').textContent=choice?`Scelta attuale: ${choice}`:''; document.getElementById('storageModal').classList.add('show'); }
+function closeStorageModal(){ document.getElementById('storageModal').classList.remove('show'); }
+function selectStorage(type){ if(type==='locale'){ const hide=localStorage.getItem('chefLing_hideLocalWarning')==='true'; if(!hide){ document.getElementById('storageModal').classList.remove('show'); document.getElementById('localWarnModal').classList.add('show'); return; } } if(type==='firebase'){ alert('Firebase Cloud in arrivo! Per ora usa Backup JSON o Locale.'); return; } if(type==='drive'){ alert('Google Drive in arrivo! Per ora usa Backup JSON.'); return; } localStorage.setItem('chefLing_storageChoice', type); document.getElementById('currentChoice').textContent=`✅ Scelto: ${type}`; setTimeout(()=>closeStorageModal(),800); }
+function closeLocalWarn(confirm){ document.getElementById('localWarnModal').classList.remove('show'); if(confirm){ const hide=document.getElementById('chkHideWarn').checked; if(hide) localStorage.setItem('chefLing_hideLocalWarning','true'); localStorage.setItem('chefLing_storageChoice','locale'); openStorageModal(); setTimeout(()=>closeStorageModal(),500); } else { openStorageModal(); } }
+function saveCustomLink(){ const input = document.getElementById('myChefLink'); const status = document.getElementById('customLinkStatus'); let link = input.value.trim(); if(!link){ status.textContent='Incolla il link che vedi su Qwen quando sei dentro Chef Ling'; status.style.display='block'; status.style.color='#f59e0b'; return; } if(!link.includes('chat.qwen.ai/c/')){ status.textContent='❌ Link non valido. Deve essere tipo https://chat.qwen.ai/c/...'; status.style.display='block'; status.style.color='#ef4444'; return; } localStorage.setItem('chefLing_customChatUrl', link); URL_CHEF = link; status.textContent='✅ Link salvato! Dalla prossima volta vai diretta nella tua chat! Incluso nel Backup JSON.'; status.style.display='block'; status.style.color='#22c55e'; setTimeout(()=>{ status.style.display='none'; },4000); }
+let pendingQwenAction = null;
+function goToPublicQwen(){
+const chkPets=document.getElementById('chkPets'); if(!chkPets.checked){ alert(" Aspetta tesoro!\n\nQuesto pulsante è dedicato ai tuoi amici pelosi! 🐾\n\nPer usarlo devi prima spuntare 'Ho animali domestici in casa' qui sotto."); document.getElementById('petProfileContainer').scrollIntoView({behavior:'smooth'}); return false; }
+const allPets=getAllPetsDetailed(); if(allPets.length===0){ alert("Aggiungi almeno un pet! Rex o Holly"); return false; }
+let selectedItems=[]; Object.values(selectionState).forEach(val=>{ if(Array.isArray(val)) selectedItems=selectedItems.concat(val); else if(val) selectedItems.push(val); }); selectedItems=selectedItems.filter(v=>v&&v.length>0); let extra=document.getElementById('extra').value.trim(); if(extra) selectedItems.push(extra); let mood=document.getElementById('mood')?document.getElementById('mood').value:'Veloce'; if(selectedItems.length===0){ alert("Seleziona almeno un ingrediente per il tuo amico! 🐾"); return false; }
+const hasSeenWelcome = localStorage.getItem('chefLing_hasSeenWelcome')==='true';
+let message="Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per i miei amici pelosi.\n\n"; message+=` Ingredienti Disponibili:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n`; message+=` Mood: ${mood}\n\n`; message+=` MEMORIA PET MULTI-PROFILO (${allPets.length} pelosi):\n`; allPets.forEach((p,idx)=>{ message+=`${idx+1}. ${p.name} - ${p.type} ${p.breed||''} - Peso: ${p.weight||'?'}kg - Allergie/Note: ${p.tastes||'nessuna'}\n`; }); message+=`\n👉 ADATTA QUANTITÀ IN BASE AL PESO:\n`; allPets.forEach(p=>{ const portion=p.weightNum?Math.round(p.weightNum*15):0; message+=`- ${p.name} (${p.weight||'?'}kg): porzione ~${portion>0?portion+'g al giorno divisa in 2 pasti':'calcola tu'} - ${p.tastes?'ATTENZIONE: '+p.tastes:'nessuna allergia'}\n`; }); let allergyBlocks=[]; allPets.forEach(pet=>{ const blocks=checkCustomAllergy(pet, selectedItems); if(blocks.length>0) allergyBlocks.push(`⚠ ${pet.name} NON può mangiare: ${blocks.join(', ')} (allergia: ${pet.tastes}) -> Escludilo!`); }); if(allergyBlocks.length>0){ message+=`\n🚫 ALLERGENI RILEVATI:\n${allergyBlocks.join('\n')}\n`; } message+=`\nAdatta la magia alla loro realtà! Ingredienti sicuri, niente cipolla/aglio, niente sale. Se un ingrediente è off-limits per Holly ma ok per Rex, specifica: "Ok per Rex, NO per Holly". Ricorda Zampa Sicura per ogni pet!`;
+function doCopyAndOpen(){
+  navigator.clipboard.writeText(message).then(()=>{
+    const btn=document.getElementById('btnInspire');
+    const originalHTML=btn.innerHTML;
+    const targetUrl = getChefUrl();
+    const hasCustomLink = !!localStorage.getItem('chefLing_customChatUrl');
+    if(hasCustomLink){ btn.innerHTML="✅ Copiato! Ti porto nella TUA chat Chef Ling! ✨"; } else { btn.innerHTML="✅ Messaggio copiato! Apro Qwen..."; }
+    btn.style.background="#22c55e";
+    setTimeout(()=>{ window.open(targetUrl,'_blank'); setTimeout(()=>{ btn.innerHTML=originalHTML; btn.style.background=""; },3000); },800);
+  }).catch(err=>{ alert("Impossibile copiare. Copia questo testo:\n\n"+message); });
+}
+pendingQwenAction = doCopyAndOpen;
+if(!hasSeenWelcome){ document.getElementById('welcomeModal').classList.add('show'); } else { doCopyAndOpen(); }
+}
+function confirmWelcome(){ localStorage.setItem('chefLing_hasSeenWelcome','true'); document.getElementById('welcomeModal').classList.remove('show'); if(pendingQwenAction){ pendingQwenAction(); pendingQwenAction=null; } }
+window.addEventListener('DOMContentLoaded', function(){ if(localStorage.getItem('userHasPets')==='true'){ document.getElementById('chkPets').checked=true; togglePetFields(); } renderPetList(); if(localStorage.getItem('chefLing_hideDiaryBanner')!=='true') checkDiary(); const savedLink = localStorage.getItem('chefLing_customChatUrl'); if(savedLink){ const el=document.getElementById('myChefLink'); if(el) el.value=savedLink; } });
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('/massy.github.io/sw.js').then(()=>console.log('SW Chef Ling v3.2.2 ok')).catch(e=>console.log('SW fail',e)); }
+</script>
+</body>
+</html>
