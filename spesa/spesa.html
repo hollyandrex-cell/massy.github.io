@@ -274,27 +274,7 @@ document.getElementById('modalOk').onclick=async()=>{
   if(isGen){if(qtaSub>=qTot){it.categoria=categoria;it.sottocategoria=sottocategoria;it.nome=`${categoria} - ${sottocategoria}`;it.qta=String(qtaSub);}else{const rimanenti=qTot-qtaSub;it.qta=String(rimanenti);items.splice(idx+1,0,{nome:`${categoria} - ${sottocategoria}`,categoria,sottocategoria,qta:String(qtaSub)});setTimeout(()=>{if(confirm(`Restano ${rimanenti} ${categoria} gen. Vuoi specificare l'altro?`))openPriceModal(idx);},400);}}else{it.sottocategoria=sottocategoria;it.nome=`${categoria} - ${sottocategoria}`;it.qta=String(qtaSub);}
   document.getElementById('priceModal').style.display='none';render();await savePrezzi();await save();
 };
-function pulisciDoppioniBruschette(){
-  let pulito=false;
-  const toDelete = [
-    ['vari','pane bruschette'],
-    ['vari','pane bruschetta'],
-    ['pane','pane bruschette'],
-    ['pane','pane bruschetta'],
-  ];
-  toDelete.forEach(([cat, sub])=>{
-    const nc=cat.toLowerCase(); const ns=sub.toLowerCase();
-    if(prezziDB[nc] && prezziDB[nc][ns]){
-      console.log('Pulisco doppione', nc, ns);
-      delete prezziDB[nc][ns];
-      if(Object.keys(prezziDB[nc]).length===0) delete prezziDB[nc];
-      pulito=true;
-    }
-  });
-  if(pulito){
-    savePrezzi().then(()=>setStatus('✅ Puliti doppioni bruschette! Ora scrivi pane e vedi solo pane - bruschette 💛'));
-  }
-}
+/* pulisciDoppioniBruschette rimosso duplicato */
 function mappaCategoriaSpesaABilancio(cat){const c=normalize(cat);if(c.includes('bau')||c.includes('animal')||c.includes('cane')||c.includes('crocchette')) return 'Animali';if(c.includes('frutta')||c.includes('verdura')||c.includes('insalata')||c.includes('pasta')||c.includes('carne')||c.includes('pesce')||c.includes('latte')||c.includes('pane')) return 'Spesa / Cibo';if(c.includes('pulizie')||c.includes('detersivo')) return 'Casa / Affitto';return 'Spesa / Cibo';}
 document.getElementById('bilancioClose').onclick=()=>document.getElementById('bilancioModal').style.display='none';
 document.getElementById('bilancioGo').onclick=()=>{
