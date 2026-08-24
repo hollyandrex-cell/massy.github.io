@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lista della Spesa - Holly & Rex - V6.1.6 Mobile Fix</title>
-<link rel="apple-touch-icon" href="../bau-180.png">
-<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
+<link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
+<link rel="manifest" href="/massy.github.io/manifest.json">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:12px;min-height:100vh}.card{background:#1e293b;padding:20px 16px;border-radius:24px;max-width:500px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start;overflow:hidden}h1{color:#fbbf24;text-align:center;margin:0 0 6px;font-size:1.9rem;font-weight:800}.sub{color:#94a3b8;text-align:center;font-size:.85rem;margin-bottom:18px}.user{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;background:#0f172a;padding:8px 12px;border-radius:12px;border:1px solid #1e293b}.user img{width:32px;height:32px;border-radius:50%;border:2px solid #fbbf24;object-fit:cover}.user span{color:#cbd5e1;font-size:.82rem;font-weight:500;word-break:break-all}.inputs{display:flex;gap:8px;margin-bottom:10px;width:100%;flex-wrap:nowrap}input{padding:14px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;outline:none;font-size:.95rem;min-width:0}input:focus{border-color:#fbbf24}#inpNome{flex:1 1 0;min-width:0}#inpQta{flex:0 0 72px;width:72px;max-width:72px;min-width:72px}.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.chip{background:#0f172a;border:1.5px solid #fbbf24;color:#fbbf24;padding:7px 12px;border-radius:20px;font-size:.82rem;cursor:pointer;font-weight:600}.chip-generic{border-color:#64748b;color:#94a3b8}.chip-sub{border-color:#22c55e;color:#22c55e}.chip-cat{border-color:#38bdf8;color:#38bdf8;font-weight:800}.btns{display:flex;gap:10px;margin-bottom:10px}button{flex:1;padding:14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:.92rem}.btn-add{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}.btn-voice{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}.btn-volantino{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;width:100%;margin-bottom:14px;padding:12px;font-size:.9rem;border:1.5px solid #fbbf24}.list{max-height:460px;overflow:auto;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}.item{background:linear-gradient(135deg,#334155,#2d3748);padding:13px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #3f4a5c}.item-left{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.item-name{font-weight:700;font-size:.95rem}.price-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start}.badge-storico{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.68rem;padding:3px 9px;border-radius:7px;font-weight:800;cursor:pointer;letter-spacing:.02em;border:1px solid #4ade80}.badge-storico.has-trend{background:linear-gradient(135deg,#38bdf8,#0ea5e9);border-color:#7dd3fc}.badge-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.73rem;padding:3px 8px;border-radius:7px;font-weight:800}.badge-old{background:#0f172a;color:#94a3b8;font-size:.72rem;padding:4px 8px;border-radius:8px;border:1px solid #1e293b}.btn-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-weight:800;min-width:38px}.btn-del{background:#1e293b;color:#ef4444;border:1px solid #334155;font-size:1.1rem;width:36px;height:36px;border-radius:9px;cursor:pointer}.btn-edit{background:#0f172a;color:#fbbf24;border:1px solid #334155;width:36px;height:36px;border-radius:9px;cursor:pointer}.totale-box{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #22c55e;color:#fff;padding:14px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;font-weight:800}textarea{width:100%;padding:12px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;min-height:80px;font-family:inherit}.btn-wa{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;width:100%;margin-top:12px;padding:15px}.btn-bilancio{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;margin-top:10px;padding:15px;font-size:1rem;box-shadow:0 4px 15px rgba(251,191,36,.3)}.btn-clear{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;width:100%;margin-top:10px;padding:13px}.btn-save{background:linear-gradient(135deg,#475569,#334155);color:#fff;width:100%;margin-top:10px;padding:12px;font-size:.85rem}.small{font-size:.85rem;color:#f1f5f9;text-align:center;margin-top:18px;line-height:1.6;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155}.status{text-align:center;font-size:.78rem;color:#22c55e;margin-top:8px;min-height:18px}.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:6px}.cat-header{font-size:.78rem;color:#fbbf24;font-weight:800;margin:12px 0 4px 4px;letter-spacing:.04em;text-transform:uppercase}.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}.modal{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:420px;max-height:85vh;overflow:auto}.modal h3{color:#fbbf24;margin-bottom:10px}.modal input{width:100%;margin-bottom:10px}.modal-btns{display:flex;gap:10px;margin-top:12px}
 .history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0f172a;border:1px solid #334155;border-radius:10px;margin-bottom:8px}.history-date{font-size:.75rem;color:#94a3b8}.history-price{font-weight:800;font-size:.95rem}.history-diff{font-size:.78rem;font-weight:700;padding:3px 7px;border-radius:6px}.diff-up{background:#450a0a;color:#fca5a5}.diff-down{background:#052e16;color:#86efac}.diff-same{background:#1e293b;color:#94a3b8}
 .volantino-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.volantino-links a{background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:10px;font-size:.8rem;text-decoration:none;font-weight:600}
-
 .update-badge{position:absolute;top:-8px;right:-8px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-size:.65rem;padding:3px 7px;border-radius:10px;font-weight:800;animation:pulse 2s infinite}
 .changelog-item{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:10px}
 .changelog-item h4{color:#fbbf24;font-size:.95rem;margin-bottom:6px}
@@ -24,7 +24,7 @@
 <div class="card">
 <h1>Lista della Spesa</h1>
 <div class="sub">Holly & Rex Group - V6.1.6 Vivi 💛 💰</div>
-<div class="user"><img src="//..bau-192x192.png" id="userAvatar"><span id="userEmail">sync...</span><span class="dot"></span><small id="syncText" style="color:#22c55e">sync</small></div>
+<div class="user"><img src="/massy.github.io/bau-192x192.png" id="userAvatar"><span id="userEmail">sync...</span><span class="dot"></span><small id="syncText" style="color:#22c55e">sync</small></div>
 <div class="inputs"><input id="inpNome" placeholder="Categoria: es. Frutta, Carne bau..." autocomplete="off"><input id="inpQta" placeholder="Qta"></div>
 <div id="suggs" class="suggestions"></div>
 <div class="btns"><button class="btn-add" id="btnAdd">+ Aggiungi</button><button class="btn-voice" id="btnVoice">🎤 Parla</button></div>
@@ -35,9 +35,9 @@
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
 <button class="btn-bilancio" id="btnBilancio">💰 Registra in Bilancio</button>
 <button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
-<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button><button class="btn-save" id="btnBackupChoice" style="flex:1;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">☁️ Dove salvare?</button></div>
+<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button><button class="btn-save" id="btnBackupChoice" style="flex:1;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">☁ Dove salvare?</button></div>
 <div id="backupChoiceBox" style="display:none;background:#0f172a;border:1px solid #f59e0b;border-radius:12px;padding:12px;margin-top:10px">
-<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">☁️ Scegli dove fare il backup</h4>
+<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">☁ Scegli dove fare il backup</h4>
 <p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px"><b>Firebase</b> (nostro) è già attivo per sincronizzazione dispositivi e storico prezzi. Il <b>backup extra</b> è una copia di sicurezza in più, scegli tu dove!</p>
 <div style="display:flex;flex-direction:column;gap:8px">
 <button class="btn-save" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="doBackupDevice()">📱💻 Scarica su questo dispositivo (cell/PC) - JSON</button>
@@ -47,12 +47,12 @@
 <div id="driveBackupStatus" style="font-size:.75rem;color:#86efac;margin-top:8px"></div>
 </div>
 <input type="file" id="fileInput" accept=".json" style="display:none;"><div class="status" id="status"></div>
-<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><div style="display:flex;gap:10px;justify-content:center;margin:6px 0;flex-wrap:wrap"><a href="./privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy</a><span style="color:#334155">|</span><a href="./cookie-policy.html" style="color:#fbbf24;text-decoration:none;">Cookie Policy</a><span style="color:#334155">|</span><a href="./privacy-policy.html" style="color:#94a3b8;text-decoration:none;font-size:.75rem">Nessun tracciamento</a></div><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
+<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><div style="display:flex;gap:10px;justify-content:center;margin:6px 0;flex-wrap:wrap"><a href="/massy.github.io/spesa/privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy</a><span style="color:#334155">|</span><a href="/massy.github.io/spesa/cookie-policy.html" style="color:#fbbf24;text-decoration:none;">Cookie Policy</a><span style="color:#334155">|</span><a href="/massy.github.io/spesa/privacy-policy.html" style="color:#94a3b8;text-decoration:none;font-size:.75rem">Nessun tracciamento</a></div><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
 </div>
 
 <div id="priceModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="modalTitle">Prezzo</h3><p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p><input id="modalSub" placeholder="Tipo: es. Lattuga"><div style="display:flex;gap:8px;"><input id="modalQta" placeholder="Qta tipo" inputmode="numeric" style="flex:1"><input id="modalPrice" placeholder="Prezzo TOTALE" inputmode="decimal" style="flex:1.5"></div><small id="modalHint" style="color:#fbbf24;font-size:.75rem;display:block;margin-bottom:8px;"></small><div class="modal-btns"><button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button><button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button></div></div></div>
 
-<div id="editModal" class="modal-bg" style="display:none;z-index:995;"><div class="modal"><h3>✏️ Modifica Prodotto</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Sposta da <b style="color:#fbbf24">vari</b> a una categoria vera, così non rimane più nel cassetto disordinato!</p><label style="font-size:.78rem;color:#94a3b8;">Categoria (es. latticini, salumi, detersivi)</label><input id="editCat" placeholder="Categoria" style="margin-bottom:10px;"><label style="font-size:.78rem;color:#94a3b8;">Tipo / Prodotto (es. mozzarella filante, arrosto tacchino)</label><input id="editSub" placeholder="Tipo" style="margin-bottom:10px;"><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="editQuickCats"></div><div class="modal-btns"><button id="editCancel" style="background:#334155;color:#fff;">Annulla</button><button id="editOk" style="background:#fbbf24;color:#0f172a;font-weight:800;">💾 Salva Categoria</button></div><small style="color:#64748b;font-size:.7rem;display:block;margin-top:8px;">💡 Es: Categoria: latticini, Tipo: mozzarella filante -> diventa "latticini - mozzarella filante"</small></div></div>
+<div id="editModal" class="modal-bg" style="display:none;z-index:995;"><div class="modal"><h3>✏ Modifica Prodotto</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Sposta da <b style="color:#fbbf24">vari</b> a una categoria vera, così non rimane più nel cassetto disordinato!</p><label style="font-size:.78rem;color:#94a3b8;">Categoria (es. latticini, salumi, detersivi)</label><input id="editCat" placeholder="Categoria" style="margin-bottom:10px;"><label style="font-size:.78rem;color:#94a3b8;">Tipo / Prodotto (es. mozzarella filante, arrosto tacchino)</label><input id="editSub" placeholder="Tipo" style="margin-bottom:10px;"><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="editQuickCats"></div><div class="modal-btns"><button id="editCancel" style="background:#334155;color:#fff;">Annulla</button><button id="editOk" style="background:#fbbf24;color:#0f172a;font-weight:800;">💾 Salva Categoria</button></div><small style="color:#64748b;font-size:.7rem;display:block;margin-top:8px;">💡 Es: Categoria: latticini, Tipo: mozzarella filante -> diventa "latticini - mozzarella filante"</small></div></div>
 <div id="historyModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="historyTitle">📈 Storico Prezzi</h3><p id="historySub" style="font-size:.85rem;color:#94a3b8;margin-bottom:14px;"></p><div id="historyStats" style="background:#0f172a;padding:12px;border-radius:12px;margin-bottom:14px;border:1px solid #334155;"></div><div id="historyList"></div><div class="modal-btns"><button id="historyClose" style="background:#334155;color:#fff;width:100%;">Chiudi</button></div></div></div>
 
 <div id="bilancioModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="bilancioTitle">💰 Registra in Bilancio</h3><div id="bilancioContent"></div><div class="modal-btns"><button id="bilancioClose" style="background:#334155;color:#fff;flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;">Chiudi</button><button id="bilancioGo" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;flex:1.5;padding:12px;border-radius:10px;border:none;font-weight:800;">📊 Apri Bilancio</button></div></div></div>
@@ -78,13 +78,11 @@
 </div>
 <p style="font-size:.78rem;color:#64748b;margin-top:14px;">💡 Consiglio di Holly: Sfoglia il volantino, trova solo le cose che hai già in lista (es. zucchine) e torna qui a inserire il prezzo migliore. Non serve copiare tutto!</p><div class="modal-btns"><button id="volantinoClose" style="background:#334155;color:#fff;width:100%;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer;">Chiudi - Ho scelto</button></div></div></div>
 
-
-
 <div id="feedbackModal" class="modal-bg" style="display:none;z-index:996;"><div class="modal" style="border:1px solid #38bdf8;"><h3 style="color:#38bdf8;">💡 Dicci la tua - Anonimo!</h3><p style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Usi la bacheca Google Moduli che già usate per il sito! Zero mail, zero tracciamento, anonimo al 100% come piace a noi. Leggete le risposte giorno per giorno.</p><div style="background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;"><p style="font-size:.82rem;color:#cbd5e1;margin-bottom:8px;"><b>Come funziona:</b><br>• Clicchi "Apri Modulo"<br>• Si apre il Google Modulo (quello della foto che mi hai mandato)<br>• Scrivi idea/bug, invii, fine. Non chiede mail!<br>• Noi leggiamo dalla bacheca come già fate</p></div><div style="display:flex;flex-direction:column;gap:8px;"><a id="btnOpenForm" href="https://docs.google.com/forms/d/e/INSERISCI_QUI_IL_TUO_ID/viewform" target="_blank" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#0f172a;padding:14px;border-radius:12px;text-align:center;font-weight:800;text-decoration:none;">📝 Apri Modulo Google (anonimo)</a><button id="btnCopyIdea" style="background:#0f172a;border:1px dashed #fbbf24;color:#fbbf24;padding:12px;border-radius:10px;">📋 Copia idea per WhatsApp</button></div><div class="modal-btns"><button id="feedbackClose" style="background:#334155;color:#fff;width:100%;">Chiudi</button></div><small style="color:#475569;font-size:.7rem;display:block;margin-top:8px;text-align:center;">Holly & Rex - Zero dati personali, anche qui!</small></div></div>
 
 <div id="updateModal" class="modal-bg" style="display:none;z-index:1000;"><div class="modal" style="max-width:440px;border:2px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,.3);"><div style="text-align:center;margin-bottom:12px;"><div style="font-size:2.5rem;">🎉</div><h3 style="color:#fbbf24;margin:6px 0;">App Aggiornata!</h3><p id="updateVersion" style="font-size:.9rem;color:#22c55e;font-weight:800;"></p></div><p style="font-size:.85rem;color:#94a3b8;text-align:center;margin-bottom:14px;">Siamo vivi e lavoriamo per te! Ecco cosa c'è di nuovo, zero sbattimenti, tutto automatico 💛</p><div id="updateContent" style="max-height:340px;overflow:auto;"></div><div style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #fbbf24;padding:10px;border-radius:10px;margin-top:14px;text-align:center;"><p style="font-size:.78rem;color:#fbbf24;">💡 Non devi scaricare nulla! L'app si è già aggiornata da sola.</p><p style="font-size:.72rem;color:#94a3b8;margin-top:4px;">La prossima volta vedrai ancora più novità</p></div><div class="modal-btns" style="margin-top:14px;"><button id="updateClose" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:1rem;">💛 Fantastico, ho capito!</button></div><div style="text-align:center;margin-top:8px;"><small style="color:#475569;font-size:.7rem;">Holly & Rex Group • LA PAZZIA È L'UNICA SANITÀ MENTALE</small></div></div></div>
 
-<div id="localWarningModalSpesa" class="modal-bg" style="display:none;z-index:1001;"><div class="modal" style="border:2px solid #ef4444;max-width:400px"><h3 style="color:#ef4444;text-align:center">⚠️ Attenzione - Solo sul dispositivo?</h3><p style="font-size:.9rem;color:#f1f5f9;line-height:1.6;margin:12px 0">Stai usando <b>solo il salvataggio locale</b>?<br><br>👉 Se <b>cancelli cache, cambi browser, perdi il telefono</b>, la lista e lo storico prezzi <b style="color:#fca5a5">andranno persi!</b><br><br>💛 <b>Consiglio da tesoro:</b> fai sempre <b>Backup</b> con il bottone 💾 qui sotto! Ci metti 2 secondi ed è al sicuro!</p><div style="display:flex;gap:10px;margin-top:14px"><button id="localWarnContinue" style="flex:1;background:#334155;color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;">Ho capito</button><button id="localWarnBackup" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:800;">💾 Fai Backup ora</button></div><div style="text-align:center;margin-top:10px"><label style="font-size:.75rem;color:#94a3b8;cursor:pointer"><input type="checkbox" id="dontShowLocalSpesa"> Non mostrare più</label></div></div></div>
+<div id="localWarningModalSpesa" class="modal-bg" style="display:none;z-index:1001;"><div class="modal" style="border:2px solid #ef4444;max-width:400px"><h3 style="color:#ef4444;text-align:center">⚠ Attenzione - Solo sul dispositivo?</h3><p style="font-size:.9rem;color:#f1f5f9;line-height:1.6;margin:12px 0">Stai usando <b>solo il salvataggio locale</b>?<br><br>👉 Se <b>cancelli cache, cambi browser, perdi il telefono</b>, la lista e lo storico prezzi <b style="color:#fca5a5">andranno persi!</b><br><br>💛 <b>Consiglio da tesoro:</b> fai sempre <b>Backup</b> con il bottone 💾 qui sotto! Ci metti 2 secondi ed è al sicuro!</p><div style="display:flex;gap:10px;margin-top:14px"><button id="localWarnContinue" style="flex:1;background:#334155;color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;">Ho capito</button><button id="localWarnBackup" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:800;">💾 Fai Backup ora</button></div><div style="text-align:center;margin-top:10px"><label style="font-size:.75rem;color:#94a3b8;cursor:pointer"><input type="checkbox" id="dontShowLocalSpesa"> Non mostrare più</label></div></div></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -114,7 +112,7 @@ function openHistoryModal(cat, sub){
   document.getElementById('historySub').textContent = storico.length ? `${storico.length} rilevazioni` : 'Nessun prezzo ancora salvato';
   const statsDiv = document.getElementById('historyStats');const listDiv = document.getElementById('historyList');
   if(!storico.length){statsDiv.innerHTML = '<span style="color:#94a3b8">Inserisci un prezzo con € per iniziare lo storico</span>';listDiv.innerHTML='';}
-  else{const prezzi = storico.map(x=>x.prezzo);const min = Math.min(...prezzi);const max = Math.max(...prezzi);const avg = prezzi.reduce((a,b)=>a+b,0)/prezzi.length;const ultimo = prezzi[prezzi.length-1];const penultimo = prezzi.length>1 ? prezzi[prezzi.length-2] : null;let diffHtml='';if(penultimo!==null){const diff = ultimo - penultimo;const perc = ((diff/penultimo)*100).toFixed(1);if(diff>0) diffHtml = `<span style="color:#fca5a5">🔺 +${diff.toFixed(2)}€ (+${perc}%) vs ultima volta</span>`;else if(diff<0) diffHtml = `<span style="color:#86efac">🔻 ${diff.toFixed(2)}€ (${perc}%) RISPARMI!</span>`;else diffHtml = `<span style="color:#94a3b8">➡️ Prezzo uguale</span>`;}statsDiv.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Ultimo:</span><b style="color:#22c55e">${ultimo.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Min / Max:</span><b>${min.toFixed(2)}€ / ${max.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Media:</span><b>${avg.toFixed(2)}€</b></div><div style="margin-top:8px;font-size:.85rem;">${diffHtml}</div>`;listDiv.innerHTML='';[...storico].reverse().forEach((entry, idxRev)=>{const idx = storico.length-1-idxRev;const prev = idx>0 ? storico[idx-1] : null;let diffBadge='';if(prev){const d = entry.prezzo - prev.prezzo;if(Math.abs(d)<0.001) diffBadge=`<span class="history-diff diff-same">➡️ 0</span>`;else if(d>0) diffBadge=`<span class="history-diff diff-up">🔺 +${d.toFixed(2)}€</span>`;else diffBadge=`<span class="history-diff diff-down">🔻 ${d.toFixed(2)}€</span>`;}else{diffBadge=`<span class="history-diff diff-same">1° prezzo</span>`;}const date = new Date(entry.data);const dateStr = date.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'}) + ' ' + date.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});const row=document.createElement('div');row.className='history-row';row.innerHTML=`<div><div class="history-price">${entry.prezzo.toFixed(2)}€</div><div class="history-date">${dateStr}</div></div>${diffBadge}`;listDiv.appendChild(row);});}
+  else{const prezzi = storico.map(x=>x.prezzo);const min = Math.min(...prezzi);const max = Math.max(...prezzi);const avg = prezzi.reduce((a,b)=>a+b,0)/prezzi.length;const ultimo = prezzi[prezzi.length-1];const penultimo = prezzi.length>1 ? prezzi[prezzi.length-2] : null;let diffHtml='';if(penultimo!==null){const diff = ultimo - penultimo;const perc = ((diff/penultimo)*100).toFixed(1);if(diff>0) diffHtml = `<span style="color:#fca5a5">🔺 +${diff.toFixed(2)}€ (+${perc}%) vs ultima volta</span>`;else if(diff<0) diffHtml = `<span style="color:#86efac">🔻 ${diff.toFixed(2)}€ (${perc}%) RISPARMI!</span>`;else diffHtml = `<span style="color:#94a3b8">➡ Prezzo uguale</span>`;}statsDiv.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Ultimo:</span><b style="color:#22c55e">${ultimo.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Min / Max:</span><b>${min.toFixed(2)}€ / ${max.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Media:</span><b>${avg.toFixed(2)}€</b></div><div style="margin-top:8px;font-size:.85rem;">${diffHtml}</div>`;listDiv.innerHTML='';[...storico].reverse().forEach((entry, idxRev)=>{const idx = storico.length-1-idxRev;const prev = idx>0 ? storico[idx-1] : null;let diffBadge='';if(prev){const d = entry.prezzo - prev.prezzo;if(Math.abs(d)<0.001) diffBadge=`<span class="history-diff diff-same">➡ 0</span>`;else if(d>0) diffBadge=`<span class="history-diff diff-up">🔺 +${d.toFixed(2)}€</span>`;else diffBadge=`<span class="history-diff diff-down">🔻 ${d.toFixed(2)}€</span>`;}else{diffBadge=`<span class="history-diff diff-same">1° prezzo</span>`;}const date = new Date(entry.data);const dateStr = date.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'}) + ' ' + date.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});const row=document.createElement('div');row.className='history-row';row.innerHTML=`<div><div class="history-price">${entry.prezzo.toFixed(2)}€</div><div class="history-date">${dateStr}</div></div>${diffBadge}`;listDiv.appendChild(row);});}
   modal.style.display='flex';
 }
 function render(){
@@ -156,10 +154,8 @@ function editItem(idx){
   const subCorrente=it.sottocategoria&&it.sottocategoria!=='_generico'?it.sottocategoria:(it.categoria&&it.categoria!==catCorrente?it.categoria: (it.nome.includes(' - ')?it.nome.split(' - ')[1]:''));
   inpCat.value=catCorrente;
   inpSub.value=subCorrente||'';
-  // suggerimenti categorie veloci
   quick.innerHTML='';
   const comuni=['latticini','salumi','carne','frutta','verdura','pane','pasta','scatolame','detersivi','bevande','dolci','vari'];
-  // aggiungi categorie esistenti
   const esistenti=[...new Set(Object.keys(prezziDB).concat(items.map(i=>i.categoria).filter(Boolean)))].slice(0,12);
   const all=[...new Set([...comuni,...esistenti])].slice(0,14);
   all.forEach(c=>{
@@ -178,17 +174,14 @@ document.getElementById('editOk').onclick=async()=>{
   const newCat=document.getElementById('editCat').value.trim();
   const newSub=document.getElementById('editSub').value.trim();
   if(!newCat){alert('Metti una categoria!');return;}
-  // sposta anche lo storico prezzi se esisteva sotto vari
   const oldNormCat=normalize(it.categoria||it.nome); const oldNormSub=normalize(it.sottocategoria||it.nome||'');
   const newNormCat=normalize(newCat); const newNormSub=normalize(newSub||newCat);
-  // se era in vari e lo spostiamo, copia lo storico se esiste e pulisci vecchio
   if(prezziDB[oldNormCat] && prezziDB[oldNormCat][oldNormSub]){
     if(oldNormCat!==newNormCat || oldNormSub!==newNormSub){
       if(!prezziDB[newNormCat]) prezziDB[newNormCat]={};
       if(!prezziDB[newNormCat][newNormSub] || prezziDB[newNormCat][newNormSub].length===0){
         prezziDB[newNormCat][newNormSub]=[...prezziDB[oldNormCat][oldNormSub]];
       }
-      // cancella vecchio per non lasciare doppioni
       delete prezziDB[oldNormCat][oldNormSub];
       if(Object.keys(prezziDB[oldNormCat]||{}).length===0) delete prezziDB[oldNormCat];
       await savePrezzi();
@@ -210,7 +203,6 @@ document.getElementById('inpNome').addEventListener('input',e=>{
     for(const subKey in catObj){
       const normSub=normalize(subKey);
       const normCat=normalize(catKey);
-      // FIX HOLLY ❤️: cerca sia in categoria che in sottocategoria! tacchino in arrosto tacchino, tonno in scatolame-tonno
       if(!(normCat.includes(val) || normSub.includes(val) || val.includes(normCat) || val.includes(normSub))) continue;
       const storico=catObj[subKey];const ultimo=storico[storico.length-1];if(!ultimo||typeof ultimo.prezzo!=='number')continue;
       const chip=document.createElement('span');chip.className='chip chip-sub';
@@ -224,7 +216,6 @@ document.getElementById('inpNome').addEventListener('input',e=>{
     }
     if(foundCount>=12) break;
   }
-  // Mostra anche match negli items attuali (lista corrente)
   if(foundCount<6){
     const seen=new Set();
     items.forEach(it=>{
@@ -283,7 +274,6 @@ document.getElementById('modalOk').onclick=async()=>{
   if(isGen){if(qtaSub>=qTot){it.categoria=categoria;it.sottocategoria=sottocategoria;it.nome=`${categoria} - ${sottocategoria}`;it.qta=String(qtaSub);}else{const rimanenti=qTot-qtaSub;it.qta=String(rimanenti);items.splice(idx+1,0,{nome:`${categoria} - ${sottocategoria}`,categoria,sottocategoria,qta:String(qtaSub)});setTimeout(()=>{if(confirm(`Restano ${rimanenti} ${categoria} gen. Vuoi specificare l'altro?`))openPriceModal(idx);},400);}}else{it.sottocategoria=sottocategoria;it.nome=`${categoria} - ${sottocategoria}`;it.qta=String(qtaSub);}
   document.getElementById('priceModal').style.display='none';render();await savePrezzi();await save();
 };
-// ===== FIX PULIZIA BRUSCHETTE - pulisce doppioni vari/pane bruschette =====
 function pulisciDoppioniBruschette(){
   let pulito=false;
   const toDelete = [
@@ -305,13 +295,10 @@ function pulisciDoppioniBruschette(){
     savePrezzi().then(()=>setStatus('✅ Puliti doppioni bruschette! Ora scrivi pane e vedi solo pane - bruschette 💛'));
   }
 }
-
 function mappaCategoriaSpesaABilancio(cat){const c=normalize(cat);if(c.includes('bau')||c.includes('animal')||c.includes('cane')||c.includes('crocchette')) return 'Animali';if(c.includes('frutta')||c.includes('verdura')||c.includes('insalata')||c.includes('pasta')||c.includes('carne')||c.includes('pesce')||c.includes('latte')||c.includes('pane')) return 'Spesa / Cibo';if(c.includes('pulizie')||c.includes('detersivo')) return 'Casa / Affitto';return 'Spesa / Cibo';}
 document.getElementById('bilancioClose').onclick=()=>document.getElementById('bilancioModal').style.display='none';
 document.getElementById('bilancioGo').onclick=()=>{
-  const possibleNames=['bilancio.html','index.html','../bilancio/bilancio.html','./bilancio.html'];
-  // Prova ad aprire il bilancio nella stessa repo GitHub
-  window.open('bilancio.html','_blank');
+  window.open('/massy.github.io/bilancio/bilancio.html','_blank');
   document.getElementById('bilancioModal').style.display='none';
 };
 document.getElementById('btnBilancio').onclick=()=>{
@@ -325,16 +312,12 @@ document.getElementById('btnBilancio').onclick=()=>{
   if(cats.length===1){nuoviMovimenti=[{id:Date.now(),data:new Date().toISOString(),tipo:'uscita',categoria:cats[0],importo:totale,descrizione:descrizioneDett}];}
   else{cats.forEach(catBil=>{nuoviMovimenti.push({id:Date.now()+Math.random(),data:new Date().toISOString(),tipo:'uscita',categoria:catBil,importo:perCat[catBil],descrizione:`${catBil}: ${descrizioneDett.substring(0,100)}`});});}
   try{
-    // Salva comunque anche se bilancio non è mai stato aperto
     movimenti.unshift(...nuoviMovimenti.reverse());
     localStorage.setItem(STORAGE_KEY,JSON.stringify(movimenti));
-    // Salva anche un backup universale che il bilancio leggerà al primo avvio
     localStorage.setItem('hollyRexBilancio_pending',JSON.stringify({totale, perCat, descrizioneDett, data:new Date().toISOString(), items: items.map(i=>({nome:i.nome, qta:i.qta}))}));
     setStatus(`✅ Registrato in Bilancio: ${totale.toFixed(2)}€`,true);
-    // Mostra modal intelligente
     const modal=document.getElementById('bilancioModal');
     const content=document.getElementById('bilancioContent');
-    const hasBilancio = localStorage.getItem(STORAGE_KEY) && movimenti.length>0;
     content.innerHTML = `
       <div style="background:#0f172a;padding:14px;border-radius:12px;border:1px solid #334155;margin-bottom:12px;">
         <div style="font-size:1.3rem;font-weight:800;color:#22c55e;margin-bottom:6px;">✅ ${totale.toFixed(2).replace('.',',')}€ salvati!</div>
@@ -352,12 +335,11 @@ document.getElementById('btnBilancio').onclick=()=>{
     `;
     modal.style.display='flex';
   }catch(e){
-    // Se localStorage bloccato (es. modalità privata iOS)
     const modal=document.getElementById('bilancioModal');
     const content=document.getElementById('bilancioContent');
     content.innerHTML=`
       <div style="background:#450a0a;padding:14px;border-radius:12px;border:1px solid #ef4444;">
-        <div style="color:#fca5a5;font-weight:800;margin-bottom:6px;">⚠️ Storage bloccato</div>
+        <div style="color:#fca5a5;font-weight:800;margin-bottom:6px;">⚠ Storage bloccato</div>
         <div style="font-size:.85rem;color:#fecaca;">Il browser è in modalità privata o blocca il salvataggio. Copia questo testo e incollalo manualmente nel Bilancio:</div>
         <textarea style="width:100%;margin-top:8px;background:#0f172a;color:#fff;padding:8px;border-radius:8px;border:1px solid #475569;min-height:60px;font-size:.8rem;">${descrizioneDett} - ${totale.toFixed(2)}€</textarea>
       </div>
@@ -368,7 +350,6 @@ document.getElementById('btnBilancio').onclick=()=>{
 document.getElementById('btnClear').onclick=()=>{if(items.length===0)return;if(confirm(`Svuotare ${items.length} art.?`)){localStorage.setItem('backup_pre_svuota_'+Date.now(),JSON.stringify({items}));items=[];render();save();}};
 document.getElementById('note').addEventListener('change',save);
 document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});const tot=calcTotale();if(tot>0) txt+=`\n💰 Totale: ${tot.toFixed(2)}€\n`;window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
-// ===== BACKUP LOGICA NUOVA - scelta dispositivo vs Drive =====
 function getBackupData(){return {items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6.1.3-backup-choice"};}
 function doBackupDevice(){
   const data=getBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);
@@ -435,9 +416,6 @@ async function doBackupDriveActual(){
 }
 document.getElementById('btnLoad').onclick=()=>document.getElementById('fileInput').click();
 document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm(`Caricare ${data.items?.length||0} art.?`))return;items=data.items||[];document.getElementById('note').value=data.note||"";if(data.prezziDB){for(const cat in data.prezziDB){if(!prezziDB[cat])prezziDB[cat]=data.prezziDB[cat];else{for(const sub in data.prezziDB[cat]){if(!prezziDB[cat][sub])prezziDB[cat][sub]=data.prezziDB[cat][sub];}}}await savePrezzi();}render();await save();}catch(err){alert('File non valido '+err.message);}};r.readAsText(f);};
-
-
-// ===== FEEDBACK ANONIMO VIA GOOGLE MODULI - idea di Holly ❤️ =====
 document.getElementById('linkFeedback')?.addEventListener('click', (e)=>{
   e.preventDefault();
   document.getElementById('feedbackModal').style.display='flex';
@@ -452,21 +430,12 @@ document.getElementById('btnCopyIdea')?.addEventListener('click', ()=>{
     document.getElementById('feedbackModal').style.display='none';
   });
 });
-// ISTRUZIONI PER HOLLY: crea un nuovo modulo Google con questi campi:
-// Titolo: Holly & Rex - Feedback Lista Spesa (Anonimo)
-// 1) Tipo (scelta multipla): 🐛 Bug / 💡 Idea / ❓ Non capisco / ❤️ Complimento
-// 2) Messaggio (paragrafo lungo) - obbligatorio
-// 3) Versione app (testo breve) - opzionale, default v6.1.1
-// Impostazioni modulo: NON raccogliere indirizzi email, NON richiedere login
-// Poi prendi il link "Invia" -> copia link e incollalo sopra in btnOpenForm href
-
-// ===== SISTEMA AGGIORNAMENTI VIVI - idea di Holly ❤️ =====
 const APP_VERSION = "6.1.6";
 const APP_CHANGELOG = [
   {
     version: "6.1.4",
     date: "18 Agosto 2026 (notte)",
-    title: "☁️ Backup scelta dove salvare - idea tesoro GENIALE",
+    title: "☁ Backup scelta dove salvare - idea tesoro GENIALE",
     news: [
       "Firebase resta d'obbligo per sincronizzazione dispositivi e storico prezzi (altrimenti non funziona multi-cell)",
       "NUOVO: bottone 'Dove salvare?' → scegli: 📱 Scarica su cell/PC (JSON) o 💾 Google Drive privato tuo (appDataFolder invisibile)",
@@ -476,7 +445,7 @@ const APP_CHANGELOG = [
   {
     version: "6.1.3",
     date: "18 Agosto 2026 (sera)",
-    title: "⚠️ Popup avvertimento locale - idea tesoro",
+    title: "⚠ Popup avvertimento locale - idea tesoro",
     news: [
       "Nuovo popup se usi solo locale senza Backup: ti avvisa che se perdi il cell perdi tutto! Con bottone Backup immediato 💾",
       "Checkbox 'Non mostrare più' per chi sa cosa fa",
@@ -515,42 +484,16 @@ const APP_CHANGELOG = [
       "WhatsApp ora invia anche il totale se hai messo i prezzi",
       "Pulizia cache da F12 spiegata - se errore strano, svuota locale e riparti pulito"
     ]
-  },
-  {
-    version: "6.0.0",
-    date: "10 Agosto 2026",
-    title: "💰 Registra in Bilancio Automatico",
-    news: [
-      "Nuovo bottone 💰 Registra in Bilancio - divide automaticamente per categorie Animali / Spesa / Casa",
-      "Modalità app unica: Spesa e Bilancio parlano tra loro ma possono vivere anche separate",
-      "Backup automatico prima di svuotare la lista"
-    ]
-  },
-  {
-    version: "5.5.0",
-    date: "1 Agosto 2026",
-    title: "📈 Storico Prezzi Intelligente",
-    news: [
-      "Storico prezzi per ogni prodotto, con min/max/media e differenze",
-      "Suggerimenti intelligenti quando scrivi - ti propone prezzi già salvati",
-      "Qta con + e - rapidi, modifica rapida con ✏️"
-    ]
   }
 ];
-
 function checkForUpdates(){
   const lastSeen = localStorage.getItem('hollyRex_lastVersionSeen') || '0.0.0';
   const updateModal = document.getElementById('updateModal');
   const updateContent = document.getElementById('updateContent');
   const updateVersion = document.getElementById('updateVersion');
   if(!updateModal) return;
-  // Se versione diversa, mostra popup
   if(lastSeen !== APP_VERSION){
-    // Costruisci changelog per versioni non viste
-    const newLogs = APP_CHANGELOG.filter(log => {
-      // semplice confronto: mostra solo ultima versione per ora, ma struttura pronta per multi-versione
-      return log.version === APP_VERSION;
-    });
+    const newLogs = APP_CHANGELOG.filter(log => { return log.version === APP_VERSION; });
     if(newLogs.length===0) return;
     const log = newLogs[0];
     updateVersion.textContent = `v${log.version} • ${log.date}`;
@@ -563,7 +506,6 @@ function checkForUpdates(){
         </ul>
       </div>
     `).join('');
-    // Mostra dopo 1.2s per far caricare app
     setTimeout(()=>{ updateModal.style.display='flex'; }, 1200);
   }
 }
@@ -572,12 +514,10 @@ document.getElementById('updateClose')?.addEventListener('click', ()=>{
   document.getElementById('updateModal').style.display='none';
   setStatus('💛 Grazie! Sei aggiornatissima/o alla '+APP_VERSION);
 });
-// ===== AVVERTIMENTO LOCALE SPESA - idea tesoro 💛 =====
 function checkLocalWarningSpesa(){
   if(localStorage.getItem('hollyRex_dontShowLocalSpesa')==='1') return;
-  // Se Firebase non è connesso (user anonimo) e ha articoli, avvisa una volta
   const hasItems = (items && items.length>0);
-  const isAnonymous = !auth.currentUser; // se non loggato con Google, è solo locale/cache
+  const isAnonymous = !auth.currentUser;
   if(hasItems && isAnonymous){
     setTimeout(()=>{ document.getElementById('localWarningModalSpesa').style.display='flex'; }, 2000);
   }
@@ -591,9 +531,31 @@ document.getElementById('localWarnBackup')?.addEventListener('click', ()=>{
   document.getElementById('localWarningModalSpesa').style.display='none';
   document.getElementById('btnSave')?.click();
 });
-// Avvia check al load
 window.addEventListener('load', ()=>{ checkForUpdates(); setTimeout(checkLocalWarningSpesa, 2500); setTimeout(pulisciDoppioniBruschette, 3000); });
-
+function pulisciDoppioniBruschette(){
+  let pulito=false;
+  const toDelete = [
+    ['vari','pane bruschette'],
+    ['vari','pane bruschetta'],
+    ['pane','pane bruschette'],
+    ['pane','pane bruschetta'],
+  ];
+  toDelete.forEach(([cat, sub])=>{
+    const nc=cat.toLowerCase(); const ns=sub.toLowerCase();
+    if(prezziDB[nc] && prezziDB[nc][ns]){
+      delete prezziDB[nc][ns];
+      if(Object.keys(prezziDB[nc]).length===0) delete prezziDB[nc];
+      pulito=true;
+    }
+  });
+  if(pulito){
+    savePrezzi().then(()=>setStatus('✅ Puliti doppioni bruschette!'));
+  }
+}
+// SW ROOT UNICO
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/massy.github.io/sw.js').then(()=>console.log('SW Group v1 root ok')).catch(e=>console.log('SW fail',e));
+}
 </script>
 </body>
 </html>
