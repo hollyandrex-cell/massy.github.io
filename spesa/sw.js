@@ -1,7 +1,7 @@
-const CACHE_NAME = 'chef-ling-v3.3-root';
+const CACHE_NAME = 'hr-spesa-v6.2.2-root';
 const urlsToCache = [
   './',
-  './index.html',
+  './spesa.html',
   './manifest.json',
   '../bau-32.png',
   '../bau-192x192.png',
@@ -15,7 +15,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         return cache.addAll(urlsToCache.map(url => new Request(url, {cache: 'reload'}))).catch(err => {
-          console.log('Cache parziale, alcuni file mancano ma ok', err);
+          console.log('Cache parziale', err);
           return Promise.allSettled(urlsToCache.map(u => cache.add(u).catch(e => console.log('Skip', u))));
         });
       })
@@ -36,4 +36,4 @@ self.addEventListener('activate', event => {
   );
   self.clients.claim();
 });
-console.log('SW Chef Ling v3.3 root ok');
+console.log('SW Spesa v6.2.2 root ok');
