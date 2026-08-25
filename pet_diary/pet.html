@@ -376,6 +376,20 @@ async function googleLogin(){
 }
 async function saveToDrive(){
   if(!gAccessToken){ alert('Fai login prima!'); return; }
+  // 🛡️ CONTROLLO DRIVE-GUARD: Verifica lo spazio prima di procedere
+  const quotaCheck = await checkDriveStorageQuota(gAccessToken, 0);
+  if (!quotaCheck.isSafe) {
+    const userWantsToProceed = confirm(
+      `⚠️ ATTENZIONE: Il tuo Google Drive sta esaurendo lo spazio!\n\n` +
+      `Spazio libero residuo: ${quotaCheck.freeSpaceMB} MB (su ${quotaCheck.totalLimitGB} GB totali).\n\n` +
+      `Se saturi completamente lo spazio, i backup automatici del telefono (come WhatsApp) potrebbero fallire.\n\n` +
+      `Vuoi comunque procedere con il salvataggio su Drive, oppure annullare per scegliere il salvataggio locale?`
+    );
+    if (!userWantsToProceed) {
+      document.getElementById('driveStatus').textContent='❌ Salvataggio interrotto per sicurezza spazio.';
+      return; // Ci fermiamo qui, i dati locali sono salvi!
+    }
+  }
   document.getElementById('driveStatus').textContent='⏳ Salvo su Drive...';
   try{
     const fileContent = JSON.stringify({pets, currentPetId, date:new Date().toISOString()});
@@ -569,6 +583,6 @@ if ('serviceWorker' in navigator) {
         .catch(err => console.log('SW Pet Diary errore', err));
 }
 </script>
-
+<script src="../drive-guard.js"></script>
 </body>
 </html>
