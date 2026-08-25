@@ -6,18 +6,28 @@
 <title>Privacy Policy - Holly & Rex Group</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <style>
+/* VARIABILI GLOBALI (FONDAMENTALI PER IL FOOTER DINAMICO) */
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --border: #334155;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:#0f172a;color:#f1f5f9;display:flex;justify-content:center;padding:20px;min-height:100vh}
-.card{background:#1e293b;padding:30px;border-radius:24px;max-width:700px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:var(--bg);color:var(--text);display:flex;justify-content:center;padding:20px;min-height:100vh}
+.card{background:var(--card);padding:30px;border-radius:24px;max-width:700px;width:100%;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start}
 h1{color:#fbbf24;text-align:center;margin-bottom:8px;font-size:1.8rem;font-weight:800}
-.sub{color:#94a3b8;text-align:center;font-size:.85rem;margin-bottom:24px}
-h2{color:#fbbf24;font-size:1.1rem;margin-top:24px;margin-bottom:10px;border-bottom:1px solid #334155;padding-bottom:6px}
+.sub{color:var(--text2);text-align:center;font-size:.85rem;margin-bottom:24px}
+h2{color:#fbbf24;font-size:1.1rem;margin-top:24px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:6px}
 p,li{font-size:.9rem;color:#cbd5e1;line-height:1.6;margin-bottom:10px}
 ul{padding-left:20px;margin-bottom:10px}
-.highlight{background:#0f172a;border-left:4px solid #fbbf24;padding:12px;border-radius:0 12px 12px 0;margin:16px 0;font-size:.85rem}
-.footer{text-align:center;border-top:1px solid #334155;padding-top:20px;margin-top:30px;font-size:.8rem;color:#94a3b8}
+.highlight{background:var(--bg);border-left:4px solid #fbbf24;padding:12px;border-radius:0 12px 12px 0;margin:16px 0;font-size:.85rem}
+.footer{text-align:center;border-top:1px solid var(--border);padding-top:20px;margin-top:30px;font-size:.8rem;color:var(--text2)}
 a{color:#fbbf24;text-decoration:none}
 a:hover{text-decoration:underline}
+code{background:var(--bg);padding:2px 6px;border-radius:4px;color:#fbbf24;font-size:.85rem}
 </style>
 </head>
 <body>
@@ -61,59 +71,53 @@ a:hover{text-decoration:underline}
 <h2>6. Aggiornamenti</h2>
 <p>Eventuali modifiche sostanziali alla presente informativa saranno pubblicate direttamente su questa pagina aggiornando la data in alto. Continuando a usare le app, accetti i termini descritti.</p>
 
+<!-- INIZIO FOOTER DINAMICO UNIFICATO -->
 <div class="footer">
-<!-- INIZIO FOOTER DINAMICO -->
-<div style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-  <p id="back-link-container">
-      <!-- Il link "Torna Indietro" apparirà qui automaticamente -->
-  </p>
-  <p style="font-size: 0.8rem; color: var(--text2); margin-top: 0.5rem;">
-      <a href="./index.html" style="color: var(--card); text-decoration: none;">Holly & Rex Group</a> 
-      | 
-      <a href="./cookie-policy.html" style="color: var(--card); text-decoration: none;">Cookie Policy</a>
-      <br>
-      <span style="opacity: 0.7;">La privacy unificata con la massima libertà di scelta.</span>
-  </p>
+    <p id="back-link-container" style="margin-bottom: 1rem;"></p>
+    <p>
+        <a href="./index.html">Holly & Rex Group</a> 
+        | 
+        <a href="./cookie-policy.html">Cookie Policy</a>
+        <br>
+        <span style="opacity:0.7;">La privacy unificata con la massima libertà di scelta.</span>
+    </p>
 </div>
 
 <script>
-  // Script intelligente per il tasto "Torna Indietro"
-  document.addEventListener("DOMContentLoaded", function() {
-      const referrer = document.referrer;
-      const container = document.getElementById('back-link-container');
-      
-      // Se c'è un referrer e NON è la home page principale
-      if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
-          // Estraiamo solo il nome dell'app dal percorso (es. bilancio, spesa)
-          let appName = "Indietro";
-          if (referrer.includes('/bilancio/')) appName = "Torna alla Console Bilancio";
-          else if (referrer.includes('/spesa/')) appName = "Torna alla Lista Spesa";
-          else if (referrer.includes('/ricette/')) appName = "Torna alle Ricette";
-          else if (referrer.includes('/pet_diary/')) appName = "Torna al Pet Diary";
-          
-          // Creiamo il link dinamico
-          const link = document.createElement('a');
-          link.href = referrer;
-          link.textContent = "⬅ " + appName;
-          link.style.cssText = "display: inline-block; padding: 10px 20px; background: var(--card); color: var(--text); border-radius: 20px; text-decoration: none; font-weight: bold; border: 1px solid var(--border); transition: all 0.3s;";
-          link.onmouseover = () => link.style.background = "var(--bg)";
-          link.onmouseout = () => link.style.background = "var(--card)";
-          
-          container.appendChild(link);
-      } else {
-          // Se non c'è referrer (es. hai aperto la policy direttamente dai preferiti)
-          // Mostriamo un link generico alla Home
-          const link = document.createElement('a');
-          link.href = "./index.html";
-          link.textContent = "⬅ Torna alla Home Page";
-          link.style.cssText = "display: inline-block; padding: 10px 20px; background: var(--card); color: var(--text); border-radius: 20px; text-decoration: none; font-weight: bold; border: 1px solid var(--border);";
-          container.appendChild(link);
-      }
-  });
+document.addEventListener("DOMContentLoaded", function() {
+    const referrer = document.referrer;
+    const container = document.getElementById('back-link-container');
+    
+    // Colori fallback sicuri
+    const bgCard = getComputedStyle(document.documentElement).getPropertyValue('--card').trim() || '#1e293b';
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#f1f5f9';
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#334155';
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f172a';
+
+    let targetUrl = "./index.html";
+    let linkText = "⬅ Torna alla Home Page";
+
+    if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
+        targetUrl = referrer;
+        if (referrer.includes('/bilancio/')) linkText = "⬅ Torna alla Console Bilancio";
+        else if (referrer.includes('/spesa/')) linkText = "⬅ Torna alla Lista Spesa";
+        else if (referrer.includes('/ricette/')) linkText = "⬅ Torna alle Ricette";
+        else if (referrer.includes('/pet_diary/')) linkText = "⬅ Torna al Pet Diary";
+    }
+
+    const link = document.createElement('a');
+    link.href = targetUrl;
+    link.textContent = linkText;
+    link.style.cssText = `display:inline-block; padding:10px 20px; background:${bgCard}; color:${textColor}; border-radius:20px; text-decoration:none; font-weight:bold; border:1px solid ${borderColor}; transition:all 0.3s;`;
+    
+    link.onmouseover = () => link.style.background = bgColor;
+    link.onmouseout = () => link.style.background = bgCard;
+    
+    container.appendChild(link);
+});
 </script>
 <!-- FINE FOOTER DINAMICO -->
-</div>
-</div>
 
+</div> <!-- Chiusura .card -->
 </body>
 </html>
