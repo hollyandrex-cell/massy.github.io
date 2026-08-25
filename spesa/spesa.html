@@ -6,8 +6,18 @@
 <title>Lista della Spesa - Holly & Rex - V6.1.6 Mobile Fix</title>
 <link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
-<link rel="manifest" href="/massy.github.io/manifest.json">
+<!-- MODIFICA 1: Manifest dedicato per installazione app specifica -->
+<link rel="manifest" href="./manifest-spesa.json">
 <style>
+/* MODIFICA 2: Variabili CSS aggiunte all'inizio */
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --border: #334155;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:12px;min-height:100vh}.card{background:#1e293b;padding:20px 16px;border-radius:24px;max-width:500px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start;overflow:hidden}h1{color:#fbbf24;text-align:center;margin:0 0 6px;font-size:1.9rem;font-weight:800}.sub{color:#94a3b8;text-align:center;font-size:.85rem;margin-bottom:18px}.user{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;background:#0f172a;padding:8px 12px;border-radius:12px;border:1px solid #1e293b}.user img{width:32px;height:32px;border-radius:50%;border:2px solid #fbbf24;object-fit:cover}.user span{color:#cbd5e1;font-size:.82rem;font-weight:500;word-break:break-all}.inputs{display:flex;gap:8px;margin-bottom:10px;width:100%;flex-wrap:nowrap}input{padding:14px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;outline:none;font-size:.95rem;min-width:0}input:focus{border-color:#fbbf24}#inpNome{flex:1 1 0;min-width:0}#inpQta{flex:0 0 72px;width:72px;max-width:72px;min-width:72px}.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.chip{background:#0f172a;border:1.5px solid #fbbf24;color:#fbbf24;padding:7px 12px;border-radius:20px;font-size:.82rem;cursor:pointer;font-weight:600}.chip-generic{border-color:#64748b;color:#94a3b8}.chip-sub{border-color:#22c55e;color:#22c55e}.chip-cat{border-color:#38bdf8;color:#38bdf8;font-weight:800}.btns{display:flex;gap:10px;margin-bottom:10px}button{flex:1;padding:14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:.92rem}.btn-add{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}.btn-voice{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}.btn-volantino{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;width:100%;margin-bottom:14px;padding:12px;font-size:.9rem;border:1.5px solid #fbbf24}.list{max-height:460px;overflow:auto;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}.item{background:linear-gradient(135deg,#334155,#2d3748);padding:13px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #3f4a5c}.item-left{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}.item-name{font-weight:700;font-size:.95rem}.price-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start}.badge-storico{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.68rem;padding:3px 9px;border-radius:7px;font-weight:800;cursor:pointer;letter-spacing:.02em;border:1px solid #4ade80}.badge-storico.has-trend{background:linear-gradient(135deg,#38bdf8,#0ea5e9);border-color:#7dd3fc}.badge-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:.73rem;padding:3px 8px;border-radius:7px;font-weight:800}.badge-old{background:#0f172a;color:#94a3b8;font-size:.72rem;padding:4px 8px;border-radius:8px;border:1px solid #1e293b}.btn-price{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-weight:800;min-width:38px}.btn-del{background:#1e293b;color:#ef4444;border:1px solid #334155;font-size:1.1rem;width:36px;height:36px;border-radius:9px;cursor:pointer}.btn-edit{background:#0f172a;color:#fbbf24;border:1px solid #334155;width:36px;height:36px;border-radius:9px;cursor:pointer}.totale-box{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #22c55e;color:#fff;padding:14px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;font-weight:800}textarea{width:100%;padding:12px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;min-height:80px;font-family:inherit}.btn-wa{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;width:100%;margin-top:12px;padding:15px}.btn-bilancio{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;margin-top:10px;padding:15px;font-size:1rem;box-shadow:0 4px 15px rgba(251,191,36,.3)}.btn-clear{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;width:100%;margin-top:10px;padding:13px}.btn-save{background:linear-gradient(135deg,#475569,#334155);color:#fff;width:100%;margin-top:10px;padding:12px;font-size:.85rem}.small{font-size:.85rem;color:#f1f5f9;text-align:center;margin-top:18px;line-height:1.6;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #334155}.status{text-align:center;font-size:.78rem;color:#22c55e;margin-top:8px;min-height:18px}.dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:6px}.cat-header{font-size:.78rem;color:#fbbf24;font-weight:800;margin:12px 0 4px 4px;letter-spacing:.04em;text-transform:uppercase}.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}.modal{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:420px;max-height:85vh;overflow:auto}.modal h3{color:#fbbf24;margin-bottom:10px}.modal input{width:100%;margin-bottom:10px}.modal-btns{display:flex;gap:10px;margin-top:12px}
 .history-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0f172a;border:1px solid #334155;border-radius:10px;margin-bottom:8px}.history-date{font-size:.75rem;color:#94a3b8}.history-price{font-weight:800;font-size:.95rem}.history-diff{font-size:.78rem;font-weight:700;padding:3px 7px;border-radius:6px}.diff-up{background:#450a0a;color:#fca5a5}.diff-down{background:#052e16;color:#86efac}.diff-same{background:#1e293b;color:#94a3b8}
 .volantino-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.volantino-links a{background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:10px;font-size:.8rem;text-decoration:none;font-weight:600}
@@ -30,12 +40,12 @@
 <div class="btns"><button class="btn-add" id="btnAdd">+ Aggiungi</button><button class="btn-voice" id="btnVoice">🎤 Parla</button></div>
 <button class="btn-volantino" id="btnVolantino">📄 Consulta Volantini Offerte</button>
 <div id="lista" class="list"></div>
-<div id="totaleBox" class="totale-box" style="display:none;"><span>💰 Totale: <span id="totaleVal">0,00€</span></span><small id="totaleDett"></small></div>
+<div id="totaleBox" class="totale-box" style="display:none;"><span> Totale: <span id="totaleVal">0,00€</span></span><small id="totaleDett"></small></div>
 <label style="font-size:.82rem;color:#94a3b8;margin-bottom:6px;display:block;">📝 Note:</label><textarea id="note" placeholder="Es. Prendi le buste..."></textarea>
 <button class="btn-wa" id="btnWA">💬 Invia a WhatsApp</button>
 <button class="btn-bilancio" id="btnBilancio">💰 Registra in Bilancio</button>
 <button class="btn-clear" id="btnClear">🗑 Svuota Lista</button>
-<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1">💾 Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button><button class="btn-save" id="btnBackupChoice" style="flex:1;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">☁ Dove salvare?</button></div>
+<div style="display:flex;gap:10px;margin-top:10px;"><button class="btn-save" id="btnSave" style="flex:1"> Backup</button><button class="btn-save" id="btnLoad" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">📂 Carica</button><button class="btn-save" id="btnBackupChoice" style="flex:1;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">☁ Dove salvare?</button></div>
 <div id="backupChoiceBox" style="display:none;background:#0f172a;border:1px solid #f59e0b;border-radius:12px;padding:12px;margin-top:10px">
 <h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">☁ Scegli dove fare il backup</h4>
 <p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px"><b>Firebase</b> (nostro) è già attivo per sincronizzazione dispositivi e storico prezzi. Il <b>backup extra</b> è una copia di sicurezza in più, scegli tu dove!</p>
@@ -47,8 +57,52 @@
 <div id="driveBackupStatus" style="font-size:.75rem;color:#86efac;margin-top:8px"></div>
 </div>
 <input type="file" id="fileInput" accept=".json" style="display:none;"><div class="status" id="status"></div>
-<div class="small"><span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali<br><div style="display:flex;gap:10px;justify-content:center;margin:6px 0;flex-wrap:wrap"><a href="/massy.github.io/spesa/privacy-policy.html" style="color:#fbbf24;text-decoration:none;">Privacy</a><span style="color:#334155">|</span><a href="/massy.github.io/spesa/cookie-policy.html" style="color:#fbbf24;text-decoration:none;">Cookie Policy</a><span style="color:#334155">|</span><a href="/massy.github.io/spesa/privacy-policy.html" style="color:#94a3b8;text-decoration:none;font-size:.75rem">Nessun tracciamento</a></div><a href="#" id="linkFeedback" style="color:#38bdf8;text-decoration:none;font-weight:700;margin-top:6px;display:inline-block;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a></div>
+
+<!-- MODIFICA 3: Footer Dinamico + Link Policy Corretti -->
+<div style="text-align:center; border-top:1px solid var(--border); padding-top:20px; margin-top:30px; font-size:.8rem; color:var(--text2); background:#0f172a; padding:12px; border-radius:12px;">
+    <p id="spesa-back-link-container" style="margin-bottom: 1rem;"></p>
+    <p style="margin-bottom:6px;">
+        <span id="count">0 articoli</span> • Storico + Volantini • Zero dati personali
+    </p>
+    <p style="margin-bottom:6px;">
+        <a href="/massy.github.io/index.html" style="color:#fbbf24; text-decoration:none;">Holly & Rex Group</a> 
+        | 
+        <a href="/massy.github.io/privacy-policy.html" style="color:#fbbf24; text-decoration:none;">Privacy Policy</a>
+        | 
+        <a href="/massy.github.io/cookie-policy.html" style="color:#fbbf24; text-decoration:none;">Cookie Policy</a>
+    </p>
+    <a href="#" id="linkFeedback" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:.75rem;">💡 Suggerisci idea / Segnala bug (anonimo, 30 sec)</a>
 </div>
+
+<script>
+// Script Torna Indietro Intelligente per Spesa
+document.addEventListener("DOMContentLoaded", function() {
+    const referrer = document.referrer;
+    const container = document.getElementById('spesa-back-link-container');
+    const bgCard = getComputedStyle(document.documentElement).getPropertyValue('--card').trim() || '#1e293b';
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#f1f5f9';
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#334155';
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f172a';
+
+    let targetUrl = "/massy.github.io/index.html";
+    let linkText = "⬅ Torna alla Home Page";
+
+    if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
+        targetUrl = referrer;
+        if (referrer.includes('/bilancio/')) linkText = " Torna alla Console Bilancio";
+        else if (referrer.includes('/pet_diary/')) linkText = "⬅ Torna al Pet Diary";
+        else if (referrer.includes('/ricette/')) linkText = "⬅ Torna alle Ricette";
+    }
+
+    const link = document.createElement('a');
+    link.href = targetUrl;
+    link.textContent = linkText;
+    link.style.cssText = `display:inline-block; padding:10px 20px; background:${bgCard}; color:${textColor}; border-radius:20px; text-decoration:none; font-weight:bold; border:1px solid ${borderColor}; transition:all 0.3s;`;
+    link.onmouseover = () => link.style.background = bgColor;
+    link.onmouseout = () => link.style.background = bgCard;
+    container.appendChild(link);
+});
+</script>
 
 <div id="priceModal" class="modal-bg" style="display:none;"><div class="modal"><h3 id="modalTitle">Prezzo</h3><p id="modalDesc" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;"></p><input id="modalSub" placeholder="Tipo: es. Lattuga"><div style="display:flex;gap:8px;"><input id="modalQta" placeholder="Qta tipo" inputmode="numeric" style="flex:1"><input id="modalPrice" placeholder="Prezzo TOTALE" inputmode="decimal" style="flex:1.5"></div><small id="modalHint" style="color:#fbbf24;font-size:.75rem;display:block;margin-bottom:8px;"></small><div class="modal-btns"><button id="modalCancel" style="background:#334155;color:#fff;">Annulla</button><button id="modalOk" style="background:#22c55e;color:#fff;">Salva</button></div></div></div>
 
@@ -66,12 +120,12 @@
 <a href="https://www.esselunga.it/it-it/promo/volantino.html" target="_blank">🟢 Esselunga</a>
 <a href="https://www.eurospin.it/volantino/" target="_blank">🔵 Eurospin</a>
 <a href="https://www.penny.it/offerte/volantino" target="_blank">🔴 Penny</a>
-<a href="https://www.basko.it/volantino" target="_blank">🟠 Basko</a>
+<a href="https://www.basko.it/volantino" target="_blank"> Basko</a>
 <a href="https://www.tigros.it/volantini" target="_blank">🟢 Tigros</a>
 <a href="https://volantino.errebi.com/" target="_blank">🔍 Tutti i Volantini (cerca città)</a>
 </div>
 <div style="margin-top:14px;">
-<label style="font-size:.8rem;color:#94a3b8;display:block;margin-bottom:6px;">➕ Aggiungi tuo supermercato preferito:</label>
+<label style="font-size:.8rem;color:#94a3b8;display:block;margin-bottom:6px;"> Aggiungi tuo supermercato preferito:</label>
 <div style="display:flex;gap:6px;"><input id="customVolName" placeholder="Nome: es. Crai" style="flex:1;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"><input id="customVolUrl" placeholder="Link volantino" style="flex:2;padding:8px;border-radius:8px;border:1px solid #475569;background:#0f172a;color:#fff;"></div>
 <button id="btnAddCustomVol" style="margin-top:6px;background:#0f172a;border:1px solid #f59e0b;color:#fbbf24;padding:8px 12px;border-radius:8px;font-weight:700;width:100%;cursor:pointer;">+ Aggiungi</button>
 <div id="customVols" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;"></div>
@@ -82,7 +136,7 @@
 
 <div id="updateModal" class="modal-bg" style="display:none;z-index:1000;"><div class="modal" style="max-width:440px;border:2px solid #fbbf24;box-shadow:0 0 30px rgba(251,191,36,.3);"><div style="text-align:center;margin-bottom:12px;"><div style="font-size:2.5rem;">🎉</div><h3 style="color:#fbbf24;margin:6px 0;">App Aggiornata!</h3><p id="updateVersion" style="font-size:.9rem;color:#22c55e;font-weight:800;"></p></div><p style="font-size:.85rem;color:#94a3b8;text-align:center;margin-bottom:14px;">Siamo vivi e lavoriamo per te! Ecco cosa c'è di nuovo, zero sbattimenti, tutto automatico 💛</p><div id="updateContent" style="max-height:340px;overflow:auto;"></div><div style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px dashed #fbbf24;padding:10px;border-radius:10px;margin-top:14px;text-align:center;"><p style="font-size:.78rem;color:#fbbf24;">💡 Non devi scaricare nulla! L'app si è già aggiornata da sola.</p><p style="font-size:.72rem;color:#94a3b8;margin-top:4px;">La prossima volta vedrai ancora più novità</p></div><div class="modal-btns" style="margin-top:14px;"><button id="updateClose" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:1rem;">💛 Fantastico, ho capito!</button></div><div style="text-align:center;margin-top:8px;"><small style="color:#475569;font-size:.7rem;">Holly & Rex Group • LA PAZZIA È L'UNICA SANITÀ MENTALE</small></div></div></div>
 
-<div id="localWarningModalSpesa" class="modal-bg" style="display:none;z-index:1001;"><div class="modal" style="border:2px solid #ef4444;max-width:400px"><h3 style="color:#ef4444;text-align:center">⚠ Attenzione - Solo sul dispositivo?</h3><p style="font-size:.9rem;color:#f1f5f9;line-height:1.6;margin:12px 0">Stai usando <b>solo il salvataggio locale</b>?<br><br>👉 Se <b>cancelli cache, cambi browser, perdi il telefono</b>, la lista e lo storico prezzi <b style="color:#fca5a5">andranno persi!</b><br><br>💛 <b>Consiglio da tesoro:</b> fai sempre <b>Backup</b> con il bottone 💾 qui sotto! Ci metti 2 secondi ed è al sicuro!</p><div style="display:flex;gap:10px;margin-top:14px"><button id="localWarnContinue" style="flex:1;background:#334155;color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;">Ho capito</button><button id="localWarnBackup" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:800;">💾 Fai Backup ora</button></div><div style="text-align:center;margin-top:10px"><label style="font-size:.75rem;color:#94a3b8;cursor:pointer"><input type="checkbox" id="dontShowLocalSpesa"> Non mostrare più</label></div></div></div>
+<div id="localWarningModalSpesa" class="modal-bg" style="display:none;z-index:1001;"><div class="modal" style="border:2px solid #ef4444;max-width:400px"><h3 style="color:#ef4444;text-align:center"> Attenzione - Solo sul dispositivo?</h3><p style="font-size:.9rem;color:#f1f5f9;line-height:1.6;margin:12px 0">Stai usando <b>solo il salvataggio locale</b>?<br><br>👉 Se <b>cancelli cache, cambi browser, perdi il telefono</b>, la lista e lo storico prezzi <b style="color:#fca5a5">andranno persi!</b><br><br>💛 <b>Consiglio da tesoro:</b> fai sempre <b>Backup</b> con il bottone 💾 qui sotto! Ci metti 2 secondi ed è al sicuro!</p><div style="display:flex;gap:10px;margin-top:14px"><button id="localWarnContinue" style="flex:1;background:#334155;color:#fff;padding:12px;border-radius:10px;border:none;font-weight:700;">Ho capito</button><button id="localWarnBackup" style="flex:1;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px;border-radius:10px;border:none;font-weight:800;">💾 Fai Backup ora</button></div><div style="text-align:center;margin-top:10px"><label style="font-size:.75rem;color:#94a3b8;cursor:pointer"><input type="checkbox" id="dontShowLocalSpesa"> Non mostrare più</label></div></div></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -108,11 +162,11 @@ function openHistoryModal(cat, sub){
   const storico = getStorico(cat, sub);
   const modal = document.getElementById('historyModal');
   const nome = sub && sub!=='_generico' ? `${cat} - ${sub}` : cat;
-  document.getElementById('historyTitle').textContent = `📈 ${nome}`;
+  document.getElementById('historyTitle').textContent = ` ${nome}`;
   document.getElementById('historySub').textContent = storico.length ? `${storico.length} rilevazioni` : 'Nessun prezzo ancora salvato';
   const statsDiv = document.getElementById('historyStats');const listDiv = document.getElementById('historyList');
   if(!storico.length){statsDiv.innerHTML = '<span style="color:#94a3b8">Inserisci un prezzo con € per iniziare lo storico</span>';listDiv.innerHTML='';}
-  else{const prezzi = storico.map(x=>x.prezzo);const min = Math.min(...prezzi);const max = Math.max(...prezzi);const avg = prezzi.reduce((a,b)=>a+b,0)/prezzi.length;const ultimo = prezzi[prezzi.length-1];const penultimo = prezzi.length>1 ? prezzi[prezzi.length-2] : null;let diffHtml='';if(penultimo!==null){const diff = ultimo - penultimo;const perc = ((diff/penultimo)*100).toFixed(1);if(diff>0) diffHtml = `<span style="color:#fca5a5">🔺 +${diff.toFixed(2)}€ (+${perc}%) vs ultima volta</span>`;else if(diff<0) diffHtml = `<span style="color:#86efac">🔻 ${diff.toFixed(2)}€ (${perc}%) RISPARMI!</span>`;else diffHtml = `<span style="color:#94a3b8">➡ Prezzo uguale</span>`;}statsDiv.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Ultimo:</span><b style="color:#22c55e">${ultimo.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Min / Max:</span><b>${min.toFixed(2)}€ / ${max.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Media:</span><b>${avg.toFixed(2)}€</b></div><div style="margin-top:8px;font-size:.85rem;">${diffHtml}</div>`;listDiv.innerHTML='';[...storico].reverse().forEach((entry, idxRev)=>{const idx = storico.length-1-idxRev;const prev = idx>0 ? storico[idx-1] : null;let diffBadge='';if(prev){const d = entry.prezzo - prev.prezzo;if(Math.abs(d)<0.001) diffBadge=`<span class="history-diff diff-same">➡ 0</span>`;else if(d>0) diffBadge=`<span class="history-diff diff-up">🔺 +${d.toFixed(2)}€</span>`;else diffBadge=`<span class="history-diff diff-down">🔻 ${d.toFixed(2)}€</span>`;}else{diffBadge=`<span class="history-diff diff-same">1° prezzo</span>`;}const date = new Date(entry.data);const dateStr = date.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'}) + ' ' + date.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});const row=document.createElement('div');row.className='history-row';row.innerHTML=`<div><div class="history-price">${entry.prezzo.toFixed(2)}€</div><div class="history-date">${dateStr}</div></div>${diffBadge}`;listDiv.appendChild(row);});}
+  else{const prezzi = storico.map(x=>x.prezzo);const min = Math.min(...prezzi);const max = Math.max(...prezzi);const avg = prezzi.reduce((a,b)=>a+b,0)/prezzi.length;const ultimo = prezzi[prezzi.length-1];const penultimo = prezzi.length>1 ? prezzi[prezzi.length-2] : null;let diffHtml='';if(penultimo!==null){const diff = ultimo - penultimo;const perc = ((diff/penultimo)*100).toFixed(1);if(diff>0) diffHtml = `<span style="color:#fca5a5">🔺 +${diff.toFixed(2)}€ (+${perc}%) vs ultima volta</span>`;else if(diff<0) diffHtml = `<span style="color:#86efac"> ${diff.toFixed(2)}€ (${perc}%) RISPARMI!</span>`;else diffHtml = `<span style="color:#94a3b8">➡ Prezzo uguale</span>`;}statsDiv.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Ultimo:</span><b style="color:#22c55e">${ultimo.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Min / Max:</span><b>${min.toFixed(2)}€ / ${max.toFixed(2)}€</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>Media:</span><b>${avg.toFixed(2)}€</b></div><div style="margin-top:8px;font-size:.85rem;">${diffHtml}</div>`;listDiv.innerHTML='';[...storico].reverse().forEach((entry, idxRev)=>{const idx = storico.length-1-idxRev;const prev = idx>0 ? storico[idx-1] : null;let diffBadge='';if(prev){const d = entry.prezzo - prev.prezzo;if(Math.abs(d)<0.001) diffBadge=`<span class="history-diff diff-same">➡ 0</span>`;else if(d>0) diffBadge=`<span class="history-diff diff-up">🔺 +${d.toFixed(2)}€</span>`;else diffBadge=`<span class="history-diff diff-down">🔻 ${d.toFixed(2)}€</span>`;}else{diffBadge=`<span class="history-diff diff-same">1° prezzo</span>`;}const date = new Date(entry.data);const dateStr = date.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'}) + ' ' + date.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});const row=document.createElement('div');row.className='history-row';row.innerHTML=`<div><div class="history-price">${entry.prezzo.toFixed(2)}€</div><div class="history-date">${dateStr}</div></div>${diffBadge}`;listDiv.appendChild(row);});}
   modal.style.display='flex';
 }
 function render(){
@@ -128,11 +182,11 @@ function render(){
       const totRiga=ultimo&&typeof ultimo.prezzo==='number'?(ultimo.prezzo*qNum).toFixed(2).replace('.',','):null;
       const isGeneric=!it.sottocategoria||it.sottocategoria==='_generico';
       const displayName=it.sottocategoria&&it.sottocategoria!=='_generico'?`${escapeHtml(it.categoria)} - <b style="color:#22c55e">${escapeHtml(it.sottocategoria)}</b>`:escapeHtml(it.categoria||it.nome);
-      let storicoBadgeHtml='';if(ultimo && storico.length>=1){let trend = '';if(storico.length>=2){const last=storico[storico.length-1].prezzo; const prev=storico[storico.length-2].prezzo;if(last>prev) trend=' 🔺'; else if(last<prev) trend=' 🔻';}storicoBadgeHtml = `<span class="badge-storico ${storico.length>1?'has-trend':''}" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}">📈 Storico${storico.length>1?` ${storico.length}${trend}`:''}</span>`;}else if(!ultimo){storicoBadgeHtml = `<span class="badge-storico" style="opacity:.6" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}">📈 Storico</span>`;}
+      let storicoBadgeHtml='';if(ultimo && storico.length>=1){let trend = '';if(storico.length>=2){const last=storico[storico.length-1].prezzo; const prev=storico[storico.length-2].prezzo;if(last>prev) trend=' 🔺'; else if(last<prev) trend=' 🔻';}storicoBadgeHtml = `<span class="badge-storico ${storico.length>1?'has-trend':''}" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}">📈 Storico${storico.length>1?` ${storico.length}${trend}`:''}</span>`;}else if(!ultimo){storicoBadgeHtml = `<span class="badge-storico" style="opacity:.6" data-cat="${escapeHtml(catName)}" data-sub="${escapeHtml(sub||it.nome)}"> Storico</span>`;}
       const prezzoBadge=ultimo&&typeof ultimo.prezzo==='number'?`<span class="badge-price">${ultimo.prezzo.toFixed(2).replace('.',',')}€ cad.</span>`:'<span class="badge-price" style="background:#475569">no prezzo</span>';
       const vecchioBadge=ultimo&&typeof ultimo.prezzo==='number'?`<span class="badge-old">${totRiga?`Tot: ${totRiga}€ • `:''}Ultimo: ${ultimo.prezzo.toFixed(2).replace('.',',')}€</span>`:'';
       const div=document.createElement('div');div.className='item';
-      div.innerHTML=`<div class="item-left"><span class="item-name">${displayName}</span><div class="price-stack">${storicoBadgeHtml}${prezzoBadge}</div>${vecchioBadge}${isGeneric?`<small style="color:#fbbf24;font-size:.75rem;">⚠ Generico ${it.qta} pz - clicca €</small>`:''}</div><div class="item-actions" style="flex-direction:column;gap:4px;"><div style="display:flex;gap:4px;align-items:center;"><button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button><span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span><button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button></div><div style="display:flex;gap:4px;"><button class="btn-edit" data-idx="${idx}">✏</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div></div>`;
+      div.innerHTML=`<div class="item-left"><span class="item-name">${displayName}</span><div class="price-stack">${storicoBadgeHtml}${prezzoBadge}</div>${vecchioBadge}${isGeneric?`<small style="color:#fbbf24;font-size:.75rem;"> Generico ${it.qta} pz - clicca €</small>`:''}</div><div class="item-actions" style="flex-direction:column;gap:4px;"><div style="display:flex;gap:4px;align-items:center;"><button class="btn-qty" data-act="minus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">−</button><span style="min-width:28px;text-align:center;font-weight:800;font-size:.95rem;">${escapeHtml(it.qta||'1')}</span><button class="btn-qty" data-act="plus" data-idx="${idx}" style="background:#1e293b;border:1px solid #334155;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:800;">+</button></div><div style="display:flex;gap:4px;"><button class="btn-edit" data-idx="${idx}">✏</button><button class="btn-price" data-idx="${idx}">€</button><button class="btn-del" data-idx="${idx}">×</button></div></div>`;
       cont.appendChild(div);
     });
   }
@@ -372,7 +426,7 @@ async function doBackupDrive(){
 }
 async function doBackupDriveActual(){
   const statusEl=document.getElementById('driveBackupStatus');
-  statusEl.textContent='⏳ Salvataggio su Drive privato...';
+  statusEl.textContent=' Salvataggio su Drive privato...';
   try{
     const data=getBackupData();
     const fileContent=JSON.stringify(data);
@@ -418,7 +472,7 @@ const APP_CHANGELOG = [
     title: "☁ Backup scelta dove salvare - idea tesoro GENIALE",
     news: [
       "Firebase resta d'obbligo per sincronizzazione dispositivi e storico prezzi (altrimenti non funziona multi-cell)",
-      "NUOVO: bottone 'Dove salvare?' → scegli: 📱 Scarica su cell/PC (JSON) o 💾 Google Drive privato tuo (appDataFolder invisibile)",
+      "NUOVO: bottone 'Dove salvare?' → scegli:  Scarica su cell/PC (JSON) o 💾 Google Drive privato tuo (appDataFolder invisibile)",
       "Massima libertà: l'utente decide dove il backup extra, Firebase resta base per sync"
     ]
   },
@@ -429,7 +483,7 @@ const APP_CHANGELOG = [
     news: [
       "Nuovo popup se usi solo locale senza Backup: ti avvisa che se perdi il cell perdi tutto! Con bottone Backup immediato 💾",
       "Checkbox 'Non mostrare più' per chi sa cosa fa",
-      "Stessa filosofia di Pet Diary: massima libertà, ma avvisiamo con amore 💛"
+      "Stessa filosofia di Pet Diary: massima libertà, ma avvisiamo con amore "
     ]
   },
   {
