@@ -29,7 +29,7 @@
         }
 
         const freeSpace = limit - usage;
-        const safetyThreshold = 1024 * 1024 * 500; // Soglia di sicurezza minima: 500 MB liberi
+        const safetyThreshold = 1024 * 1024 * 1024; // Soglia di sicurezza minima: 1 GB libero
 
         // Controllo 1: Lo spazio libero è sotto la soglia di sicurezza?
         // Controllo 2: Il file che vogliamo caricare è più grande dello spazio libero rimasto?
