@@ -1,0 +1,14 @@
+{
+    "name": "Holly & Rex - Pet Diary",
+    "short_name": "Pet Diary",
+    "start_url": "/massy.github.io/pet_diary/pet.html",
+    "scope": "/massy.github.io/pet_diary/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "description": "Diario Salute, Scadenze e Report Veterinari per i tuoi Pelosi",
+    "icons": [
+      { "src": "/massy.github.io/bau-192x192.png", "sizes": "192x192", "type": "image/png" },
+      { "src": "/massy.github.io/bau-512x512.png", "sizes": "512x512", "type": "image/png" }
+    ]
+  }

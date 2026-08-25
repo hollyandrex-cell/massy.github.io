@@ -3,11 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex Pet Diary - Il Diario del Peloso 🐾 V0.6 Drive Fixed - ClientID integrato by Nova+Aura+Luna</title>
+<title>Holly & Rex Pet Diary - Il Diario del Peloso 🐾 V0.6 Drive Fixed</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-180.png">
-<link rel="manifest" href="./manifest.json">
+<!-- MODIFICA 1: Manifest dedicato -->
+<link rel="manifest" href="./manifest-petdiary.json">
 <style>
+/* MODIFICA 2: Variabili CSS aggiunte all'inizio */
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --border: #334155;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:16px;min-height:100vh}
 .card{background:#1e293b;padding:24px 20px;border-radius:24px;max-width:540px;width:100%;border:1px solid #334155;box-shadow:0 20px 60px rgba(0,0,0,.5);align-self:flex-start}
@@ -56,7 +66,7 @@ textarea{min-height:70px}
 <h3 style="color:#fbbf24;margin-bottom:8px">🐾 Scegli il tuo spazio dati</h3>
 <p style="font-size:.85rem;color:#94a3b8;margin-bottom:16px">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro 💛</p>
 <div class="storage-option" onclick="selectStorage('firebase')">
-<strong style="color:#fbbf24">☁ Firebase Cloud (Consigliato)</strong>
+<strong style="color:#fbbf24"> Firebase Cloud (Consigliato)</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Sincronizzazione in tempo reale tra dispositivi e condivisione con la famiglia. Perfetto per chi ha più telefoni.</div>
 </div>
 <div class="storage-option" onclick="selectStorage('drive')">
@@ -64,7 +74,7 @@ textarea{min-height:70px}
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Salva e gestisci i dati sul tuo spazio Google personale in totale autonomia. 100% tuo, privato, 15GB gratis.</div>
 </div>
 <div class="storage-option" onclick="selectStorage('local')">
-<strong style="color:#f59e0b">📱 Solo su questo Dispositivo (Locale)</strong>
+<strong style="color:#f59e0b"> Solo su questo Dispositivo (Locale)</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">I dati restano offline sul tuo browser/telefono. Veloce, ma se perdi il cell perdi tutto (ti avvisiamo!).</div>
 </div>
 </div>
@@ -72,7 +82,7 @@ textarea{min-height:70px}
 
 <div id="localWarningModal" class="modal-bg" style="display:none;z-index:1003">
 <div class="modal" style="border:2px solid #ef4444">
-<h3 style="color:#ef4444;margin-bottom:10px">⚠ Attenzione alla modalità locale</h3>
+<h3 style="color:#ef4444;margin-bottom:10px"> Attenzione alla modalità locale</h3>
 <p style="font-size:.88rem;color:#f1f5f9;line-height:1.5;margin-bottom:14px">
 Stai scegliendo di salvare i dati <b>solo su questo dispositivo</b>.<br><br>
 Se cambi telefono, formatti la memoria o cancelli i dati del browser, <b style="color:#fca5a5">tutti i diari, le scadenze e lo storico dei tuoi pelosi andranno persi</b> e non potranno essere recuperati.<br><br>
@@ -97,7 +107,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 <span class="badge-free">Zero Pubblicità • Zero Abbonamenti • 100% Nostro 💛</span>
 
 <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
-<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()">💾 Backup JSON</button>
+<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()"> Backup JSON</button>
 <button class="btn-add-pet" style="background:linear-gradient(135deg,#f59e0b,#d97706);font-size:.8rem" onclick="document.getElementById('importFile').click()">📥 Ripristina</button>
 <input type="file" id="importFile" style="display:none" accept=".json" onchange="importBackup(event)">
 <button class="btn-add-pet" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);font-size:.8rem" onclick="toggleCloudPanel()">☁ Cloud (Firebase / Drive)</button>
@@ -105,7 +115,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 
 <div id="cloudPanel" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:12px">
 <div style="display:flex;gap:8px;margin-bottom:12px">
-<button id="tabFb" class="btn-add-pet" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')">🔥 Firebase</button>
+<button id="tabFb" class="btn-add-pet" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')"> Firebase</button>
 <button id="tabDrive" class="btn-add-pet" style="flex:1;background:#0f172a;border:1px solid #4285F4;color:#4285F4" onclick="showTab('drive')">💾 Drive</button>
 </div>
 <div id="panelFb">
@@ -138,12 +148,12 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 
 <div class="pet-tabs" id="petTabs"></div>
 <div id="noPets" style="text-align:center;padding:20px;display:none">
-<p style="color:#94a3b8;font-size:.9rem;margin-bottom:12px">Nessun peloso ancora!<br>Crea il primo profilo 🐶🐱</p>
+<p style="color:#94a3b8;font-size:.9rem;margin-bottom:12px">Nessun peloso ancora!<br>Crea il primo profilo 🐶</p>
 <button class="btn btn-primary" onclick="openPetModal()">+ Crea Profilo Peloso</button>
 </div>
 <div id="petView" style="display:none">
   <div class="section">
-    <h3>📋 Profilo <span id="petNameTitle"></span> <button onclick="openPetModal(true)" style="background:#0f172a;border:1px solid #334155;color:#fbbf24;padding:4px 8px;border-radius:8px;cursor:pointer;font-size:.75rem">✏ Modifica</button></h3>
+    <h3> Profilo <span id="petNameTitle"></span> <button onclick="openPetModal(true)" style="background:#0f172a;border:1px solid #334155;color:#fbbf24;padding:4px 8px;border-radius:8px;cursor:pointer;font-size:.75rem">✏ Modifica</button></h3>
     <div class="grid2">
       <div><small style="color:#94a3b8">Specie</small><div id="vSpecie" style="font-weight:700"></div></div>
       <div><small style="color:#94a3b8">Peso</small><div id="vPeso" style="font-weight:700"></div></div>
@@ -154,7 +164,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
   </div>
   <div class="section">
     <h3>📝 Diario Salute in Tempo Reale</h3>
-    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento">🧠 Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option></select>
+    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento"> Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option></select>
     <textarea id="diaryText" placeholder="Es: Rex zoppica leggermente..."></textarea>
     <button class="btn btn-primary" onclick="addDiary()">+ Annota ora → Sincronizza</button>
     <div id="diaryList" style="margin-top:12px;max-height:280px;overflow:auto"></div>
@@ -495,7 +505,7 @@ function delReminder(id){
 function generateReport(){
   const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
   const last30 = (pet.diary||[]).filter(d=> (new Date()-new Date(d.date))/86400000 <=30);
-  let txt = `🐾 HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
+  let txt = ` HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
   txt+=`\n--- ULTIMI 30GG ---\n`; last30.forEach(d=>{txt+=`${new Date(d.date).toLocaleString()} [${d.tag}] ${d.text}\n`;});
   txt+=`\n--- STORICO ---\n`; (pet.diary||[]).forEach(d=>{txt+=`${new Date(d.date).toLocaleDateString()} ${d.tag}: ${d.text}\n`;});
   txt+=`\nHolly & Rex Pet Diary V0.6 Drive Fixed - ClientID integrato by Nova+Aura+Luna 💛\nModalità: ${storageMode}\n`;
@@ -508,5 +518,57 @@ function shareWhatsApp(){
 }
 checkStorageConfig();
 </script>
+
+<!-- MODIFICA 3: Footer Dinamico + SW Registration -->
+<div style="text-align:center; border-top:1px solid var(--border); padding-top:20px; margin-top:30px; font-size:.8rem; color:var(--text2);">
+    <p id="pd-back-link-container" style="margin-bottom: 1rem;"></p>
+    <p>
+        <a href="/massy.github.io/index.html" style="color:#fbbf24; text-decoration:none;">Holly & Rex Group</a> 
+        | 
+        <a href="/massy.github.io/privacy-policy.html" style="color:#fbbf24; text-decoration:none;">Privacy Policy</a>
+        | 
+        <a href="/massy.github.io/cookie-policy.html" style="color:#fbbf24; text-decoration:none;">Cookie Policy</a>
+        <br>
+        <span style="opacity:0.7;">Zero pubblicità, massima libertà. Fatto con amore per i pelosi. 🐾</span>
+    </p>
+</div>
+
+<script>
+// Script Torna Indietro Intelligente
+document.addEventListener("DOMContentLoaded", function() {
+    const referrer = document.referrer;
+    const container = document.getElementById('pd-back-link-container');
+    const bgCard = getComputedStyle(document.documentElement).getPropertyValue('--card').trim() || '#1e293b';
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#f1f5f9';
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#334155';
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f172a';
+
+    let targetUrl = "/massy.github.io/index.html";
+    let linkText = "⬅ Torna alla Home Page";
+
+    if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
+        targetUrl = referrer;
+        if (referrer.includes('/bilancio/')) linkText = "⬅ Torna alla Console Bilancio";
+        else if (referrer.includes('/spesa/')) linkText = "⬅ Torna alla Lista Spesa";
+        else if (referrer.includes('/ricette/')) linkText = "⬅ Torna alle Ricette";
+    }
+
+    const link = document.createElement('a');
+    link.href = targetUrl;
+    link.textContent = linkText;
+    link.style.cssText = `display:inline-block; padding:10px 20px; background:${bgCard}; color:${textColor}; border-radius:20px; text-decoration:none; font-weight:bold; border:1px solid ${borderColor}; transition:all 0.3s;`;
+    link.onmouseover = () => link.style.background = bgColor;
+    link.onmouseout = () => link.style.background = bgCard;
+    container.appendChild(link);
+});
+
+// Registrazione Service Worker UNICO (Root)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/massy.github.io/sw.js')
+        .then(reg => console.log('SW Pet Diary registrato', reg))
+        .catch(err => console.log('SW Pet Diary errore', err));
+}
+</script>
+
 </body>
 </html>
