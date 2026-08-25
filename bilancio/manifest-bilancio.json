@@ -1,0 +1,22 @@
+{
+    "name": "Holly & Rex - Console Bilancio",
+    "short_name": "Bilancio",
+    "start_url": "/massy.github.io/bilancio/bilancio.html",
+    "scope": "/massy.github.io/bilancio/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "description": "Console di Controllo Economico Holly & Rex",
+    "icons": [
+      {
+        "src": "/massy.github.io/bau-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/massy.github.io/bau-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
