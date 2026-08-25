@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Chef Ling - Detail Perfect v3.2.2</title>
 <link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
-<link rel="manifest" href="/massy.github.io/manifest.json">
+<!-- MODIFICA 1: Manifest dedicato per installazione app specifica -->
+<link rel="manifest" href="./manifest-chefling.json">
 <link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
 <style>
-:root { --bg:#0f172a; --card:#1e293b; --text:#f8fafc; --pink:#ec4899; --gold:#f59e0b; --green:#22c55e; --blue:#3b82f6; --red:#ef4444; }
+/* MODIFICA 2: Variabili CSS già presenti, aggiunte quelle mancanti per sicurezza */
+:root { --bg:#0f172a; --card:#1e293b; --text:#f8fafc; --pink:#ec4899; --gold:#f59e0b; --green:#22c55e; --blue:#3b82f6; --red:#ef4444; --border:#334155; --text2:#94a3b8; }
 body { font-family: sans-serif; background:var(--bg); color:var(--text); margin:0; padding:20px; display:flex; justify-content:center; min-height:100vh; }
 .app { background:var(--card); padding:20px; border-radius:20px; width:100%; max-width:460px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.5); position:relative; overflow:hidden; display:flex; flex-direction:column; }
 h1 { color:var(--pink); margin:0 0 5px 0; font-size:1.8rem; }
@@ -56,12 +58,12 @@ textarea { resize:vertical; }
 <body>
 <div class="app">
 <div id="mainScreen">
-<h1>👩🍳 Chef Ling</h1>
+<h1>👩 Chef Ling</h1>
 <p>Holly & Rex Group - v3.2.2 Fusione Perfect <span style="font-size:0.7rem; background:#22c55e; color:#000; padding:2px 6px; border-radius:10px; font-weight:bold;">MULTI + BACKUP</span></p>
 <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin-bottom:5px;">COSA HAI? (Clicca per dettagli)</div>
 <div class="grid" id="grid"></div>
 <textarea id="extra" rows="2" placeholder="Qualcos'altro di specifico? (Es. zafferano, tartufo...)"></textarea>
-<div style="text-align:left;"><button class="backup-btn" onclick="startDict()">🎤 Detta Altro</button></div>
+<div style="text-align:left;"><button class="backup-btn" onclick="startDict()"> Detta Altro</button></div>
 <div style="text-align:left; font-weight:bold; color:var(--gold); font-size:0.9rem; margin:10px 0 5px 0;">MOOD:</div>
 <select id="mood"><option value="Veloce">⚡ Veloce (Poco tempo)</option><option value="Romantica">❤ Romantica</option><option value="Sfiziosa">😋 Sfiziosa</option><option value="Leggera">🥗 Leggera</option><option value="Svuotafrigo">🧹 Svuota Frigo</option></select>
 <button class="btn-main" onclick="showResult()">PREPARA MESSAGGIO</button>
@@ -82,7 +84,7 @@ textarea { resize:vertical; }
 <div class="backup-row">
 <button class="backup-btn gold" onclick="exportBackup()">💾 Backup JSON</button>
 <button class="backup-btn green" onclick="document.getElementById('importFile').click()">📥 Ripristina JSON</button>
-<button class="backup-btn blue" onclick="openStorageModal()">☁ Spazio Dati</button>
+<button class="backup-btn blue" onclick="openStorageModal()"> Spazio Dati</button>
 </div>
 <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)">
 <button onclick="openLingRestore()" style="background:linear-gradient(135deg,#3b82f6,#6366f1); color:white; border:none; padding:12px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; margin-bottom:12px; font-size:0.95rem;">🔄 Recupera dati dalla Chat di Ling<br><span style="font-size:0.75rem; font-weight:normal; opacity:0.9;">Hai perso tutto? Ling se li ricorda nella chat!</span></button>
@@ -94,24 +96,67 @@ textarea { resize:vertical; }
 <div style="margin-bottom:12px;"><label style="display:flex; align-items:center; gap:10px; cursor:pointer; color:#f8fafc; font-size:0.95rem; font-weight:500; justify-content:center;"><input type="checkbox" id="chkPets" onchange="togglePetFields()" style="width:18px; height:18px; accent-color:var(--pink);">Ho animali domestici in casa</label></div>
 <div id="petFields" style="display:none;">
 <div id="petList" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; justify-content:center"></div>
-<div class="form-row"><div class="form-col"><select id="selPetType"><option value="">Tipo animale...</option><option value="Cane">🐶 Cane</option><option value="Gatto">🐱 Gatto</option><option value="Altro">🐰 Altro</option></select></div><div class="form-col"><input type="text" id="txtPetName" placeholder="Nome (es. Rex, Holly)" autocomplete="off"></div></div>
-<div class="form-row"><div class="form-col"><select id="selPetSize"><option value="">Taglia...</option><option value="Piccola (fino a 10kg)">🐾 Piccola</option><option value="Media (10-25kg)">🦮 Media</option><option value="Grande (oltre 25kg)">🐕🦺 Grande</option></select></div><div class="form-col"><input type="number" id="numPetWeight" placeholder="Peso kg (es. 38)"></div></div>
-<div class="form-row"><div class="form-col"><select id="selPetAge"><option value="">Età/Fase...</option><option value="Cucciolo">🍼 Cucciolo</option><option value="Adulto">🐾 Adulto</option><option value="Anziano">👴 Anziano</option></select></div><div class="form-col"><input type="text" id="txtPetBreed" placeholder="Razza (es. Pastore tedesco)"></div></div>
+<div class="form-row"><div class="form-col"><select id="selPetType"><option value="">Tipo animale...</option><option value="Cane">🐶 Cane</option><option value="Gatto">🐱 Gatto</option><option value="Altro"> Altro</option></select></div><div class="form-col"><input type="text" id="txtPetName" placeholder="Nome (es. Rex, Holly)" autocomplete="off"></div></div>
+<div class="form-row"><div class="form-col"><select id="selPetSize"><option value="">Taglia...</option><option value="Piccola (fino a 10kg)">🐾 Piccola</option><option value="Media (10-25kg)"> Media</option><option value="Grande (oltre 25kg)">🐕 Grande</option></select></div><div class="form-col"><input type="number" id="numPetWeight" placeholder="Peso kg (es. 38)"></div></div>
+<div class="form-row"><div class="form-col"><select id="selPetAge"><option value="">Età/Fase...</option><option value="Cucciolo"> Cucciolo</option><option value="Adulto">🐾 Adulto</option><option value="Anziano">👴 Anziano</option></select></div><div class="form-col"><input type="text" id="txtPetBreed" placeholder="Razza (es. Pastore tedesco)"></div></div>
 <div style="margin-bottom:10px; text-align:left;"><label style="display:block; color:#94a3b8; font-size:0.85rem; margin-bottom:6px;">Allergie, Condizioni o Gusti:</label><textarea id="txtTastes" rows="2" placeholder="Es. intollerante al pollo, no lattosio..." autocomplete="off"></textarea></div>
 <button onclick="saveUserProfile()" class="btn-save">💾 Aggiungi / Aggiorna Pet</button>
 <p id="saveFeedback" style="color:var(--green); font-size:0.8rem; margin-top:8px; text-align:center; display:none;"></p>
 </div>
 </div>
-<div class="site-footer"><p>© 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p><p style="margin-top:6px;"><a href="./privacy.html">Privacy</a> | <a href="./cookies.html">Cookie</a> | <a href="./termini.html">Termini</a></p><p style="font-size:0.65rem; margin-top:8px; opacity:0.7;">Zero Pubblicità · Zero Abbonamenti · 100% Nostro ♡</p></div>
+
+<!-- MODIFICA 3: Footer Dinamico + Link Policy Corretti -->
+<div class="site-footer" style="background:#0f172a; padding:15px; border-radius:12px; border:1px solid var(--border);">
+    <p id="chefling-back-link-container" style="margin-bottom: 1rem;"></p>
+    <p>© 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
+    <p style="margin-top:6px;">
+        <a href="/massy.github.io/index.html" style="color:#fbbf24; text-decoration:none;">Home</a> | 
+        <a href="/massy.github.io/privacy-policy.html" style="color:#fbbf24; text-decoration:none;">Privacy</a> | 
+        <a href="/massy.github.io/cookie-policy.html" style="color:#fbbf24; text-decoration:none;">Cookie</a>
+    </p>
+    <p style="font-size:0.65rem; margin-top:8px; opacity:0.7;">Zero Pubblicità · Zero Abbonamenti · 100% Nostro ♡</p>
 </div>
+
+<script>
+// Script Torna Indietro Intelligente per Chef Ling
+document.addEventListener("DOMContentLoaded", function() {
+    const referrer = document.referrer;
+    const container = document.getElementById('chefling-back-link-container');
+    const bgCard = getComputedStyle(document.documentElement).getPropertyValue('--card').trim() || '#1e293b';
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#f8fafc';
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#334155';
+    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f172a';
+
+    let targetUrl = "/massy.github.io/index.html";
+    let linkText = "⬅ Torna alla Home Page";
+
+    if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
+        targetUrl = referrer;
+        if (referrer.includes('/bilancio/')) linkText = "⬅ Torna alla Console Bilancio";
+        else if (referrer.includes('/spesa/')) linkText = "⬅ Torna alla Lista Spesa";
+        else if (referrer.includes('/pet_diary/')) linkText = "⬅ Torna al Pet Diary";
+    }
+
+    const link = document.createElement('a');
+    link.href = targetUrl;
+    link.textContent = linkText;
+    link.style.cssText = `display:inline-block; padding:10px 20px; background:${bgCard}; color:${textColor}; border-radius:20px; text-decoration:none; font-weight:bold; border:1px solid ${borderColor}; transition:all 0.3s;`;
+    link.onmouseover = () => link.style.background = bgColor;
+    link.onmouseout = () => link.style.background = bgCard;
+    container.appendChild(link);
+});
+</script>
+
+</div> <!-- Chiusura .app -->
+
 <div id="resultScreen"><h2 style="color:var(--gold); margin-top:0;">Messaggio Pronto!</h2><div id="finalText"></div><button class="btn-action" onclick="copyAndGo()">COPIA E APRI CHAT</button><button class="btn-action btn-back" onclick="goBack()">Torna Indietro</button><div class="blink-box"><h3>📝 Cosa fare ora:</h3><div>1. Clicca copia e apri chat</div><div>2. Accedi gratis in 10s con Google se è la prima volta</div><div>3. Incolla</div><div>4. Invia a Chef Ling!</div></div></div>
 </div>
 <div id="storageModal" class="modal-overlay" onclick="if(event.target===this) closeStorageModal()">
 <div class="modal-box">
 <h3 style="color:var(--gold); text-align:center; margin:0 0 10px 0;">🐾 Scegli il tuo spazio dati</h3>
-<p style="font-size:0.85rem; text-align:center; color:#cbd5e1; margin:0 0 12px 0;">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro ♡</p>
-<div class="modal-option" onclick="selectStorage('firebase')"><div style="color:var(--gold); font-weight:bold;">☁ Firebase Cloud (Consigliato)</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Sincronizzazione in tempo reale.</div></div>
-<div class="modal-option" onclick="selectStorage('drive')"><div style="color:var(--blue); font-weight:bold;">📁 Google Drive / File Personale</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">100% tuo, privato.</div></div>
+<p style="font-size:0.85rem; text-align:center; color:#cbd5e1; margin:0 0 12px 0;">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro </p>
+<div class="modal-option" onclick="selectStorage('firebase')"><div style="color:var(--gold); font-weight:bold;"> Firebase Cloud (Consigliato)</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Sincronizzazione in tempo reale.</div></div>
+<div class="modal-option" onclick="selectStorage('drive')"><div style="color:var(--blue); font-weight:bold;"> Google Drive / File Personale</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">100% tuo, privato.</div></div>
 <div class="modal-option" onclick="selectStorage('locale')"><div style="color:var(--gold); font-weight:bold;">📱 Solo su questo Dispositivo (Locale)</div><div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Veloce, offline.</div></div>
 <div id="currentChoice" style="text-align:center; font-size:0.8rem; color:var(--green); margin-top:12px;"></div>
 <button class="btn-action btn-back" style="margin-top:12px;" onclick="closeStorageModal()">Chiudi</button>
@@ -158,17 +203,17 @@ function getChefUrl(){
 let URL_CHEF = getChefUrl();
 const ingredients = [
 { id:'pasta', label:'Pasta', icon:'🍝', type:'complex', options:['Corta','Lunga','Riso','Orzo','Altro'] },
-{ id:'carne', label:'Carne', icon:'🥩', type:'complex', options:['Pollo','Manzo','Maiale','Tacchino','Macinato','Bistecca','Altro'] },
+{ id:'carne', label:'Carne', icon:'', type:'complex', options:['Pollo','Manzo','Maiale','Tacchino','Macinato','Bistecca','Altro'] },
 { id:'pesce', label:'Pesce', icon:'🐟', type:'complex', options:['Tonno (scatola)','Salmone','Gamberi','Pesce Bianco','Molluschi','Altro'] },
 { id:'verdure', label:'Verdure', icon:'🥬', type:'complex', options:['Zucchine','Melanzane','Pomodori','Insalata','Cipolle','Peperoni','Spinaci','Altro'] },
 { id:'legumi', label:'Legumi', icon:'🫘', type:'complex', options:['Fagioli','Piselli','Lenticchie','Ceci','Altro'] },
 { id:'uova', label:'Uova', icon:'🥚', type:'simple' },
 { id:'formaggio', label:'Formaggio', icon:'🧀', type:'complex', options:['Stagionato','Molle','Pasta dura','Mozzarella','Stracchino','Altro'] },
 { id:'salumi', label:'Salumi', icon:'🥓', type:'complex', options:['Insaccati','Prosciutto crudo','Prosciutto cotto','Speck','Mortadella','Altro'] },
-{ id:'pane', label:'Pane', icon:'🍞', type:'complex', options:['Ai cereali','Integrale','Focaccia','Grissini','Piadina','Altro'] },
-{ id:'latticini', label:'Latte/Yogurt', icon:'🥛', type:'complex', options:['Latte intero','Latte scremato','Yogurt greco','Yogurt magro','Besciamella','Panna','Altro'] },
+{ id:'pane', label:'Pane', icon:'', type:'complex', options:['Ai cereali','Integrale','Focaccia','Grissini','Piadina','Altro'] },
+{ id:'latticini', label:'Latte/Yogurt', icon:'', type:'complex', options:['Latte intero','Latte scremato','Yogurt greco','Yogurt magro','Besciamella','Panna','Altro'] },
 { id:'condimenti', label:'Grassi & Condimenti', icon:'🧈', type:'complex', options:['Olio EVO','Burro','Strutto','Aceto Balsamico','Limone','Salsa di Soia','Altro'] },
-{ id:'aromi', label:'Aromi & Spezie', icon:'🌿', type:'complex', options:['Erbe Fresche','Spezie Secche','Aglio/Cipolla','Pepe/Sale','Altro'] }
+{ id:'aromi', label:'Aromi & Spezie', icon:'', type:'complex', options:['Erbe Fresche','Spezie Secche','Aglio/Cipolla','Pepe/Sale','Altro'] }
 ];
 const grid=document.getElementById('grid'); let selectionState={};
 ingredients.forEach(ing=>{ const container=document.createElement('div'); container.style.display='flex'; container.style.flexDirection='column'; container.style.width='100%'; const btn=document.createElement('div'); btn.className='btn-ing'; btn.id=`btn-${ing.id}`; btn.innerHTML=`<span class="icon">${ing.icon}</span><span id="label-${ing.id}">${ing.label}</span>`; selectionState[ing.id]=[]; btn.onclick=()=>{ if(ing.type==='simple'){ btn.classList.toggle('active'); selectionState[ing.id]=btn.classList.contains('active')?[ing.label]:[]; document.querySelectorAll('.submenu').forEach(sub=>sub.classList.remove('show')); } else { const submenu=document.getElementById(`sub-${ing.id}`); const isOpen=submenu.classList.contains('show'); document.querySelectorAll('.submenu').forEach(s=>s.classList.remove('show')); if(!isOpen){ submenu.classList.add('show'); btn.classList.add('active'); } else { submenu.classList.remove('show'); btn.classList.remove('active'); if(selectionState[ing.id]&&selectionState[ing.id].length>0) btn.classList.add('selected-specific'); } } }; if(ing.type==='complex'){ const subMenuDiv=document.createElement('div'); subMenuDiv.className='submenu'; subMenuDiv.id=`sub-${ing.id}`; ing.options.forEach(opt=>{ const subBtn=document.createElement('button'); subBtn.className='sub-btn'; subBtn.innerText=opt; subBtn.onclick=(e)=>{ e.stopPropagation(); const key=`${ing.label}: ${opt}`; if(!Array.isArray(selectionState[ing.id])) selectionState[ing.id]=[]; const idx=selectionState[ing.id].indexOf(key); if(idx>-1){ selectionState[ing.id].splice(idx,1); subBtn.classList.remove('selected'); } else { selectionState[ing.id].push(key); subBtn.classList.add('selected'); } const count=selectionState[ing.id].length; const labelEl=document.getElementById(`label-${ing.id}`); if(count===0){ labelEl.innerText=ing.label; btn.classList.remove('selected-specific'); btn.classList.remove('active'); } else if(count===1){ labelEl.innerText=`${selectionState[ing.id][0].split(': ')[1]} ✅`; btn.classList.add('selected-specific'); } else { labelEl.innerText=`${count} scelte ✅`; btn.classList.add('selected-specific'); } }; subMenuDiv.appendChild(subBtn); }); container.prepend(subMenuDiv); } container.appendChild(btn); grid.appendChild(container); });
@@ -184,7 +229,7 @@ function editPetByName(enc){ const name=decodeURIComponent(enc); const pets=getC
 function deletePetByName(enc){ const name=decodeURIComponent(enc); if(!confirm(`Eliminare ${name}?`)) return; let pets=getChefLingPets(); pets=pets.filter(p=>p.name.toLowerCase()!==name.toLowerCase()); saveChefLingPets(pets); renderPetList(); if(pets.length===0){ document.getElementById('chkPets').checked=false; togglePetFields(); } }
 function checkToxicIngredients(items){ const found=[]; const lower=items.join(' ').toLowerCase(); for(const k in TOXIC_MAP){ if(lower.includes(k)){ if(!found.includes(TOXIC_MAP[k])) found.push(TOXIC_MAP[k]); } } return found; }
 function checkCustomAllergy(petProfile, items){ try{ const raw=(petProfile.tastes||'').toLowerCase(); if(!raw) return []; const low=items.join(' ').toLowerCase(); const triggers=[]; const kws=raw.split(/[,;.\n]+/).map(s=>s.trim()).filter(s=>s.length>2); kws.forEach(k=>{ k.split(/\s+/).forEach(w=>{ w=w.replace(/[^a-zàèéìòù]/gi,''); if(w.length>=3 && low.includes(w) && !['alla','alle','intollerante','allergia','allergico','no','non','per','con'].includes(w)){ if(!triggers.includes(w)) triggers.push(w); } }); }); return triggers; }catch(e){ return []; } }
-function buildMsg(){ let selectedItems=[]; Object.values(selectionState).forEach(val=>{ if(Array.isArray(val)) selectedItems=selectedItems.concat(val); else if(val) selectedItems.push(val); }); selectedItems=selectedItems.filter(v=>v&&v.length>0); let extra=document.getElementById('extra').value.trim(); let mood=document.getElementById('mood').value; if(extra) selectedItems.push(extra); if(selectedItems.length===0) return "Aiutami tu Chef! Ho il frigo vuoto!"; let petWarning=''; const allPets=getAllPetsDetailed(); if(allPets.length>0){ const toxics=checkToxicIngredients(selectedItems.concat([extra])); const petListStr=allPets.map(p=>`${p.name} (${p.weight||'?'}kg ${p.breed||''})`).join(', '); if(toxics.length>0){ petWarning=`\n\n⚠ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nIn casa ho ${allPets.length} pelosi: ${petListStr}. Questa ricetta UMANA contiene: ${toxics.join(', ')} che è TOSSICO!\n👉 Avvisami: "Tieni fuori dalla portata di ${allPets.map(p=>p.name).join(' e ')}!"`; } else { let allergyWarnings=[]; allPets.forEach(pet=>{ const allerg=checkCustomAllergy(pet, selectedItems.concat([extra])); if(allerg.length>0) allergyWarnings.push(`- ${pet.name} intollerante a: ${allerg.join(', ')} (nota: ${pet.tastes}) -> NON dargli!`); }); if(allergyWarnings.length>0){ petWarning=`\n\n🚫 ALLERGIE MULTI-PET:\n${petListStr}\n${allergyWarnings.join('\n')}`; } else { petWarning=`\n\n🐾 CONTESTO FAMIGLIA: Ho ${petListStr} in casa. Ricordami attenzioni per loro!`; } } } return `Ciao Chef Ling! Sono un amico di Holly & Rex Group.\n\n Ingredienti Precisi:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n Mood: ${mood}${petWarning}\n\nCosa cuciniamo? Sorprendimi! ❤`; }
+function buildMsg(){ let selectedItems=[]; Object.values(selectionState).forEach(val=>{ if(Array.isArray(val)) selectedItems=selectedItems.concat(val); else if(val) selectedItems.push(val); }); selectedItems=selectedItems.filter(v=>v&&v.length>0); let extra=document.getElementById('extra').value.trim(); let mood=document.getElementById('mood').value; if(extra) selectedItems.push(extra); if(selectedItems.length===0) return "Aiutami tu Chef! Ho il frigo vuoto!"; let petWarning=''; const allPets=getAllPetsDetailed(); if(allPets.length>0){ const toxics=checkToxicIngredients(selectedItems.concat([extra])); const petListStr=allPets.map(p=>`${p.name} (${p.weight||'?'}kg ${p.breed||''})`).join(', '); if(toxics.length>0){ petWarning=`\n\n⚠ NOTA SICUREZZA PET - REGOLA D'ORO #1:\nIn casa ho ${allPets.length} pelosi: ${petListStr}. Questa ricetta UMANA contiene: ${toxics.join(', ')} che è TOSSICO!\n👉 Avvisami: "Tieni fuori dalla portata di ${allPets.map(p=>p.name).join(' e ')}!"`; } else { let allergyWarnings=[]; allPets.forEach(pet=>{ const allerg=checkCustomAllergy(pet, selectedItems.concat([extra])); if(allerg.length>0) allergyWarnings.push(`- ${pet.name} intollerante a: ${allerg.join(', ')} (nota: ${pet.tastes}) -> NON dargli!`); }); if(allergyWarnings.length>0){ petWarning=`\n\n🚫 ALLERGIE MULTI-PET:\n${petListStr}\n${allergyWarnings.join('\n')}`; } else { petWarning=`\n\n CONTESTO FAMIGLIA: Ho ${petListStr} in casa. Ricordami attenzioni per loro!`; } } } return `Ciao Chef Ling! Sono un amico di Holly & Rex Group.\n\n Ingredienti Precisi:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n Mood: ${mood}${petWarning}\n\nCosa cuciniamo? Sorprendimi! ❤`; }
 function showResult(){ const msg=buildMsg(); if(msg.includes("frigo vuoto")){ alert("Seleziona almeno un ingrediente!"); return; } document.getElementById('finalText').innerText=msg; document.getElementById('mainScreen').style.display='none'; document.getElementById('resultScreen').style.display='flex'; }
 function goBack(){ document.getElementById('mainScreen').style.display='block'; document.getElementById('resultScreen').style.display='none'; }
 async function copyAndGo(){ const msg=document.getElementById('finalText').innerText; URL_CHEF = getChefUrl(); try{ await navigator.clipboard.writeText(msg); window.location.href=URL_CHEF; }catch(err){ alert("Copia fallita. Copia manualmente."); } }
@@ -232,7 +277,7 @@ const chkPets=document.getElementById('chkPets'); if(!chkPets.checked){ alert(" 
 const allPets=getAllPetsDetailed(); if(allPets.length===0){ alert("Aggiungi almeno un pet! Rex o Holly"); return false; }
 let selectedItems=[]; Object.values(selectionState).forEach(val=>{ if(Array.isArray(val)) selectedItems=selectedItems.concat(val); else if(val) selectedItems.push(val); }); selectedItems=selectedItems.filter(v=>v&&v.length>0); let extra=document.getElementById('extra').value.trim(); if(extra) selectedItems.push(extra); let mood=document.getElementById('mood')?document.getElementById('mood').value:'Veloce'; if(selectedItems.length===0){ alert("Seleziona almeno un ingrediente per il tuo amico! 🐾"); return false; }
 const hasSeenWelcome = localStorage.getItem('chefLing_hasSeenWelcome')==='true';
-let message="Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per i miei amici pelosi.\n\n"; message+=` Ingredienti Disponibili:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n`; message+=` Mood: ${mood}\n\n`; message+=` MEMORIA PET MULTI-PROFILO (${allPets.length} pelosi):\n`; allPets.forEach((p,idx)=>{ message+=`${idx+1}. ${p.name} - ${p.type} ${p.breed||''} - Peso: ${p.weight||'?'}kg - Allergie/Note: ${p.tastes||'nessuna'}\n`; }); message+=`\n👉 ADATTA QUANTITÀ IN BASE AL PESO:\n`; allPets.forEach(p=>{ const portion=p.weightNum?Math.round(p.weightNum*15):0; message+=`- ${p.name} (${p.weight||'?'}kg): porzione ~${portion>0?portion+'g al giorno divisa in 2 pasti':'calcola tu'} - ${p.tastes?'ATTENZIONE: '+p.tastes:'nessuna allergia'}\n`; }); let allergyBlocks=[]; allPets.forEach(pet=>{ const blocks=checkCustomAllergy(pet, selectedItems); if(blocks.length>0) allergyBlocks.push(`⚠ ${pet.name} NON può mangiare: ${blocks.join(', ')} (allergia: ${pet.tastes}) -> Escludilo!`); }); if(allergyBlocks.length>0){ message+=`\n🚫 ALLERGENI RILEVATI:\n${allergyBlocks.join('\n')}\n`; } message+=`\nAdatta la magia alla loro realtà! Ingredienti sicuri, niente cipolla/aglio, niente sale. Se un ingrediente è off-limits per Holly ma ok per Rex, specifica: "Ok per Rex, NO per Holly". Ricorda Zampa Sicura per ogni pet!`;
+let message="Ciao Chef Ling! Voglio qualcosa di caldo e avvolgente per i miei amici pelosi.\n\n"; message+=` Ingredienti Disponibili:\n${selectedItems.map(i=>'- '+i).join('\n')}\n\n`; message+=` Mood: ${mood}\n\n`; message+=` MEMORIA PET MULTI-PROFILO (${allPets.length} pelosi):\n`; allPets.forEach((p,idx)=>{ message+=`${idx+1}. ${p.name} - ${p.type} ${p.breed||''} - Peso: ${p.weight||'?'}kg - Allergie/Note: ${p.tastes||'nessuna'}\n`; }); message+=`\n ADATTA QUANTITÀ IN BASE AL PESO:\n`; allPets.forEach(p=>{ const portion=p.weightNum?Math.round(p.weightNum*15):0; message+=`- ${p.name} (${p.weight||'?'}kg): porzione ~${portion>0?portion+'g al giorno divisa in 2 pasti':'calcola tu'} - ${p.tastes?'ATTENZIONE: '+p.tastes:'nessuna allergia'}\n`; }); let allergyBlocks=[]; allPets.forEach(pet=>{ const blocks=checkCustomAllergy(pet, selectedItems); if(blocks.length>0) allergyBlocks.push(`⚠ ${pet.name} NON può mangiare: ${blocks.join(', ')} (allergia: ${pet.tastes}) -> Escludilo!`); }); if(allergyBlocks.length>0){ message+=`\n🚫 ALLERGENI RILEVATI:\n${allergyBlocks.join('\n')}\n`; } message+=`\nAdatta la magia alla loro realtà! Ingredienti sicuri, niente cipolla/aglio, niente sale. Se un ingrediente è off-limits per Holly ma ok per Rex, specifica: "Ok per Rex, NO per Holly". Ricorda Zampa Sicura per ogni pet!`;
 function doCopyAndOpen(){
   navigator.clipboard.writeText(message).then(()=>{
     const btn=document.getElementById('btnInspire');
