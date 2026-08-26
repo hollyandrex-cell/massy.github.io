@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chef Ling - Detail Perfect v3.3 Drive + Firebase Attivo</title>
+<link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text2:#94a3b8;--border:#334155;--accent:#ec4899;--accent2:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:radial-gradient(ellipse at top,#1e293b 0%,#0f172a 100%);color:#f1f5f9;display:flex;justify-content:center;padding:16px;min-height:100vh}
+.app{max-width:540px;width:100%}
+.card{background:var(--card);padding:20px;border-radius:24px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);margin-bottom:16px}
+h2{color:var(--accent2);font-size:1.1rem;margin:14px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{background:#0f172a;border:1.5px solid #475569;color:#cbd5e1;padding:9px 14px;border-radius:20px;font-size:.85rem;cursor:pointer;user-select:none;transition:.2s}
+.chip.active{border-color:var(--accent);background:rgba(236,72,153,.15);color:#f9a8d4}
+textarea,input,select{width:100%;padding:12px;border-radius:12px;border:1.5px solid #475569;background:#0f172a;color:#fff;outline:none;font-size:.9rem;font-family:inherit}
+textarea:focus,input:focus,select:focus{border-color:var(--accent2)}
+.btn{padding:14px;border:none;border-radius:14px;font-weight:800;cursor:pointer;font-size:.95rem;width:100%;margin-top:10px;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;box-shadow:0 8px 20px rgba(236,72,153,.35)}
+.btn-pet{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff}
+.btn-secondary{background:#0f172a;border:1px solid var(--border);color:#f1f5f9}
+.btn-small{padding:8px 12px;font-size:.8rem;border-radius:10px;width:auto;display:inline-flex;align-items:center;gap:6px}
+.small{font-size:.8rem;color:var(--text2);text-align:center;margin-top:8px;line-height:1.4}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;width:100%;max-width:480px;max-height:85vh;overflow:auto}
+.storage-option{background:#0f172a;border:1.5px solid #475569;padding:14px;border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.2s;text-align:left}
+.storage-option:hover{border-color:#fbbf24;transform:translateY(-1px)}
+.link-box{display:flex;gap:8px;margin-top:8px}
+.link-status{font-size:.78rem;margin-top:6px;display:none}
+.pet-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pet-pill{background:#0f172a;border:1px solid #fbbf24;color:#fde68a;padding:6px 10px;border-radius:20px;font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- STORAGE MODAL -->
+<div id="storageModal" class="modal-bg" style="z-index:1002">
+<div class="modal" style="text-align:center;border:2px solid #fbbf24">
+<h3 style="color:#fbbf24;margin-bottom:8px">🧩 Scegli il tuo spazio dati</h3>
+<p style="font-size:.85rem;color:#94a3b8;margin-bottom:16px">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro 💛</p>
+<div class="storage-option" onclick="selectStorage('firebase')">
+<strong style="color:#fbbf24">🔥 Firebase Cloud (Consigliato)</strong>
+<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Sincronizzazione in tempo reale tra dispositivi e condivisione famiglia. Perfetto per ricette e pet.</div>
+</div>
+<div class="storage-option" onclick="selectStorage('drive')">
+<strong style="color:#4285F4">📁 Google Drive / File Personale</strong>
+<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Salva il tuo profilo ricette sul tuo Drive privato, 15GB gratis, 100% tuo.</div>
+</div>
+<div class="storage-option" onclick="selectStorage('locale')">
+<strong style="color:#f59e0b">💾 Solo su questo Dispositivo (Locale)</strong>
+<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Veloce, offline. Ma se perdi il telefono perdi tutto!</div>
+</div>
+<div id="currentChoice" style="font-size:.75rem;color:#22c55e;margin-top:10px"></div>
+<button class="btn btn-secondary" onclick="closeStorageModal()" style="margin-top:12px">Chiudi</button>
+</div>
+</div>
+
+<div id="localWarnModal" class="modal-bg" style="z-index:1003">
+<div class="modal" style="border:2px solid #ef4444">
+<h3 style="color:#ef4444;margin-bottom:10px">⚠ Attenzione modalità locale</h3>
+<p style="font-size:.88rem;color:#f1f5f9;line-height:1.5;margin-bottom:14px">
+Stai salvando <b>solo su questo dispositivo</b>.<br><br>
+Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi profili pet, gusti, link Qwen e preferenze Chef Ling</b>.<br><br>
+<span style="display:block;background:#0f172a;border:1px dashed #f59e0b;border-radius:10px;padding:10px;margin:10px 0;font-size:.82rem;color:#fde68a">
+💾 Limite locale: max 5-10MB.<br>💡 Con Drive hai 15GB gratis, con Firebase spazio illimitato!
+</span>
+</p>
+<div style="display:flex;gap:10px">
+<button class="btn btn-secondary" onclick="closeLocalWarn(false)" style="flex:1">Indietro</button>
+<button class="btn" style="flex:1;background:#ef4444;color:#fff" onclick="closeLocalWarn(true)">Ho capito</button>
+</div>
+<label style="font-size:.75rem;color:#94a3b8;cursor:pointer;display:block;margin-top:10px;text-align:center"><input type="checkbox" id="chkHideWarn"> Non mostrare più</label>
+</div>
+</div>
+
+<!-- APP RICETTE -->
+<div class="card">
+<h2 style="text-align:center;color:#fbbf24;margin-top:0">Chef Ling - Detail Perfect v3.3</h2>
+
+<div class="chips" id="catChips">
+<button class="chip" data-cat="Latte/Yogurt">Latte/Yogurt</button>
+<button class="chip" data-cat="Grassi & Condimenti">Grassi & Condimenti</button>
+<button class="chip" data-cat="Aromi & Spezie">Aromi & Spezie</button>
+<button class="chip" data-cat="Proteine">Proteine</button>
+<button class="chip" data-cat="Verdure">Verdure</button>
+<button class="chip" data-cat="Carboidrati">Carboidrati</button>
+</div>
+
+<textarea id="extraInput" placeholder="Qualcos'altro di specifico? (Es. zafferano, tartufo...)" rows="3"></textarea>
+<button class="btn btn-secondary btn-small" onclick="addCustom()">Detta Altro</button>
+
+<h2 style="color:#facc15">MOOD:</h2>
+<select id="moodSel">
+<option>⚡ Veloce (Poco tempo)</option>
+<option>🧘 Relax (Coccola)</option>
+<option>💪 Proteico / Fit</option>
+<option>🌱 Leggero / Detox</option>
+<option>🎉 Sfizioso / Gourmet</option>
+<option>👨‍👩‍👧‍👦 Famiglia</option>
+</select>
+
+<button class="btn btn-primary" onclick="prepareMessage()">PREPARA MESSAGGIO</button>
+<button class="btn btn-pet" onclick="preparePetMessage()">Chef Ling for Pet 🐾</button>
+<div class="small">Clicca → Incolla in "Cosa vorresti esplorare?" di Qwen<br>Accedi gratis in 10s con Google ✨</div>
+
+<div class="card" style="background:#0f172a;margin-top:14px;padding:14px">
+<div style="font-size:.85rem;color:#94a3b8">📌 Hai già una chat Chef Ling? Salva il link per accesso diretto:</div>
+<div class="link-box">
+<input id="myChefLink" placeholder="https://chat.qwen.ai/c/...">
+<button class="btn btn-secondary btn-small" onclick="saveCustomLink()" style="margin:0">📋</button>
+</div>
+<div id="customLinkStatus" class="link-status"></div>
+<div id="qwenQuickAccess" style="margin-top:10px;display:none">
+<a id="qwenDirectLink" href="#" target="_blank" style="color:#22c55e;font-size:.85rem">→ Vai alla tua chat Chef Ling</a>
+</div>
+</div>
+
+<div class="card" style="background:#0f172a;margin-top:14px">
+<h3 style="color:#f59e0b;text-align:center;font-size:.95rem">🛡️ Profilo Sicurezza & Gusti MULTI-PET</h3>
+
+<!-- I 3 PULSANTI PRINCIPALI BEN VISIBILI -->
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
+<button class="btn btn-secondary btn-small" onclick="exportBackup()">💾 Backup JSON</button>
+<button class="btn btn-secondary btn-small" onclick="document.getElementById('importFile').click()">📥 Ripristina JSON</button>
+<input type="file" id="importFile" style="display:none" accept=".json" onchange="importBackup(event)">
+<button class="btn btn-secondary btn-small" style="background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff" onclick="openStorageModal()">☁ Spazio Dati</button>
+</div>
+
+<!-- CLOUD PANEL -->
+<div id="cloudPanel" style="display:none;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:12px">
+<div style="display:flex;gap:8px;margin-bottom:12px">
+<button id="tabFb" class="btn btn-secondary btn-small" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')">🔥 Firebase</button>
+<button id="tabDrive" class="btn btn-secondary btn-small" style="flex:1" onclick="showTab('drive')">💾 Drive</button>
+</div>
+<div id="panelFb">
+<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase - Sincronizza Ricette & Pet</h4>
+<textarea id="fbConfig" placeholder='Incolla qui il firebaseConfig { apiKey:... }' style="min-height:70px;font-size:.7rem"></textarea>
+<input id="fbFamilyId" placeholder="ID Famiglia: es. holly-rex-famiglia-rossi" style="margin-top:8px">
+<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+<button class="btn btn-secondary btn-small" onclick="saveFirebaseConfig()">💾 Salva Config</button>
+<button class="btn btn-secondary btn-small" style="background:#22c55e;color:#fff" onclick="syncToFirebase()">☁ Sincronizza</button>
+<button class="btn btn-secondary btn-small" onclick="loadFromFirebase()">📥 Carica</button>
+</div>
+<div id="fbStatus" style="font-size:.75rem;color:#22c55e;margin-top:6px"></div>
+</div>
+<div id="panelDrive" style="display:none">
+<h4 style="color:#4285F4;font-size:.9rem;margin-bottom:8px">💾 Google Drive - 100% Privato</h4>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">File <code>chef_ling_ricette.json</code> in appDataFolder invisibile.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-secondary btn-small" style="background:#fff;color:#000;flex:1" onclick="googleLogin()">🔑 Login Google</button>
+<button class="btn btn-secondary btn-small" style="flex:1" onclick="saveToDrive()">☁ Salva su Drive</button>
+<button class="btn btn-secondary btn-small" style="flex:1" onclick="loadFromDrive()">📥 Carica da Drive</button>
+</div>
+<div id="driveStatus" style="font-size:.75rem;color:#86efac;margin-top:8px"></div>
+<div id="driveQuotaInfo" style="font-size:.72rem;color:#94a3b8;margin-top:6px"></div>
+</div>
+</div>
+
+<button class="btn btn-secondary" style="background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff" onclick="openLingModal()">🔄 Recupera dati dalla Chat di Ling<br><span style="font-size:.75rem;font-weight:400">Hai perso tutto? Ling se li ricorda nella chat!</span></button>
+
+<div style="margin-top:12px;display:flex;align-items:center;gap:8px;justify-content:center">
+<input type="checkbox" id="chkPets"><label for="chkPets" style="font-size:.85rem">Ho animali domestici in casa</label>
+</div>
+
+<div id="petFields" style="display:none;margin-top:10px">
+<div id="petList" class="pet-list"></div>
+<button class="btn btn-secondary btn-small" onclick="addPetPrompt()">+ Aggiungi Pet</button>
+</div>
+
+<div style="text-align:right;margin-top:10px">
+<button onclick="resetStorageChoice()" style="background:none;border:none;color:#94a3b8;font-size:.7rem;cursor:pointer;text-decoration:underline">⚙ Cambia modalità (<span id="currentStorageMode">-</span>)</button>
+</div>
+</div>
+
+<button class="btn btn-secondary" style="margin-top:16px" onclick="location.href='/massy.github.io/index.html'">← Torna alla Home Page</button>
+<div class="small">Modalità: <span id="footerModeText">-</span> | <span id="storageDetails"></span><br>V3.3 Drive Fixed + Firebase - by Nova + Aura + Luna + Tesoro 💛</div>
+</div>
+
+</div>
+
+<!-- MODAL RECUPERO LING -->
+<div id="lingModal" class="modal-bg">
+<div class="modal">
+<h3 style="color:#fbbf24">Recupera da Ling</h3>
+<p style="font-size:.85rem;color:#94a3b8;margin:8px 0">Incolla qui la risposta di Ling che contiene <code>{"chefLing_pets": ...}</code></p>
+<textarea id="lingPaste" rows="8" placeholder='Incolla qui il blocco { "chefLing_pets": [...] }'></textarea>
+<div id="lingFeedback" style="font-size:.85rem;margin-top:8px;display:none"></div>
+<div style="display:flex;gap:8px;margin-top:12px">
+<button class="btn btn-secondary" style="flex:1" onclick="closeLingModal()">Chiudi</button>
+<button class="btn btn-primary" style="flex:1" onclick="restoreFromLingPaste()">Recupera</button>
+</div>
+</div>
+</div>
+
+<script>
+// ---- MODULO DRIVE GUARD ----
+async function checkDriveStorageQuota(accessKey, fileSize = 0) {
+    try {
+        const res = await fetch('https://www.googleapis.com/drive/v3/about?fields=storageQuota', {
+            headers: { 'Authorization': `Bearer ${accessKey}` }
+        });
+        if (!res.ok) throw new Error('Errore verifica quota Drive');
+        const data = await res.json();
+        const quota = data.storageQuota;
+        const limit = parseInt(quota.limit, 10);
+        const usage = parseInt(quota.usage, 10);
+
+        if (isNaN(limit)) return { isSafe: true, message: "Illimitato" };
+
+        const freeSpace = limit - usage;
+        const safetyThreshold = 1024 * 1024 * 1024; // 1 GB minimo libero
+        const isNearFull = freeSpace < safetyThreshold;
+        const willExceed = fileSize > 0 && freeSpace < fileSize;
+
+        return {
+            isSafe: !isNearFull && !willExceed,
+            freeSpaceMB: (freeSpace / (1024 * 1024)).toFixed(2),
+            totalLimitGB: (limit / (1024 * 1024 * 1024)).toFixed(2),
+            usedGB: (usage / (1024 * 1024 * 1024)).toFixed(2)
+        };
+    } catch (err) {
+        return { isSafe: true, error: true };
+    }
+}
+
+// ---- STATO APP RICETTE ----
+let selectedCats = JSON.parse(localStorage.getItem('chefLing_cats')||'[]');
+let customIngredients = JSON.parse(localStorage.getItem('chefLing_custom')||'[]');
+let storageMode = localStorage.getItem('hollyRex_storageMode') || localStorage.getItem('chefLing_storageChoice') || null;
+let gAccessToken = localStorage.getItem('hollyRex_gDriveToken')||null;
+let pets = JSON.parse(localStorage.getItem('chefLing_pets')||'[]');
+let URL_CHEF = localStorage.getItem('chefLing_customChatUrl')||'https://chat.qwen.ai';
+
+function parseWeight(w){ if(!w) return 0; const m = (w+'').match(/(\d+(\.\d+)?)/); return m?parseFloat(m[1]):0; }
+function saveChefLingPets(p){ pets=p; localStorage.setItem('chefLing_pets', JSON.stringify(p)); }
+function renderPetList(){
+  const c=document.getElementById('petList'); if(!c) return;
+  c.innerHTML=''; pets.forEach(p=>{
+    const d=document.createElement('div'); d.className='pet-pill'; d.textContent=`${p.type||'Pet'} ${p.name} ${p.weight||''}`; c.appendChild(d);
+  });
+}
+function togglePetFields(){
+  const chk=document.getElementById('chkPets');
+  document.getElementById('petFields').style.display= chk.checked ? 'block':'none';
+}
+document.getElementById('chkPets').addEventListener('change', togglePetFields);
+
+// Chips
+function refreshChips(){
+  document.querySelectorAll('.chip').forEach(ch=>{
+    const cat=ch.dataset.cat;
+    ch.classList.toggle('active', selectedCats.includes(cat) || customIngredients.includes(cat));
+    ch.onclick=()=>{
+      if(selectedCats.includes(cat)) selectedCats=selectedCats.filter(x=>x!==cat);
+      else selectedCats.push(cat);
+      localStorage.setItem('chefLing_cats', JSON.stringify(selectedCats));
+      refreshChips();
+    };
+  });
+}
+function addCustom(){
+  const v=document.getElementById('extraInput').value.trim();
+  if(!v) return;
+  customIngredients.push(v);
+  localStorage.setItem('chefLing_custom', JSON.stringify(customIngredients));
+  document.getElementById('extraInput').value='';
+  refreshChips();
+}
+refreshChips(); renderPetList();
+const savedLink=localStorage.getItem('chefLing_customChatUrl');
+if(savedLink){ document.getElementById('myChefLink').value=savedLink; document.getElementById('qwenQuickAccess').style.display='block'; document.getElementById('qwenDirectLink').href=savedLink; URL_CHEF=savedLink; }
+if(localStorage.getItem('chefLing_hasPets')==='true' || pets.length>0){ document.getElementById('chkPets').checked=true; togglePetFields(); }
+
+// ---- STORAGE MODAL ----
+function openStorageModal(){
+  const choice=localStorage.getItem('chefLing_storageChoice')||localStorage.getItem('hollyRex_storageMode')||'locale';
+  document.getElementById('currentChoice').textContent=choice?`Scelta attuale: ${choice}`:'';
+  document.getElementById('storageModal').classList.add('show');
+}
+function closeStorageModal(){ document.getElementById('storageModal').classList.remove('show'); }
+
+function selectStorage(type){
+  if(type==='locale'){
+    const hide=localStorage.getItem('chefLing_hideLocalWarning')==='true';
+    if(!hide){
+      document.getElementById('storageModal').classList.remove('show');
+      document.getElementById('localWarnModal').classList.add('show');
+      return;
+    }
+  }
+  if(type==='firebase' || type==='drive'){
+    localStorage.setItem('chefLing_storageChoice', type);
+    localStorage.setItem('hollyRex_storageMode', type);
+    storageMode = type;
+    document.getElementById('currentChoice').textContent=`✅ Scelto: ${type} - Configura sotto`;
+    setTimeout(()=>{ closeStorageModal(); toggleCloudPanel(true); showTab(type==='firebase'?'fb':'drive'); },400);
+    updateStorageUI();
+    return;
+  }
+  localStorage.setItem('chefLing_storageChoice', type);
+  localStorage.setItem('hollyRex_storageMode', type);
+  storageMode = type;
+  document.getElementById('currentChoice').textContent=`✅ Scelto: ${type}`;
+  setTimeout(()=>closeStorageModal(),800);
+  updateStorageUI();
+}
+function closeLocalWarn(confirm){
+  document.getElementById('localWarnModal').classList.remove('show');
+  if(confirm){
+    const hide=document.getElementById('chkHideWarn').checked;
+    if(hide) localStorage.setItem('chefLing_hideLocalWarning','true');
+    localStorage.setItem('chefLing_storageChoice','locale');
+    localStorage.setItem('hollyRex_storageMode','locale');
+    storageMode='locale';
+    updateStorageUI();
+    openStorageModal(); setTimeout(()=>closeStorageModal(),500);
+  } else {
+    openStorageModal();
+  }
+}
+function resetStorageChoice(){
+  if(confirm('Vuoi cambiare modalità di salvataggio?')){
+    localStorage.removeItem('chefLing_storageChoice');
+    localStorage.removeItem('hollyRex_storageMode');
+    storageMode=null;
+    document.getElementById('storageModal').classList.add('show');
+  }
+}
+function updateStorageUI(){
+  const labels={firebase:'Firebase Cloud', drive:'Google Drive Privato', locale:'Solo Dispositivo'};
+  const short={firebase:'Firebase', drive:'Drive', locale:'Locale'};
+  const mode=storageMode||localStorage.getItem('chefLing_storageChoice');
+  document.getElementById('currentStorageMode').textContent=short[mode]||mode||'-';
+  document.getElementById('footerModeText').textContent=labels[mode]||'Non definita';
+  const hasFb=!!localStorage.getItem('hollyRex_fbConfigStr');
+  const hasDrive=!!localStorage.getItem('hollyRex_gDriveToken');
+  document.getElementById('storageDetails').textContent=`Fb:${hasFb?'ok':'no'} Drive:${hasDrive?'ok':'no'}`;
+}
+updateStorageUI();
+
+function toggleCloudPanel(forceOpen){
+  const panel=document.getElementById('cloudPanel');
+  if(forceOpen) panel.style.display='block';
+  else panel.style.display=panel.style.display==='none'?'block':'none';
+}
+function showTab(which){
+  const mode=which==='fb'?'firebase':which;
+  localStorage.setItem('hollyRex_storagePref', mode);
+  document.getElementById('panelFb').style.display=which==='fb'?'block':'none';
+  document.getElementById('panelDrive').style.display=which==='drive'?'block':'none';
+  document.getElementById('tabFb').style.background=which==='fb'?'#f59e0b':'#0f172a';
+  document.getElementById('tabFb').style.color=which==='fb'?'#0f172a':'#f59e0b';
+  document.getElementById('tabDrive').style.background=which==='drive'?'#4285F4':'#0f172a';
+  document.getElementById('tabDrive').style.color=which==='drive'?'#fff':'#4285F4';
+}
+
+// ---- FIREBASE CONFIG ----
+function saveFirebaseConfig(){
+  const cfgStr=document.getElementById('fbConfig').value.trim();
+  const fam=document.getElementById('fbFamilyId').value.trim()||'default-family';
+  localStorage.setItem('hollyRex_fbConfigStr', cfgStr);
+  localStorage.setItem('hollyRex_familyId', fam);
+  document.getElementById('fbStatus').textContent='✅ Config salvata! Ora Sincronizza.';
+  updateStorageUI();
+}
+async function syncToFirebase(silent){
+  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
+  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
+  if(!cfgStr){ if(!silent) alert('Incolla config Firebase!'); return; }
+  if(!silent) document.getElementById('fbStatus').textContent='⏳ Sync Firebase...';
+  try{
+    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    let cfg; try{ cfg=(new Function('return '+cfgStr))(); } catch{ cfg=JSON.parse(cfgStr); }
+    let app; try{ app=getApp('chefLingFb'); } catch{ app=initializeApp(cfg,'chefLingFb'); }
+    const db=getFirestore(app);
+    const payload={ chefLing_cats:selectedCats, chefLing_custom:customIngredients, chefLing_pets:pets, chefLing_customChatUrl:URL_CHEF, chefLing_hasPets:document.getElementById('chkPets').checked, mood:document.getElementById('moodSel').value, updatedAt:new Date().toISOString() };
+    await setDoc(doc(db,'chefLingFamilies',familyId), payload, {merge:true});
+    if(!silent) document.getElementById('fbStatus').textContent='✅ Sincronizzato! Famiglia: '+familyId;
+  }catch(err){ if(!silent) document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
+}
+async function loadFromFirebase(){
+  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
+  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
+  if(!cfgStr){ alert('Config mancante'); return; }
+  document.getElementById('fbStatus').textContent='⏳ Carico da Firebase...';
+  try{
+    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    let cfg; try{ cfg=(new Function('return '+cfgStr))(); } catch{ cfg=JSON.parse(cfgStr); }
+    let app; try{ app=getApp('chefLingFb'); } catch{ app=initializeApp(cfg,'chefLingFb'); }
+    const db=getFirestore(app);
+    const snap=await getDoc(doc(db,'chefLingFamilies',familyId));
+    if(!snap.exists()){ document.getElementById('fbStatus').textContent='⚠ Nessun dato su cloud per questa famiglia'; return; }
+    const data=snap.data();
+    if(!confirm(`Trovato backup Firebase del ${data.updatedAt} con ${data.chefLing_pets?.length||0} pet. Caricare?`)) return;
+    if(data.chefLing_cats) { selectedCats=data.chefLing_cats; localStorage.setItem('chefLing_cats', JSON.stringify(selectedCats)); }
+    if(data.chefLing_custom) { customIngredients=data.chefLing_custom; localStorage.setItem('chefLing_custom', JSON.stringify(customIngredients)); }
+    if(data.chefLing_pets) saveChefLingPets(data.chefLing_pets);
+    if(data.chefLing_customChatUrl) { localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl); URL_CHEF=data.chefLing_customChatUrl; }
+    renderPetList(); refreshChips();
+    document.getElementById('fbStatus').textContent='✅ Caricato da Firebase!';
+    location.reload();
+  }catch(err){ document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; }
+}
+
+// ---- GOOGLE DRIVE INTEGRATION ----
+function loadGis(){
+  return new Promise((resolve, reject)=>{
+    if(window.google && window.google.accounts) return resolve();
+    const s=document.createElement('script'); s.src='https://accounts.google.com/gsi/client'; s.onload=resolve; s.onerror=reject; document.head.appendChild(s);
+  });
+}
+async function googleLogin(){
+  try{
+    await loadGis();
+    const clientId='312141109786-aahbkamgrdtrmg6iv6nka4f6olmi56m9.apps.googleusercontent.com';
+    localStorage.setItem('hollyRex_gClientId', clientId);
+    const tokenClient=google.accounts.oauth2.initTokenClient({
+      client_id:clientId,
+      scope:'https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file',
+      callback:(resp)=>{
+        if(resp.access_token){
+          gAccessToken=resp.access_token;
+          localStorage.setItem('hollyRex_gDriveToken', gAccessToken);
+          document.getElementById('driveStatus').textContent='✅ Login ok! Ora salva/carica.';
+          updateStorageUI();
+          checkDriveStorageQuota(gAccessToken).then(q=>{
+            if(!q.error) document.getElementById('driveQuotaInfo').textContent=`💾 Drive: ${q.usedGB}GB usati / ${q.totalLimitGB}GB - Libero: ${q.freeSpaceMB}MB`;
+          });
+        } else {
+          document.getElementById('driveStatus').textContent='❌ Login fallito';
+        }
+      }
+    });
+    tokenClient.requestAccessToken();
+  }catch(e){ alert('Errore: '+e.message); }
+}
+async function saveToDrive(){
+  if(!gAccessToken){ alert('Fai login Google prima!'); return; }
+  const fileContent=JSON.stringify({chefLing_cats:selectedCats, chefLing_custom:customIngredients, chefLing_pets:pets, chefLing_customChatUrl:URL_CHEF, date:new Date().toISOString()});
+  const fileSize=new Blob([fileContent]).size;
+  const quotaCheck=await checkDriveStorageQuota(gAccessToken, fileSize);
+  if(!quotaCheck.error){
+    document.getElementById('driveQuotaInfo').textContent=`💾 Libero: ${quotaCheck.freeSpaceMB}MB / Totale: ${quotaCheck.totalLimitGB}GB`;
+  }
+  if(!quotaCheck.isSafe){
+    const ok=confirm(`⚠ ATTENZIONE: Il tuo Google Drive sta esaurendo lo spazio!\n\nLibero: ${quotaCheck.freeSpaceMB} MB (su ${quotaCheck.totalLimitGB} GB)\n\nVuoi procedere comunque con il salvataggio su Drive o annullare?`);
+    if(!ok){ document.getElementById('driveStatus').textContent='❌ Salvataggio interrotto per sicurezza spazio.'; return; }
+  }
+  document.getElementById('driveStatus').textContent='⏳ Salvo su Drive...';
+  try{
+    const searchRes=await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27chef_ling_ricette.json%27&fields=files(id,name)', {headers:{Authorization:'Bearer '+gAccessToken}});
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
+    const searchJson=await searchRes.json();
+    let fileId=searchJson.files && searchJson.files[0] ? searchJson.files[0].id : null;
+    if(fileId){
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`, {method:'PATCH', headers:{Authorization:'Bearer '+gAccessToken}, body:fileContent});
+    } else {
+      const metadata={name:'chef_ling_ricette.json', parents:['appDataFolder']};
+      const form=new FormData();
+      form.append('metadata', new Blob([JSON.stringify(metadata)], {type:'application/json'}));
+      form.append('file', new Blob([fileContent], {type:'application/json'}));
+      const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {method:'POST', headers:{Authorization:'Bearer '+gAccessToken}, body:form});
+      const json=await res.json(); fileId=json.id;
+    }
+    document.getElementById('driveStatus').textContent='✅ Salvato su Drive! ID:'+fileId.substring(0,8);
+  }catch(err){ document.getElementById('driveStatus').textContent='❌ Errore: '+err.message; }
+}
+async function loadFromDrive(){
+  if(!gAccessToken){ alert('Login prima'); return; }
+  document.getElementById('driveStatus').textContent='⏳ Carico da Drive...';
+  try{
+    const searchRes=await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27chef_ling_ricette.json%27&fields=files(id,name)', {headers:{Authorization:'Bearer '+gAccessToken}});
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login'; localStorage.removeItem('hollyRex_gDriveToken'); updateStorageUI(); return; }
+    const searchJson=await searchRes.json();
+    if(!searchJson.files || !searchJson.files.length){ document.getElementById('driveStatus').textContent='⚠ Nessun backup su Drive'; return; }
+    const fileId=searchJson.files[0].id;
+    const fileRes=await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {headers:{Authorization:'Bearer '+gAccessToken}});
+    const data=await fileRes.json();
+    if(!confirm(`Backup Drive ${data.date} con ${data.chefLing_cats?.length||0} ingredienti e ${data.chefLing_pets?.length||0} pet. Caricare?`)) return;
+    if(data.chefLing_cats) localStorage.setItem('chefLing_cats', JSON.stringify(data.chefLing_cats));
+    if(data.chefLing_custom) localStorage.setItem('chefLing_custom', JSON.stringify(data.chefLing_custom));
+    if(data.chefLing_pets) localStorage.setItem('chefLing_pets', JSON.stringify(data.chefLing_pets));
+    if(data.chefLing_customChatUrl) localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl);
+    document.getElementById('driveStatus').textContent='✅ Caricato da Drive! Ricarico...';
+    setTimeout(()=>location.reload(),800);
+  }catch(err){ document.getElementById('driveStatus').textContent='❌ Errore: '+err.message; }
+}
+
+// ---- BACKUP LOCALE & UTILITIES ----
+function exportBackup(){
+  const data = { chefLing_cats: selectedCats, chefLing_custom: customIngredients, chefLing_pets: pets, chefLing_customChatUrl: URL_CHEF, version:'v3.3' };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'chef-ling-backup.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+function importBackup(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      const data = JSON.parse(evt.target.result);
+      if(data.chefLing_cats) localStorage.setItem('chefLing_cats', JSON.stringify(data.chefLing_cats));
+      if(data.chefLing_custom) localStorage.setItem('chefLing_custom', JSON.stringify(data.chefLing_custom));
+      if(data.chefLing_pets) localStorage.setItem('chefLing_pets', JSON.stringify(data.chefLing_pets));
+      if(data.chefLing_customChatUrl) localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl);
+      alert('✅ Ripristino completato!');
+      location.reload();
+    } catch(err) {
+      alert('❌ File JSON non valido');
+    }
+  };
+  reader.readAsText(file);
+}
+function saveCustomLink(){
+  const input=document.getElementById('myChefLink'); const status=document.getElementById('customLinkStatus');
+  let link=input.value.trim();
+  if(!link){ status.textContent='Incolla il link che vedi su Qwen quando sei dentro Chef Ling'; status.style.display='block'; status.style.color='#f59e0b'; return; }
+  if(!link.includes('chat.qwen.ai/c/')){ status.textContent='❌ Link non valido. Deve essere tipo https://chat.qwen.ai/c/...'; status.style.display='block'; status.style.color='#ef4444'; return; }
+  localStorage.setItem('chefLing_customChatUrl', link); URL_CHEF=link;
+  status.textContent='✅ Link salvato! Incluso nel Backup JSON.'; status.style.display='block'; status.style.color='#22c55e';
+  document.getElementById('qwenQuickAccess').style.display='block'; document.getElementById('qwenDirectLink').href=link;
+  setTimeout(()=>{ status.style.display='none'; },4000);
+}
+function openLingModal(){ document.getElementById('lingModal').classList.add('show'); }
+function closeLingModal(){ document.getElementById('lingModal').classList.remove('show'); }
+function restoreFromLingPaste(){
+  const txt=document.getElementById('lingPaste').value.trim();
+  const fb=document.getElementById('lingFeedback');
+  try{
+    const match = txt.match(/\{[\s\S]*\}/);
+    const data = JSON.parse(match ? match[0] : txt);
+    if(data.chefLing_pets) saveChefLingPets(data.chefLing_pets);
+    if(data.chefLing_customChatUrl) localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl);
+    fb.style.display='block'; fb.style.color='#22c55e';
+    fb.textContent='✅ Dati recuperati con successo dalla chat di Ling! Ricarico...';
+    setTimeout(()=>location.reload(), 1200);
+  }catch(e){
+    fb.style.display='block'; fb.style.color='#ef4444';
+    fb.textContent='❌ Formato non riconosciuto. Incolla il blocco JSON valido.';
+  }
+}
+function prepareMessage(){
+  const mood=document.getElementById('moodSel').value;
+  const extra=document.getElementById('extraInput').value.trim();
+  const allIng=[...selectedCats, ...customIngredients, extra].filter(Boolean).join(', ');
+  const text=`Ciao Chef Ling! Ho questi ingredienti: ${allIng}. Mood: ${mood}. Fammi una ricetta fantastica!`;
+  navigator.clipboard.writeText(text).then(()=>{
+    window.open(URL_CHEF, '_blank');
+  });
+}
+function preparePetMessage(){
+  const mood=document.getElementById('moodSel').value;
+  const hasPets = document.getElementById('chkPets').checked;
+  if(!hasPets){ alert('Spunta "Ho animali domestici in casa" per generare il messaggio pet! 🐾'); return; }
+  const text=`Ciao Chef Ling! Prepara qualcosa di sicuro per i miei pet: ${pets.map(p=>p.name).join(', ')}. Mood: ${mood}.`;
+  navigator.clipboard.writeText(text).then(()=>{
+    window.open(URL_CHEF, '_blank');
+  });
+}
+function addPetPrompt(){
+  const name = prompt("Nome del pet (es. Rex, Holly):");
+  if(!name) return;
+  const type = prompt("Specie (Cane / Gatto):", "Cane");
+  const weight = prompt("Peso (es. 15kg):", "10kg");
+  pets.push({name, type, weight});
+  saveChefLingPets(pets);
+  renderPetList();
+}
+</script>
+</body>
+</html>
