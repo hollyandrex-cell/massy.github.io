@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chef Ling - Detail Perfect v3.3 Drive + Firebase Attivo</title>
+<title>Chef Ling - Detail Perfect v3.4 Drive Only</title>
 <link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
 <style>
 :root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text2:#94a3b8;--border:#334155;--accent:#ec4899;--accent2:#f59e0b}
@@ -42,12 +42,8 @@ textarea:focus,input:focus,select:focus{border-color:var(--accent2)}
 <div class="modal" style="text-align:center;border:2px solid #fbbf24">
 <h3 style="color:#fbbf24;margin-bottom:8px">🧩 Scegli il tuo spazio dati</h3>
 <p style="font-size:.85rem;color:#94a3b8;margin-bottom:16px">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro 💛</p>
-<div class="storage-option" onclick="selectStorage('firebase')">
-<strong style="color:#fbbf24">🔥 Firebase Cloud (Consigliato)</strong>
-<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Sincronizzazione in tempo reale tra dispositivi e condivisione famiglia. Perfetto per ricette e pet.</div>
-</div>
 <div class="storage-option" onclick="selectStorage('drive')">
-<strong style="color:#4285F4">📁 Google Drive / File Personale</strong>
+<strong style="color:#4285F4">📁 Google Drive / File Personale (Consigliato)</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Salva il tuo profilo ricette sul tuo Drive privato, 15GB gratis, 100% tuo.</div>
 </div>
 <div class="storage-option" onclick="selectStorage('locale')">
@@ -66,7 +62,7 @@ textarea:focus,input:focus,select:focus{border-color:var(--accent2)}
 Stai salvando <b>solo su questo dispositivo</b>.<br><br>
 Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi profili pet, gusti, link Qwen e preferenze Chef Ling</b>.<br><br>
 <span style="display:block;background:#0f172a;border:1px dashed #f59e0b;border-radius:10px;padding:10px;margin:10px 0;font-size:.82rem;color:#fde68a">
-💾 Limite locale: max 5-10MB.<br>💡 Con Drive hai 15GB gratis, con Firebase spazio illimitato!
+💾 Limite locale: max 5-10MB.<br>💡 Con Drive hai 15GB gratis e sicurezza totale!
 </span>
 </p>
 <div style="display:flex;gap:10px">
@@ -79,7 +75,7 @@ Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi 
 
 <!-- APP RICETTE -->
 <div class="card">
-<h2 style="text-align:center;color:#fbbf24;margin-top:0">Chef Ling - Detail Perfect v3.3</h2>
+<h2 style="text-align:center;color:#fbbf24;margin-top:0">Chef Ling - Detail Perfect v3.4</h2>
 
 <div class="chips" id="catChips">
 <button class="chip" data-cat="Latte/Yogurt">Latte/Yogurt</button>
@@ -122,7 +118,7 @@ Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi 
 <div class="card" style="background:#0f172a;margin-top:14px">
 <h3 style="color:#f59e0b;text-align:center;font-size:.95rem">🛡️ Profilo Sicurezza & Gusti MULTI-PET</h3>
 
-<!-- I 3 PULSANTI PRINCIPALI BEN VISIBILI -->
+<!-- I PULSANTI PRINCIPALI -->
 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0">
 <button class="btn btn-secondary btn-small" onclick="exportBackup()">💾 Backup JSON</button>
 <button class="btn btn-secondary btn-small" onclick="document.getElementById('importFile').click()">📥 Ripristina JSON</button>
@@ -130,26 +126,11 @@ Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi 
 <button class="btn btn-secondary btn-small" style="background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff" onclick="openStorageModal()">☁ Spazio Dati</button>
 </div>
 
-<!-- CLOUD PANEL -->
+<!-- CLOUD PANEL (SOLO DRIVE) -->
 <div id="cloudPanel" style="display:none;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:12px">
-<div style="display:flex;gap:8px;margin-bottom:12px">
-<button id="tabFb" class="btn btn-secondary btn-small" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')">🔥 Firebase</button>
-<button id="tabDrive" class="btn btn-secondary btn-small" style="flex:1" onclick="showTab('drive')">💾 Drive</button>
-</div>
-<div id="panelFb">
-<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase - Sincronizza Ricette & Pet</h4>
-<textarea id="fbConfig" placeholder='Incolla qui il firebaseConfig { apiKey:... }' style="min-height:70px;font-size:.7rem"></textarea>
-<input id="fbFamilyId" placeholder="ID Famiglia: es. holly-rex-famiglia-rossi" style="margin-top:8px">
-<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-<button class="btn btn-secondary btn-small" onclick="saveFirebaseConfig()">💾 Salva Config</button>
-<button class="btn btn-secondary btn-small" style="background:#22c55e;color:#fff" onclick="syncToFirebase()">☁ Sincronizza</button>
-<button class="btn btn-secondary btn-small" onclick="loadFromFirebase()">📥 Carica</button>
-</div>
-<div id="fbStatus" style="font-size:.75rem;color:#22c55e;margin-top:6px"></div>
-</div>
-<div id="panelDrive" style="display:none">
+<div id="panelDrive">
 <h4 style="color:#4285F4;font-size:.9rem;margin-bottom:8px">💾 Google Drive - 100% Privato</h4>
-<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">File <code>chef_ling_ricette.json</code> in appDataFolder invisibile.</p>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">File <code>chef_ling_ricette.json</code> protetto in appDataFolder.</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap">
 <button class="btn btn-secondary btn-small" style="background:#fff;color:#000;flex:1" onclick="googleLogin()">🔑 Login Google</button>
 <button class="btn btn-secondary btn-small" style="flex:1" onclick="saveToDrive()">☁ Salva su Drive</button>
@@ -177,7 +158,7 @@ Se cambi telefono o cancelli i dati del browser, <b style="color:#fca5a5">perdi 
 </div>
 
 <button class="btn btn-secondary" style="margin-top:16px" onclick="location.href='/massy.github.io/index.html'">← Torna alla Home Page</button>
-<div class="small">Modalità: <span id="footerModeText">-</span> | <span id="storageDetails"></span><br>V3.3 Drive Fixed + Firebase - by Nova + Aura + Luna + Tesoro 💛</div>
+<div class="small">Modalità: <span id="footerModeText">-</span> | <span id="storageDetails"></span><br>V3.4 Drive Only - by Nova + Aura + Luna + Tesoro 💛</div>
 </div>
 
 </div>
@@ -292,12 +273,12 @@ function selectStorage(type){
       return;
     }
   }
-  if(type==='firebase' || type==='drive'){
+  if(type==='drive'){
     localStorage.setItem('chefLing_storageChoice', type);
     localStorage.setItem('hollyRex_storageMode', type);
     storageMode = type;
-    document.getElementById('currentChoice').textContent=`✅ Scelto: ${type} - Configura sotto`;
-    setTimeout(()=>{ closeStorageModal(); toggleCloudPanel(true); showTab(type==='firebase'?'fb':'drive'); },400);
+    document.getElementById('currentChoice').textContent=`✅ Scelto: Google Drive`;
+    setTimeout(()=>{ closeStorageModal(); toggleCloudPanel(true); },400);
     updateStorageUI();
     return;
   }
@@ -331,14 +312,13 @@ function resetStorageChoice(){
   }
 }
 function updateStorageUI(){
-  const labels={firebase:'Firebase Cloud', drive:'Google Drive Privato', locale:'Solo Dispositivo'};
-  const short={firebase:'Firebase', drive:'Drive', locale:'Locale'};
+  const labels={drive:'Google Drive Privato', locale:'Solo Dispositivo'};
+  const short={drive:'Drive', locale:'Locale'};
   const mode=storageMode||localStorage.getItem('chefLing_storageChoice');
   document.getElementById('currentStorageMode').textContent=short[mode]||mode||'-';
   document.getElementById('footerModeText').textContent=labels[mode]||'Non definita';
-  const hasFb=!!localStorage.getItem('hollyRex_fbConfigStr');
   const hasDrive=!!localStorage.getItem('hollyRex_gDriveToken');
-  document.getElementById('storageDetails').textContent=`Fb:${hasFb?'ok':'no'} Drive:${hasDrive?'ok':'no'}`;
+  document.getElementById('storageDetails').textContent=`Drive Token:${hasDrive?'ok':'no'}`;
 }
 updateStorageUI();
 
@@ -346,66 +326,6 @@ function toggleCloudPanel(forceOpen){
   const panel=document.getElementById('cloudPanel');
   if(forceOpen) panel.style.display='block';
   else panel.style.display=panel.style.display==='none'?'block':'none';
-}
-function showTab(which){
-  const mode=which==='fb'?'firebase':which;
-  localStorage.setItem('hollyRex_storagePref', mode);
-  document.getElementById('panelFb').style.display=which==='fb'?'block':'none';
-  document.getElementById('panelDrive').style.display=which==='drive'?'block':'none';
-  document.getElementById('tabFb').style.background=which==='fb'?'#f59e0b':'#0f172a';
-  document.getElementById('tabFb').style.color=which==='fb'?'#0f172a':'#f59e0b';
-  document.getElementById('tabDrive').style.background=which==='drive'?'#4285F4':'#0f172a';
-  document.getElementById('tabDrive').style.color=which==='drive'?'#fff':'#4285F4';
-}
-
-// ---- FIREBASE CONFIG ----
-function saveFirebaseConfig(){
-  const cfgStr=document.getElementById('fbConfig').value.trim();
-  const fam=document.getElementById('fbFamilyId').value.trim()||'default-family';
-  localStorage.setItem('hollyRex_fbConfigStr', cfgStr);
-  localStorage.setItem('hollyRex_familyId', fam);
-  document.getElementById('fbStatus').textContent='✅ Config salvata! Ora Sincronizza.';
-  updateStorageUI();
-}
-async function syncToFirebase(silent){
-  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
-  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
-  if(!cfgStr){ if(!silent) alert('Incolla config Firebase!'); return; }
-  if(!silent) document.getElementById('fbStatus').textContent='⏳ Sync Firebase...';
-  try{
-    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
-    const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-    let cfg; try{ cfg=(new Function('return '+cfgStr))(); } catch{ cfg=JSON.parse(cfgStr); }
-    let app; try{ app=getApp('chefLingFb'); } catch{ app=initializeApp(cfg,'chefLingFb'); }
-    const db=getFirestore(app);
-    const payload={ chefLing_cats:selectedCats, chefLing_custom:customIngredients, chefLing_pets:pets, chefLing_customChatUrl:URL_CHEF, chefLing_hasPets:document.getElementById('chkPets').checked, mood:document.getElementById('moodSel').value, updatedAt:new Date().toISOString() };
-    await setDoc(doc(db,'chefLingFamilies',familyId), payload, {merge:true});
-    if(!silent) document.getElementById('fbStatus').textContent='✅ Sincronizzato! Famiglia: '+familyId;
-  }catch(err){ if(!silent) document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
-}
-async function loadFromFirebase(){
-  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
-  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
-  if(!cfgStr){ alert('Config mancante'); return; }
-  document.getElementById('fbStatus').textContent='⏳ Carico da Firebase...';
-  try{
-    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
-    const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-    let cfg; try{ cfg=(new Function('return '+cfgStr))(); } catch{ cfg=JSON.parse(cfgStr); }
-    let app; try{ app=getApp('chefLingFb'); } catch{ app=initializeApp(cfg,'chefLingFb'); }
-    const db=getFirestore(app);
-    const snap=await getDoc(doc(db,'chefLingFamilies',familyId));
-    if(!snap.exists()){ document.getElementById('fbStatus').textContent='⚠ Nessun dato su cloud per questa famiglia'; return; }
-    const data=snap.data();
-    if(!confirm(`Trovato backup Firebase del ${data.updatedAt} con ${data.chefLing_pets?.length||0} pet. Caricare?`)) return;
-    if(data.chefLing_cats) { selectedCats=data.chefLing_cats; localStorage.setItem('chefLing_cats', JSON.stringify(selectedCats)); }
-    if(data.chefLing_custom) { customIngredients=data.chefLing_custom; localStorage.setItem('chefLing_custom', JSON.stringify(customIngredients)); }
-    if(data.chefLing_pets) saveChefLingPets(data.chefLing_pets);
-    if(data.chefLing_customChatUrl) { localStorage.setItem('chefLing_customChatUrl', data.chefLing_customChatUrl); URL_CHEF=data.chefLing_customChatUrl; }
-    renderPetList(); refreshChips();
-    document.getElementById('fbStatus').textContent='✅ Caricato da Firebase!';
-    location.reload();
-  }catch(err){ document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; }
 }
 
 // ---- GOOGLE DRIVE INTEGRATION ----
@@ -494,7 +414,7 @@ async function loadFromDrive(){
 
 // ---- BACKUP LOCALE & UTILITIES ----
 function exportBackup(){
-  const data = { chefLing_cats: selectedCats, chefLing_custom: customIngredients, chefLing_pets: pets, chefLing_customChatUrl: URL_CHEF, version:'v3.3' };
+  const data = { chefLing_cats: selectedCats, chefLing_custom: customIngredients, chefLing_pets: pets, chefLing_customChatUrl: URL_CHEF, version:'v3.4' };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = 'chef-ling-backup.json'; a.click();
