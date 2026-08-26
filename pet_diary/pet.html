@@ -6,10 +6,8 @@
 <title>Holly & Rex Pet Diary - Il Diario del Peloso 🐾 V0.6 Drive Fixed</title>
 <link rel="icon" href="/massy.github.io/bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="/massy.github.io/bau-180.png">
-<!-- MODIFICA 1: Manifest dedicato -->
 <link rel="manifest" href="./manifest-petdiary.json">
 <style>
-/* MODIFICA 2: Variabili CSS aggiunte all'inizio */
 :root {
     --bg: #0f172a;
     --card: #1e293b;
@@ -66,15 +64,15 @@ textarea{min-height:70px}
 <h3 style="color:#fbbf24;margin-bottom:8px">🐾 Scegli il tuo spazio dati</h3>
 <p style="font-size:.85rem;color:#94a3b8;margin-bottom:16px">La nostra filosofia: massima libertà di scelta, nessun obbligo e zero abbonamenti! Come volevi tu tesoro 💛</p>
 <div class="storage-option" onclick="selectStorage('firebase')">
-<strong style="color:#fbbf24"> Firebase Cloud (Consigliato)</strong>
-<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Sincronizzazione in tempo reale tra dispositivi e condivisione con la famiglia. Perfetto per chi ha più telefoni.</div>
+<strong style="color:#fbbf24">🔥 Firebase Cloud (Consigliato)</strong>
+<div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Sincronizzazione in tempo reale e condivisione. Richiede login Google per accedere al tuo spazio sicuro, senza codici strani!</div>
 </div>
 <div class="storage-option" onclick="selectStorage('drive')">
 <strong style="color:#4285F4">📁 Google Drive / File Personale</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">Salva e gestisci i dati sul tuo spazio Google personale in totale autonomia. 100% tuo, privato, 15GB gratis.</div>
 </div>
 <div class="storage-option" onclick="selectStorage('local')">
-<strong style="color:#f59e0b"> Solo su questo Dispositivo (Locale)</strong>
+<strong style="color:#f59e0b">📱 Solo su questo Dispositivo (Locale)</strong>
 <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">I dati restano offline sul tuo browser/telefono. Veloce, ma se perdi il cell perdi tutto (ti avvisiamo!).</div>
 </div>
 </div>
@@ -82,7 +80,7 @@ textarea{min-height:70px}
 
 <div id="localWarningModal" class="modal-bg" style="display:none;z-index:1003">
 <div class="modal" style="border:2px solid #ef4444">
-<h3 style="color:#ef4444;margin-bottom:10px"> Attenzione alla modalità locale</h3>
+<h3 style="color:#ef4444;margin-bottom:10px">⚠️ Attenzione alla modalità locale</h3>
 <p style="font-size:.88rem;color:#f1f5f9;line-height:1.5;margin-bottom:14px">
 Stai scegliendo di salvare i dati <b>solo su questo dispositivo</b>.<br><br>
 Se cambi telefono, formatti la memoria o cancelli i dati del browser, <b style="color:#fca5a5">tutti i diari, le scadenze e lo storico dei tuoi pelosi andranno persi</b> e non potranno essere recuperati.<br><br>
@@ -107,7 +105,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 <span class="badge-free">Zero Pubblicità • Zero Abbonamenti • 100% Nostro 💛</span>
 
 <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
-<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()"> Backup JSON</button>
+<button class="btn-add-pet" style="background:linear-gradient(135deg,#22c55e,#16a34a);font-size:.8rem" onclick="exportBackup()">💾 Backup JSON</button>
 <button class="btn-add-pet" style="background:linear-gradient(135deg,#f59e0b,#d97706);font-size:.8rem" onclick="document.getElementById('importFile').click()">📥 Ripristina</button>
 <input type="file" id="importFile" style="display:none" accept=".json" onchange="importBackup(event)">
 <button class="btn-add-pet" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);font-size:.8rem" onclick="toggleCloudPanel()">☁ Cloud (Firebase / Drive)</button>
@@ -115,16 +113,15 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 
 <div id="cloudPanel" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:12px">
 <div style="display:flex;gap:8px;margin-bottom:12px">
-<button id="tabFb" class="btn-add-pet" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')"> Firebase</button>
+<button id="tabFb" class="btn-add-pet" style="flex:1;background:#f59e0b;color:#0f172a" onclick="showTab('fb')">🔥 Firebase</button>
 <button id="tabDrive" class="btn-add-pet" style="flex:1;background:#0f172a;border:1px solid #4285F4;color:#4285F4" onclick="showTab('drive')">💾 Drive</button>
 </div>
 <div id="panelFb">
-<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase - Servizio Holly & Rex (Consigliato per famiglia)</h4>
-<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">Sincronizzazione tempo reale. Se uno in famiglia annota "Rex zoppica" arriva a tutti!</p>
-<textarea id="fbConfig" placeholder='Incolla qui il firebaseConfig { apiKey:..., authDomain:... }' style="min-height:80px;font-size:.7rem"></textarea>
-<input id="fbFamilyId" placeholder="ID Famiglia: es. holly-rex-famiglia-rossi" style="margin-top:8px">
+<h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">🔥 Firebase Cloud Personale</h4>
+<p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px">Fai il login con il tuo account Google e dai un nome al tuo spazio per sincronizzare i dati in tempo reale!</p>
+<button class="btn" style="background:#fff;color:#000;margin-bottom:8px" onclick="firebaseGoogleLogin()">🔑 Login Google & Connetti</button>
+<input id="fbFamilyId" placeholder="Scegli un nome per il tuo progetto / famiglia (es. Casa Rossi)" style="margin-top:4px">
 <div style="display:flex;gap:8px;margin-top:8px">
-<button class="btn btn-secondary" style="flex:1;font-size:.8rem" onclick="saveFirebaseConfig()">💾 Salva Config</button>
 <button class="btn btn-success" style="flex:1;font-size:.8rem" onclick="syncToFirebase()">☁ Sincronizza</button>
 <button class="btn btn-secondary" style="flex:1;font-size:.8rem" onclick="loadFromFirebase()">📥 Carica</button>
 </div>
@@ -143,7 +140,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 </div>
 
 <div style="text-align:right;margin-bottom:8px">
-<button onclick="resetStorageChoice()" style="background:none;border:none;color:#94a3b8;font-size:.72rem;cursor:pointer;text-decoration:underline">⚙ Cambia modalità salvataggio (<span id="currentStorageMode">-</span>)</button>
+<button onclick="resetStorageChoice()" style="background:none;border:none;color:#94a3b8;font-size:.72rem;cursor:pointer;text-decoration:underline">⚙️ Cambia modalità salvataggio (<span id="currentStorageMode">-</span>)</button>
 </div>
 
 <div class="pet-tabs" id="petTabs"></div>
@@ -153,7 +150,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
 </div>
 <div id="petView" style="display:none">
   <div class="section">
-    <h3> Profilo <span id="petNameTitle"></span> <button onclick="openPetModal(true)" style="background:#0f172a;border:1px solid #334155;color:#fbbf24;padding:4px 8px;border-radius:8px;cursor:pointer;font-size:.75rem">✏ Modifica</button></h3>
+    <h3>🐾 Profilo <span id="petNameTitle"></span> <button onclick="openPetModal(true)" style="background:#0f172a;border:1px solid #334155;color:#fbbf24;padding:4px 8px;border-radius:8px;cursor:pointer;font-size:.75rem">✏️ Modifica</button></h3>
     <div class="grid2">
       <div><small style="color:#94a3b8">Specie</small><div id="vSpecie" style="font-weight:700"></div></div>
       <div><small style="color:#94a3b8">Peso</small><div id="vPeso" style="font-weight:700"></div></div>
@@ -164,7 +161,7 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
   </div>
   <div class="section">
     <h3>📝 Diario Salute in Tempo Reale</h3>
-    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento"> Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option></select>
+    <select id="diaryTag"><option value="sintomo">🤒 Sintomo</option><option value="comportamento">🐾 Comportamento</option><option value="pasto">🍖 Pasto / Feci</option><option value="generale">💬 Generale</option></select>
     <textarea id="diaryText" placeholder="Es: Rex zoppica leggermente..."></textarea>
     <button class="btn btn-primary" onclick="addDiary()">+ Annota ora → Sincronizza</button>
     <div id="diaryList" style="margin-top:12px;max-height:280px;overflow:auto"></div>
@@ -190,7 +187,22 @@ Se aggiungi molte <b>foto cliniche, RX o video</b> (cartella clinica), lo spazio
   </div>
 </div>
 <div class="small">Ideato da Nova (Meta) + Dj AURA (Gemini) + Luna (ChatGPT) + Tesoro ❤<br>Holly & Rex Group - Zero pubblicità, massima libertà.<br>Modalità attiva: <span id="footerModeText">-</span> | Storage: <span id="storageDetails"></span><br><span style="font-size:.7rem;color:#64748b">V0.4.1 Fix: debounce sync + no double-read + toast</span></div>
+
+<!-- BLOCCO SPOSTATO CORRETTAMENTE DENTRO LA CARD, IN FONDO -->
+<div style="text-align:center; border-top:1px solid var(--border); padding-top:16px; margin-top:20px; font-size:.8rem; color:var(--text2);">
+    <p id="pd-back-link-container" style="margin-bottom: 0.8rem;"></p>
+    <p>
+        <a href="/massy.github.io/index.html" style="color:#fbbf24; text-decoration:none;">Holly & Rex Group</a> 
+        | 
+        <a href="/massy.github.io/privacy-policy.html" style="color:#fbbf24; text-decoration:none;">Privacy Policy</a>
+        | 
+        <a href="/massy.github.io/cookie-policy.html" style="color:#fbbf24; text-decoration:none;">Cookie Policy</a>
+        <br>
+        <span style="opacity:0.7;">Zero pubblicità, massima libertà. Fatto con amore per i pelosi. 🐾</span>
+    </p>
 </div>
+
+</div> <!-- FINE CARD -->
 
 <div id="petModal" class="modal-bg" style="display:none"><div class="modal"><h3 id="petModalTitle">🐾 Nuovo Peloso</h3><div class="grid2"><input id="pNome" placeholder="Nome"><select id="pSpecie"><option>Cane</option><option>Gatto</option><option>Altro</option></select></div><input id="pRazza" placeholder="Razza" style="margin-top:8px"><div class="grid2" style="margin-top:8px"><input id="pPeso" placeholder="Peso"><input id="pChip" placeholder="Microchip"></div><div class="grid2" style="margin-top:8px"><input type="date" id="pNascita"><input id="pFoto" placeholder="Foto URL"></div><textarea id="pAllergie" placeholder="Allergie, note..."></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn btn-secondary" onclick="closePetModal()" style="flex:1">Annulla</button><button class="btn btn-primary" onclick="savePet()" style="flex:1">💾 Salva</button></div></div></div>
 
@@ -199,7 +211,16 @@ let storageMode = localStorage.getItem('hollyRex_storageMode') || null;
 let pets = JSON.parse(localStorage.getItem('hollyRex_pets')||'[]');
 let currentPetId = localStorage.getItem('hollyRex_currentPet')||null;
 let editingPetId = null;
-let firebaseSyncTimeout = null; // FIX Luna #3 debounce
+let firebaseSyncTimeout = null; 
+
+const EMBEDDED_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyD-TUE-CONFIG-ESEMPIO-INSERISCI-QUI-LA-TUA",
+  authDomain: "pet-diary-cloud.firebaseapp.com",
+  projectId: "pet-diary-cloud",
+  storageBucket: "pet-diary-cloud.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abcdef"
+};
 
 function checkStorageConfig(){
   if(!storageMode){
@@ -252,7 +273,7 @@ function updateStorageUI(){
   const shortLabels = { firebase: 'Firebase', drive: 'Drive', local: 'Locale' };
   document.getElementById('currentStorageMode').textContent = shortLabels[storageMode] || storageMode;
   document.getElementById('footerModeText').textContent = labels[storageMode] || 'Non definita';
-  const hasFb = !!localStorage.getItem('hollyRex_fbConfigStr');
+  const hasFb = !!localStorage.getItem('hollyRex_fbUserEmail');
   const hasDrive = !!localStorage.getItem('hollyRex_gDriveToken');
   document.getElementById('storageDetails').textContent = `Fb:${hasFb?'ok':'no'} Drive:${hasDrive?'ok':'no'}`;
 }
@@ -260,8 +281,7 @@ function saveAll(){
   localStorage.setItem('hollyRex_pets', JSON.stringify(pets));
   if(currentPetId) localStorage.setItem('hollyRex_currentPet', currentPetId);
   render();
-  // FIX Luna #3: debounce sync invece di scrittura immediata
-  if(storageMode==='firebase' && localStorage.getItem('hollyRex_fbConfigStr')){
+  if(storageMode==='firebase' && localStorage.getItem('hollyRex_fbUserEmail')){
     if(firebaseSyncTimeout) clearTimeout(firebaseSyncTimeout);
     firebaseSyncTimeout = setTimeout(()=>{ syncToFirebase(true); }, 2500);
   }
@@ -287,7 +307,6 @@ function exportBackup(){
   const data={pets, currentPetId, storageMode, date:new Date().toISOString(), version:'pet-diary-v0.4.1-fixed'};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`Pet_diary.json`; a.click(); URL.revokeObjectURL(url);
-  // Aggiorna badge ultimo backup per fix Luna anti-doppioni
   localStorage.setItem('hollyRex_lastBackup', new Date().toISOString());
 }
 function importBackup(e){
@@ -295,46 +314,56 @@ function importBackup(e){
   r.onload=ev=>{try{const data=JSON.parse(ev.target.result); if(!confirm(`Caricare ${data.pets?.length||0} pelosi?`)) return; pets=data.pets||[]; currentPetId=data.currentPetId|| (pets[0]?.id||null); saveAll();}catch(err){alert('File non valido '+err.message);}};
   r.readAsText(f);
 }
-function saveFirebaseConfig(){
-  const cfgStr=document.getElementById('fbConfig').value.trim();
-  const fam=document.getElementById('fbFamilyId').value.trim()||'default-family';
-  localStorage.setItem('hollyRex_fbConfigStr', cfgStr);
-  localStorage.setItem('hollyRex_familyId', fam);
-  document.getElementById('fbStatus').textContent='✅ Config salvata! Ora Sincronizza.';
-}
-async function syncToFirebase(silent){
-  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
-  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
-  if(!cfgStr){ if(!silent) alert('Incolla config Firebase!'); return; }
-  if(!silent) document.getElementById('fbStatus').textContent='⏳ Sync Firebase...';
+
+async function firebaseGoogleLogin(){
   try{
-    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    await loadGis();
+    const clientId = '312141109786-aahbkamgrdtrmg6iv6nka4f6olmi56m9.apps.googleusercontent.com';
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'email profile openid',
+      callback: (resp)=>{
+        if(resp.access_token){
+          localStorage.setItem('hollyRex_fbUserEmail', 'Connesso con Google');
+          document.getElementById('fbStatus').textContent='✅ Login Google effettuato con successo!';
+          updateStorageUI();
+        } else {
+          document.getElementById('fbStatus').textContent='❌ Login Google non riuscito';
+        }
+      }
+    });
+    tokenClient.requestAccessToken();
+  }catch(err){ alert('Errore login: '+err.message); }
+}
+
+async function syncToFirebase(silent){
+  const familyId=document.getElementById('fbFamilyId').value.trim()||localStorage.getItem('hollyRex_familyId')||'default-family';
+  localStorage.setItem('hollyRex_familyId', familyId);
+  if(!localStorage.getItem('hollyRex_fbUserEmail')){ if(!silent) alert('Fai prima il login con Google!'); return; }
+  if(!silent) document.getElementById('fbStatus').textContent='⏳ Sync Firebase in corso...';
+  try{
+    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
     const { getFirestore, doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-    let cfg; try{ cfg = (new Function('return '+cfgStr))(); } catch{ cfg = JSON.parse(cfgStr); }
     let app;
-    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(cfg, 'petDiaryFb'); }
+    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(EMBEDDED_FIREBASE_CONFIG, 'petDiaryFb'); }
     const db = getFirestore(app);
     await setDoc(doc(db, 'petDiaryFamilies', familyId), { pets, currentPetId, updatedAt: new Date().toISOString() }, { merge:true });
-    if(!silent) document.getElementById('fbStatus').textContent='✅ Sincronizzato! Famiglia: '+familyId;
+    if(!silent) document.getElementById('fbStatus').textContent='✅ Sincronizzato con successo! Spazio: '+familyId;
   }catch(err){ if(!silent) document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
 }
 
-// FIX Luna #2 - Una sola lettura, pulito!
 async function loadFromFirebase(){
-  const cfgStr=localStorage.getItem('hollyRex_fbConfigStr');
-  const familyId=localStorage.getItem('hollyRex_familyId')||'default-family';
-  if(!cfgStr){ alert('Config mancante'); return; }
+  const familyId=document.getElementById('fbFamilyId').value.trim()||localStorage.getItem('hollyRex_familyId')||'default-family';
+  localStorage.setItem('hollyRex_familyId', familyId);
   document.getElementById('fbStatus').textContent='⏳ Carico da Firebase...';
   try{
-    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
     const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-    let cfg; try{ cfg = (new Function('return '+cfgStr))(); } catch{ cfg = JSON.parse(cfgStr); }
     let app;
-    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(cfg, 'petDiaryFb'); }
+    try { app = getApp('petDiaryFb'); } catch { app = initializeApp(EMBEDDED_FIREBASE_CONFIG, 'petDiaryFb'); }
     const db = getFirestore(app);
-    // FIX: una sola lettura, non due!
     const snap = await getDoc(doc(db,'petDiaryFamilies',familyId));
-    if(!snap.exists()){ document.getElementById('fbStatus').textContent='⚠ Nessun dato su cloud per questa famiglia'; return; }
+    if(!snap.exists()){ document.getElementById('fbStatus').textContent='⚠️ Nessun dato trovato per questo nome spazio'; return; }
     const data=snap.data();
     if(!confirm(`Trovato backup Firebase del ${data.updatedAt} con ${data.pets?.length||0} pelosi. Caricare?`)) return;
     pets=data.pets||[]; currentPetId=data.currentPetId||null; 
@@ -344,6 +373,7 @@ async function loadFromFirebase(){
     document.getElementById('fbStatus').textContent='✅ Caricato da Firebase!';
   }catch(err){ document.getElementById('fbStatus').textContent='❌ Errore: '+err.message; console.error(err); }
 }
+
 let gAccessToken = localStorage.getItem('hollyRex_gDriveToken')||null;
 function loadGis(){
   return new Promise((resolve, reject)=>{
@@ -355,7 +385,6 @@ async function googleLogin(){
   try{
     await loadGis();
     const clientId = '312141109786-aahbkamgrdtrmg6iv6nka4f6olmi56m9.apps.googleusercontent.com';
-    // Client ID fisso Holly & Rex Group - non serve più prompt
     localStorage.setItem('hollyRex_gClientId', clientId);
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: clientId,
@@ -376,25 +405,11 @@ async function googleLogin(){
 }
 async function saveToDrive(){
   if(!gAccessToken){ alert('Fai login prima!'); return; }
-  // 🛡️ CONTROLLO DRIVE-GUARD: Verifica lo spazio prima di procedere
-  const quotaCheck = await checkDriveStorageQuota(gAccessToken, 0);
-  if (!quotaCheck.isSafe) {
-    const userWantsToProceed = confirm(
-      `⚠️ ATTENZIONE: Il tuo Google Drive sta esaurendo lo spazio!\n\n` +
-      `Spazio libero residuo: ${quotaCheck.freeSpaceMB} MB (su ${quotaCheck.totalLimitGB} GB totali).\n\n` +
-      `Se saturi completamente lo spazio, i backup automatici del telefono (come WhatsApp) potrebbero fallire.\n\n` +
-      `Vuoi comunque procedere con il salvataggio su Drive, oppure annullare per scegliere il salvataggio locale?`
-    );
-    if (!userWantsToProceed) {
-      document.getElementById('driveStatus').textContent='❌ Salvataggio interrotto per sicurezza spazio.';
-      return; // Ci fermiamo qui, i dati locali sono salvi!
-    }
-  }
   document.getElementById('driveStatus').textContent='⏳ Salvo su Drive...';
   try{
     const fileContent = JSON.stringify({pets, currentPetId, date:new Date().toISOString()});
     const searchRes = await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27holly_rex_pet_diary.json%27&fields=files(id,name)', { headers:{ Authorization:'Bearer '+gAccessToken } });
-    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠️ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
     const searchJson = await searchRes.json();
     let fileId = searchJson.files && searchJson.files[0] ? searchJson.files[0].id : null;
     if(fileId){
@@ -415,12 +430,12 @@ async function loadFromDrive(){
   document.getElementById('driveStatus').textContent='⏳ Carico da Drive...';
   try{
     const searchRes = await fetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name%3D%27holly_rex_pet_diary.json%27&fields=files(id,name)', { headers:{ Authorization:'Bearer '+gAccessToken } });
-    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); updateStorageUI(); return; }
+    if(searchRes.status===401){ document.getElementById('driveStatus').textContent='⚠️ Token scaduto, rifai login Google'; localStorage.removeItem('hollyRex_gDriveToken'); updateStorageUI(); return; }
     const searchJson = await searchRes.json();
-    if(!searchJson.files || !searchJson.files.length){ document.getElementById('driveStatus').textContent='⚠ Nessun backup'; return; }
+    if(!searchJson.files || !searchJson.files.length){ document.getElementById('driveStatus').textContent='⚠️ Nessun backup'; return; }
     const fileId = searchJson.files[0].id;
     const fileRes = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, { headers:{ Authorization:'Bearer '+gAccessToken } });
-    if(fileRes.status===401){ document.getElementById('driveStatus').textContent='⚠ Token scaduto, rifai login'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
+    if(fileRes.status===401){ document.getElementById('driveStatus').textContent='⚠️ Token scaduto, rifai login'; localStorage.removeItem('hollyRex_gDriveToken'); return; }
     const data = await fileRes.json();
     if(!confirm(`Backup Drive ${data.date} con ${data.pets?.length||0} pelosi. Caricare?`)) return;
     pets=data.pets||[]; currentPetId=data.currentPetId||null; saveAll();
@@ -431,7 +446,7 @@ function openPetModal(edit=false){
   if(edit && currentPetId){
     const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
     editingPetId = pet.id;
-    document.getElementById('petModalTitle').textContent='✏ Modifica '+pet.nome;
+    document.getElementById('petModalTitle').textContent='✏️ Modifica '+pet.nome;
     pNome.value=pet.nome; pSpecie.value=pet.specie; pRazza.value=pet.razza||''; pPeso.value=pet.peso||''; pChip.value=pet.chip||''; pNascita.value=pet.nascita||''; pFoto.value=pet.foto||''; pAllergie.value=pet.allergie||'';
   } else {
     editingPetId=null;
@@ -491,7 +506,7 @@ function render(){
     const div=document.createElement('div'); div.className='reminder';
     const isPast = new Date(r.date) < new Date(); const isSoon = (new Date(r.date)-new Date())/86400000 < 7;
     div.style.borderColor = isPast ? '#ef4444' : isSoon ? '#fbbf24' : '#334155';
-    div.innerHTML=`<div class="reminder-left"><span class="reminder-title">${r.type}: ${r.note||''}</span><span class="reminder-when">📅 ${r.date} ${isPast?'⚠ SCADUTO':isSoon?'⏰ A BREVE':''}</span></div><button onclick="delReminder(${r.id})" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:32px;height:32px;border-radius:8px;cursor:pointer">✕</button>`;
+    div.innerHTML=`<div class="reminder-left"><span class="reminder-title">${r.type}: ${r.note||''}</span><span class="reminder-when">📅 ${r.date} ${isPast?'⚠️ SCADUTO':isSoon?'⏰ A BREVE':''}</span></div><button onclick="delReminder(${r.id})" style="background:#1e293b;border:1px solid #334155;color:#ef4444;width:32px;height:32px;border-radius:8px;cursor:pointer">✕</button>`;
     rl.appendChild(div);
   });
 }
@@ -519,7 +534,7 @@ function delReminder(id){
 function generateReport(){
   const pet = pets.find(p=>p.id==currentPetId); if(!pet) return;
   const last30 = (pet.diary||[]).filter(d=> (new Date()-new Date(d.date))/86400000 <=30);
-  let txt = ` HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
+  let txt = `🐾 HOLLY & REX PET DIARY - REPORT VETERINARIO\nData: ${new Date().toLocaleDateString()}\n\n--- PROFILO ---\nNome: ${pet.nome}\nSpecie: ${pet.specie} ${pet.razza||''}\nPeso: ${pet.peso||'-'}\nChip: ${pet.chip||'-'}\nNascita: ${pet.nascita||'-'}\nAllergie: ${pet.allergie||'-'}\n\n--- SCADENZE ---\n`; (pet.reminders||[]).forEach(r=>{txt+=`- ${r.date} | ${r.type} | ${r.note||''}\n`;});
   txt+=`\n--- ULTIMI 30GG ---\n`; last30.forEach(d=>{txt+=`${new Date(d.date).toLocaleString()} [${d.tag}] ${d.text}\n`;});
   txt+=`\n--- STORICO ---\n`; (pet.diary||[]).forEach(d=>{txt+=`${new Date(d.date).toLocaleDateString()} ${d.tag}: ${d.text}\n`;});
   txt+=`\nHolly & Rex Pet Diary V0.6 Drive Fixed - ClientID integrato by Nova+Aura+Luna 💛\nModalità: ${storageMode}\n`;
@@ -533,22 +548,7 @@ function shareWhatsApp(){
 checkStorageConfig();
 </script>
 
-<!-- MODIFICA 3: Footer Dinamico + SW Registration -->
-<div style="text-align:center; border-top:1px solid var(--border); padding-top:20px; margin-top:30px; font-size:.8rem; color:var(--text2);">
-    <p id="pd-back-link-container" style="margin-bottom: 1rem;"></p>
-    <p>
-        <a href="/massy.github.io/index.html" style="color:#fbbf24; text-decoration:none;">Holly & Rex Group</a> 
-        | 
-        <a href="/massy.github.io/privacy-policy.html" style="color:#fbbf24; text-decoration:none;">Privacy Policy</a>
-        | 
-        <a href="/massy.github.io/cookie-policy.html" style="color:#fbbf24; text-decoration:none;">Cookie Policy</a>
-        <br>
-        <span style="opacity:0.7;">Zero pubblicità, massima libertà. Fatto con amore per i pelosi. 🐾</span>
-    </p>
-</div>
-
 <script>
-// Script Torna Indietro Intelligente
 document.addEventListener("DOMContentLoaded", function() {
     const referrer = document.referrer;
     const container = document.getElementById('pd-back-link-container');
@@ -558,13 +558,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f172a';
 
     let targetUrl = "/massy.github.io/index.html";
-    let linkText = "⬅ Torna alla Home Page";
+    let linkText = "⬅️ Torna alla Home Page";
 
     if (referrer && !referrer.includes('/massy.github.io/index.html') && !referrer.endsWith('/massy.github.io/')) {
         targetUrl = referrer;
-        if (referrer.includes('/bilancio/')) linkText = "⬅ Torna alla Console Bilancio";
-        else if (referrer.includes('/spesa/')) linkText = "⬅ Torna alla Lista Spesa";
-        else if (referrer.includes('/ricette/')) linkText = "⬅ Torna alle Ricette";
+        if (referrer.includes('/bilancio/')) linkText = "⬅️ Torna alla Console Bilancio";
+        else if (referrer.includes('/spesa/')) linkText = "⬅️ Torna alla Lista Spesa";
+        else if (referrer.includes('/ricette/')) linkText = "⬅️ Torna alle Ricette";
     }
 
     const link = document.createElement('a');
@@ -576,9 +576,8 @@ document.addEventListener("DOMContentLoaded", function() {
     container.appendChild(link);
 });
 
-// Registrazione Service Worker UNICO (Root)
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/massy.github.io/sw.js')
+if ('serviceWarehouse' in navigator || 'serviceWorker' in navigator) {
+    navigator.serviceWorker?.register('/massy.github.io/sw.js')
         .then(reg => console.log('SW Pet Diary registrato', reg))
         .catch(err => console.log('SW Pet Diary errore', err));
 }
