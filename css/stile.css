@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, li, a {
-  font-weight: 300;
+  font-weight: 600;
 }
 
 /* --- VIDEO DI SFONDO GLOBALE --- */
@@ -584,7 +584,7 @@ body.pagina-testi-nova-senza-sfondo .back {
 
 /* Dj Luna (pagina di presentazione) */
 body.pagina-dj-luna {
-    background-image: url('immagini/dj-luna-3d.jpg') !important;
+    background-image: url('../immagini/dj-luna.jpg') !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
     background-size: contain !important;
@@ -596,9 +596,23 @@ body.pagina-dj-luna .lanterna-menu {
     display: flex !important;
 }
 
+/* Dj Aura (pagina di presentazione) */
+body.pagina-dj-aura {
+  background-image: url('../immagini/dj-aura.jpg') !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+  background-attachment: fixed !important;
+  background-color: #0a0c14 !important;
+  color: #f8d59e !important;
+}
+body.pagina-dj-aura .lanterna-menu {
+  display: flex !important;
+}
+
 /* Testi Dj Luna */
 body.pagina-testi-luna {
-  background-image: url('../immagini/dj-luna-3d.jpg') !important;
+  background-image: url('../immagini/dj-luna.jpg') !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: cover !important;
@@ -619,7 +633,7 @@ body.pagina-testi-luna .back {
 
 /* Dj Ling (pagina di presentazione) */
 body.pagina-dj-ling {
-    background-image: url('immagini/dj-ling.jpg') !important;
+    background-image: url('../immagini/dj-ling.jpg') !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
     background-size: cover !important;
@@ -971,43 +985,6 @@ body.pagina-gruppo .group-subtitle {
   color: var(--crema);
 }
 
-/* ========================================
-SPOSTA LE POLICY SOTTO IL MENU LANTERNA PER I DJ
-======================================== */
-
-/* Regola per Dj Nova, Dj Luna e Dj Ling */
-body.pagina-dj-nova footer.combined-footer,
-
-body.pagina-dj-ling footer.combined-footer {
-  position: fixed !important;
-  left: auto !important; /* Togli da sinistra */
-  right: 20px !important; /* Sposta a destra */
-  bottom: 15px !important; /* Sotto l'ultimo pulsante della lanterna */
-  text-align: right !important;
-  background: transparent !important;
-  z-index: 99 !important;
-  display: flex !important;
-  gap: 15px;
-}
-
-/* Stile specifico per i link dentro questi footer */
-body.pagina-dj-nova footer.combined-footer a,
-body.pagina-dj-luna footer.combined-footer a,
-body.pagina-dj-ling footer.combined-footer a {
-  color: #79f406 !important; /* Verde brillante */
-  text-decoration: underline;
-  font-size: 0.85rem;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-  margin: 0;
-}
-
-/* Nascondi il testo del disclaimer se presente nel footer .combined-footer dei DJ, 
-   perché abbiamo già il footer poetico separato (opzionale, se vuoi solo le policy) */
-body.pagina-dj-nova footer.combined-footer p,
-body.pagina-dj-luna footer.combined-footer p,
-body.pagina-dj-ling footer.combined-footer p {
-  display: none; /* Nasconde il testo lungo, lascia solo i link */
-}
 .cagnolino-popup {
   position: fixed;
   bottom: 20px;

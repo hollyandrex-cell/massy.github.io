@@ -68,11 +68,13 @@
     margin: 8px 0;
     display: block;
   }
+  
   body.no-scroll { overflow: hidden; }
 
   /* === HERO SECTIONS DJ (comune a tutte e tre) === */
   .dj-nova-hero,
   .luna-hero,
+  .aura-hero,
   .ling-hero {
     background-size: cover !important;
     background-position: center center !important;
@@ -84,6 +86,7 @@
   /* === CONTENUTO DJ === */
   .dj-nova-content,
   .luna-content,
+  .aura-content,
   .ling-content {
     margin-top: 60px !important;
     padding: 15px !important;
@@ -92,6 +95,7 @@
 
   .dj-nova-content h1,
   .luna-content h1,
+  .aura-content h1,
   .ling-content h1 {
     font-size: 2.5rem !important;
     line-height: 1.2;
@@ -100,6 +104,7 @@
 
   .dj-nova-content .subtitle,
   .luna-content .subtitle,
+  .aura-content .subtitle,
   .ling-content .subtitle {
     font-size: 1.2rem !important;
     margin-bottom: 20px;
@@ -107,68 +112,23 @@
 
   /* Box di testo principale */
   .dj-nova-story,
+  .dj-aura-story,
   .dj-nova-truth,
   .luna-story,
   .ling-story,
   .ling-truth {
     padding: 25px 20px !important;
-    font-size: 1rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.7;
-    margin: 15px 0;
+    margin: 35px 0;
     width: 100% !important;
     box-sizing: border-box;
   }
 
-  /* === FOOTER POETICO (specifico dei DJ) === */
-  footer.dj-poetic-footer {
-    position: fixed !important;
-    bottom: 60px !important; /* Sopra il footer policy */
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 90% !important;
-    max-width: none !important;
-    font-size: 0.9rem !important;
-    padding: 10px 15px !important;
-    text-align: center;
-    z-index: 50;
-  }
-
-  footer.dj-poetic-footer p {
-    margin: 0;
-    line-height: 1.4;
-  }
-
-  /* === FOOTER POLICY (comune) === */
-  footer.combined-footer {
-    position: fixed !important;
-    bottom: 10px !important;
-    left: 10px !important;
-    right: 10px !important;
-    background: rgba(10, 12, 20, 0.9) !important;
-    padding: 10px !important;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    display: flex !important;
-    flex-direction: row !important; /* Stessa riga */
-    justify-content: center !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-    gap: 5px 15px !important;
-    z-index: 100 !important;
-    backdrop-filter: blur(5px);
-  }
-
-  footer.combined-footer a {
-    display: inline-block !important;
-    color: #aef604 !important;
-    text-decoration: none;
-    white-space: nowrap !important;
-    font-size: 0.75rem;
-  }
-
-  /* === BODY PADDING per evitare che il footer copra === */
+    /* === BODY PADDING per evitare che il footer copra === */
   body.pagina-dj-nova,
   body.pagina-dj-luna,
+  body.pagina-dj-aura,
   body.pagina-dj-ling {
     padding-bottom: 120px !important;
     overflow-x: hidden;
