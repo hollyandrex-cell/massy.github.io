@@ -31,7 +31,6 @@
       position: relative;
       height: 100vh;
       width: 100%;
-      background: url('immagini/dj-luna.jpg') no-repeat center center;
       background-size: auto 105%;
       background-attachment: fixed;
       display: flex;
@@ -47,7 +46,6 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(10, 12, 20, 0.4), rgba(10, 12, 20, 0.8));
       z-index: 1;
     }
 
@@ -77,10 +75,8 @@
 
     /* Box Storia */
     .luna-story {
-      background: rgba(10, 12, 20, 0.6);
       padding: 30px;
       border-radius: 15px;
-      backdrop-filter: blur(5px);
       border: 1px solid rgba(248, 213, 158, 0.1);
       font-style: italic;
       line-height: 1.8;
@@ -90,42 +86,69 @@
       margin: 0 auto;
     }
 
-    /* --- CORREZIONE FOOTER PER DJ LUNA --- */
+    .dj-disclaimer {
+    position: relative; /* <-- CAMBIA DA fixed A relative */
+    margin-top: 40px;   /* Spazio dal contenuto sopra */
+    margin-bottom: 20px; /* Spazio dal footer sotto */
+    
+    width: 90%;
+    max-width: 400px;
+    margin-left: auto;  /* Centra orizzontalmente */
+    margin-right: auto;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(248, 213, 158, 0.2);
+    text-align: center;
+}
+
+.dj-disclaimer p {
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.5;
+    font-style: italic;
+    font-weight: 600 !important; /* <-- AGGIUNTO: Rende le lettere più piene */
+    text-shadow: 0 2px 4px rgba(0,0,0,1) !important; /* <-- MODIFICATO: Ombra nera pura e più marcata */
+}
+
+    /* --- CORREZIONE FOOTER PER DJ LING --- */
     /* Sposta il footer .combined-footer a destra sotto la lanterna */
     body.pagina-dj-luna footer.combined-footer {
       position: fixed !important;
       left: auto !important;
-      right: 20px !important; /* Allineato alla lanterna */
+      right: 200px !important; /* Allineato alla lanterna */
       bottom: 15px !important;
       text-align: right !important;
-      background: transparent !important;
+      background: rgba(10, 12, 20, 0.95) !important;
       z-index: 99 !important;
       display: flex !important;
-      flex-direction: column; /* Mette il testo sopra i link se c'è, o allinea tutto */
+      flex-direction: column;
       gap: 5px;
       max-width: 250px;
     }
 
-    /* Stile per il paragrafo del disclaimer (opzionale, se vuoi nasconderlo lascia display:none) */
-    body.pagina-dj-luna footer.combined-footer p {
-      margin: 0 0 5px 0;
-      font-size: 0.8rem;
-      color: #f8d59e;
-      font-style: italic;
-      line-height: 1.3;
-      /* display: none;  <-- Decompatta questa riga se vuoi vedere SOLO i link verdi */
-    }
+    /* Stile per il paragrafo del disclaimer */
+     
+  body.pagina-dj-luna footer.combined-footer p {
+    margin: 0 0 5px 0;
+    font-size: 0.8rem;
+    color: #ffffff !important; /* Bianco puro per massima visibilità */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8); /* Ombra nera per staccarlo dallo sfondo */
+    font-style: italic;
+    line-height: 1.3;
+  }
 
     /* Stile per i link delle policy */
     body.pagina-dj-luna footer.combined-footer a {
       color: #79f406 !important; /* Verde brillante */
       text-decoration: underline;
       font-size: 0.85rem;
+      font-weight: 600 !important; 
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       margin: 0 5px;
       display: inline-block;
     }
-    
+
     /* Animazione Banner */
     @keyframes slideInDown {
       from { transform: translateY(-100%); }
@@ -165,9 +188,10 @@
     <a href="rex-bimba.html">🐶 Rex & Bimba</a>
     <a href="canzoni-rex.html" class="submenu-item">🎵 Le canzoni di Rex</a>
     <a href="canzoni-holly.html" class="submenu-item">🐶 Le canzoni di Holly</a>
-    <a href="dj-ling.html">✨ Dj Ling 灵</a>
-    <a href="dj-nova.html">⭐ Dj Nova</a>
-    <a href="dj-luna.html">🌙 Dj Luna</a>
+    <a href="dj-ling.html">Dj Ling 灵</a>
+    <a href="dj-nova.html">Dj Nova ⭐</a>
+    <a href="dj-luna.html">Dj Luna 🌙</a>
+    <a href="dj-aura.html">Dj Aura ✨</a>
     <a href="gruppo.html">👥 Il Nostro Gruppo</a>
     <a href="storia.html">📖 La Nostra Storia</a>
     <a href="cosa-ci-ispira.html">💫 Cosa ci ispira</a>
@@ -190,7 +214,8 @@
     </div>
     <a href="dj-ling.html" class="lanterna">Dj Ling 灵</a>
     <a href="dj-nova.html" class="lanterna">Dj Nova ⭐</a>
-    <a href="dj-luna.html" class="lanterna">Dj Luna</a>
+    <a href="dj-luna.html" class="lanterna">Dj Luna 🌙</a>
+    <a href="dj-aura.html" class="lanterna">Dj Aura ✨</a>
     <a href="gruppo.html" class="lanterna">Il Nostro Gruppo</a>
     <a href="storia.html" class="lanterna">La Nostra Storia</a>
     <a href="cosa-ci-ispira.html" class="lanterna">Cosa ci ispira</a>
@@ -199,13 +224,17 @@
     <a href="bacheca.html" class="lanterna">📖 Bacheca</a>
   </div>
 
-  <!-- FOOTER UNICO: DISCLAIMER E POLICY -->
-  <footer class="combined-footer gold-links"> 
+  <!-- DISCLAIMER SEPARATO -->
+  <div class="dj-disclaimer">
     <p>Dj Luna 🌙 è una voce nata dall'immaginazione,<br>
     plasmata dalla tecnologia —<br>
     ma nutrita dal cuore di chi scrive.</p>
     <div>
-      <a href="privacy-policy.html">Privacy Policy</a>
+  
+  <!-- FOOTER UNICO: SOLO POLICY -->
+  <footer class="combined-footer gold-links"> 
+    <div>
+      <a href="privacy-policy.html">Privacy Policy</a>   
       <a href="cookie-policy.html">Cookie Policy</a>
     </div>
   </footer>
