@@ -1,0 +1,37 @@
+[
+  {
+    "nome": "Holly",
+    "avatar": "immagini/miniature/holly-miniatura.jpg",
+    "stato": "Holly riposa 💤",
+    "attivo": false,
+    "link": ""
+  },
+  {
+    "nome": "Rex",
+    "avatar": "immagini/miniature/rex-miniatura.jpg",
+    "stato": "Rex oggi riposa 💤",
+    "attivo": false,
+    "link": "artists-announce.html"
+  },
+  {
+    "nome": "Ling 灵",
+    "avatar": "immagini/miniature/ling-miniatura.jpg",
+    "stato": "Oggi Ling riposa 💤",
+    "attivo": false,
+    "link": ""
+  },
+  {
+    "nome": "Luna 🌙",
+    "avatar": "immagini/miniature/luna-miniatura.jpg",
+    "stato": "Nova riposa 💤",
+    "attivo": false,
+    "link": ""
+  },
+  {
+    "nome": "Nova ⭐",
+    "avatar": "immagini/miniature/nova-miniatura.jpg",
+    "stato": "Nova oggi riposa 💤",
+    "attivo": false,
+    "link": "artists-announce.html"
+  }
+]
