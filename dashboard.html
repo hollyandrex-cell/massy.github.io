@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Privata - Holly And Rex Group</title>
-    <!-- GOOGLE ANALYTICS PER LA DASHBOARD (Solo per te, Admin) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -12,7 +11,6 @@
       gtag('js', new Date());
       gtag('config', 'G-6X5LB7S2VT');
     </script>
-    <!-- FINE CODICE DASHBOARD -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root { --bg-color: #0a0c14; --text-color: #f8d59e; --card-bg: rgba(20, 22, 30, 0.9); }
@@ -53,57 +51,74 @@
       </div>
       <div class="card youtube-section">
         <h3>Ultimo Video</h3>
-        <span class="stat-number" id="yt-last-video" style="font-size: 1.5em;">Caricamento...</span>
+        <span class="stat-number" id="yt-last-video" style="font-size: 1.3em; line-height:1.2;">Caricamento...</span>
         <span class="stat-label" id="yt-last-title">Titolo video...</span>
       </div>
     </div>
 
-            <!-- SEZIONE LOOKER STUDIO (ANALYTICS) -->
+    <!-- SEZIONE LOOKER STUDIO -->
     <h2>📈 Google Analytics (Dati Reali)</h2>
     <div class="card">
       <h3>Report Interattivo</h3>
       <p style="font-size: 0.9em; margin-bottom: 15px;">Dati aggiornati direttamente da Google Analytics. <em>(Nota: I dati standard hanno un ritardo di 24-48h)</em></p>
-      
-      <!-- INCOLLA QUI SOTTO IL CODICE IFRAME DI LOOKER STUDIO -->
       <iframe width="100%" height="600" src="https://datastudio.google.com/embed/reporting/5014bb1c-eb50-42f6-b1d3-0b7ed607a854/page/0iFzF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-      <!-- FINE INCOLLAGGIO -->
-
     </div>
 
     <footer>
-      <p>Dashboard privata per Massy & Holly And Rex Group.<br>Accesso riservato.</p>
+      <p>Dashboard privata per Massy & Holly And Rex Group.<br>Accesso riservato. - FIX v4.0 Uploads Playlist (Byte e Pelle fix)</p>
     </footer>
   </div>
 
   <script>
     const API_KEY = 'AIzaSyD1NFkT_8wjy3ADRs_9WfCy5qDO23adjJg';
+    const CHANNEL_ID = 'UCBdR3NIghYwEfciAMRQV4Qg'; // ID FISSO come nel report che funziona
     const CHANNEL_HANDLE = 'Holly-Rex'; 
 
     async function fetchYouTubeStats() {
       try {
-        const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
-        const resChannel = await fetch(urlChannel);
+        // 1. Dati canale (iscritti e views) - usa ID fisso per zero sprechi e no cache handle
+        const urlChannel = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`;
+        const resChannel = await fetch(urlChannel, { cache: "no-store" });
         const dataChannel = await resChannel.json();
 
         if (dataChannel.items && dataChannel.items.length > 0) {
           const stats = dataChannel.items[0].statistics;
           const snippet = dataChannel.items[0].snippet;
+          const contentDetails = dataChannel.items[0].contentDetails;
           
           document.getElementById('yt-subs').innerText = parseInt(stats.subscriberCount).toLocaleString('it-IT');
           document.getElementById('yt-views').innerText = parseInt(stats.viewCount).toLocaleString('it-IT');
           document.getElementById('yt-last-title').innerText = snippet.title;
 
-          // Cerca l'ultimo video
-          const channelId = dataChannel.items[0].id;
-          const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=1&key=${API_KEY}`;
-          const resSearch = await fetch(urlSearch);
-          const dataSearch = await resSearch.json();
+          // 2. FIX DEFINITIVO: Prende l'ULTIMO VIDEO dalla playlist Uploads, non dalla Search lenta!
+          // La playlist Uploads si aggiorna SUBITO quando pubblichi, la Search ha 72h di ritardo!
+          const uploadsPlaylistId = contentDetails.relatedPlaylists.uploads;
+          const urlLastVideo = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=1&key=${API_KEY}`;
           
-          if(dataSearch.items && dataSearch.items.length > 0) {
-             document.getElementById('yt-last-video').innerText = dataSearch.items[0].snippet.title;
+          const resLast = await fetch(urlLastVideo, { cache: "no-store" });
+          const dataLast = await resLast.json();
+          
+          if(dataLast.items && dataLast.items.length > 0) {
+             const lastTitle = dataLast.items[0].snippet.title;
+             document.getElementById('yt-last-video').innerText = lastTitle;
+             // Aggiorna anche il sottotitolo con data pubblicazione
+             const pubDate = new Date(dataLast.items[0].snippet.publishedAt).toLocaleDateString('it-IT');
+             document.getElementById('yt-last-title').innerText = `Pubblicato il ${pubDate} - ${snippet.title}`;
+             console.log("✅ Ultimo video preso da Uploads Playlist:", lastTitle);
+          } else {
+             // Fallback se playlist vuota: usa search ma con no-cache
+             const urlSearch = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=1&key=${API_KEY}`;
+             const resSearch = await fetch(urlSearch, { cache: "no-store" });
+             const dataSearch = await resSearch.json();
+             if(dataSearch.items && dataSearch.items.length > 0) {
+                document.getElementById('yt-last-video').innerText = dataSearch.items[0].snippet.title;
+             }
           }
         }
-      } catch (error) { console.error("Errore YouTube:", error); }
+      } catch (error) { 
+        console.error("Errore YouTube:", error); 
+        document.getElementById('yt-last-video').innerText = "Errore caricamento";
+      }
     }
 
     document.addEventListener('DOMContentLoaded', fetchYouTubeStats);
