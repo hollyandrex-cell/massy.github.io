@@ -609,16 +609,17 @@ body.pagina-dj-aura .lanterna-menu {
   display: flex !important;
 }
 
-/* Testi Dj Luna */
+/* Testi Dj Luna - VERSIONE CORRETTA PER NON TAGLIARE I CANI */
 body.pagina-testi-luna {
-  background-image: url('../immagini/dj-luna.jpg') !important;
+  background-image: url('../immagini/dj-luna.jpg') !important; /* Assicurati che il nome sia esatto! */
   background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: cover !important;
+  background-position: center top !important; /* Centra in alto per non tagliare le teste */
+  background-size: contain !important; /* <--- LA MAGIA: Mostra TUTTA l'immagine */
   background-attachment: fixed !important;
   background-color: #0a0c14 !important;
   color: #f8d59e !important; 
 }
+
 body.pagina-testi-luna .dedica {
     font-size: 1.61rem;
     margin-top: -15px;
