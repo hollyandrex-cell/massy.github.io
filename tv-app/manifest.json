@@ -2,20 +2,20 @@
   "name": "Holly & Rex TV",
   "short_name": "H&R TV",
   "description": "Holly and Rex Group - 49 brani Atmosfera TV",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/massy.github.io/tv-app/",
+  "scope": "/massy.github.io/tv-app/",
   "display": "standalone",
   "background_color": "#08080A",
   "theme_color": "#FF6B8A",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/massy.github.io/tv-app/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/massy.github.io/tv-app/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
