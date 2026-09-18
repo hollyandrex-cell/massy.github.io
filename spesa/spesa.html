@@ -50,9 +50,9 @@
 <h4 style="color:#fbbf24;font-size:.9rem;margin-bottom:8px">☁ Scegli dove fare il backup</h4>
 <p style="font-size:.75rem;color:#94a3b8;margin-bottom:8px"><b>Firebase</b> (nostro) è già attivo per sincronizzazione dispositivi e storico prezzi. Il <b>backup extra</b> è una copia di sicurezza in più, scegli tu dove!</p>
 <div style="display:flex;flex-direction:column;gap:8px">
-<button class="btn-save" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="doBackupDevice()">📱💻 Scarica su questo dispositivo (cell/PC) - JSON</button>
-<button class="btn-save" style="background:linear-gradient(135deg,#4285F4,#2a64d0);color:#fff" onclick="doBackupDrive()">💾 Google Drive - file privato tuo (appDataFolder)</button>
-<button class="btn-save" style="background:#1e293b;border:1px solid #334155" onclick="document.getElementById('backupChoiceBox').style.display='none'">Annulla</button>
+<button class="btn-save" style="background:linear-gradient(135deg,#22c55e,#16a34a)" id="btnDoBackupDevice">📱💻 Scarica su questo dispositivo (cell/PC) - JSON</button>
+<button class="btn-save" style="background:linear-gradient(135deg,#4285F4,#2a64d0);color:#fff" id="btnDoBackupDrive">💾 Google Drive - file privato tuo (appDataFolder)</button>
+<button class="btn-save" style="background:#1e293b;border:1px solid #334155" id="btnCancelBackupChoice">Annulla</button>
 </div>
 <div id="driveBackupStatus" style="font-size:.75rem;color:#86efac;margin-top:8px"></div>
 </div>
@@ -386,11 +386,33 @@ document.getElementById('note').addEventListener('change',save);
 document.getElementById('btnWA').onclick=()=>{if(items.length===0)return alert('Lista vuota!');let txt="*Lista Spesa Holly & Rex* 🛒\n";items.forEach(it=>{txt+=`• ${it.categoria||it.nome}${it.sottocategoria?' - '+it.sottocategoria:''} (${it.qta})\n`;});const tot=calcTotale();if(tot>0) txt+=`\n💰 Totale: ${tot.toFixed(2)}€\n`;window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");};
 function getBackupData(){return {items,note:document.getElementById('note').value,prezziDB,date:new Date().toISOString(),version:"v6.1.3-backup-choice"};}
 function doBackupDevice(){
-  const data=getBackupData();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);
-  document.getElementById('backupChoiceBox').style.display='none';
-  setStatus('💾 Backup scaricato su dispositivo!');
+  try{
+    const data=getBackupData();
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`Lista_Spesa_${new Date().toISOString().slice(0,10)}.json`;
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+    const box=document.getElementById('backupChoiceBox');
+    if(box) box.style.display='none';
+    setStatus('💾 Backup scaricato su dispositivo!');
+  }catch(e){
+    console.error(e);
+    alert('Errore backup: '+e.message);
+    setStatus('❌ Errore backup: '+e.message);
+  }
 }
 document.getElementById('btnSave').onclick=()=>doBackupDevice();
+
+// FIX TESORO - pulsanti backup non funzionavano per onclick inline bloccato
+document.getElementById('btnDoBackupDevice')?.addEventListener('click', ()=>{ doBackupDevice(); });
+document.getElementById('btnDoBackupDrive')?.addEventListener('click', ()=>{ doBackupDrive(); });
+document.getElementById('btnCancelBackupChoice')?.addEventListener('click', ()=>{ const b=document.getElementById('backupChoiceBox'); if(b) b.style.display='none'; });
+
 document.getElementById('btnBackupChoice').onclick=()=>{const box=document.getElementById('backupChoiceBox');box.style.display=box.style.display==='none'?'block':'none';};
 let gSpesaToken = localStorage.getItem('hollyRex_spesa_gDriveToken')||null;
 async function loadGisSpesa(){
