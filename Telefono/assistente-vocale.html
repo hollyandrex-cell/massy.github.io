@@ -29,6 +29,26 @@ button:active{transform:translateY(0)}
 .voice-preview button{flex:1;padding:.6rem;font-size:.85rem}
 .small{font-size:.78rem;color:var(--text2);margin-top:6px}
 </style>
+<!-- Firebase SDK di base -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+
+  // La tua configurazione esatta
+  const firebaseConfig = {
+    apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
+    authDomain: "holly-rex-spesa.firebaseapp.com",
+    projectId: "holly-rex-spesa",
+    storageBucket: "holly-rex-spesa.firebasestorage.app",
+    messagingSenderId: "450072023944",
+    appId: "1:450072023944:web:888af5555a5b50c599203d"
+  };
+
+  // Inizializzazione
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+  console.log("Firebase collegato con successo all'assistente!", app.name);
+</script>
 </head>
 <body>
 <div class="container">

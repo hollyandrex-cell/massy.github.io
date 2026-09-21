@@ -33,3 +33,30 @@ self.addEventListener('fetch', (e) => {
     }))
   );
 });
+// Gestione delle notifiche Push in arrivo da Firebase
+self.addEventListener('push', (event) => {
+  if (!event.data) return;
+  
+  const dati = event.data.json();
+  const titolo = dati.notification?.title || 'Holly & Rex - Assistente';
+  const messaggio = dati.notification?.body || 'Nuovo messaggio in arrivo';
+
+  const opzioni = {
+    body: messaggio,
+    icon: './bau-192x192.png',
+    badge: './bau-32.png',
+    vibrate: [200, 100, 200]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(titolo, opzioni)
+  );
+});
+
+// Gestione del click sulla notifica per riaprire l'assistente
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow('./assistente-vocale.html')
+  );
+});
