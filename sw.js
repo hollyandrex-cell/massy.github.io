@@ -11,7 +11,8 @@ const urlsToCache = [
   '/massy.github.io/spesa/spesa.html',
   '/massy.github.io/ricette/index.html',
   '/massy.github.io/bilancio/bilancio.html',
-  '/massy.github.io/pet_diary/index.html'
+  '/massy.github.io/pet_diary/index.html',
+  '/massy.github.io/tv-app/index.html'
 ];
 
 self.addEventListener('install', event => {
