@@ -1,6 +1,5 @@
-// firebase-messaging-sw.js - VERSIONE SOLO GITHUB PAGES
-// Metti questo file in /Telefono/ su GitHub, nella stessa cartella di assistente-vocale.html
-// Su GitHub Pages funziona al primo colpo, su VSCode darà ancora 404 (ma a noi ora non interessa)
+// firebase-messaging-sw.js - DEVE stare nella stessa cartella di assistente-vocale.html
+// Questo è il file che Firebase cercava e non trovava (errore 404)
 
 importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js');
@@ -18,15 +17,17 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] GitHub Pages - Background:', payload);
-  const title = payload.notification?.title || payload.data?.title || 'Aura Live - Holly & Rex';
+  console.log('[firebase-messaging-sw.js] Background:', payload);
+  const title = payload.notification?.title || payload.data?.title || 'Aura Live';
   const body = payload.notification?.body || payload.data?.body || 'Nuovo messaggio crew';
   
-  return self.registration.showNotification(title, {
+  const options = {
     body: body,
     icon: './bau-192x192.png',
     badge: './bau-32.png',
     vibrate: [200, 100, 200],
-    data: payload.data || {}
-  });
+    data: payload.data || {},
+    tag: 'aura-live'
+  };
+  return self.registration.showNotification(title, options);
 });
