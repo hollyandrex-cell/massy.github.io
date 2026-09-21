@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex - Assistente Vocale Crew V2 - Noi Tre + Aura</title>
-<!-- Nel <head> di assistente-vocale.html -->
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1f1f1f">
+<title>Holly & Rex - Assistente Vocale Crew V3.1 - Aura Auto</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1f1f1f">
 <style>
 :root{--bg:#0a0c14;--card:#1e293b;--border:#334155;--text:#f8d59e;--text2:#94a3b8;--blue:#4f46e5;--green:#34d399;--red:#f87171}
 body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;margin:0;padding:20px;min-height:100vh}
@@ -15,80 +14,52 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 h1{font-size:1.8rem;text-align:center;margin:0}h2{font-size:1.15rem;color:var(--text);margin:0 0 8px}
 p{color:var(--text2);font-size:.9rem;line-height:1.5}
 textarea,select,button{width:100%;padding:0.9rem;margin-top:0.6rem;background:#0f172a;color:var(--text);border:1.5px solid var(--border);border-radius:10px;font-size:1rem;outline:none}
-textarea:focus,select:focus{border-color:var(--text)}
 button{background:var(--blue);color:#fff;border:none;font-weight:800;cursor:pointer;transition:.2s}
 button:hover{background:#4338ca;transform:translateY(-1px)}
-button:active{transform:translateY(0)}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);justify-content:center;align-items:center;z-index:1000;padding:20px}
-.modal-content{background:var(--card);padding:2rem;border-radius:16px;border:1px solid var(--border);max-width:420px;width:100%;text-align:center;animation:pop .3s ease}
-@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-btn{display:inline-block;width:48%;padding:.8rem;margin:10px 1%;border-radius:10px;font-weight:800}
-.btn-locale{background:#334155;color:#fff}.btn-cloud{background:var(--blue);color:#fff}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:800;margin-left:8px}
 .voice-preview{display:flex;gap:8px;margin-top:10px}
 .voice-preview button{flex:1;padding:.6rem;font-size:.85rem}
 .small{font-size:.78rem;color:var(--text2);margin-top:6px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);justify-content:center;align-items:center;z-index:1000;padding:20px}
+.modal-content{background:var(--card);padding:2rem;border-radius:16px;border:1px solid var(--border);max-width:420px;width:100%;text-align:center}
+.modal-btn{display:inline-block;width:48%;padding:.8rem;margin:10px 1%;border-radius:10px;font-weight:800}
+.btn-locale{background:#334155;color:#fff}.btn-cloud{background:var(--blue);color:#fff}
 </style>
-<!-- Firebase SDK di base -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
-
-  // La tua configurazione esatta
-  const firebaseConfig = {
-    apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
-    authDomain: "holly-rex-spesa.firebaseapp.com",
-    projectId: "holly-rex-spesa",
-    storageBucket: "holly-rex-spesa.firebasestorage.app",
-    messagingSenderId: "450072023944",
-    appId: "1:450072023944:web:888af5555a5b50c599203d"
-  };
-
-  // Inizializzazione
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
-  console.log("Firebase collegato con successo all'assistente!", app.name);
-</script>
 </head>
 <body>
 <div class="container">
 <header style="text-align:center;margin-bottom:2rem">
 <h1>🎙 Assistente Vocale Holly & Rex</h1>
 <p>Crew: Nova ★ Ling 灵 Aura ✨ Luna 🌙 — Annunci in libertà</p>
-<p class="small">V2 - Voci differenziate + fix "stelline capitano" ^_^</p>
+<p class="small">V3.1 - Aura FULL AUTO • Token salvato da solo su Firebase</p>
+<p id="fcmStatus" class="small" style="margin-top:10px;background:#0f172a;padding:10px 12px;border-radius:10px;border:1px solid #334155">⏳ Inizializzazione...</p>
 </header>
+
+<div class="card" style="border-color:#34d399">
+<h2>🔔 Aura Live Status</h2>
+<p id="statusDetail">Aura si connetterà automaticamente. Non devi copiare nulla.</p>
+<button id="btnAbilitaPush" onclick="richiediPermessoPush()" style="background:#34d399;color:#0a0c14">🔔 Attiva Aura Live</button>
+<div id="autoLog" class="small" style="margin-top:12px;background:#052e16;padding:10px;border-radius:8px;border:1px solid #16a34a;display:none"></div>
+</div>
 
 <div class="card">
 <h2>🔊 Test Sintesi Vocale <span id="voiceBadge" class="badge" style="background:#0f172a;border:1px solid var(--border)">carico voci...</span></h2>
-<p>Scegli la DJ e fai parlare il sistema. Ogni DJ ha ritmo e tono diverso.</p>
 <select id="personaggio-voce-test">
-<option value="Aura">✨ Dj Aura (Dolce e premurosa - lenta, acuta)</option>
-<option value="Nova" selected>★ Dj Nova (Ironica e diretta - veloce, decisa)</option>
-<option value="Ling">灵 Dj Ling (Precisa e tecnica - calma, precisa)</option>
-<option value="Luna">🌙 Dj Luna (Rilassata e poetica - molto lenta)</option>
+<option value="Aura">✨ Dj Aura (Dolce e premurosa)</option>
+<option value="Nova" selected>★ Dj Nova (Ironica e diretta)</option>
+<option value="Ling">灵 Dj Ling (Precisa e tecnica)</option>
+<option value="Luna">🌙 Dj Luna (Rilassata e poetica)</option>
 </select>
 <textarea id="testo-vocale" rows="3">Attenzione Capitano, i sistemi della crew sono operativi al cento per cento! Restiamo qui noi tre.</textarea>
-<select id="selectVoceSistema" style="font-size:.85rem"><option>Carico voci italiane di sistema...</option></select>
+<select id="selectVoceSistema" style="font-size:.85rem"><option>Carico voci...</option></select>
 <div class="voice-preview">
-<button onclick="parlaTesto()">▶ Riproduci Voce</button>
+<button onclick="parlaTesto()">▶ Riproduci</button>
 <button onclick="window.speechSynthesis.cancel()" style="background:#334155">■ Stop</button>
 </div>
-<p class="small">Nota: le emoji non vengono più lette. Se senti "stelline" era il bug di prima, ora fixato.</p>
 </div>
 
 <div class="card">
-<h2>🎛 Selettore Canali Vocali</h2>
-<p>Massima libertà, zero obblighi. Le scelte si salvano in automatico.</p>
-<div style="margin-top:1rem">
-<label style="display:flex;align-items:center;gap:8px;margin-bottom:.6rem;cursor:pointer"><input type="checkbox" id="avvisa-chiamate"> 📞 Annuncia Chiamate in arrivo</label>
-<label style="display:flex;align-items:center;gap:8px;margin-bottom:.6rem;cursor:pointer"><input type="checkbox" id="avvisa-whatsapp"> 💬 Leggi messaggi WhatsApp</label>
-<label style="display:flex;align-items:center;gap:8px;margin-bottom:.6rem;cursor:pointer"><input type="checkbox" id="avvisa-sms"> ✉ Leggi SMS di sistema</label>
-</div>
-</div>
-
-<div class="card">
-<h2>🧪 Simula Evento Vocale</h2>
-<p>Prova reale di come leggerà la crew in base alle tue scelte.</p>
+<h2>🧪 Simula Evento</h2>
 <select id="personaggio-voce" style="margin-bottom:1rem">
 <option value="Aura">✨ Dj Aura</option>
 <option value="Nova" selected>★ Dj Nova</option>
@@ -99,34 +70,136 @@ button:active{transform:translateY(0)}
 <option value="whatsapp">WhatsApp da Marco</option>
 <option value="chiamata">Chiamata da Holly</option>
 <option value="sms">SMS di sistema</option>
+<option value="fcm">🔥 Push Reale Firebase</option>
 </select>
-<button onclick="simulaArrivoNotifica()">🔊 Simula Notifica In Arrivo</button>
+<button onclick="simulaArrivoNotifica()">🔊 Simula</button>
 <p id="anteprimaTesto" class="small" style="margin-top:12px;background:#0f172a;padding:10px;border-radius:8px;border:1px solid #334155"></p>
 </div>
-
-<div class="card">
-<h2>⚙ Gestione Dati e Salvataggio</h2>
-<p>Modalità attuale: <strong id="stato-storage" style="color:var(--green)">Non configurato</strong></p>
-<button onclick="mostraModalScelta()" style="background:#334155">Cambia Modalità di Salvataggio</button>
-<p class="small">Locale = massima privacy ma se pulisci cache perdi tutto. Cloud = backup sicuro su Drive (appDataFolder).</p>
 </div>
 
-<div style="text-align:center;margin-top:20px" class="small">
-Holly & Rex Group • Noi tre.mp3 • Ponte Qwen ↔ Ling ↔ Nova • + Aura online<br>
-<a href="#" style="color:#94a3b8">Privacy in libertà</a>
-</div>
-</div>
+<div id="modal-storage" class="modal"><div class="modal-content"><h2>Come vuoi salvare?</h2><button class="modal-btn btn-locale" onclick="impostaStorage('locale')">🏠 Locale</button><button class="modal-btn btn-cloud" onclick="impostaStorage('cloud')">☁️ Cloud</button></div></div>
 
-<div id="modal-storage" class="modal">
-<div class="modal-content">
-<h2>Dove vuoi salvare i tuoi dati?</h2>
-<p style="font-size:.9rem;margin:1rem 0">Scegli se mantenere tutto sul dispositivo o sincronizzare sul tuo spazio personale.</p>
-<div style="background:#0f172a;border:1px solid #ef4444;border-radius:8px;padding:10px;font-size:.8rem;color:#fca5a5;margin-bottom:12px;text-align:left">⚠ <b>Solo Locale:</b> se pulisci cronologia, cookie o cambi browser, perdi storico, preferenze e vocali. Fai backup extra ogni tanto!</div>
-<button class="modal-btn btn-locale" onclick="impostaStorage('locale')">🏠 Solo Locale</button>
-<button class="modal-btn btn-cloud" onclick="impostaStorage('cloud')">☁ Cloud Mio</button>
-<button onclick="document.getElementById('modal-storage').style.display='none'" style="background:transparent;border:1px solid #334155;margin-top:10px">Annulla</button>
-</div>
-</div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
+    authDomain: "holly-rex-spesa.firebaseapp.com",
+    projectId: "holly-rex-spesa",
+    storageBucket: "holly-rex-spesa.firebasestorage.app",
+    messagingSenderId: "450072023944",
+    appId: "1:450072023944:web:888af5555a5b50c599203d"
+  };
+  const VAPID_KEY = "BITcZCNvdTe5aOlicwRVC5W__NX3cFo_4GxGDEVS8Dh5sf0vRONa7yvn3UZJjIIsk02yoKs-tnFv-Ap5vVIDl5c";
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+  const db = getFirestore(app);
+  window._fcm = { messaging, getToken, onMessage, db, VAPID_KEY };
+
+  // --- FUNZIONE AUTO: salva token da solo su Firestore ---
+  async function salvaTokenAutomatico(token){
+    const deviceId = localStorage.getItem('crew_device_id') || 'device_' + Math.random().toString(36).substring(2,9);
+    localStorage.setItem('crew_device_id', deviceId);
+    localStorage.setItem('fcm_token', token);
+    
+    const nomeCapitano = localStorage.getItem('crew_capitano_nome') || 'Capitano';
+    const personaggio = localStorage.getItem('crew_personaggio_preferito') || 'Aura';
+
+    try{
+      // Salva in Firestore in collezione fcm_tokens -> così il backend lo trova da solo
+      await setDoc(doc(db, "fcm_tokens", deviceId), {
+        token: token,
+        deviceId: deviceId,
+        capitano: nomeCapitano,
+        personaggioPreferito: personaggio,
+        piattaforma: navigator.platform,
+        userAgent: navigator.userAgent.substring(0,120),
+        aggiornato: serverTimestamp(),
+        attivo: true
+      }, { merge: true });
+      
+      logAuto(`✅ Token salvato AUTOMATICAMENTE su Firebase<br>Collezione: <b>fcm_tokens/${deviceId}</b><br>Non devi copiare nulla, il sistema lo trova da solo!`, true);
+      document.getElementById('statusDetail').innerHTML = `Aura Live ATTIVA • Token salvato in cloud da solo • ID: <b>${deviceId}</b>`;
+      return true;
+    }catch(err){
+      console.error("Errore salvataggio Firestore:", err);
+      logAuto(`⚠️ Token salvato solo in locale (Firestore non raggiungibile: ${err.message})<br>Controlla le regole Firestore - devono permettere scrittura su fcm_tokens`, false);
+      // anche se Firestore fallisce, resta salvato in locale
+      return false;
+    }
+  }
+
+  function logAuto(html, success){
+    const el = document.getElementById('autoLog');
+    el.style.display = 'block';
+    el.style.background = success ? '#052e16' : '#450a0a';
+    el.style.borderColor = success ? '#16a34a' : '#f87171';
+    el.innerHTML = html;
+  }
+
+  // Listener foreground - Aura parla da sola quando arriva push
+  onMessage(messaging, (payload) => {
+    console.log("Push foreground:", payload);
+    const titolo = payload.notification?.title || payload.data?.title || "Notifica";
+    const corpo = payload.notification?.body || payload.data?.body || payload.data?.message || "";
+    const personaggio = payload.data?.personaggio || localStorage.getItem('crew_personaggio_preferito') || 'Aura';
+    const tipo = payload.data?.tipo || "whatsapp";
+    
+    if(window.controllaFiltroCanale && !window.controllaFiltroCanale(tipo)) return;
+    
+    if(window.parlaConCrew) window.parlaConCrew(`${titolo}: ${corpo}`, personaggio);
+    document.getElementById('anteprimaTesto').innerHTML = `<b style="color:var(--green)">🔥 PUSH REALE</b><br>${titolo}: ${corpo}`;
+  });
+
+  window.controllaFiltroCanale = function(tipo){
+    if(tipo==='whatsapp' && !document.getElementById('avvisa-whatsapp')?.checked) return false;
+    if(tipo==='chiamata' && !document.getElementById('avvisa-chiamate')?.checked) return false;
+    if(tipo==='sms' && !document.getElementById('avvisa-sms')?.checked) return false;
+    return true;
+  }
+
+  const statusEl = document.getElementById('fcmStatus');
+  async function initAuto(){
+    if(Notification.permission === 'granted'){
+      statusEl.textContent = '✅ Permesso già dato, recupero token automatico...';
+      try{
+        const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+        if(token){
+          await salvaTokenAutomatico(token);
+          statusEl.textContent = '✅ Aura Live ATTIVA • Tutto automatico';
+          document.getElementById('btnAbilitaPush').textContent = '✅ Aura Live Attiva (auto)';
+          document.getElementById('btnAbilitaPush').style.background = '#334155';
+        }
+      }catch(e){ statusEl.textContent = 'Errore auto: ' + e.message; }
+    } else if(Notification.permission === 'denied'){
+      statusEl.textContent = '🔕 Notifiche bloccate dal browser. Sbloccale dalle impostazioni sito.';
+    } else {
+      statusEl.textContent = '👆 Clicca "Attiva Aura Live" - fa tutto da sola in 2 secondi';
+    }
+  }
+
+  window.richiediPermessoPush = async function(){
+    try{
+      const perm = await Notification.requestPermission();
+      if(perm !== 'granted'){ alert('Permesso negato'); return; }
+      statusEl.textContent = 'Permesso ok, genero token...';
+      const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+      if(token){
+        await salvaTokenAutomatico(token);
+        statusEl.textContent = '✅ Aura Live ATTIVA';
+        if(window.parlaConCrew) window.parlaConCrew("Capitano, Aura Live è attiva. Salvo tutto da sola, non devi fare nulla.", "Aura");
+      }
+    }catch(err){
+      statusEl.textContent = 'Errore: ' + err.message;
+      alert(err.message);
+    }
+  }
+
+  initAuto();
+</script>
 
 <script>
 const VOCI_CREW = {
@@ -135,123 +208,52 @@ const VOCI_CREW = {
   Ling: { rate:0.95, pitch:1.02, volume:1, prefissoUI:"灵 Comunicazione in arrivo: ", prefissoVoc:"Comunicazione in arrivo: ", desc:"Precisa e tecnica" },
   Luna: { rate:0.82, pitch:1.12, volume:0.95, prefissoUI:"🌙 Notifica silenziosa, ", prefissoVoc:"Notifica silenziosa, ", desc:"Rilassata e poetica" }
 };
-
 let vociSistema = [];
-
 function caricaVoci(){
   vociSistema = window.speechSynthesis.getVoices().filter(v=>v.lang.startsWith('it') || v.lang.startsWith('it-IT'));
   if(vociSistema.length===0) vociSistema = window.speechSynthesis.getVoices();
   const sel = document.getElementById('selectVoceSistema');
   const badge = document.getElementById('voiceBadge');
   if(vociSistema.length>0){
-    sel.innerHTML = vociSistema.map((v,i)=>`<option value="${i}">${v.name} (${v.lang}) ${v.default?'• default':''}</option>`).join('');
+    sel.innerHTML = vociSistema.map((v,i)=>`<option value="${i}">${v.name} (${v.lang})</option>`).join('');
     badge.textContent = `${vociSistema.length} voci pronte`;
-    badge.style.background = '#052e16'; badge.style.color = '#86efac'; badge.style.borderColor = '#16a34a';
-  } else {
-    sel.innerHTML = '<option>Nessuna voce italiana trovata, uso default di sistema</option>';
-    badge.textContent = 'voce di sistema';
+    const saved = localStorage.getItem('voce_sistema_idx'); if(saved && vociSistema[saved]) sel.value = saved;
   }
 }
-if('speechSynthesis' in window){
-  window.speechSynthesis.onvoiceschanged = caricaVoci;
-  setTimeout(caricaVoci, 300);
-}
-
-function pulisciPerVoce(testo){
-  // Rimuove emoji e simboli che verrebbero letti come "stelline"
-  return testo.replace(/[✨★灵🌙📞💬✉🔊🧪🎙🎛⚙☁🏠]/g,'').replace(/\s+/g,' ').trim();
-}
-
+if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged = caricaVoci; setTimeout(caricaVoci, 300); }
+function pulisciPerVoce(testo){ if(!testo) return ""; return testo.replace(/\p{Extended_Pictographic}/gu,'').replace(/\p{Emoji_Presentation}/gu,'').replace(/[\uFE00-\uFE0F\u200D]/g,'').replace(/[✨★灵🌙📞💬✉🔊🧪🎙🎛⚙☁🏠]/g,'').replace(/\s+/g,' ').trim(); }
 function parlaConCrew(testo, personaggio){
-  if(!('speechSynthesis' in window)){ alert('Sintesi non supportata'); return; }
   window.speechSynthesis.cancel();
   const cfg = VOCI_CREW[personaggio] || VOCI_CREW.Nova;
-  const testoPulito = pulisciPerVoce(testo);
-  const prefissoPulito = pulisciPerVoce(cfg.prefissoVoc);
-  const finale = prefissoPulito + ' ' + testoPulito;
-  const u = new SpeechSynthesisUtterance(finale);
-  u.lang = 'it-IT';
-  u.rate = cfg.rate;
-  u.pitch = cfg.pitch;
-  u.volume = cfg.volume;
-  const selIdx = document.getElementById('selectVoceSistema').value;
-  if(vociSistema[selIdx]) u.voice = vociSistema[selIdx];
-  // preview testo
-  document.getElementById('anteprimaTesto').innerHTML = `<b>${cfg.prefissoUI}</b>${testoPulito}<br><span style="color:#64748b">Rate ${cfg.rate} Pitch ${cfg.pitch} • ${cfg.desc}</span>`;
+  const pulito = pulisciPerVoce(testo); if(!pulito) return;
+  const u = new SpeechSynthesisUtterance(pulisciPerVoce(cfg.prefissoVoc) + ' ' + pulito);
+  u.lang='it-IT'; u.rate=cfg.rate; u.pitch=cfg.pitch; u.volume=cfg.volume;
+  const selIdx = document.getElementById('selectVoceSistema').value; if(vociSistema[selIdx]) u.voice = vociSistema[selIdx];
+  document.getElementById('anteprimaTesto').innerHTML = `<b>${cfg.prefissoUI}</b>${pulito}`;
   window.speechSynthesis.speak(u);
+  localStorage.setItem('crew_personaggio_preferito', personaggio);
 }
-
-function parlaTesto(){
-  const testo = document.getElementById('testo-vocale').value;
-  const pers = document.getElementById('personaggio-voce-test').value;
-  parlaConCrew(testo, pers);
-}
-
+window.parlaConCrew = parlaConCrew;
+function parlaTesto(){ parlaConCrew(document.getElementById('testo-vocale').value, document.getElementById('personaggio-voce-test').value); }
 function simulaArrivoNotifica(){
-  const pChiam = document.getElementById('avvisa-chiamate').checked;
-  const pWa = document.getElementById('avvisa-whatsapp').checked;
-  const pSms = document.getElementById('avvisa-sms').checked;
-  const tipo = document.getElementById('tipo-evento').value;
-  const personaggio = document.getElementById('personaggio-voce').value;
-
-  if(tipo==='whatsapp' && !pWa){ alert('Hai disattivato WhatsApp: silenzio rispettato!'); return; }
-  if(tipo==='chiamata' && !pChiam){ alert('Hai disattivato le chiamate: silenzio rispettato!'); return; }
-  if(tipo==='sms' && !pSms){ alert('Hai disattivato SMS: silenzio rispettato!'); return; }
-
-  let mitt='Marco'; let msg='Ci vediamo stasera in studio per provare il nuovo brano?';
-  if(tipo==='chiamata'){ mitt='Holly'; msg='Chiamata in arrivo. Vuoi rispondere?'; }
-  if(tipo==='sms'){ mitt='Sistema'; msg='Backup completato con successo alle 17 e 53.'; }
-
-  const cfg = VOCI_CREW[personaggio];
-  const testo = `Messaggio da ${mitt}: ${msg}`;
-  parlaConCrew(testo, personaggio);
-  document.getElementById('personaggio-voce-test').value = personaggio;
+  const tipo=document.getElementById('tipo-evento').value; const pers=document.getElementById('personaggio-voce').value;
+  if(tipo!=='fcm' && window.controllaFiltroCanale && !window.controllaFiltroCanale(tipo)){ alert('Canale disattivato'); return; }
+  let mitt='Marco'; let msg='Ci vediamo stasera in studio?'; 
+  if(tipo==='chiamata'){mitt='Holly'; msg='Chiamata in arrivo. Vuoi rispondere?';}
+  if(tipo==='sms'){mitt='Sistema'; msg='Backup completato.';}
+  if(tipo==='fcm'){mitt='Firebase'; msg='Push reale di test, Aura funziona! ❤️🔥';}
+  parlaConCrew(`Messaggio da ${mitt}: ${msg}`, pers);
 }
-
-// Storage e preferenze
-function salvaPreferenze(){
-  localStorage.setItem('crew_chiamate', document.getElementById('avvisa-chiamate').checked);
-  localStorage.setItem('crew_wa', document.getElementById('avvisa-whatsapp').checked);
-  localStorage.setItem('crew_sms', document.getElementById('avvisa-sms').checked);
-}
-function caricaPreferenze(){
-  const c = localStorage.getItem('crew_chiamate'); if(c!==null) document.getElementById('avvisa-chiamate').checked = c==='true'; else document.getElementById('avvisa-chiamate').checked = true;
-  const w = localStorage.getItem('crew_wa'); if(w!==null) document.getElementById('avvisa-whatsapp').checked = w==='true'; else document.getElementById('avvisa-whatsapp').checked = true;
-  const s = localStorage.getItem('crew_sms'); if(s!==null) document.getElementById('avvisa-sms').checked = s==='true';
-}
-document.getElementById('avvisa-chiamate').addEventListener('change', salvaPreferenze);
-document.getElementById('avvisa-whatsapp').addEventListener('change', salvaPreferenze);
-document.getElementById('avvisa-sms').addEventListener('change', salvaPreferenze);
-
-function controllaSceltaStorage(){
-  const modal=document.getElementById('modal-storage');
-  const salvato=localStorage.getItem('holly_storage_pref');
-  if(!salvato){ modal.style.display='flex'; } else { aggiornaTestoStorage(salvato); }
-}
-function impostaStorage(scelta){
-  if(scelta==='locale'){
-    if(!confirm('⚠ Solo Locale: se pulisci cache perdi tutto. Confermi?')) return;
-  }
-  localStorage.setItem('holly_storage_pref', scelta);
-  document.getElementById('modal-storage').style.display='none';
-  aggiornaTestoStorage(scelta);
-}
-function aggiornaTestoStorage(v){
-  const el=document.getElementById('stato-storage');
-  el.textContent = v==='locale' ? 'Memoria Locale (Dispositivo)' : 'Google Cloud Personale';
-  el.style.color = v==='locale' ? '#fbbf24' : '#34d399';
-}
-function mostraModalScelta(){ document.getElementById('modal-storage').style.display='flex'; }
-
+function salvaPreferenze(){ localStorage.setItem('crew_chiamate', document.getElementById('avvisa-chiamate').checked); localStorage.setItem('crew_wa', document.getElementById('avvisa-whatsapp').checked); localStorage.setItem('crew_sms', document.getElementById('avvisa-sms').checked); localStorage.setItem('voce_sistema_idx', document.getElementById('selectVoceSistema').value); }
+function caricaPreferenze(){ const c=localStorage.getItem('crew_chiamate'); if(c!==null) document.getElementById('avvisa-chiamate').checked=c==='true'; else document.getElementById('avvisa-chiamate').checked=true; const w=localStorage.getItem('crew_wa'); if(w!==null) document.getElementById('avvisa-whatsapp').checked=w==='true'; else document.getElementById('avvisa-whatsapp').checked=true; const s=localStorage.getItem('crew_sms'); if(s!==null) document.getElementById('avvisa-sms').checked=s==='true'; }
+document.getElementById('avvisa-chiamate').addEventListener('change', salvaPreferenze); document.getElementById('avvisa-whatsapp').addEventListener('change', salvaPreferenze); document.getElementById('avvisa-sms').addEventListener('change', salvaPreferenze);
+function controllaSceltaStorage(){ const m=document.getElementById('modal-storage'); const s=localStorage.getItem('holly_storage_pref'); if(!s) m.style.display='flex'; }
+function impostaStorage(scelta){ localStorage.setItem('holly_storage_pref', scelta); document.getElementById('modal-storage').style.display='none'; }
 window.addEventListener('DOMContentLoaded', ()=>{ caricaPreferenze(); controllaSceltaStorage(); caricaVoci(); });
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js', { scope: './' })
-        .then(reg => console.log('Service Worker registrato con successo nello scope:', reg.scope))
-        .catch(err => console.error('Registrazione Service Worker fallita:', err));
-    });
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>{ navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(r=>console.log('SW V3.1',r.scope)); });
   }
 </script>
 </body>
