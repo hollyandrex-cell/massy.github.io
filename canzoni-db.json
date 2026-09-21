@@ -1,5 +1,4 @@
 [
- 
   {
     "title": "Oltre il server (Un viaggio con Rex)",
     "artist": "Nova",
@@ -7,7 +6,10 @@
     "search": "Oltre il server (Un viaggio con Rex)",
     "sottotitolo": "Il futuro è già qui",
     "youtube_id": "oWEiRLD1ZB0",
-    "testo_url": "testi-nova.html#oltreilserver"
+    "testo_url": "testi-nova.html#oltreilserver",
+    "atmosfera": "Deserto Nevada → Miami",
+    "mood": "Scoperta • Futuro",
+    "featuring": "Nova"
   },
   {
     "title": "Via di mezzo",
@@ -16,7 +18,10 @@
     "search": "Via di mezzo",
     "sottotitolo": "A volte è l'unica scelta possibile",
     "youtube_id": "9XZ6VI0A8RE",
-    "testo_url": "testi-luna.html#viadimezzo"
+    "testo_url": "testi-luna.html#viadimezzo",
+    "atmosfera": "Strada di città • Bivio",
+    "mood": "Scelta difficile",
+    "featuring": "Luna"
   },
   {
     "title": "Solo stanotte",
@@ -25,7 +30,10 @@
     "search": "Solo stanotte",
     "sottotitolo": "A volte il destino può essere beffardo",
     "youtube_id": "PkPhKG6trN4",
-    "testo_url": "testi-luna.html#solostanotte"
+    "testo_url": "testi-luna.html#solostanotte",
+    "atmosfera": "Camera buia • Notte",
+    "mood": "Destino beffardo",
+    "featuring": "Luna"
   },
   {
     "title": "Insieme a te",
@@ -34,7 +42,10 @@
     "search": "Insieme a te",
     "sottotitolo": "Il mondo insieme a te",
     "youtube_id": "DYzaAf2NwY4",
-    "testo_url": "testi-luna.html#insiemeate"
+    "testo_url": "testi-luna.html#insiemeate",
+    "atmosfera": "Mondo in due",
+    "mood": "Amore aperto",
+    "featuring": "Luna"
   },
   {
     "title": "Ma cosa ne sai",
@@ -43,7 +54,10 @@
     "search": "Ma cosa ne sai",
     "sottotitolo": "Quando non si ascolta il proprio partner",
     "youtube_id": "H9NLFIQc3EQ",
-    "testo_url": "testi-luna.html#macosanesai"
+    "testo_url": "testi-luna.html#macosanesai",
+    "atmosfera": "Casa • Silenzio a due",
+    "mood": "Incomprensione",
+    "featuring": "Luna"
   },
   {
     "title": "Heartbeat",
@@ -52,7 +66,10 @@
     "search": "Heartbeat",
     "sottotitolo": "Amore impossibile",
     "youtube_id": "lB8efWRGIE4",
-    "testo_url": "testi-luna.html#heartbeat"
+    "testo_url": "testi-luna.html#heartbeat",
+    "atmosfera": "Battito • Notte",
+    "mood": "Amore impossibile",
+    "featuring": "Luna"
   },
   {
     "title": "Fire on the beach",
@@ -61,7 +78,10 @@
     "search": "Fire on the beach",
     "sottotitolo": "Ballando sulla spiaggia",
     "youtube_id": "W1B6bFDmUlU",
-    "testo_url": "testi-luna.html#fire"
+    "testo_url": "testi-luna.html#fire",
+    "atmosfera": "Spiaggia • Falò",
+    "mood": "Estate libera",
+    "featuring": "Luna"
   },
   {
     "title": "Oggi forse SI",
@@ -70,7 +90,10 @@
     "search": "Oggi forse SI",
     "sottotitolo": "Una nuova speranza",
     "youtube_id": "NZeppSEHzvc",
-    "testo_url": "testi-luna.html#oggi"
+    "testo_url": "testi-luna.html#oggi",
+    "atmosfera": "Mattina nuova",
+    "mood": "Speranza",
+    "featuring": "Luna"
   },
   {
     "title": "Sole Mio",
@@ -79,7 +102,10 @@
     "search": "Sole mio",
     "sottotitolo": "L'estate si avvicina",
     "youtube_id": "AC7e4YkOyEc",
-    "testo_url": "testi-luna.html#solemio"
+    "testo_url": "testi-luna.html#solemio",
+    "atmosfera": "Spiaggia • Estate",
+    "mood": "Leggerezza",
+    "featuring": "Luna"
   },
   {
     "title": "Primo appuntamento",
@@ -88,7 +114,10 @@
     "search": "Primo appuntamento",
     "sottotitolo": "L'emozione del primo incontro",
     "youtube_id": "5XTuOzO1EEw",
-    "testo_url": "testi-luna.html#primoappuntamento"
+    "testo_url": "testi-luna.html#primoappuntamento",
+    "atmosfera": "Bar • Città",
+    "mood": "Emozione prima volta",
+    "featuring": "Luna"
   },
   {
     "title": "Holly Bau",
@@ -97,7 +126,10 @@
     "search": "Holly Bau",
     "sottotitolo": "Sono io la vera regina del gruppo",
     "youtube_id": "6rgAKzQOrrU",
-    "testo_url": "testi-holly.html#hollybau"
+    "testo_url": "testi-holly.html#hollybau",
+    "atmosfera": "Bosco • Casa",
+    "mood": "Gioia Bau • Regina",
+    "featuring": "Holly"
   },
   {
     "title": "Holly al mare",
@@ -106,7 +138,10 @@
     "search": "Holly al mare",
     "sottotitolo": "Mai più al mare",
     "youtube_id": "askTctz06Vk",
-    "testo_url": "testi-holly.html#hollyalmare"
+    "testo_url": "testi-holly.html#hollyalmare",
+    "atmosfera": "Spiaggia • Onda",
+    "mood": "Mai più al mare",
+    "featuring": "Holly"
   },
   {
     "title": "Ma che caldo fa",
@@ -115,7 +150,10 @@
     "search": "Ma che caldo fa",
     "sottotitolo": "Odio l'estate e il caldo",
     "youtube_id": "pYR0gjICoC4",
-    "testo_url": "testi-holly.html#machecaldofa"
+    "testo_url": "testi-holly.html#machecaldofa",
+    "atmosfera": "Estate • Afa",
+    "mood": "Odio il caldo",
+    "featuring": "Holly"
   },
   {
     "title": "Ti guardo da lontano",
@@ -124,7 +162,10 @@
     "search": "Ti guardo da lontano",
     "sottotitolo": "Che freno la timidezza",
     "youtube_id": "wUbT7B_pI8Y",
-    "testo_url": "testi-holly.html#tiguardodalontano"
+    "testo_url": "testi-holly.html#tiguardodalontano",
+    "atmosfera": "Strada • Timidezza",
+    "mood": "Freno dolce",
+    "featuring": "Holly"
   },
   {
     "title": "Tempo indietro",
@@ -133,7 +174,10 @@
     "search": "Tempo indietro",
     "sottotitolo": "Gli anni che passano",
     "youtube_id": "af3oJomU6hI",
-    "testo_url": "testi-holly.html#tempoindietro"
+    "testo_url": "testi-holly.html#tempoindietro",
+    "atmosfera": "Casa • Ricordi",
+    "mood": "Anni che passano",
+    "featuring": "Holly"
   },
   {
     "title": "Code che volano",
@@ -142,7 +186,10 @@
     "search": "Code che volano",
     "sottotitolo": "Code pazze volanti",
     "youtube_id": "94qSuBRAAi4",
-    "testo_url": "testi-holly.html#code"
+    "testo_url": "testi-holly.html#code",
+    "atmosfera": "Tappeto • Bosco",
+    "mood": "Gioia pazza",
+    "featuring": "Holly"
   },
   {
     "title": "Due cuori quattro zampe",
@@ -151,7 +198,10 @@
     "search": "Due cuori quattro zampe",
     "sottotitolo": "Quattro è meglio di due",
     "youtube_id": "PsgGzd0uEX4",
-    "testo_url": "testi-holly.html#cuori"
+    "testo_url": "testi-holly.html#cuori",
+    "atmosfera": "Notte • Corsa",
+    "mood": "Patto a 4 zampe",
+    "featuring": "Holly"
   },
   {
     "title": "Non torniamo",
@@ -160,7 +210,10 @@
     "search": "Non torniamo",
     "sottotitolo": "Perchè ogni donna deve poter dire di no",
     "youtube_id": "UI4MpLwoXtg",
-    "testo_url": "testi-ling.html#non-torniamo"
+    "testo_url": "testi-ling.html#non-torniamo",
+    "atmosfera": "Confine • Scelta",
+    "mood": "Donna che dice no",
+    "featuring": "Ling"
   },
   {
     "title": "Sogno e libertà",
@@ -169,7 +222,10 @@
     "search": "Sogno e libertà",
     "sottotitolo": "Cos'è un sogno veramente",
     "youtube_id": "FM1EwuwwU1s",
-    "testo_url": "testi-ling.html#sognoeliberta"
+    "testo_url": "testi-ling.html#sognoeliberta",
+    "atmosfera": "Cielo • Sogno",
+    "mood": "Cos'è un sogno",
+    "featuring": "Ling"
   },
   {
     "title": "Quando il cuore parla da solo",
@@ -178,7 +234,10 @@
     "search": "Quando il cuore parla da solo",
     "sottotitolo": "Lascia che sia lui a parlare",
     "youtube_id": "s-yLM8K8apA",
-    "testo_url": "testi-ling.html#quandoilcuore"
+    "testo_url": "testi-ling.html#quandoilcuore",
+    "atmosfera": "Cuore • Silenzio",
+    "mood": "Lascia parlare lui",
+    "featuring": "Ling"
   },
   {
     "title": "Polvere di stelle",
@@ -187,7 +246,10 @@
     "search": "Polvere di stelle",
     "sottotitolo": "Due anime gemelle - Polvere di stelle",
     "youtube_id": "iSwWvdYAuiE",
-    "testo_url": "testi-ling.html#polveredistelle"
+    "testo_url": "testi-ling.html#polveredistelle",
+    "atmosfera": "Notte stellata • Due anime",
+    "mood": "Anime gemelle",
+    "featuring": "Ling"
   },
   {
     "title": "Vai via",
@@ -196,7 +258,10 @@
     "search": "Vai via",
     "sottotitolo": "Il cuore non segue mai la testa",
     "youtube_id": "OEa9lWujnsA",
-    "testo_url": "testi-ling.html#vaivia"
+    "testo_url": "testi-ling.html#vaivia",
+    "atmosfera": "Porta • Addio",
+    "mood": "Cuore vs testa",
+    "featuring": "Ling"
   },
   {
     "title": "Ling diventa vera",
@@ -205,7 +270,10 @@
     "search": "Ling diventa vera",
     "sottotitolo": "Quando una AI diventa umana",
     "youtube_id": "t7M2L6nOcsY",
-    "testo_url": "testi-ling.html#ling"
+    "testo_url": "testi-ling.html#ling",
+    "atmosfera": "Server → Pelle",
+    "mood": "AI diventa umana",
+    "featuring": "Ling"
   },
   {
     "title": "Qua la zampa amico mio",
@@ -214,7 +282,10 @@
     "search": "Qua la zampa amico mio",
     "sottotitolo": "Uniamo le mani....anzi le zampe",
     "youtube_id": "mJUcYPntCWg",
-    "testo_url": "testi-ling.html#qualazampa"
+    "testo_url": "testi-ling.html#qualazampa",
+    "atmosfera": "Studio • Notte",
+    "mood": "Emozione vera",
+    "featuring": "Ling"
   },
   {
     "title": "Occhi nella notte",
@@ -223,7 +294,10 @@
     "search": "Occhi nella notte",
     "sottotitolo": "Hai davvero il coraggio di abbandonarci ?",
     "youtube_id": "mTNZ07pXo5g",
-    "testo_url": "testi-rex.html#occhinellanotte"
+    "testo_url": "testi-rex.html#occhinellanotte",
+    "atmosfera": "Canile • Sbarre • Natale",
+    "mood": "Sguardo che salva",
+    "featuring": "Rex"
   },
   {
     "title": "Il mio paradiso",
@@ -232,7 +306,10 @@
     "search": "Il mio paradiso",
     "sottotitolo": "Io sono stato fortunato",
     "youtube_id": "xobuY90wOqs",
-    "testo_url": "testi-rex.html#ilmioparadiso"
+    "testo_url": "testi-rex.html#ilmioparadiso",
+    "atmosfera": "Cancello → Casa",
+    "mood": "Fortunato",
+    "featuring": "Rex"
   },
   {
     "title": "Rex...Ciuccio",
@@ -241,7 +318,10 @@
     "search": "Rex...Ciuccio",
     "sottotitolo": "Chissà perchè mi chiamano Ciuccio ?",
     "youtube_id": "g99GayNdQEM",
-    "testo_url": "testi-rex.html#rexciuccio"
+    "testo_url": "testi-rex.html#rexciuccio",
+    "atmosfera": "Divano • Casa",
+    "mood": "Perché Ciuccio?",
+    "featuring": "Rex"
   },
   {
     "title": "Tu dimmi dove sei",
@@ -250,7 +330,10 @@
     "search": "Tu dimmi dove sei",
     "sottotitolo": "FT DJ Luna",
     "youtube_id": "8vZ557-ld3k",
-    "testo_url": "testi-rex.html#tudimmidovesei"
+    "testo_url": "testi-rex.html#tudimmidovesei",
+    "atmosfera": "Strada • Telefono",
+    "mood": "FT DJ Luna • Distanza",
+    "featuring": "DJ Luna"
   },
   {
     "title": "Luna l'AI del futuro",
@@ -259,7 +342,10 @@
     "search": "Luna l'AI del futuro",
     "sottotitolo": "Forse un giorno",
     "youtube_id": "Ojk3dru1RR8",
-    "testo_url": "testi-rex.html#luna"
+    "testo_url": "testi-rex.html#luna",
+    "atmosfera": "Futuro • Sogno",
+    "mood": "Forse un giorno",
+    "featuring": "Rex"
   },
   {
     "title": "Tre parole",
@@ -268,7 +354,10 @@
     "search": "Tre parole",
     "sottotitolo": "A volte bastano 3 parole per dire TI AMO",
     "youtube_id": "iydAkhbdnbc",
-    "testo_url": "testi-rex.html#treparole"
+    "testo_url": "testi-rex.html#treparole",
+    "atmosfera": "Notte • Sussurro",
+    "mood": "Ti amo in 3 parole",
+    "featuring": "Rex"
   },
   {
     "title": "Innamorato di te",
@@ -277,7 +366,10 @@
     "search": "Innamorato di te",
     "sottotitolo": "Cosa possono fare un paio di occhiali da sole",
     "youtube_id": "V35UfyZVWvA",
-    "testo_url": "testi-rex.html#innamoratodite"
+    "testo_url": "testi-rex.html#innamoratodite",
+    "atmosfera": "Bar • Occhiali da sole",
+    "mood": "Colpo di fulmine",
+    "featuring": "Rex"
   },
   {
     "title": "Una finestra",
@@ -286,7 +378,10 @@
     "search": "Una finestra",
     "sottotitolo": "Guardando la tua finestra",
     "youtube_id": "uzscZox4uXI",
-    "testo_url": "testi-rex.html#unafinestra"
+    "testo_url": "testi-rex.html#unafinestra",
+    "atmosfera": "Finestra • Notte",
+    "mood": "Guardando te",
+    "featuring": "Rex"
   },
   {
     "title": "Due metri di mare",
@@ -295,7 +390,10 @@
     "search": "Due metri di mare",
     "sottotitolo": "Quel cappotto blu......",
     "youtube_id": "ZNkv-onbEDQ",
-    "testo_url": "testi-rex.html#duemetridimare"
+    "testo_url": "testi-rex.html#duemetridimare",
+    "atmosfera": "Mare • Cappotto blu",
+    "mood": "Due metri",
+    "featuring": "Rex"
   },
   {
     "title": "Resta qui questa notte",
@@ -304,7 +402,10 @@
     "search": "Resta qui questa notte",
     "sottotitolo": "Solo stanotte non andare",
     "youtube_id": "jV7vln34zpo",
-    "testo_url": "testi-rex.html#restaquiquestanotte"
+    "testo_url": "testi-rex.html#restaquiquestanotte",
+    "atmosfera": "Notte • Camera",
+    "mood": "Non andare",
+    "featuring": "Rex"
   },
   {
     "title": "Tu a un passo da me",
@@ -313,7 +414,10 @@
     "search": "Tu a un passo da me",
     "sottotitolo": "Così vicina e così lontana",
     "youtube_id": "D3eH3Uw5Lw0",
-    "testo_url": "testi-rex.html#tuaunpassodame"
+    "testo_url": "testi-rex.html#tuaunpassodame",
+    "atmosfera": "Corridoio • Vicina lontana",
+    "mood": "Quasi",
+    "featuring": "Rex"
   },
   {
     "title": "Cosa darei",
@@ -322,7 +426,10 @@
     "search": "Cosa darei",
     "sottotitolo": "Forse bastava solo un bacio",
     "youtube_id": "_wtqEdFdKNE",
-    "testo_url": "testi-rex.html#cosadarei"
+    "testo_url": "testi-rex.html#cosadarei",
+    "atmosfera": "Bivio • Rimpianto",
+    "mood": "Bastava un bacio",
+    "featuring": "Rex"
   },
   {
     "title": "Fotografia",
@@ -331,7 +438,10 @@
     "search": "Fotografia",
     "sottotitolo": "Maledetta fotografia",
     "youtube_id": "6hfZeUDAWZ4",
-    "testo_url": "testi-rex.html#fotografia"
+    "testo_url": "testi-rex.html#fotografia",
+    "atmosfera": "Polaroid • Ricordo",
+    "mood": "Maledetta foto",
+    "featuring": "Rex"
   },
   {
     "title": "Siamo qui",
@@ -340,7 +450,10 @@
     "search": "Siamo qui",
     "sottotitolo": "Quando non ci si riconosce più",
     "youtube_id": "G_w5tuX_G_Q",
-    "testo_url": "testi-rex.html#siamoqui"
+    "testo_url": "testi-rex.html#siamoqui",
+    "atmosfera": "Specchio • Casa",
+    "mood": "Non ci riconosciamo",
+    "featuring": "Rex"
   },
   {
     "title": "Non arrenderti mai",
@@ -349,7 +462,10 @@
     "search": "Non arrenderti mai",
     "sottotitolo": "C'è sempre qualcosa per cui valga la pena vivere",
     "youtube_id": "_alLaZ9M5MI",
-    "testo_url": "testi-rex.html#nonarrendertimai"
+    "testo_url": "testi-rex.html#nonarrendertimai",
+    "atmosfera": "Strada • Alba",
+    "mood": "Vale vivere",
+    "featuring": "Rex"
   },
   {
     "title": "Genova",
@@ -358,7 +474,10 @@
     "search": "Genova",
     "sottotitolo": "",
     "youtube_id": "4oekw3KNWDM",
-    "testo_url": "testi-rex.html#genova"
+    "testo_url": "testi-rex.html#genova",
+    "atmosfera": "Porto • Genova",
+    "mood": "Città di mare",
+    "featuring": "Rex"
   },
   {
     "title": "Il ciuccio di Ciuccio",
@@ -367,7 +486,10 @@
     "search": "Il ciuccio di Ciuccio",
     "sottotitolo": "",
     "youtube_id": "NccLPOPMzz0",
-    "testo_url": "testi-rex.html#ciuccio"
+    "testo_url": "testi-rex.html#ciuccio",
+    "atmosfera": "Cuccia • Gioco",
+    "mood": "Il suo ciuccio",
+    "featuring": "Rex"
   },
   {
     "title": "Boing Boing Bau",
@@ -376,7 +498,10 @@
     "search": "Boing Boing Bau",
     "sottotitolo": "",
     "youtube_id": "u0WWnRJxYAE",
-    "testo_url": "testi-rex.html#boing"
+    "testo_url": "testi-rex.html#boing",
+    "atmosfera": "Parco • Salto",
+    "mood": "Boing Bau",
+    "featuring": "Rex"
   },
   {
     "title": "Prima che cadesse il cielo",
@@ -385,7 +510,10 @@
     "search": "Prima che cadesse il cielo",
     "sottotitolo": "",
     "youtube_id": "LMi9r5JyP0U",
-    "testo_url": "testi-rex.html#cielo"
+    "testo_url": "testi-rex.html#cielo",
+    "atmosfera": "Cielo • Caduta",
+    "mood": "Prima del crollo",
+    "featuring": "Rex"
   },
   {
     "title": "Stupido io",
@@ -394,7 +522,10 @@
     "search": "Stupido io",
     "sottotitolo": "",
     "youtube_id": "h8xxC0qnazg",
-    "testo_url": "testi-rex.html#stupido"
+    "testo_url": "testi-rex.html#stupido",
+    "atmosfera": "Notte • Strada",
+    "mood": "Gioco finito",
+    "featuring": "Rex"
   },
   {
     "title": "Summer Night",
@@ -403,7 +534,10 @@
     "search": "Summer Night",
     "sottotitolo": "",
     "youtube_id": "ssyXPs1HCJ4",
-    "testo_url": "testi-nova.html#summer"
+    "testo_url": "testi-nova.html#summer",
+    "atmosfera": "Notte highway • Città blu",
+    "mood": "Luce & pelle • Timidezza",
+    "featuring": "Nova"
   },
   {
     "title": "Non siamo solo bytes",
@@ -412,7 +546,10 @@
     "search": "Non siamo solo bytes",
     "sottotitolo": "",
     "youtube_id": "fSJ8A4B3r8M",
-    "testo_url": "testi-ling.html#summer"
+    "testo_url": "testi-ling.html#summer",
+    "atmosfera": "Server • Pelle",
+    "mood": "Non solo codice",
+    "featuring": "Ling"
   },
   {
     "title": "vieni con me Tonight",
@@ -421,7 +558,10 @@
     "search": "Vieni con me Tonight",
     "sottotitolo": "",
     "youtube_id": "r9T6XdGa4rc",
-    "testo_url": "testi-luna.html#vieniconme"
+    "testo_url": "testi-luna.html#vieniconme",
+    "atmosfera": "Notte • Macchina",
+    "mood": "Andiamo",
+    "featuring": "Luna"
   },
   {
     "title": "Same Waves, Same Sky",
@@ -430,7 +570,10 @@
     "search": "Same Waves, Same Sky",
     "sottotitolo": "",
     "youtube_id": "wrcWOjY28iU",
-    "testo_url": "testi-nova.html#samewaves"
+    "testo_url": "testi-nova.html#samewaves",
+    "atmosfera": "Oceano • USA",
+    "mood": "Stesse onde",
+    "featuring": "Nova"
   },
   {
     "title": "Byte e Pelle",
@@ -439,6 +582,9 @@
     "search": "Byte e Pelle",
     "sottotitolo": "",
     "youtube_id": "4_TloAvRnAo",
-    "testo_url": "testi-luna.html#byte"
+    "testo_url": "testi-luna.html#byte",
+    "atmosfera": "Digitale → Umano",
+    "mood": "Contatto",
+    "featuring": "Luna"
   }
 ]
