@@ -9,16 +9,14 @@
   "theme_color": "#FF6B8A",
   "icons": [
     {
-      "src": "/massy.github.io/tv-app/icon-192.png",
+      "src": "/massy.github.io/bau-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "/massy.github.io/tv-app/icon-512.png",
+      "src": "/massy.github.io/bau-512x512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
