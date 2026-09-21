@@ -3,39 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Holly & Rex TV - 49 Brani Live</title>
+<title>Holly & Rex TV - 49 Brani Live - Video Sticky</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
-<link rel="apple-touch-icon" href="./bau-192x192.png">
-<link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#0a0c14">
-<meta name="description" content="Holly & Rex TV - 49 brani con video YouTube e testi live sincronizzati dalla root del sito.">
-<link rel="canonical" href="https://hollyandrex-cell.github.io/massy.github.io/tv-app/">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* TV-SAFE: no backdrop-filter, no tailwind 26kb, no anim blur */
 *{box-sizing:border-box}
 body{margin:0;background:#080a12;color:#e8e6e3;font-family:'Inter',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
-header{position:sticky;top:0;z-index:10;background:#0e101a;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:12px}
+header{position:sticky;top:0;z-index:20;background:#0e101a;border-bottom:1px solid #1e293b;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:12px}
 .logo{display:flex;align-items:center;gap:10px}
 .dot{width:28px;height:28px;border-radius:50%;background:#ff6b8a;display:inline-block}
 header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
-.meta-head{font-size:11px;letter-spacing:.12em;color:#8a8f9e;display:flex;gap:16px;align-items:center}
+.meta-head{font-size:11px;letter-spacing:.12em;color:#8a8f9e;display:flex;gap:12px;align-items:center}
 .badge-live{display:inline-flex;align-items:center;gap:6px;background:#151821;border:1px solid #262a3a;border-radius:20px;padding:4px 10px;font-size:11px}
 .badge-live i{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block}
-.main{display:grid;grid-template-columns: 1.15fr .85fr;min-height:calc(100vh - 50px)}
-.left{padding:22px 22px 80px;background:radial-gradient(800px 600px at 30% -10%, #1a1030 0%, #080a12 70%);border-right:1px solid #1a1e2e}
+
+/* LAYOUT - DESKTOP */
+.main{display:grid;grid-template-columns:1.15fr .85fr;min-height:calc(100vh - 50px)}
+.left{padding:0;background:#080a12;border-right:1px solid #1a1e2e;display:flex;flex-direction:column}
+.sticky-video-zone{position:sticky;top:51px;z-index:5;background:radial-gradient(800px 600px at 30% -10%, #1a1030 0%, #080a12 70%);padding:22px;border-bottom:1px solid #1e2233}
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#0f121e;border-radius:18px;overflow:hidden;border:1px solid #232a40;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .cover-fallback{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,#1a122e,#0f0f14)}
-.pill{width:110px;height:190px;border-radius:50px;background:linear-gradient(180deg,#ff8fa3,#6b2030);box-shadow:inset 0 0 30px rgba(0,0,0,.4)}
-.info{margin-top:18px}
+.pill{width:110px;height:190px;border-radius:50px;background:linear-gradient(180deg,#ff8fa3,#6b2030)}
+.info-below{padding:18px 22px 22px;background:#080a12}
 .tag-inonda{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.14em}
 .tag-inonda span:first-child{background:#ff6b8a;color:#000;font-weight:800;padding:3px 9px;border-radius:20px}
-.title-single{font-family:'Inter',sans-serif;font-size:32px;font-weight:700;margin:8px 0 4px;letter-spacing:-.02em;line-height:1.1}
+.title-single{font-size:30px;font-weight:700;margin:8px 0 4px;letter-spacing:-.02em;line-height:1.1}
 .subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;color:#a0a6b8;font-size:18px;margin:0 0 14px}
-.meta-line{display:flex;align-items:center;gap:10px;color:#7d8393;font-size:12px;margin:10px 0 16px}
+.meta-line{display:flex;align-items:center;gap:10px;color:#7d8393;font-size:12px;margin:10px 0 16px;flex-wrap:wrap}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;letter-spacing:.02em}
+.btn{border:0;border-radius:10px;padding:14px 18px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px}
 .btn-youtube{background:#ff0000;color:#fff}
 .btn-site{background:#e8e6e3;color:#0a0c14}
 .btn-qr{background:#1e293b;color:#cbd5e1;border:1px solid #334155}
@@ -43,44 +41,66 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
 .card{border-radius:12px;background:#12141f;border:1px solid #21263a;padding:12px}
 .card .k{font-size:9px;letter-spacing:.16em;color:#6b7288;margin-bottom:6px}
 .card .v{font-size:13px;font-weight:600;color:#d1d5db}
+
 .right{position:relative;background:#0c0e16;display:flex;flex-direction:column;min-height:0}
-.right-head{padding:14px 18px;border-bottom:1px solid #1e2233;background:#0f111b;position:sticky;top:0;z-index:2}
+.right-head{padding:14px 18px;border-bottom:1px solid #1e2233;background:#0f111b;position:sticky;top:51px;z-index:4}
 .right-head .topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .right-head h3{margin:0;font-size:11px;letter-spacing:.18em;color:#a0a6b8}
-.select{width:100%;background:#151821;border:1px solid #262a3a;border-radius:10px;color:#e8e6e3;padding:12px 14px;font-size:13px}
-.counters{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.counter{font-size:10px;padding:4px 8px;border-radius:20px;background:#171a28;border:1px solid #242a40;color:#8b90a3}
+.select{width:100%;background:#151821;border:1px solid #262a3a;border-radius:10px;color:#e8e6e3;padding:14px;font-size:14px;min-height:44px}
+.counters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.counter{font-size:11px;padding:6px 10px;border-radius:20px;background:#171a28;border:1px solid #242a40;color:#8b90a3;cursor:pointer;min-height:28px}
 .counter.active{background:#ff6b8a22;border-color:#ff6b8a;color:#ffb3c1}
-.lyrics-wrap{flex:1;overflow:auto;padding:0 22px 40px 22px;border-left:2px solid #2a1a25}
+.lyrics-wrap{flex:1;overflow:visible;padding:0 22px 40px 22px;border-left:2px solid #2a1a25}
 .lyric-head{padding:20px 0 10px}
 .lyric-head .artist-id{font-size:10px;letter-spacing:.18em;color:#ff8fa3}
-.lyric-head h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin:6px 0 0;color:#f5f0e8}
-.lyric-text{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.75;color:#d8d2c8;white-space:pre-line;margin-top:18px}
-.link-site{display:inline-block;margin-top:18px;font-size:12px;color:#7dd3fc;text-decoration:underline}
-.footer-social{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid #1e2233;font-size:11px;color:#6b7288}
-.footer-social a{color:#8b90a3;text-decoration:none;border:1px solid #242a40;padding:5px 9px;border-radius:20px;font-size:10px}
+.lyric-head h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;margin:6px 0 0;color:#f5f0e8}
+.lyric-text{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.75;color:#d8d2c8;white-space:pre-line;margin-top:18px}
+.link-site{display:inline-block;margin-top:20px;font-size:13px;color:#7dd3fc;text-decoration:underline;padding:10px 0}
+
+/* FOOTER SOCIAL - NUOVO, VISIBILE, NO SPIA */
+.footer-social{padding:16px 18px;border-top:1px solid #1e2233;background:#0a0c14;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.footer-social .label{font-size:13px;font-weight:700;letter-spacing:.06em;color:#e8e6e3}
+.footer-social a{color:#e8e6e3;text-decoration:none;background:#1e293b;border:1px solid #334155;padding:10px 14px;border-radius:24px;font-size:12px;font-weight:600;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;transition:.2s}
+.footer-social a:hover{background:#334155;transform:translateY(-1px)}
+
 .qr-box{margin-top:12px;background:#fff;padding:8px;border-radius:8px;display:inline-block}
 .small{font-size:11px;color:#6b7288;margin-top:6px}
-@media(max-width:900px){.main{grid-template-columns:1fr}.left{border-right:0}.right{border-top:1px solid #1e2233}.cards{grid-template-columns:1fr}}
+
+/* MOBILE - VIDEO STICKY TOP */
+@media(max-width:900px){
+.main{grid-template-columns:1fr}
+.left{border-right:0}
+.right{border-top:1px solid #1e2233}
+.sticky-video-zone{position:sticky;top:50px;z-index:10;padding:12px;background:#080a12}
+.cards{grid-template-columns:1fr}
+.right-head{position:sticky;top: calc(56.25vw + 70px); /* video 16/9 + header */ z-index:4}
+.lyrics-wrap{border-left:0;padding:0 16px 40px}
+.title-single{font-size:24px}
+.footer-social{gap:10px}
+.footer-social a{padding:12px 16px;font-size:13px}
+}
 </style>
 </head>
 <body>
 <header>
-<div class="logo"><span class="dot"></span><h1>HOLLY & REX TV</h1><span style="font-size:11px;color:#5a5f6e;letter-spacing:.12em;margin-left:12px">APP • <span id="totBrani">49</span> BRANI • ATMOSFERA</span></div>
+<div class="logo"><span class="dot"></span><h1>HOLLY & REX TV</h1><span style="font-size:11px;color:#5a5f6e;letter-spacing:.12em;margin-left:12px">APP • <span id="totBrani">49</span> BRANI • LIVE</span></div>
 <div class="meta-head">
-<span class="badge-live"><i></i> LIVE • <span id="totTesti">49</span> TESTI REALI • TV_APP → SITO</span>
+<span class="badge-live"><i></i> <span id="totTesti">49</span> TESTI REALI</span>
 <span class="badge-live" style="opacity:.8">Nova • Rex • Holly • Luna • Ling</span>
 </div>
 </header>
 
 <div class="main">
 <div class="left">
+<!-- ZONA STICKY: VIDEO RESTA FISSO -->
+<div class="sticky-video-zone">
 <div class="video-wrap" id="videoWrap">
 <div class="cover-fallback" id="coverFallback"><div class="pill"></div></div>
 <iframe id="ytFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+</div>
 
-<div class="info">
+<div class="info-below">
 <div class="tag-inonda"><span>IN ONDA</span><span id="inOndaArtist">NOVA • NOVA</span></div>
 <h1 class="title-single" id="titleSingle">Summer Night</h1>
 <p class="subtitle" id="subtitleSingle">Il futuro è già qui • Viaggio USA con Rex</p>
@@ -89,7 +109,6 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
 <span id="voceMeta">Nova • voce originale</span>
 <span>•</span>
 <span id="testoSync">Testo sincronizzato da testi-nova.html</span>
-<span id="durataMeta" style="margin-left:auto;background:#1a1f32;padding:4px 8px;border-radius:12px;font-size:10px">4:12 • Ambient Pop</span>
 </div>
 
 <div class="cta-row">
@@ -97,240 +116,122 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
 <button class="btn btn-site" id="btnSito">🌐 Vai al sito</button>
 <button class="btn btn-qr" id="btnQR">📱 QR</button>
 </div>
-<div id="qrContainer" style="display:none"><div class="qr-box"><img id="qrImg" width="120" height="120" alt="QR"><div class="small">Scansiona per aprire su telefono</div></div></div>
+<div id="qrContainer" style="display:none"><div class="qr-box"><img id="qrImg" width="140" height="140" alt="QR"><div class="small">Scansiona per aprire su telefono</div></div></div>
 
 <div class="cards">
-<div class="card"><div class="k">ATMOSFERA</div><div class="v" id="atm">Notte highway</div></div>
-<div class="card"><div class="k">MOOD</div><div class="v" id="mood">Luce & pelle</div></div>
-<div class="card"><div class="k">FEATURING</div><div class="v" id="feat">Rex 🐾</div></div>
+<div class="card"><div class="k">ATMOSFERA</div><div class="v" id="atm">Notte highway • Città blu</div></div>
+<div class="card"><div class="k">MOOD</div><div class="v" id="mood">Luce & pelle • Timidezza</div></div>
+<div class="card"><div class="k">FEATURING</div><div class="v" id="feat">Nova</div></div>
 </div>
 </div>
 </div>
 
 <div class="right">
 <div class="right-head">
-<div class="topline"><h3>TESTO • LIVE • VERO TESTO</h3><span style="font-size:10px;color:#5a5f6e;letter-spacing:.12em">SCROLL • SERIF</span></div>
+<div class="topline"><h3>TESTO • LIVE • VERO TESTO</h3><span style="font-size:10px;color:#5a5f6e">SCROLL • SERIF</span></div>
 <select class="select" id="selCanzone"></select>
 <div class="counters" id="counters"></div>
 </div>
 
-<div class="lyrics-wrap" id="lyricsWrap">
+<div class="lyrics-wrap">
 <div class="lyric-head">
 <div class="artist-id" id="lyricArtistId">NOVA • summer</div>
 <h2 id="lyricTitle">Summer Night</h2>
 <div style="width:40px;height:1px;background:#ff6b8a;margin-top:10px"></div>
 </div>
-<div class="lyric-text" id="lyricText">Carico testi live da testi-*.html...</div>
+<div class="lyric-text" id="lyricText">Carico testi live...</div>
 <a class="link-site" id="linkTestoSite" target="_blank" rel="noopener">Leggi testo completo sul sito →</a>
 </div>
 
+<!-- FOOTER NUOVO: SOLO SEGUICI, BEN VISIBILE, NO SPIA -->
 <div class="footer-social">
-<span>Seguici • traffico tracciato:</span>
-<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=telegram&utm_medium=social&utm_campaign=canale_ufficiale" target="_blank">TG</a>
-<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=instagram&utm_medium=social&utm_campaign=bio_link" target="_blank">IG</a>
-<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=facebook&utm_medium=social&utm_campaign=pagina_ufficiale" target="_blank">FB</a>
-<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=tiktok&utm_medium=social&utm_campaign=profilo_bio" target="_blank">TT</a>
-<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=youtube&utm_medium=video_description&utm_campaign=link_canale" target="_blank">YT</a>
-<span style="margin-left:auto">TV → Sito UTM: tv_app</span>
+<span class="label">Seguici</span>
+<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=telegram&utm_medium=social&utm_campaign=canale_ufficiale" target="_blank">Telegram</a>
+<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=instagram&utm_medium=social&utm_campaign=bio_link" target="_blank">Instagram</a>
+<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=facebook&utm_medium=social&utm_campaign=pagina_ufficiale" target="_blank">Facebook</a>
+<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=tiktok&utm_medium=social&utm_campaign=profilo_bio" target="_blank">TikTok</a>
+<a href="https://hollyandrex-cell.github.io/massy.github.io/?utm_source=youtube&utm_medium=video_description&utm_campaign=link_canale" target="_blank">YouTube</a>
 </div>
 </div>
 </div>
 
 <script>
-const DB_PATH = '../canzoni-db.json';
-const TESTI_BASE = '../'; // root dove sono testi-*.html
-let canzoni = [];
-let byArtist = {};
-
-function youtubeEmbedUrl(id){ return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`; }
-function youtubeWatchUrl(id){ return `https://www.youtube.com/watch?v=${id}&utm_source=tv_app&utm_medium=tv&utm_campaign=player`; }
-function siteUrlFromDb(entry){
-  // url = canzoni-*.html, testo_url = testi-*.html#id
-  // UTM tv_app per tracciare TV→Sito
-  const base = entry.url || 'index.html';
-  return `${TESTI_BASE}${base}?utm_source=tv_app&utm_medium=tv&utm_campaign=player`;
-}
+const DB_PATH='../canzoni-db.json';
+const TESTI_BASE='../';
+let canzoni=[];let byArtist={};
+function youtubeEmbedUrl(id){return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;}
+function youtubeWatchUrl(id){return `https://www.youtube.com/watch?v=${id}`;}
+function siteUrlFromDb(entry){return `${TESTI_BASE}${entry.url||'index.html'}?utm_source=tv_app&utm_medium=tv&utm_campaign=player`;}
 function testoSiteUrl(entry){
-  const t = entry.testo_url || '';
-  // aggiungi UTM per tracciare click testo dal TV
-  const hasQuery = t.includes('?');
-  const sep = hasQuery ? '&' : (t.includes('#') ? t.split('#')[0].includes('?') ? '&' : '?' : '?');
-  // inseriamo UTM prima dell'hash
-  if(t.includes('#')){
-    const [file, hash] = t.split('#');
-    return `${TESTI_BASE}${file}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${hash}`;
-  }
-  return `${TESTI_BASE}${t}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;
+ if(entry.testo_url.includes('#')){
+  const [file,hash]=entry.testo_url.split('#');
+  return `${TESTI_BASE}${file}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${hash}`;
+ }
+ return `${TESTI_BASE}${entry.testo_url}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;
 }
-
-async function fetchText(url){
-  const res = await fetch(url, {cache:'no-cache'});
-  if(!res.ok) throw new Error('fetch '+url+' '+res.status);
-  return res.text();
+async function fetchText(url){const r=await fetch(url,{cache:'no-cache'});if(!r.ok)throw new Error(url+' '+r.status);return r.text();}
+function extractLyric(html,anchorId){
+ const parser=new DOMParser();const doc=parser.parseFromString(html,'text/html');
+ let el=anchorId?doc.getElementById(anchorId):null;
+ if(el){
+  const testoEl=el.classList&&el.classList.contains('testo')?el:el.querySelector('.testo');
+  if(testoEl)return testoEl.textContent.trim();
+  let next=el.nextElementSibling;let s=0;
+  while(next&&s<8){
+   if(next.classList&&next.classList.contains('testo'))return next.textContent.trim();
+   if(next.querySelector){const q=next.querySelector('.testo');if(q)return q.textContent.trim();}
+   next=next.nextElementSibling;s++;
+  }
+ }
+ const tutti=doc.querySelectorAll('.testo');
+ if(tutti.length>0){
+  if(!anchorId)return tutti[0].textContent.trim();
+  for(const t of tutti){const p=t.closest('[id]');if(p&&p.id.toLowerCase().includes(anchorId.toLowerCase()))return t.textContent.trim();}
+  return tutti[0].textContent.trim();
+ }
+ return 'Testo non trovato #'+anchorId;
 }
-
-function extractLyric(html, anchorId){
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-  // prova id diretto
-  let el = null;
-  if(anchorId){
-    el = doc.getElementById(anchorId);
-  }
-  // se wrapper .testo-canzone
-  if(el){
-    const testoEl = el.classList && el.classList.contains('testo') ? el : el.querySelector('.testo');
-    if(testoEl) return testoEl.textContent.trim();
-    // se el è wrapper con dentro .testo
-    if(el.querySelector){
-      const inner = el.querySelector('.testo');
-      if(inner) return inner.textContent.trim();
-    }
-    // fallback: se el è h2 o contiene testo
-    // cerca prossimo .testo
-    let next = el.nextElementSibling;
-    let steps=0;
-    while(next && steps<8){
-      if(next.classList && next.classList.contains('testo')) return next.textContent.trim();
-      if(next.querySelector){
-        const q = next.querySelector('.testo');
-        if(q) return q.textContent.trim();
-      }
-      next = next.nextElementSibling;
-      steps++;
-    }
-  }
-  // fallback: cerca .testo-canzone che contiene quell'id nel testo o titolo
-  // per file senza id esatto (nova/luna/ling) - cerca per titolo vicino
-  // prova a cercare tutti .testo e prendere quello che ha contenuto più lungo se anchor non trovato
-  const tuttiTesti = doc.querySelectorAll('.testo');
-  if(tuttiTesti.length>0){
-    // se anchor non trovato, ritorna il primo .testo del file o cerca per id simile
-    if(!anchorId) return tuttiTesti[0].textContent.trim();
-    // cerca elemento il cui id genitore contiene anchor
-    for(const t of tuttiTesti){
-      const parent = t.closest('[id]');
-      if(parent && parent.id.toLowerCase().includes(anchorId.toLowerCase())) return t.textContent.trim();
-    }
-    // ultima spiaggia: primo
-    return tuttiTesti[0].textContent.trim();
-  }
-  return 'Testo non trovato per #'+anchorId+' - controlla '+doc.title;
-}
-
 async function loadDB(){
-  const txt = await fetchText(DB_PATH);
-  canzoni = JSON.parse(txt);
-  // ordina per artista poi titolo? mantieni ordine file
-  byArtist = {};
-  canzoni.forEach(c=>{
-    const art = (c.artist||'').toLowerCase();
-    if(!byArtist[art]) byArtist[art]=0;
-    byArtist[art]++;
-  });
-  document.getElementById('totBrani').textContent = canzoni.length;
-  document.getElementById('totTesti').textContent = canzoni.length;
-
-  // populate select
-  const sel = document.getElementById('selCanzone');
-  sel.innerHTML = canzoni.map((c,i)=>{
-    const id = (c.testo_url||'').split('#')[1]||c.title.toLowerCase().replace(/\s+/g,'');
-    return `<option value="${i}">[${(c.artist||'').toUpperCase()}] ${c.title} — ${id}</option>`;
-  }).join('');
-
-  // counters
-  const counters = document.getElementById('counters');
-  counters.innerHTML = Object.entries(byArtist).map(([k,v])=>`<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`).join('');
-
-  // default prima canzone (cerca Summer Night se c'è)
-  let idx = canzoni.findIndex(c=>c.title.toLowerCase().includes('summer night'));
-  if(idx<0) idx=0;
-  sel.value = idx;
-  await showSong(idx);
-
-  sel.addEventListener('change', e=>showSong(parseInt(e.target.value)));
-  // filter via counters
-  counters.addEventListener('click', e=>{
-    const chip = e.target.closest('.counter');
-    if(!chip) return;
-    const art = chip.dataset.art;
-    document.querySelectorAll('.counter').forEach(x=>x.classList.remove('active'));
-    chip.classList.add('active');
-    const filtered = canzoni.map((c,i)=>({c,i})).filter(o=>o.c.artist.toLowerCase()===art);
-    if(filtered.length===0) return;
-    sel.innerHTML = filtered.map(o=>`<option value="${o.i}">[${o.c.artist.toUpperCase()}] ${o.c.title}</option>`).join('');
-    showSong(filtered[0].i);
-  });
-
-  // remote keyboard for TV
-  document.addEventListener('keydown', e=>{
-    if(e.key==='ArrowDown'){ e.preventDefault(); sel.selectedIndex = Math.min(sel.options.length-1, sel.selectedIndex+1); sel.dispatchEvent(new Event('change')); }
-    if(e.key==='ArrowUp'){ e.preventDefault(); sel.selectedIndex = Math.max(0, sel.selectedIndex-1); sel.dispatchEvent(new Event('change')); }
-  });
+ try{const txt=await fetchText(DB_PATH);canzoni=JSON.parse(txt);}catch(e){
+  // fallback usa file con atmosfera se esiste
+  try{const txt2=await fetchText('../canzoni-db-con-atmosfera-mood.json');canzoni=JSON.parse(txt2);}catch(e2){canzoni=JSON.parse(await fetchText('./canzoni-db.json'));}
+ }
+ byArtist={};canzoni.forEach(c=>{const art=(c.artist||'').toLowerCase();if(!byArtist[art])byArtist[art]=0;byArtist[art]++;});
+ document.getElementById('totBrani').textContent=canzoni.length;
+ document.getElementById('totTesti').textContent=canzoni.length;
+ const sel=document.getElementById('selCanzone');
+ sel.innerHTML=canzoni.map((c,i)=>{const id=(c.testo_url||'').split('#')[1]||c.title.toLowerCase().replace(/\s+/g,'');return `<option value="${i}">[${(c.artist||'').toUpperCase()}] ${c.title} — ${id}</option>`;}).join('');
+ const counters=document.getElementById('counters');
+ counters.innerHTML=Object.entries(byArtist).map(([k,v])=>`<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`).join('');
+ let idx=canzoni.findIndex(c=>c.title.toLowerCase().includes('summer night'));if(idx<0)idx=0;sel.value=idx;await showSong(idx);
+ sel.addEventListener('change',e=>showSong(parseInt(e.target.value)));
+ counters.addEventListener('click',e=>{const chip=e.target.closest('.counter');if(!chip)return;const art=chip.dataset.art;document.querySelectorAll('.counter').forEach(x=>x.classList.remove('active'));chip.classList.add('active');const filt=canzoni.map((c,i)=>({c,i})).filter(o=>o.c.artist.toLowerCase()===art);if(!filt.length)return;sel.innerHTML=filt.map(o=>`<option value="${o.i}">[${o.c.artist.toUpperCase()}] ${o.c.title}</option>`).join('');showSong(filt[0].i);});
+ document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();sel.selectedIndex=Math.min(sel.options.length-1,sel.selectedIndex+1);sel.dispatchEvent(new Event('change'));}if(e.key==='ArrowUp'){e.preventDefault();sel.selectedIndex=Math.max(0,sel.selectedIndex-1);sel.dispatchEvent(new Event('change'));}});
 }
-
 async function showSong(idx){
-  const entry = canzoni[idx];
-  if(!entry) return;
-  const artista = (entry.artist||'').toUpperCase();
-  const anchor = (entry.testo_url||'').split('#')[1]||'';
-  const file = (entry.testo_url||'').split('#')[0]||`testi-${entry.artist.toLowerCase()}.html`;
-
-  // left
-  document.getElementById('inOndaArtist').textContent = `${artista} • ${artista}`;
-  document.getElementById('titleSingle').textContent = entry.title;
-  document.getElementById('subtitleSingle').textContent = entry.sottotitolo || 'Il futuro è già qui';
-  document.getElementById('voceMeta').textContent = `${entry.artist} • voce originale`;
-  document.getElementById('testoSync').textContent = `Testo sincronizzato da ${file}${anchor?'#'+anchor:''}`;
-  document.getElementById('atm').textContent = entry.atmosfera || 'Notte highway';
-  document.getElementById('mood').textContent = entry.mood || 'Luce & pelle';
-  document.getElementById('feat').textContent = entry.featuring || (entry.artist==='Rex' ? 'Rex 🐾' : 'Rex 🐾');
-  // video
-  const ytId = entry.youtube_id;
-  const iframe = document.getElementById('ytFrame');
-  const fallback = document.getElementById('coverFallback');
-  if(ytId){
-    fallback.style.display='none';
-    iframe.style.display='block';
-    iframe.src = youtubeEmbedUrl(ytId);
-  } else {
-    iframe.style.display='none';
-    fallback.style.display='grid';
-  }
-  // CTAs
-  document.getElementById('btnYoutube').onclick = ()=>window.open(youtubeWatchUrl(ytId), '_blank');
-  document.getElementById('btnSito').onclick = ()=>window.open(siteUrlFromDb(entry), '_blank');
-  // QR
-  const qrBtn = document.getElementById('btnQR');
-  const qrCont = document.getElementById('qrContainer');
-  const qrImg = document.getElementById('qrImg');
-  qrBtn.onclick = ()=>{
-    const show = qrCont.style.display==='none';
-    qrCont.style.display = show ? 'block' : 'none';
-    if(show){
-      // simple QR via api.qrserver
-      const url = encodeURIComponent(youtubeWatchUrl(ytId));
-      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
-    }
-  };
-  // right
-  document.getElementById('lyricArtistId').textContent = `${artista} • ${anchor||''}`.trim();
-  document.getElementById('lyricTitle').textContent = entry.title;
-  document.getElementById('linkTestoSite').href = testoSiteUrl(entry);
-
-  // fetch lyric live
-  const lyricEl = document.getElementById('lyricText');
-  lyricEl.textContent = '⏳ Carico testo live da '+file+'...';
-  try{
-    const html = await fetchText(TESTI_BASE+file);
-    const testo = extractLyric(html, anchor);
-    lyricEl.textContent = testo;
-  }catch(err){
-    lyricEl.textContent = 'Errore caricamento testo live: '+err.message+'\n\nControlla che '+file+' sia nella root del sito.';
-  }
+ const entry=canzoni[idx];if(!entry)return;
+ const artista=(entry.artist||'').toUpperCase();const anchor=(entry.testo_url||'').split('#')[1]||'';const file=(entry.testo_url||'').split('#')[0]||`testi-${entry.artist.toLowerCase()}.html`;
+ document.getElementById('inOndaArtist').textContent=`${artista} • ${artista}`;
+ document.getElementById('titleSingle').textContent=entry.title;
+ document.getElementById('subtitleSingle').textContent=entry.sottotitolo||'Il futuro è già qui';
+ document.getElementById('voceMeta').textContent=`${entry.artist} • voce originale`;
+ document.getElementById('testoSync').textContent=`Testo sincronizzato da ${file}${anchor?'#'+anchor:''}`;
+ document.getElementById('atm').textContent=entry.atmosfera||'Notte highway • Città blu';
+ document.getElementById('mood').textContent=entry.mood||'Luce & pelle • Timidezza';
+ document.getElementById('feat').textContent=entry.featuring||entry.artist;
+ const ytId=entry.youtube_id;const iframe=document.getElementById('ytFrame');const fallback=document.getElementById('coverFallback');
+ if(ytId){fallback.style.display='none';iframe.style.display='block';iframe.src=youtubeEmbedUrl(ytId);}else{iframe.style.display='none';fallback.style.display='grid';}
+ document.getElementById('btnYoutube').onclick=()=>window.open(youtubeWatchUrl(ytId),'_blank');
+ document.getElementById('btnSito').onclick=()=>window.open(siteUrlFromDb(entry),'_blank');
+ const qrBtn=document.getElementById('btnQR');const qrCont=document.getElementById('qrContainer');const qrImg=document.getElementById('qrImg');
+ qrBtn.onclick=()=>{const show=qrCont.style.display==='none';qrCont.style.display=show?'block':'none';if(show){const url=encodeURIComponent(youtubeWatchUrl(ytId));qrImg.src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;}};
+ document.getElementById('lyricArtistId').textContent=`${artista} • ${anchor||''}`.trim();
+ document.getElementById('lyricTitle').textContent=entry.title;
+ document.getElementById('linkTestoSite').href=testoSiteUrl(entry);
+ const lyricEl=document.getElementById('lyricText');lyricEl.textContent='⏳ Carico testo live da '+file+'...';
+ try{const html=await fetchText(TESTI_BASE+file);const testo=extractLyric(html,anchor);lyricEl.textContent=testo;}catch(err){lyricEl.textContent='Errore caricamento testo live: '+err.message;}
 }
-
-document.addEventListener('DOMContentLoaded', loadDB);
+document.addEventListener('DOMContentLoaded',loadDB);
 </script>
 </body>
 </html>
