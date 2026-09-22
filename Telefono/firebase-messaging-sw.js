@@ -1,9 +1,12 @@
+// firebase-messaging-sw.js V4 FINALE - Holly & Rex - Fix 401 + Spesa Live + WhatsApp + Ponte
+// DEVE stare nella stessa cartella di assistente-vocale.html
 
-// Service Worker V5 FIX 401 - Holly & Rex - Aura Live - NON intercetta FCM
-const CACHE_NAME = 'assistente-vocale-v5-fix-fcm401';
+const CACHE_NAME = 'assistente-vocale-v4-finale-fix-401-spesa';
+
 const ASSETS = [
   './',
   './assistente-vocale.html',
+  './assistente-vocale-v4-finale.html',
   './manifest.json',
   './bau-192x192.png',
   './bau-32.png'
@@ -24,12 +27,12 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Fetch FIX: NON intercettare fcmregistrations e googleapis per evitare 401
+// FIX CRITICO 401: NON intercettare fcmregistrations e googleapis
 self.addEventListener('fetch', (e) => {
   const url = e.request.url;
   if (e.request.method !== 'GET') return;
-  if (url.includes('fcmregistrations') || url.includes('fcm.googleapis.com') || url.includes('googleapis.com/identity') || url.includes('www.googleapis.com') || url.includes('fcm') && url.includes('googleapis')) {
-    return; // lascia passare diretta a Google
+  if (url.includes('fcmregistrations') || url.includes('fcm.googleapis.com') || url.includes('googleapis.com/identity') || url.includes('www.googleapis.com') || (url.includes('fcm') && url.includes('googleapis'))) {
+    return; // lascia passare diretta a Google, evita 401
   }
   if (url.includes('/api/')) return;
   e.respondWith(
@@ -42,7 +45,6 @@ self.addEventListener('fetch', (e) => {
   );
 });
 
-// Firebase compat per background push
 try {
   importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js');
   importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js');
@@ -59,26 +61,57 @@ try {
   const messaging = firebase.messaging();
 
   messaging.onBackgroundMessage((payload) => {
-    console.log('[SW V5 FIX] Background Message:', payload);
+    console.log('[SW V4 FINALE] Background:', payload);
+    const tipo = payload.data?.tipo || payload.data?.type || "";
     const title = payload.notification?.title || payload.data?.title || 'Holly & Rex - Aura';
-    const body = payload.notification?.body || payload.data?.body || payload.data?.message || 'Nuovo messaggio per la crew';
+    const body = payload.notification?.body || payload.data?.body || payload.data?.message || 'Nuovo messaggio crew';
     const personaggio = payload.data?.personaggio || 'Aura';
-    
-    const options = {
+
+    // SPESA LIVE IN CASSA - avviso speciale che resta
+    if(tipo === 'spesa_nuova'){
+      const prodotto = payload.data?.prodotto || body;
+      const autore = payload.data?.autore || payload.data?.da || 'Holly';
+      return self.registration.showNotification("🛒 Nuova voce in lista spesa!", {
+        body: `Nuova voce inserita: ${prodotto} da ${autore} - Sei ancora in cassa?`,
+        icon: './bau-192x192.png',
+        badge: './bau-32.png',
+        vibrate: [200, 100, 200, 100, 400, 100, 400],
+        data: { personaggio: 'Aura', tipo: 'spesa_nuova', prodotto, autore, ...payload.data },
+        tag: 'spesa-live-' + Date.now(),
+        requireInteraction: true,
+        actions: [{action: 'visto', title: 'Visto, lo prendo!'}]
+      });
+    }
+
+    // WHATSAPP DAL PONTE - notifica normale
+    if(tipo === 'whatsapp' || title.toLowerCase().includes('whatsapp')){
+      return self.registration.showNotification(title, {
+        body: body,
+        icon: './bau-192x192.png',
+        badge: './bau-32.png',
+        vibrate: [200, 100, 200],
+        data: { personaggio, tipo: 'whatsapp', ...payload.data },
+        tag: 'whatsapp-' + Date.now(),
+        actions: [{action: 'rispondi', title: '🎤 Rispondi a voce'}]
+      });
+    }
+
+    // GENERICO
+    return self.registration.showNotification(title, {
       body: body,
       icon: './bau-192x192.png',
       badge: './bau-32.png',
       vibrate: [200, 100, 200],
       data: { personaggio, body, title, ...payload.data },
       tag: 'aura-live-' + Date.now()
-    };
-    return self.registration.showNotification(title, options);
+    });
   });
 } catch(err){
   console.log('Firebase compat non caricato in SW', err);
 }
 
 self.addEventListener('push', (event) => {
+  // fallback per push non FCM (se usi web push diretto)
   if (event.data && event.data.json) {
     try {
       const dati = event.data.json();
@@ -87,34 +120,34 @@ self.addEventListener('push', (event) => {
       }
       const titolo = dati.notification?.title || 'Holly & Rex - Assistente';
       const messaggio = dati.notification?.body || 'Nuovo messaggio in arrivo';
-      const opzioni = {
-        body: messaggio,
-        icon: './bau-192x192.png',
-        badge: './bau-32.png',
-        vibrate: [200, 100, 200],
-        data: dati.data || {}
-      };
       event.waitUntil(
-        self.registration.showNotification(titolo, opzioni)
+        self.registration.showNotification(titolo, {
+          body: messaggio,
+          icon: './bau-192x192.png',
+          badge: './bau-32.png',
+          vibrate: [200, 100, 200],
+          data: dati.data || {}
+        })
       );
-    } catch(e){
-      console.log('Push non JSON', e);
-    }
+    } catch(e){ console.log('Push non JSON', e); }
   }
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   const data = event.notification.data || {};
+  const action = event.action;
+  
   event.waitUntil(
     clients.matchAll({type:'window'}).then(clientList => {
+      // Se clicchi su notifica spesa o whatsapp, apri assistente vocale V4
       for(const client of clientList){
         if(client.url.includes('assistente-vocale') && 'focus' in client){
-          client.postMessage({type:'AURA_READ', data});
+          client.postMessage({type:'AURA_READ', data, action});
           return client.focus();
         }
       }
-      return clients.openWindow('./assistente-vocale.html');
+      return clients.openWindow('./assistente-vocale-v4-finale.html');
     })
   );
 });
