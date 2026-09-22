@@ -134,7 +134,20 @@ Holly & Rex Group • Noi tre.mp3 • Ponte Qwen ↔ Ling ↔ Nova • + Aura on
     messagingSenderId: "450072023944",
     appId: "1:450072023944:web:888af5555a5b50c599203d"
   };
-  const VAPID_KEY = "BITcZCNvdTe5aOlicwRVC5W__NX3cFo_4GxGDEVS8Dh5sf0vRONa7yvn3UZjIIsk02yoKs-tnFv-Ap5vVIDl5c";
+  // VAPID attuale in console (21 set 2026) è CORROTTA: decodifica 64 bytes invece di 65 -> PushManager dice "applicationServerKey is not valid"
+  // Dobbiamo rigenerarla in Firebase Console
+  let VAPID_KEY = "BDq9gZmdpnSGBanEk-8iPnEi7Ay--VkL3iPgOf7gZi4fYQS1f51uhS5Y3jph1g9dvGOC2FOaAqLzRNwbH2e3S-E";
+
+  // Helper per validare VAPID
+  function isValidVapid(k){
+    try{
+      if(!k || k.length < 86) return false;
+      let b64 = k.replace(/-/g,'+').replace(/_/g,'/');
+      b64 += '='.repeat((4 - b64.length % 4) % 4);
+      const raw = atob(b64);
+      return raw.length === 65 && raw.charCodeAt(0) === 4;
+    }catch(e){ return false; }
+  }
 
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
@@ -187,38 +200,53 @@ Holly & Rex Group • Noi tre.mp3 • Ponte Qwen ↔ Ling ↔ Nova • + Aura on
 
   window.richiediPermessoPush = async function(){
     const statusEl = document.getElementById('fcmStatus');
+    // CHECK VAPID VALIDITA'
+    if(!isValidVapid(VAPID_KEY)){
+      const l = VAPID_KEY.length;
+      const dl = vapidLen(VAPID_KEY);
+      statusEl.textContent = `❌ VAPID CORROTTA: ${l} chars -> ${dl} bytes (deve essere 65) -> applicationServerKey is not valid`;
+      statusEl.style.background='#450a0a'; statusEl.style.color='#fecaca'; statusEl.style.borderColor='#f87171';
+      alert(`VAPID CORROTTA!
+
+Attuale: ${VAPID_KEY}
+Len: ${l} -> ${dl} bytes (deve essere 65)
+
+SOLUZIONE:
+1. Firebase Console > Cloud Messaging > Certificati web push
+2. Elimina chiave del 21 set 2026 (3 puntini -> Elimina)
+3. Genera coppia di chiavi
+4. Copia NUOVA chiave e incollala in assistente-vocale.html
+
+Le voci funzionano comunque.`);
+      return;
+    }
     try{
       const perm = await Notification.requestPermission();
-      if(perm !== 'granted'){ alert('Permesso negato: abilita notifiche nel browser'); return; }
-      statusEl.textContent = 'Permesso OK, registro SW in /Telefono/...';
+      if(perm !== 'granted'){ alert('Permesso negato'); return; }
+      statusEl.textContent = 'Permesso OK, registro SW...';
       let reg = swRegistration || await registraSWFix();
-      if(!reg){ alert('SW non registrato - verifica che firebase-messaging-sw.js sia in /Telefono/'); return; }
-      // aspetta che SW sia ready
       reg = await navigator.serviceWorker.ready;
       swRegistration = reg;
-      statusEl.textContent = 'SW READY, prendo token FCM con VAPID del 21 set 2026...';
-      const token = await getToken(messaging, { vapidKey: VAPID_PUBBLICA, serviceWorkerRegistration: reg });
+      statusEl.textContent = 'SW READY, prendo token FCM...';
+      const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
       if(token){
         await salvaTokenAutomatico(token);
-        statusEl.textContent = '✅ Aura Live ATTIVA - VAPID OK!';
+        statusEl.textContent = '✅ Aura Live ATTIVA - VAPID 65 bytes OK!';
         statusEl.style.background='#052e16'; statusEl.style.color='#86efac'; statusEl.style.borderColor='#16a34a';
         document.getElementById('btnAbilitaPush').textContent = '✅ Aura Live Attiva';
-        document.getElementById('btnAbilitaPush').style.background='#334155';
-      } else {
-        statusEl.textContent = 'Nessun token ritornato - controlla VAPID in console Firebase';
       }
     }catch(err){
-      console.error('FCM error', err);
       const msg = err.message || err.toString();
       statusEl.textContent = 'Errore dopo SI: ' + msg;
-      statusEl.style.background='#450a0a'; statusEl.style.color='#fecaca'; statusEl.style.borderColor='#f87171';
-      if(msg.includes('401') || msg.includes('authentication') || msg.includes('token-subscribe-failed')){
-        alert('Errore 401 FCM: il vecchio SW bloccava fcmregistrations.\n\nFIX APPLICATO:\n1. Ho aggiornato firebase-messaging-sw.js v5 che NON intercetta più fcmregistrations\n2. Cancella cache: DevTools > Applicazione > Svuota spazio di archiviazione > Cancella dati sito\n3. Ricarica e riprova Attiva Aura Live\n\nLa VAPID che hai copiato è corretta: BITcZCN...VIDl5c del 21 set 2026');
+      statusEl.style.background='#450a0a'; statusEl.style.color='#fecaca';
+      if(msg.includes('applicationServerKey')){
+        alert('applicationServerKey is not valid -> VAPID corrotta 64 bytes invece di 65. Elimina e rigenera in Firebase Console.');
       } else {
-        alert('Errore Aura Live: ' + msg + '\n\nLe voci funzionano comunque.');
+        alert('Errore Aura Live: ' + msg + '\nLe voci funzionano comunque.');
       }
     }
   }
+
 
   (async ()=>{
     const reg = await registraSWFix();
