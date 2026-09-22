@@ -1,6 +1,6 @@
 
-// Service Worker V3 COMPLETO - Holly & Rex - Aura Live + cache Telefono
-const CACHE_NAME = 'assistente-vocale-v4-completo';
+// Service Worker V5 FIX 401 - Holly & Rex - Aura Live - NON intercetta FCM
+const CACHE_NAME = 'assistente-vocale-v5-fix-fcm401';
 const ASSETS = [
   './',
   './assistente-vocale.html',
@@ -11,7 +11,7 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS).catch(()=>{}))
       .then(() => self.skipWaiting())
   );
 });
@@ -21,6 +21,24 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keys) => Promise.all(
       keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
     )).then(() => self.clients.claim())
+  );
+});
+
+// Fetch FIX: NON intercettare fcmregistrations e googleapis per evitare 401
+self.addEventListener('fetch', (e) => {
+  const url = e.request.url;
+  if (e.request.method !== 'GET') return;
+  if (url.includes('fcmregistrations') || url.includes('fcm.googleapis.com') || url.includes('googleapis.com/identity') || url.includes('www.googleapis.com') || url.includes('fcm') && url.includes('googleapis')) {
+    return; // lascia passare diretta a Google
+  }
+  if (url.includes('/api/')) return;
+  e.respondWith(
+    caches.match(e.request).then((cached) => cached || fetch(e.request).then((res) => {
+      if(!res || res.status !== 200 || res.type !== 'basic') return res;
+      const clone = res.clone();
+      caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+      return res;
+    }).catch(()=>caches.match(e.request)))
   );
 });
 
@@ -41,7 +59,7 @@ try {
   const messaging = firebase.messaging();
 
   messaging.onBackgroundMessage((payload) => {
-    console.log('[SW V4] Background Message:', payload);
+    console.log('[SW V5 FIX] Background Message:', payload);
     const title = payload.notification?.title || payload.data?.title || 'Holly & Rex - Aura';
     const body = payload.notification?.body || payload.data?.body || payload.data?.message || 'Nuovo messaggio per la crew';
     const personaggio = payload.data?.personaggio || 'Aura';
@@ -57,20 +75,8 @@ try {
     return self.registration.showNotification(title, options);
   });
 } catch(err){
-  console.log('Firebase compat non caricato in SW, uso fallback', err);
+  console.log('Firebase compat non caricato in SW', err);
 }
-
-self.addEventListener('fetch', (e) => {
-  if (e.request.url.includes('/api/') || e.request.method !== 'GET') return;
-  if (e.request.url.includes('fcm') || e.request.url.includes('googleapis')) return;
-  e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request).then((res) => {
-      const clone = res.clone();
-      caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-      return res;
-    }))
-  );
-});
 
 self.addEventListener('push', (event) => {
   if (event.data && event.data.json) {

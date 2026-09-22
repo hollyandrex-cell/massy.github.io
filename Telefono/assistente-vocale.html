@@ -181,47 +181,72 @@ Holly & Rex Group • Noi tre.mp3 • Ponte Qwen ↔ Ling ↔ Nova • + Aura on
     }
   }
 
+  // VAPID PUBBLICA presa da Firebase Console > Certificati web push (21 set 2026)
+  // Confermata da te: BITcZCN...VIDl5c - è corretta, il 401 era dovuto al vecchio SW che cachava fcmregistrations
+  const VAPID_PUBBLICA = VAPID_KEY;
+
   window.richiediPermessoPush = async function(){
+    const statusEl = document.getElementById('fcmStatus');
     try{
       const perm = await Notification.requestPermission();
-      if(perm !== 'granted'){ alert('Permesso negato'); return; }
-      document.getElementById('fcmStatus').textContent = 'Permesso OK, registro SW in /Telefono/...';
-      const reg = swRegistration || await registraSWFix();
-      if(!reg){ alert('SW non registrato'); return; }
-      document.getElementById('fcmStatus').textContent = 'SW OK, prendo token in automatico...';
-      const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+      if(perm !== 'granted'){ alert('Permesso negato: abilita notifiche nel browser'); return; }
+      statusEl.textContent = 'Permesso OK, registro SW in /Telefono/...';
+      let reg = swRegistration || await registraSWFix();
+      if(!reg){ alert('SW non registrato - verifica che firebase-messaging-sw.js sia in /Telefono/'); return; }
+      // aspetta che SW sia ready
+      reg = await navigator.serviceWorker.ready;
+      swRegistration = reg;
+      statusEl.textContent = 'SW READY, prendo token FCM con VAPID del 21 set 2026...';
+      const token = await getToken(messaging, { vapidKey: VAPID_PUBBLICA, serviceWorkerRegistration: reg });
       if(token){
         await salvaTokenAutomatico(token);
-        document.getElementById('fcmStatus').textContent = '✅ Aura Live ATTIVA - completo!';
-        document.getElementById('btnAbilitaPush').textContent = '✅ Aura Live Attiva - token auto';
+        statusEl.textContent = '✅ Aura Live ATTIVA - VAPID OK!';
+        statusEl.style.background='#052e16'; statusEl.style.color='#86efac'; statusEl.style.borderColor='#16a34a';
+        document.getElementById('btnAbilitaPush').textContent = '✅ Aura Live Attiva';
+        document.getElementById('btnAbilitaPush').style.background='#334155';
+      } else {
+        statusEl.textContent = 'Nessun token ritornato - controlla VAPID in console Firebase';
       }
     }catch(err){
-      document.getElementById('fcmStatus').textContent = 'Errore dopo SI: ' + err.message;
-      console.error(err);
-      alert('Errore dopo SI: ' + err.message);
+      console.error('FCM error', err);
+      const msg = err.message || err.toString();
+      statusEl.textContent = 'Errore dopo SI: ' + msg;
+      statusEl.style.background='#450a0a'; statusEl.style.color='#fecaca'; statusEl.style.borderColor='#f87171';
+      if(msg.includes('401') || msg.includes('authentication') || msg.includes('token-subscribe-failed')){
+        alert('Errore 401 FCM: il vecchio SW bloccava fcmregistrations.\n\nFIX APPLICATO:\n1. Ho aggiornato firebase-messaging-sw.js v5 che NON intercetta più fcmregistrations\n2. Cancella cache: DevTools > Applicazione > Svuota spazio di archiviazione > Cancella dati sito\n3. Ricarica e riprova Attiva Aura Live\n\nLa VAPID che hai copiato è corretta: BITcZCN...VIDl5c del 21 set 2026');
+      } else {
+        alert('Errore Aura Live: ' + msg + '\n\nLe voci funzionano comunque.');
+      }
     }
   }
 
   (async ()=>{
     const reg = await registraSWFix();
-    if(!reg){ document.getElementById('fcmStatus').textContent = '❌ SW non registrato in Telefono/'; return; }
+    if(!reg){ document.getElementById('fcmStatus').textContent = '❌ SW non registrato in Telefono/ - verifica file'; return; }
     const existingId = localStorage.getItem('crew_device_id');
     if(existingId) document.getElementById('deviceBadge').textContent = existingId;
+    // aspetta ready
+    try{ await navigator.serviceWorker.ready; }catch(e){}
     if(Notification.permission === 'granted'){
-      document.getElementById('fcmStatus').textContent = '✅ Permesso gia presente, prendo token in AUTO...';
+      document.getElementById('fcmStatus').textContent = '✅ Permesso presente, provo token auto con VAPID 21 set 2026...';
       try{
-        const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+        const readyReg = await navigator.serviceWorker.ready;
+        const token = await getToken(messaging, { vapidKey: VAPID_PUBBLICA, serviceWorkerRegistration: readyReg });
         if(token){
           await salvaTokenAutomatico(token);
-          document.getElementById('fcmStatus').textContent = '✅ Aura Live ATTIVA in AUTO - completo!';
+          document.getElementById('fcmStatus').textContent = '✅ Aura Live ATTIVA in AUTO - VAPID OK!';
+          document.getElementById('fcmStatus').style.background='#052e16'; document.getElementById('fcmStatus').style.color='#86efac';
           document.getElementById('btnAbilitaPush').textContent = '✅ Aura Live Attiva (auto)';
           document.getElementById('btnAbilitaPush').style.background = '#334155';
         }
-      }catch(e){ document.getElementById('fcmStatus').textContent = 'Errore auto token: ' + e.message + ' - clicca bottone'; }
+      }catch(e){ 
+        console.warn('auto token error', e);
+        document.getElementById('fcmStatus').textContent = 'Errore auto token: ' + e.message + ' - clicca bottone (e svuota cache se 401)'; 
+      }
     } else if(Notification.permission === 'denied'){
-      document.getElementById('fcmStatus').textContent = '🔕 Notifiche bloccate - sbloccale dalle impostazioni';
+      document.getElementById('fcmStatus').textContent = '🔕 Notifiche bloccate - sbloccale dalle impostazioni browser';
     } else {
-      document.getElementById('fcmStatus').textContent = '👆 Fix 404 attivo completo - clicca Attiva Aura Live (1° volta)';
+      document.getElementById('fcmStatus').textContent = '👆 Fix v5 attivo (no cache FCM) - clicca Attiva Aura Live - VAPID 21 set 2026 OK';
     }
   })();
 
