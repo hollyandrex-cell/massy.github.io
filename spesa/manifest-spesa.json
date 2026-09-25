@@ -1,8 +1,8 @@
 {
     "name": "Holly & Rex - Lista della Spesa",
     "short_name": "Spesa",
-    "start_url": "/massy.github.io/spesa/spesa.html",
-    "scope": "/massy.github.io/spesa/",
+    "start_url": "./spesa.html",
+    "scope": "./",
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#0f172a",
