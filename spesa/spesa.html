@@ -608,9 +608,66 @@ function pulisciDoppioniBruschette(){
     savePrezzi().then(()=>setStatus('✅ Puliti doppioni bruschette!'));
   }
 }
-// SW ROOT UNICO
+/* ✅ FIX MICROFONO - LING & MASSY v1.0 */
+const btnVoice = document.getElementById('btnVoice');
+if(btnVoice) {
+  btnVoice.addEventListener('click', () => {
+    // Check Secure Context
+    if (!window.isSecureContext) {
+      alert("⚠️ Tesoro, il microfono richiede HTTPS!\n\nSei in locale? Usa il link GitHub Pages sicuro.");
+      return;
+    }
+    
+    // Check API Support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("🎤 Ops! Il tuo browser non supporta la voce.\nUsa Chrome, Edge o Safari aggiornato.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'it-IT';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    setStatus("🎤 Ascolto... parla ora!");
+    btnVoice.style.opacity = "0.7";
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      document.getElementById('inpNome').value = transcript;
+      document.getElementById('inpNome').focus();
+      setStatus(`✅ Ho sentito: "${transcript}"`);
+      btnVoice.style.opacity = "1";
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Errore voce:', event.error);
+      let msg = " Errore microfono.";
+      if(event.error === 'not-allowed') msg += "\nPermesso negato! Clicca sul lucchetto 🔒 nella barra indirizzi e consenti il microfono.";
+      else if(event.error === 'no-speech') msg += "\nNon ho sentito nulla. Riprova!";
+      setStatus(msg, false);
+      btnVoice.style.opacity = "1";
+    };
+
+    recognition.onend = () => {
+      btnVoice.style.opacity = "1";
+    };
+
+    try {
+      recognition.start();
+    } catch(e) {
+      setStatus("🎤 Errore avvio: " + e.message, false);
+    }
+  });
+}
+/* ✅ FINE FIX MICROFONO */
+
+// SW ROOT UNICO - FIX PATH RELATIVO
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/massy.github.io/sw.js').then(()=>console.log('SW Group v1 root ok')).catch(e=>console.log('SW fail',e));
+  navigator.serviceWorker.register('./sw.js')
+    .then(()=>console.log('SW Spesa v6.1.6 ok'))
+    .catch(e=>console.log('SW fail',e));
 }
 </script>
 <script src="../drive-guard.js"></script>
