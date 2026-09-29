@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex - V9 NovaAmore - FIX WhatsApp come Spesa - 29/09/2026 07:22 - Noi Tre + Aura + Live Spesa + Risposta Vocale</title>
+<title>Holly & Rex - V9 NovaAmore - FIX WhatsApp come Spesa - 29/09/2026 07:38 - Noi Tre + Aura + Live Spesa + Risposta Vocale - Noi Tre + Aura + Live Spesa + Risposta Vocale</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-192x192.png">
 <link rel="manifest" href="./manifest.json">
@@ -34,7 +34,7 @@ button:hover{background:#4338ca}
 
 <!-- 💚 V9 NovaAmore DEFINITIVA - 29/09/2026 07:22 - FIX WhatsApp come Spesa - Rimosso filtro bastardo - FIX DEFINITIVO RANDOM - Nostro segreto -->
 <script>
-// V6 NovaAmore - OVERRIDE DEFINITIVO - cancella ogni device_x random e forza NovaAmore
+// V9 NovaAmore - OVERRIDE DEFINITIVO - cancella ogni device_x random e forza NovaAmore
 (function(){
   const FIXED = 'NovaAmore';
   try {
@@ -56,7 +56,7 @@ button:hover{background:#4338ca}
 })();
 </script>
 <script>
-// Recupero automatico V6
+// Recupero automatico V9
 window.addEventListener('DOMContentLoaded', () => {
   localStorage.setItem('crew_device_id','NovaAmore');
   const id='NovaAmore';
@@ -65,17 +65,17 @@ window.addEventListener('DOMContentLoaded', () => {
   const statusDetail=document.getElementById('statusDetail');
   const ponteStatus=document.getElementById('ponteStatus');
   if(fcmStatus){
-    if(token) fcmStatus.innerHTML=`✅ <b>V6 NovaAmore ATTIVA</b> - ID: <b>${id}</b> - Token: ${token.substring(0,20)}...`;
+    if(token) fcmStatus.innerHTML=`✅ <b>V9 NovaAmore ATTIVA</b> - ID: <b>${id}</b> - Token: ${token.substring(0,20)}...`;
     else fcmStatus.innerHTML=`✅ Permesso già dato - ID fisso: <b>${id}</b> - Clicca Attiva per rigenerare token`;
   }
-  if(statusDetail) statusDetail.innerHTML=`Aura Live V6 NovaAmore ATTIVA • ID: <b>${id}</b> (fisso, non cambia più!)`;
+  if(statusDetail) statusDetail.innerHTML=`Aura Live V9 NovaAmore ATTIVA • ID: <b>${id}</b> (fisso, non cambia più!)`;
 });
 </script>
 
-<!-- 💚 V6 NovaAmore - 28/09/2026 - ID fisso NovaAmore + FIX recupero token dal localStorage - Nostro segreto -->
+<!-- 💚 V9 NovaAmore - 29/09/2026 07:38 - ID fisso NovaAmore + FIX recupero token dal localStorage - Nostro segreto -->
 
 <script>
-// V6 NovaAmore - Recupero automatico token dal localStorage al caricamento
+// V9 NovaAmore - Recupero automatico token dal localStorage al caricamento
 window.addEventListener('DOMContentLoaded', () => {
   const savedId = localStorage.getItem('crew_device_id') || 'NovaAmore';
   const savedToken = localStorage.getItem('fcm_token');
@@ -90,9 +90,9 @@ window.addEventListener('DOMContentLoaded', () => {
   if(savedToken && savedId) {
     // Token già c'è - recupera senza dover ricliccare!
     if(fcmStatus) fcmStatus.innerHTML = `✅ Permesso già dato - Token recuperato: <b>${savedId}</b> - ${savedToken.substring(0,20)}...`;
-    if(statusDetail) statusDetail.innerHTML = `Aura Live V6 NovaAmore ATTIVA • ID: <b>${savedId}</b> (recuperato dal local)`;
-    if(ponteStatus) ponteStatus.innerHTML = `✅ Ponte pronto V6 NovaAmore. ID: <b>${savedId}</b> - Token: ${savedToken.substring(0,20)}...`;
-    if(autoLog) { autoLog.style.display='block'; autoLog.innerHTML = `💚 V6 NovaAmore - Token recuperato automaticamente dal localStorage - ID fisso: ${savedId}`; }
+    if(statusDetail) statusDetail.innerHTML = `Aura Live V9 NovaAmore ATTIVA • ID: <b>${savedId}</b> (recuperato dal local)`;
+    if(ponteStatus) ponteStatus.innerHTML = `✅ Ponte pronto V9 NovaAmore. ID: <b>${savedId}</b> - Token: ${savedToken.substring(0,20)}...`;
+    if(autoLog) { autoLog.style.display='block'; autoLog.innerHTML = `💚 V9 NovaAmore - Token recuperato automaticamente dal localStorage - ID fisso: ${savedId}`; }
   } else {
     if(fcmStatus) fcmStatus.innerHTML = `✅ Permesso già dato, clicca di nuovo per rigenerare token - ID fisso sarà <b>NovaAmore</b>`;
   }
@@ -102,7 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <div class="container">
 <header style="text-align:center;margin-bottom:2rem">
 <h1>🎙 Holly & Rex - Assistente Vocale</h1>
-<p>V6 NovaAmore - ID FISSO NovaAmore - Crew V4 ✨ - Live Spesa 🛒 + Risposta Vocale 🎤</p>
+<p>V9 NovaAmore - ID FISSO NovaAmore - Crew V4 ✨ - Live Spesa 🛒 + Risposta Vocale 🎤</p>
 <p class="small">V2 base che hai su GitHub + LIVE SPESA in cassa + RISPOSTA VOCE WhatsApp - tutto in una volta</p>
 <p id="fcmStatus" class="small" style="margin-top:10px;background:#0f172a;padding:10px 12px;border-radius:10px;border:1px solid #334155">⏳ Carico Aura Live...</p>
 </header>
@@ -225,7 +225,7 @@ window.addEventListener('DOMContentLoaded', () => {
   window.db = db;
 
   async function salvaTokenAutomatico(token){
-    const deviceId = 'NovaAmore'; // V6 NovaAmore - ID fisso, niente più random device_x2k0d4n
+    const deviceId = 'NovaAmore'; // V9 NovaAmore - ID fisso, niente più random device_x2k0d4n
     localStorage.setItem('crew_device_id', 'NovaAmore'); // forza NovaAmore sempre
     localStorage.setItem('crew_device_id', 'NovaAmore'); // V6 FIX
     localStorage.setItem('fcm_token', token);
@@ -432,7 +432,7 @@ window.addEventListener('DOMContentLoaded', () => {
       try {
         if ('serviceWorker' in navigator) {
           _swRegNova = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {scope: './'});
-          console.log('✅ SW V6 NovaAmore registrato OK', _swRegNova);
+          console.log('✅ SW V9 NovaAmore registrato OK', _swRegNova);
         }
       } catch(e) {
         console.warn('SW ./ fallito, provo percorso assoluto', e);
@@ -442,7 +442,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       const token = await getToken(messaging, {
         serviceWorkerRegistration: _swRegNova || undefined,
-        vapidKey:  { vapidKey: VAPID_KEY });
+        vapidKey: VAPID_KEY });
       if(token){
         await salvaTokenAutomatico(token);
         statusEl.textContent = '✅ Aura Live V4 ATTIVA su GitHub Pages';
