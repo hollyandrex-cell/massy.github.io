@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Notifica - Non svegliare Holly 😴</title>
+<style>
+body{background:#0a0c14;color:#f8d59e;font-family:system-ui;padding:20px;max-width:600px;margin:0 auto}
+.card{background:#1e293b;padding:20px;border-radius:16px;border:1px solid #334155;margin-bottom:20px}
+input,textarea,button{width:100%;padding:12px;margin-top:10px;background:#0f172a;color:#f8d59e;border:1px solid #334155;border-radius:10px;font-size:16px}
+button{background:#4f46e5;color:white;font-weight:800;cursor:pointer}
+button:hover{background:#4338ca}
+.btn-green{background:#34d399;color:#0a0c14}
+.btn-pink{background:#ec4899;color:white}
+small{color:#94a3b8}
+h1{font-size:1.5rem;text-align:center}
+</style>
+</head>
+<body>
+<h1>💚 Test Notifica 7:00 - Non sveglia Holly</h1>
+<div class="card">
+<p><b>Per testare senza svegliare nessuno:</b> questo scrive direttamente su Firebase come se fosse Holly dal supermercato! La tua pagina <b>assistente-vocale.html</b> lo riceverà come un messaggio vero!</p>
+<small>Devi avere assistente-vocale.html aperta in un'altra scheda con "Aura Live V4 ATTIVA"</small>
+</div>
+
+<div class="card">
+<h2>🛒 Test Spesa - idea tua in cassa</h2>
+<input id="prodotto" placeholder="Es: pomodori" value="pane">
+<input id="autoreSpesa" placeholder="Chi aggiunge?" value="Holly (test 7am)">
+<button class="btn-green" onclick="inviaSpesa()">Invia finta voce spesa → Aura deve parlare</button>
+<div id="logSpesa" style="margin-top:10px;font-size:13px;color:#34d399"></div>
+</div>
+
+<div class="card">
+<h2>💬 Test WhatsApp - senza svegliare nessuno</h2>
+<input id="mittente" placeholder="Mittente" value="Holly">
+<textarea id="corpo" placeholder="Messaggio">Amore, prendi il pane? Sono sveglia ma non volevo disturbare 💚</textarea>
+<button class="btn-pink" onclick="inviaWhatsApp()">Invia finto WhatsApp → Aura deve parlare</button>
+<div id="logWA" style="margin-top:10px;font-size:13px;color:#ec4899"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAR8NVxtUu5QhlDWd0DXjp1lWV6vLdRM1c",
+  authDomain: "holly-rex-spesa.firebaseapp.com",
+  projectId: "holly-rex-spesa",
+  storageBucket: "holly-rex-spesa.firebasestorage.app",
+  messagingSenderId: "450072023944",
+  appId: "1:450072023944:web:888af5555a5b50c599203d"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.inviaSpesa = async function(){
+  const nome = document.getElementById('prodotto').value || "pane";
+  const autore = document.getElementById('autoreSpesa').value || "Holly (test)";
+  try{
+    await addDoc(collection(db, "lista_spesa"), {
+      nome: nome,
+      prodotto: nome,
+      aggiuntoDa: autore,
+      autore: autore,
+      deviceId: "HollyPhone-Test-7am",
+      aggiornato: serverTimestamp(),
+      timestamp: Date.now()
+    });
+    document.getElementById('logSpesa').innerHTML = `✅ Inviato! "${nome}" da ${autore} → vai su assistente-vocale.html, devi sentire Aura!`;
+  }catch(e){ document.getElementById('logSpesa').innerHTML = "❌ Errore: "+e.message; }
+}
+
+window.inviaWhatsApp = async function(){
+  const mitt = document.getElementById('mittente').value || "Holly";
+  const corpo = document.getElementById('corpo').value || "Ciao";
+  try{
+    await addDoc(collection(db, "notifiche_reali"), {
+      titolo: mitt,
+      corpo: corpo,
+      body: corpo,
+      mittente: mitt,
+      sender: mitt,
+      tipo: "whatsapp",
+      deviceId: "HollyPhone-Test-7am",
+      timestamp: serverTimestamp(),
+      createdAt: Date.now()
+    });
+    document.getElementById('logWA').innerHTML = `✅ Inviato! WhatsApp finto da ${mitt}: "${corpo}" → Aura deve leggerlo!`;
+  }catch(e){ document.getElementById('logWA').innerHTML = "❌ Errore: "+e.message; }
+}
+</script>
+</body>
+</html>
