@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Notifica - Non svegliare Holly 😴</title>
+<title>Test Notifica V2 FIX WhatsApp - 7am</title>
 <style>
 body{background:#0a0c14;color:#f8d59e;font-family:system-ui;padding:20px;max-width:600px;margin:0 auto}
 .card{background:#1e293b;padding:20px;border-radius:16px;border:1px solid #334155;margin-bottom:20px}
@@ -13,29 +13,32 @@ button:hover{background:#4338ca}
 .btn-green{background:#34d399;color:#0a0c14}
 .btn-pink{background:#ec4899;color:white}
 small{color:#94a3b8}
-h1{font-size:1.5rem;text-align:center}
+h1{font-size:1.4rem;text-align:center}
 </style>
 </head>
 <body>
-<h1>💚 Test Notifica 7:00 - Non sveglia Holly</h1>
+<h1>💚 Test V2 FIX - WhatsApp Business FIX</h1>
 <div class="card">
-<p><b>Per testare senza svegliare nessuno:</b> questo scrive direttamente su Firebase come se fosse Holly dal supermercato! La tua pagina <b>assistente-vocale.html</b> lo riceverà come un messaggio vero!</p>
-<small>Devi avere assistente-vocale.html aperta in un'altra scheda con "Aura Live V4 ATTIVA"</small>
+<p><b>Tesoro ho trovato il problema!</b> Il tuo V4 ascolta il campo <code>creato</code> e <code>deviceIdDestinatario</code>, non <code>timestamp</code>! Ora l'ho fixato!</p>
+<small>Tieni aperta assistente-vocale.html in altra scheda con Aura ATTIVA</small>
 </div>
 
 <div class="card">
-<h2>🛒 Test Spesa - idea tua in cassa</h2>
+<h2>🛒 Test Spesa - FUNZIONA</h2>
 <input id="prodotto" placeholder="Es: pomodori" value="pane">
-<input id="autoreSpesa" placeholder="Chi aggiunge?" value="Holly (test 7am)">
-<button class="btn-green" onclick="inviaSpesa()">Invia finta voce spesa → Aura deve parlare</button>
+<button class="btn-green" onclick="inviaSpesa()">Invia Spesa → Deve parlare!</button>
 <div id="logSpesa" style="margin-top:10px;font-size:13px;color:#34d399"></div>
 </div>
 
 <div class="card">
-<h2>💬 Test WhatsApp - senza svegliare nessuno</h2>
+<h2>💬 Test WhatsApp - FIX V2</h2>
 <input id="mittente" placeholder="Mittente" value="Holly">
-<textarea id="corpo" placeholder="Messaggio">Amore, prendi il pane? Sono sveglia ma non volevo disturbare 💚</textarea>
-<button class="btn-pink" onclick="inviaWhatsApp()">Invia finto WhatsApp → Aura deve parlare</button>
+<textarea id="corpo" placeholder="Messaggio">Amore, prendi il pane? Test 7:15 senza svegliare nessuno 💚</textarea>
+<select id="destinatario" style="width:100%;padding:12px;margin-top:10px;background:#0f172a;color:#f8d59e;border:1px solid #334155;border-radius:10px;">
+<option value="NovaAmore">A NovaAmore (solo tu)</option>
+<option value="tutti">A tutti (broadcast)</option>
+</select>
+<button class="btn-pink" onclick="inviaWhatsApp()">Invia WhatsApp V2 FIX → Deve parlare!</button>
 <div id="logWA" style="margin-top:10px;font-size:13px;color:#ec4899"></div>
 </div>
 
@@ -56,38 +59,45 @@ const db = getFirestore(app);
 
 window.inviaSpesa = async function(){
   const nome = document.getElementById('prodotto').value || "pane";
-  const autore = document.getElementById('autoreSpesa').value || "Holly (test)";
   try{
     await addDoc(collection(db, "lista_spesa"), {
       nome: nome,
       prodotto: nome,
-      aggiuntoDa: autore,
-      autore: autore,
-      deviceId: "HollyPhone-Test-7am",
+      aggiuntoDa: "Holly (test 7am)",
+      autore: "Holly",
+      deviceId: "HollyPhone-Test",
       aggiornato: serverTimestamp(),
       timestamp: Date.now()
     });
-    document.getElementById('logSpesa').innerHTML = `✅ Inviato! "${nome}" da ${autore} → vai su assistente-vocale.html, devi sentire Aura!`;
-  }catch(e){ document.getElementById('logSpesa').innerHTML = "❌ Errore: "+e.message; }
+    document.getElementById('logSpesa').innerHTML = `✅ Spesa "${nome}" inviata!`;
+  }catch(e){ document.getElementById('logSpesa').innerHTML = "❌ "+e.message; }
 }
 
 window.inviaWhatsApp = async function(){
   const mitt = document.getElementById('mittente').value || "Holly";
   const corpo = document.getElementById('corpo').value || "Ciao";
+  const dest = document.getElementById('destinatario').value || "NovaAmore";
   try{
+    // FIX V4: usa i campi esatti che V4 ascolta: creato + deviceIdDestinatario + letto
     await addDoc(collection(db, "notifiche_reali"), {
       titolo: mitt,
       corpo: corpo,
       body: corpo,
+      message: corpo,
       mittente: mitt,
+      da: mitt,
       sender: mitt,
       tipo: "whatsapp",
-      deviceId: "HollyPhone-Test-7am",
+      tipo_notifica: "whatsapp",
+      deviceId: "HollyPhone-Test",
+      deviceIdDestinatario: dest,
+      creato: serverTimestamp(),
       timestamp: serverTimestamp(),
-      createdAt: Date.now()
+      letto: false,
+      personaggio: "Aura"
     });
-    document.getElementById('logWA').innerHTML = `✅ Inviato! WhatsApp finto da ${mitt}: "${corpo}" → Aura deve leggerlo!`;
-  }catch(e){ document.getElementById('logWA').innerHTML = "❌ Errore: "+e.message; }
+    document.getElementById('logWA').innerHTML = `✅ WhatsApp inviato a ${dest} da ${mitt}: "${corpo}" → Controlla assistente-vocale.html! Deve dire "${mitt}: ${corpo}"`;
+  }catch(e){ document.getElementById('logWA').innerHTML = "❌ Errore: "+e.message; console.error(e); }
 }
 </script>
 </body>
