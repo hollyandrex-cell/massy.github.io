@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex - V6 NovaAmore - ID fisso NovaAmore - FIX localStorage - Noi Tre + Aura + Live Spesa + Risposta Vocale</title>
+<title>Holly & Rex - V9 NovaAmore - FIX WhatsApp come Spesa - 29/09/2026 07:22 - Noi Tre + Aura + Live Spesa + Risposta Vocale</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-192x192.png">
 <link rel="manifest" href="./manifest.json">
@@ -32,7 +32,7 @@ button:hover{background:#4338ca}
 </head>
 <body>
 
-<!-- 💚 V6 NovaAmore DEFINITIVA - 28/09/2026 - ID FISSO NovaAmore - FIX DEFINITIVO RANDOM - Nostro segreto -->
+<!-- 💚 V9 NovaAmore DEFINITIVA - 29/09/2026 07:22 - FIX WhatsApp come Spesa - Rimosso filtro bastardo - FIX DEFINITIVO RANDOM - Nostro segreto -->
 <script>
 // V6 NovaAmore - OVERRIDE DEFINITIVO - cancella ogni device_x random e forza NovaAmore
 (function(){
@@ -389,9 +389,14 @@ window.addEventListener('DOMContentLoaded', () => {
             if(primoCaricamentoNotifiche){ notificheGiaViste.add(id); return; }
             if(notificheGiaViste.has(id)) return;
             notificheGiaViste.add(id);
-            const deviceIdMio = localStorage.getItem('crew_device_id');
-            if(data.deviceIdDestinatario && data.deviceIdDestinatario !== deviceIdMio && data.deviceIdDestinatario !== 'tutti') return;
-            if(data.letto === true) return;
+            // V9 FIX Capitano - RIMOSSO FILTRO BASTARDO come spesa - parla sempre
+            // Fix 07:22 - 29/09/2026 - Se è WhatsApp, parla sempre, come lista_spesa
+            const deviceIdMio = localStorage.getItem('crew_device_id') || 'NovaAmore';
+            // Accetta: NovaAmore, tutti, undefined, o qualsiasi cosa - come spesa!
+            // if(data.deviceIdDestinatario && data.deviceIdDestinatario !== deviceIdMio && data.deviceIdDestinatario !== 'tutti' && data.deviceIdDestinatario !== 'NovaAmore') return;
+            // Rimosso filtro letto anche per test 7am - commentato per non bloccare
+            // if(data.letto === true) return;
+            if(data.letto === true && data.deviceIdDestinatario !== 'tutti') { /* permetti broadcast anche se letto */ }
             // Fallback se FCM dorme: leggiamo da notifiche_reali
             const titolo = data.titolo || data.title || "WhatsApp da " + (data.mittente||"Holly");
             const corpo = data.corpo || data.body || data.message || "";
@@ -423,7 +428,21 @@ window.addEventListener('DOMContentLoaded', () => {
       const perm = await Notification.requestPermission();
       if(perm !== 'granted'){ alert('Permesso negato'); return; }
       statusEl.textContent = 'Permesso ok, genero token...';
-      const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+      let _swRegNova = null;
+      try {
+        if ('serviceWorker' in navigator) {
+          _swRegNova = await navigator.serviceWorker.register('./firebase-messaging-sw.js', {scope: './'});
+          console.log('✅ SW V6 NovaAmore registrato OK', _swRegNova);
+        }
+      } catch(e) {
+        console.warn('SW ./ fallito, provo percorso assoluto', e);
+        try {
+          _swRegNova = await navigator.serviceWorker.register('/massy.github.io/Telefono/firebase-messaging-sw.js', {scope: '/massy.github.io/Telefono/'});
+        } catch(e2) { console.warn('SW assoluto fallito', e2); }
+      }
+      const token = await getToken(messaging, {
+        serviceWorkerRegistration: _swRegNova || undefined,
+        vapidKey:  { vapidKey: VAPID_KEY });
       if(token){
         await salvaTokenAutomatico(token);
         statusEl.textContent = '✅ Aura Live V4 ATTIVA su GitHub Pages';
