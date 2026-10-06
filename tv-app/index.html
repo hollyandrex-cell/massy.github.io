@@ -138,8 +138,8 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
 </div>
 
 <script>
-    // CONFIGURAZIONE
-    const DB_PATH = '../canzoni-db.json';
+    // CONFIGURAZIONE SICURA
+    const DB_PATH = 'https://hollyandrex-cell.github.io/canzoni-db.json'; // PATH ASSOLUTO PER EVITARE ERRORI RELATIVI
     const TESTI_BASE = '../';
     let canzoni = [];
     let byArtist = {};
@@ -149,18 +149,25 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
     function youtubeWatchUrl(id){ return `https://www.youtube.com/watch?v=${id}`; }
     function siteUrlFromDb(e){ return `${TESTI_BASE}${e.url || 'index.html'}?utm_source=tv_app&utm_medium=tv&utm_campaign=player`; }
     function testoSiteUrl(e){ 
-        if(e.testo_url.includes('#')){
-            const [f,h] = e.testo_url.split('#');
-            return `${TESTI_BASE}${f}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${h}`;
+        let url = e.testo_url || '';
+        if(url.includes('#')){
+            let parts = url.split('#');
+            return `${TESTI_BASE}${parts[0]}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${parts[1]}`;
         }
-        return `${TESTI_BASE}${e.testo_url}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;
+        return `${TESTI_BASE}${url}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;
     }
     async function fetchText(u){
-        const r = await fetch(u, {cache:'no-cache'});
-        if(!r.ok) throw new Error(u + ' ' + r.status);
-        return r.text();
+        try {
+            const r = await fetch(u, {cache:'no-cache'});
+            if(!r.ok) throw new Error(u + ' ' + r.status);
+            return r.text();
+        } catch(err) {
+            console.error('Errore fetch:', err);
+            return '';
+        }
     }
     function extractLyric(html, anchorId){
+        if(!html) return 'Testo non disponibile.';
         const p = new DOMParser();
         const d = p.parseFromString(html, 'text/html');
         let el = anchorId ? d.getElementById(anchorId) : null;
@@ -183,62 +190,70 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
             }
             return tutti[0].textContent.trim();
         }
-        return 'Testo non trovato #'+anchorId;
+        return 'Testo non trovato per: '+anchorId;
     }
     
-    // CARICAMENTO E INIZIALIZZAZIONE DINAMICA
+    // CARICAMENTO E INIZIALIZZAZIONE
     async function loadDB(){
+        console.log(' Caricamento DB iniziato...');
         try {
-            // 1. Carica il DB
             const t = await fetchText(DB_PATH);
+            if(!t) throw new Error('JSON vuoto');
             canzoni = JSON.parse(t);
+            console.log(`✅ DB caricato: ${canzoni.length} brani`);
         } catch(e) {
-            console.warn('Fallback DB...', e);
+            console.error(' Errore caricamento DB:', e);
+            // Fallback locales se il fetch assoluto fallisce
             try {
-                const t2 = await fetchText('../canzoni-db-con-atmosfera-mood.json');
+                const t2 = await fetchText('../canzoni-db.json');
                 canzoni = JSON.parse(t2);
             } catch(e2) {
-                try {
-                    const t3 = await fetchText('./canzoni-db.json');
-                    canzoni = JSON.parse(t3);
-                } catch(e3) { canzoni = []; }
+                console.error('❌ Fallback fallito:', e2);
+                canzoni = [];
             }
         }
     
-        // 2. Aggiorna Contatori (Via il "49" fisso!)
-        document.getElementById('totBrani').textContent = canzoni.length;
-        document.getElementById('totTesti').textContent = canzoni.length;
+        // 1. Aggiorna Contatori
+        const totBraniEl = document.getElementById('totBrani');
+        const totTestiEl = document.getElementById('totTesti');
+        if(totBraniEl) totBraniEl.textContent = canzoni.length;
+        if(totTestiEl) totTestiEl.textContent = canzoni.length;
+        console.log(`🔢 Contatori aggiornati a: ${canzoni.length}`);
     
-        // 3. Cambia Titolo Sezione Testi (Da "TESTO • LIVE" a "SCEGLI LA TUA CANZONE")
+        // 2. Cambia Titolo Sezione Testi
         const testoTitle = Array.from(document.querySelectorAll('h3')).find(el => el.innerText.includes('TESTO'));
-        if(testoTitle) testoTitle.innerText = 'SCEGLI LA TUA CANZONE';
+        if(testoTitle) {
+            testoTitle.innerText = 'SCEGLI LA TUA CANZONE';
+            console.log(' Titolo sezione cambiato');
+        }
     
-        // 4. Popola Menu a Tendina PULITO (Titoli umani, ID nascosti)
+        // 3. Popola Menu a Tendina PULITO
         const sel = document.getElementById('selCanzone');
-        sel.innerHTML = '';
-        canzoni.forEach((c, i) => {
-            const option = document.createElement('option');
-            // ID tecnico nascosto nel value
-            const idTecnico = c.testo_url.split('#')[1] || c.title.toLowerCase().replace(/\s+/g,'');
-            option.value = i; // Usiamo l'indice per semplicità
-            option.dataset.id = idTecnico; 
-            // Testo visibile pulito
-            option.innerText = `${c.title.trim()} - ${c.artist.trim()}`;
-            sel.appendChild(option);
-        });
+        if(sel) {
+            sel.innerHTML = '';
+            canzoni.forEach((c, i) => {
+                const option = document.createElement('option');
+                option.value = i;
+                option.innerText = `${(c.title||'').trim()} - ${(c.artist||'').trim()}`;
+                sel.appendChild(option);
+            });
+            console.log(' Menu popolato');
+        }
     
-        // 5. Popola Contatori Artisti
+        // 4. Popola Contatori Artisti
         byArtist = {};
         canzoni.forEach(c => {
-            const a = (c.artist || '').toLowerCase();
-            byArtist[a] = (byArtist[a] || 0) + 1;
+            const a = (c.artist || '').toLowerCase().trim();
+            if(a) byArtist[a] = (byArtist[a] || 0) + 1;
         });
         const counters = document.getElementById('counters');
-        counters.innerHTML = Object.entries(byArtist).map(([k,v]) => 
-            `<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`
-        ).join('');
+        if(counters) {
+            counters.innerHTML = Object.entries(byArtist).map(([k,v]) => 
+                `<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`
+            ).join('');
+        }
     
-        // 6. Link Strategico in Fondo
+        // 5. Link Strategico in Fondo
         const oldLink = document.getElementById('linkTestoSite');
         if(oldLink) {
             oldLink.href = 'https://hollyandrex-cell.github.io/';
@@ -246,36 +261,40 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
             oldLink.innerText = 'Scopri il Mondo Holly & Rex Group →';
             oldLink.style.color = '#FF6B8A';
             oldLink.style.fontWeight = 'bold';
+            console.log('🔗 Link strategico aggiornato');
         }
     
-        // 7. Seleziona Canzone Iniziale (Summer Night o prima)
-        let idx = canzoni.findIndex(c => c.title.toLowerCase().includes('summer night'));
+        // 6. Seleziona Canzone Iniziale
+        let idx = canzoni.findIndex(c => c.title && c.title.toLowerCase().includes('summer night'));
         if(idx < 0) idx = 0;
-        sel.value = idx;
+        if(sel) sel.value = idx;
         await showSong(idx);
     
         // Event Listeners
-        sel.addEventListener('change', e => showSong(parseInt(e.target.value)));
+        if(sel) sel.addEventListener('change', e => showSong(parseInt(e.target.value)));
         
-        counters.addEventListener('click', e => {
-            const chip = e.target.closest('.counter');
-            if(!chip) return;
-            const art = chip.dataset.art;
-            document.querySelectorAll('.counter').forEach(x => x.classList.remove('active'));
-            chip.classList.add('active');
-            const filt = canzoni.map((c,i) => ({c,i})).filter(o => o.c.artist.toLowerCase() === art);
-            if(!filt.length) return;
-            sel.innerHTML = '';
-            filt.forEach(o => {
-                const opt = document.createElement('option');
-                opt.value = o.i;
-                opt.innerText = `${o.c.title.trim()} - ${o.c.artist.trim()}`;
-                sel.appendChild(opt);
+        if(counters) {
+            counters.addEventListener('click', e => {
+                const chip = e.target.closest('.counter');
+                if(!chip) return;
+                const art = chip.dataset.art;
+                document.querySelectorAll('.counter').forEach(x => x.classList.remove('active'));
+                chip.classList.add('active');
+                const filt = canzoni.map((c,i) => ({c,i})).filter(o => o.c.artist && o.c.artist.toLowerCase() === art);
+                if(!filt.length) return;
+                sel.innerHTML = '';
+                filt.forEach(o => {
+                    const opt = document.createElement('option');
+                    opt.value = o.i;
+                    opt.innerText = `${o.c.title.trim()} - ${o.c.artist.trim()}`;
+                    sel.appendChild(opt);
+                });
+                showSong(filt[0].i);
             });
-            showSong(filt[0].i);
-        });
+        }
     
         document.addEventListener('keydown', e => {
+            if(!sel) return;
             if(e.key === 'ArrowDown'){ e.preventDefault(); sel.selectedIndex = Math.min(sel.options.length-1, sel.selectedIndex+1); sel.dispatchEvent(new Event('change')); }
             if(e.key === 'ArrowUp'){ e.preventDefault(); sel.selectedIndex = Math.max(0, sel.selectedIndex-1); sel.dispatchEvent(new Event('change')); }
         });
@@ -288,66 +307,75 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
         
         const artista = (entry.artist || '').toUpperCase();
         const anchor = (entry.testo_url || '').split('#')[1] || '';
-        const file = (entry.testo_url || '').split('#')[0] || `testi-${entry.artist.toLowerCase()}.html`;
+        const file = (entry.testo_url || '').split('#')[0] || `testi-${(entry.artist||'').toLowerCase()}.html`;
     
         // Aggiorna UI Sinistra
-        document.getElementById('inOndaArtist').textContent = `${artista} • ${artista}`;
-        document.getElementById('titleSingle').textContent = entry.title;
-        document.getElementById('subtitleSingle').textContent = entry.sottotitolo || 'Il futuro è già qui';
-        document.getElementById('voceMeta').textContent = `${entry.artist} • voce originale`;
-        document.getElementById('testoSync').textContent = `${file}${anchor ? '#'+anchor : ''}`;
-        document.getElementById('atm').textContent = entry.atmosfera || 'Notte highway • Città blu';
-        document.getElementById('mood').textContent = entry.mood || 'Luce & pelle • Timidezza';
-        document.getElementById('feat').textContent = entry.featuring || entry.artist;
+        const inOnda = document.getElementById('inOndaArtist'); if(inOnda) inOnda.textContent = `${artista} • ${artista}`;
+        const titleSingle = document.getElementById('titleSingle'); if(titleSingle) titleSingle.textContent = entry.title;
+        const subtitle = document.getElementById('subtitleSingle'); if(subtitle) subtitle.textContent = entry.sottotitolo || 'Il futuro è già qui';
+        const voceMeta = document.getElementById('voceMeta'); if(voceMeta) voceMeta.textContent = `${entry.artist} • voce originale`;
+        const testoSync = document.getElementById('testoSync'); if(testoSync) testoSync.textContent = `${file}${anchor ? '#'+anchor : ''}`;
+        const atm = document.getElementById('atm'); if(atm) atm.textContent = entry.atmosfera || 'Notte highway • Città blu';
+        const mood = document.getElementById('mood'); if(mood) mood.textContent = entry.mood || 'Luce & pelle • Timidezza';
+        const feat = document.getElementById('feat'); if(feat) feat.textContent = entry.featuring || entry.artist;
     
         // Video YouTube
         const ytId = entry.youtube_id;
         const iframe = document.getElementById('ytFrame');
         const fallback = document.getElementById('coverFallback');
-        if(ytId){
+        if(ytId && iframe && fallback){
             fallback.style.display = 'none';
             iframe.style.display = 'block';
             iframe.src = youtubeEmbedUrl(ytId);
-        } else {
+        } else if(iframe && fallback) {
             iframe.style.display = 'none';
             fallback.style.display = 'grid';
         }
     
         // Bottoni Azione
-        document.getElementById('btnYoutube').onclick = () => window.open(youtubeWatchUrl(ytId), '_blank');
-        document.getElementById('btnSito').onclick = () => window.open(siteUrlFromDb(entry), '_blank');
+        const btnYoutube = document.getElementById('btnYoutube');
+        if(btnYoutube && ytId) btnYoutube.onclick = () => window.open(youtubeWatchUrl(ytId), '_blank');
+        
+        const btnSito = document.getElementById('btnSito');
+        if(btnSito) btnSito.onclick = () => window.open(siteUrlFromDb(entry), '_blank');
         
         const qrBtn = document.getElementById('btnQR');
         const qrCont = document.getElementById('qrContainer');
         const qrImg = document.getElementById('qrImg');
-        qrBtn.onclick = () => {
-            const show = qrCont.style.display === 'none';
-            qrCont.style.display = show ? 'block' : 'none';
-            if(show){
-                const url = encodeURIComponent(youtubeWatchUrl(ytId));
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
-            }
-        };
+        if(qrBtn && qrCont && qrImg && ytId) {
+            qrBtn.onclick = () => {
+                const show = qrCont.style.display === 'none';
+                qrCont.style.display = show ? 'block' : 'none';
+                if(show){
+                    const url = encodeURIComponent(youtubeWatchUrl(ytId));
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
+                }
+            };
+        }
     
         // Testi Destra
-        document.getElementById('lyricArtistId').textContent = `${artista} • ${anchor || ''}`.trim();
-        document.getElementById('lyricTitle').textContent = entry.title;
-        document.getElementById('linkTestoSite').href = testoSiteUrl(entry);
+        const lyricArtistId = document.getElementById('lyricArtistId'); if(lyricArtistId) lyricArtistId.textContent = `${artista} • ${anchor || ''}`.trim();
+        const lyricTitle = document.getElementById('lyricTitle'); if(lyricTitle) lyricTitle.textContent = entry.title;
+        const linkTestoSite = document.getElementById('linkTestoSite'); if(linkTestoSite) linkTestoSite.href = testoSiteUrl(entry);
         
         const lyricEl = document.getElementById('lyricText');
-        lyricEl.textContent = ' Carico testo live da '+file+'...';
-        try {
-            const html = await fetchText(TESTI_BASE + file);
-            const testo = extractLyric(html, anchor);
-            lyricEl.textContent = testo;
-        } catch(err) {
-            lyricEl.textContent = 'Errore caricamento testo live: '+err.message;
+        if(lyricEl) {
+            lyricEl.textContent = '⏳ Carico testo live da '+file+'...';
+            try {
+                const html = await fetchText(TESTI_BASE + file);
+                const testo = extractLyric(html, anchor);
+                lyricEl.textContent = testo;
+            } catch(err) {
+                lyricEl.textContent = 'Errore caricamento testo: '+err.message;
+            }
         }
     }
     
     // AVVIO
-    document.addEventListener('DOMContentLoaded', loadDB);
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log(' DOMContentLoaded - Avvio loadDB');
+        loadDB();
+    });
     </script>
-    <!-- FINE SCRIPT HOLLY & REX TV -->
 </body>
 </html>
