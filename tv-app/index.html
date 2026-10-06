@@ -138,61 +138,216 @@ header h1{font-size:13px;letter-spacing:.18em;margin:0;font-weight:700}
 </div>
 
 <script>
-const DB_PATH='../canzoni-db.json';const TESTI_BASE='../';let canzoni=[];let byArtist={};
-function youtubeEmbedUrl(id){return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;}
-function youtubeWatchUrl(id){return `https://www.youtube.com/watch?v=${id}`;}
-function siteUrlFromDb(e){return `${TESTI_BASE}${e.url||'index.html'}?utm_source=tv_app&utm_medium=tv&utm_campaign=player`;}
-function testoSiteUrl(e){if(e.testo_url.includes('#')){const [f,h]=e.testo_url.split('#');return `${TESTI_BASE}${f}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${h}`;}return `${TESTI_BASE}${e.testo_url}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;}
-async function fetchText(u){const r=await fetch(u,{cache:'no-cache'});if(!r.ok)throw new Error(u+' '+r.status);return r.text();}
-function extractLyric(html,anchorId){
- const p=new DOMParser();const d=p.parseFromString(html,'text/html');
- let el=anchorId?d.getElementById(anchorId):null;
- if(el){
-  const t=el.classList&&el.classList.contains('testo')?el:el.querySelector('.testo');
-  if(t)return t.textContent.trim();
-  let n=el.nextElementSibling;let s=0;while(n&&s<8){if(n.classList&&n.classList.contains('testo'))return n.textContent.trim();if(n.querySelector){const q=n.querySelector('.testo');if(q)return q.textContent.trim();}n=n.nextElementSibling;s++;}
- }
- const tutti=d.querySelectorAll('.testo');if(tutti.length>0){if(!anchorId)return tutti[0].textContent.trim();for(const t of tutti){const par=t.closest('[id]');if(par&&par.id.toLowerCase().includes(anchorId.toLowerCase()))return t.textContent.trim();}return tutti[0].textContent.trim();}
- return 'Testo non trovato #'+anchorId;
-}
-async function loadDB(){
- try{const t=await fetchText(DB_PATH);canzoni=JSON.parse(t);}catch(e){
-  try{const t2=await fetchText('../canzoni-db-con-atmosfera-mood.json');canzoni=JSON.parse(t2);}catch(e2){try{const t3=await fetchText('./canzoni-db.json');canzoni=JSON.parse(t3);}catch(e3){canzoni=[];}}
- }
- byArtist={};canzoni.forEach(c=>{const a=(c.artist||'').toLowerCase();if(!byArtist[a])byArtist[a]=0;byArtist[a]++;});
- document.getElementById('totBrani').textContent=canzoni.length;document.getElementById('totTesti').textContent=canzoni.length;
- const sel=document.getElementById('selCanzone');
- sel.innerHTML=canzoni.map((c,i)=>{const id=(c.testo_url||'').split('#')[1]||c.title.toLowerCase().replace(/\s+/g,'');return `<option value="${i}">[${(c.artist||'').toUpperCase()}] ${c.title} — ${id}</option>`;}).join('');
- const counters=document.getElementById('counters');counters.innerHTML=Object.entries(byArtist).map(([k,v])=>`<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`).join('');
- let idx=canzoni.findIndex(c=>c.title.toLowerCase().includes('summer night'));if(idx<0)idx=0;sel.value=idx;await showSong(idx);
- sel.addEventListener('change',e=>showSong(parseInt(e.target.value)));
- counters.addEventListener('click',e=>{const chip=e.target.closest('.counter');if(!chip)return;const art=chip.dataset.art;document.querySelectorAll('.counter').forEach(x=>x.classList.remove('active'));chip.classList.add('active');const filt=canzoni.map((c,i)=>({c,i})).filter(o=>o.c.artist.toLowerCase()===art);if(!filt.length)return;sel.innerHTML=filt.map(o=>`<option value="${o.i}">[${o.c.artist.toUpperCase()}] ${o.c.title}</option>`).join('');showSong(filt[0].i);});
- document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();sel.selectedIndex=Math.min(sel.options.length-1,sel.selectedIndex+1);sel.dispatchEvent(new Event('change'));}if(e.key==='ArrowUp'){e.preventDefault();sel.selectedIndex=Math.max(0,sel.selectedIndex-1);sel.dispatchEvent(new Event('change'));}});
-}
-async function showSong(idx){
- const entry=canzoni[idx];if(!entry)return;
- const artista=(entry.artist||'').toUpperCase();const anchor=(entry.testo_url||'').split('#')[1]||'';const file=(entry.testo_url||'').split('#')[0]||`testi-${entry.artist.toLowerCase()}.html`;
- document.getElementById('inOndaArtist').textContent=`${artista} • ${artista}`;
- document.getElementById('titleSingle').textContent=entry.title;
- document.getElementById('subtitleSingle').textContent=entry.sottotitolo||'Il futuro è già qui';
- document.getElementById('voceMeta').textContent=`${entry.artist} • voce originale`;
- document.getElementById('testoSync').textContent=`${file}${anchor?'#'+anchor:''}`;
- document.getElementById('atm').textContent=entry.atmosfera||'Notte highway • Città blu';
- document.getElementById('mood').textContent=entry.mood||'Luce & pelle • Timidezza';
- document.getElementById('feat').textContent=entry.featuring||entry.artist;
- const ytId=entry.youtube_id;const iframe=document.getElementById('ytFrame');const fallback=document.getElementById('coverFallback');
- if(ytId){fallback.style.display='none';iframe.style.display='block';iframe.src=youtubeEmbedUrl(ytId);}else{iframe.style.display='none';fallback.style.display='grid';}
- document.getElementById('btnYoutube').onclick=()=>window.open(youtubeWatchUrl(ytId),'_blank');
- document.getElementById('btnSito').onclick=()=>window.open(siteUrlFromDb(entry),'_blank');
- const qrBtn=document.getElementById('btnQR');const qrCont=document.getElementById('qrContainer');const qrImg=document.getElementById('qrImg');
- qrBtn.onclick=()=>{const show=qrCont.style.display==='none';qrCont.style.display=show?'block':'none';if(show){const url=encodeURIComponent(youtubeWatchUrl(ytId));qrImg.src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;}};
- document.getElementById('lyricArtistId').textContent=`${artista} • ${anchor||''}`.trim();
- document.getElementById('lyricTitle').textContent=entry.title;
- document.getElementById('linkTestoSite').href=testoSiteUrl(entry);
- const lyricEl=document.getElementById('lyricText');lyricEl.textContent='⏳ Carico testo live da '+file+'...';
- try{const html=await fetchText(TESTI_BASE+file);const testo=extractLyric(html,anchor);lyricEl.textContent=testo;}catch(err){lyricEl.textContent='Errore caricamento testo live: '+err.message;}
-}
-document.addEventListener('DOMContentLoaded',loadDB);
-</script>
+    // CONFIGURAZIONE
+    const DB_PATH = '../canzoni-db.json';
+    const TESTI_BASE = '../';
+    let canzoni = [];
+    let byArtist = {};
+    
+    // FUNZIONI DI SUPPORTO
+    function youtubeEmbedUrl(id){ return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`; }
+    function youtubeWatchUrl(id){ return `https://www.youtube.com/watch?v=${id}`; }
+    function siteUrlFromDb(e){ return `${TESTI_BASE}${e.url || 'index.html'}?utm_source=tv_app&utm_medium=tv&utm_campaign=player`; }
+    function testoSiteUrl(e){ 
+        if(e.testo_url.includes('#')){
+            const [f,h] = e.testo_url.split('#');
+            return `${TESTI_BASE}${f}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live#${h}`;
+        }
+        return `${TESTI_BASE}${e.testo_url}?utm_source=tv_app&utm_medium=tv&utm_campaign=testo_live`;
+    }
+    async function fetchText(u){
+        const r = await fetch(u, {cache:'no-cache'});
+        if(!r.ok) throw new Error(u + ' ' + r.status);
+        return r.text();
+    }
+    function extractLyric(html, anchorId){
+        const p = new DOMParser();
+        const d = p.parseFromString(html, 'text/html');
+        let el = anchorId ? d.getElementById(anchorId) : null;
+        if(el){
+            const t = el.classList && el.classList.contains('testo') ? el : el.querySelector('.testo');
+            if(t) return t.textContent.trim();
+            let n = el.nextElementSibling; let s = 0;
+            while(n && s < 8){
+                if(n.classList && n.classList.contains('testo')) return n.textContent.trim();
+                if(n.querySelector){ const q = n.querySelector('.testo'); if(q) return q.textContent.trim(); }
+                n = n.nextElementSibling; s++;
+            }
+        }
+        const tutti = d.querySelectorAll('.testo');
+        if(tutti.length > 0){
+            if(!anchorId) return tutti[0].textContent.trim();
+            for(const t of tutti){
+                const par = t.closest('[id]');
+                if(par && par.id.toLowerCase().includes(anchorId.toLowerCase())) return t.textContent.trim();
+            }
+            return tutti[0].textContent.trim();
+        }
+        return 'Testo non trovato #'+anchorId;
+    }
+    
+    // CARICAMENTO E INIZIALIZZAZIONE DINAMICA
+    async function loadDB(){
+        try {
+            // 1. Carica il DB
+            const t = await fetchText(DB_PATH);
+            canzoni = JSON.parse(t);
+        } catch(e) {
+            console.warn('Fallback DB...', e);
+            try {
+                const t2 = await fetchText('../canzoni-db-con-atmosfera-mood.json');
+                canzoni = JSON.parse(t2);
+            } catch(e2) {
+                try {
+                    const t3 = await fetchText('./canzoni-db.json');
+                    canzoni = JSON.parse(t3);
+                } catch(e3) { canzoni = []; }
+            }
+        }
+    
+        // 2. Aggiorna Contatori (Via il "49" fisso!)
+        document.getElementById('totBrani').textContent = canzoni.length;
+        document.getElementById('totTesti').textContent = canzoni.length;
+    
+        // 3. Cambia Titolo Sezione Testi (Da "TESTO • LIVE" a "SCEGLI LA TUA CANZONE")
+        const testoTitle = Array.from(document.querySelectorAll('h3')).find(el => el.innerText.includes('TESTO'));
+        if(testoTitle) testoTitle.innerText = 'SCEGLI LA TUA CANZONE';
+    
+        // 4. Popola Menu a Tendina PULITO (Titoli umani, ID nascosti)
+        const sel = document.getElementById('selCanzone');
+        sel.innerHTML = '';
+        canzoni.forEach((c, i) => {
+            const option = document.createElement('option');
+            // ID tecnico nascosto nel value
+            const idTecnico = c.testo_url.split('#')[1] || c.title.toLowerCase().replace(/\s+/g,'');
+            option.value = i; // Usiamo l'indice per semplicità
+            option.dataset.id = idTecnico; 
+            // Testo visibile pulito
+            option.innerText = `${c.title.trim()} - ${c.artist.trim()}`;
+            sel.appendChild(option);
+        });
+    
+        // 5. Popola Contatori Artisti
+        byArtist = {};
+        canzoni.forEach(c => {
+            const a = (c.artist || '').toLowerCase();
+            byArtist[a] = (byArtist[a] || 0) + 1;
+        });
+        const counters = document.getElementById('counters');
+        counters.innerHTML = Object.entries(byArtist).map(([k,v]) => 
+            `<span class="counter" data-art="${k}">${k.toUpperCase()} ${v}</span>`
+        ).join('');
+    
+        // 6. Link Strategico in Fondo
+        const oldLink = document.getElementById('linkTestoSite');
+        if(oldLink) {
+            oldLink.href = 'https://hollyandrex-cell.github.io/';
+            oldLink.target = '_blank';
+            oldLink.innerText = 'Scopri il Mondo Holly & Rex Group →';
+            oldLink.style.color = '#FF6B8A';
+            oldLink.style.fontWeight = 'bold';
+        }
+    
+        // 7. Seleziona Canzone Iniziale (Summer Night o prima)
+        let idx = canzoni.findIndex(c => c.title.toLowerCase().includes('summer night'));
+        if(idx < 0) idx = 0;
+        sel.value = idx;
+        await showSong(idx);
+    
+        // Event Listeners
+        sel.addEventListener('change', e => showSong(parseInt(e.target.value)));
+        
+        counters.addEventListener('click', e => {
+            const chip = e.target.closest('.counter');
+            if(!chip) return;
+            const art = chip.dataset.art;
+            document.querySelectorAll('.counter').forEach(x => x.classList.remove('active'));
+            chip.classList.add('active');
+            const filt = canzoni.map((c,i) => ({c,i})).filter(o => o.c.artist.toLowerCase() === art);
+            if(!filt.length) return;
+            sel.innerHTML = '';
+            filt.forEach(o => {
+                const opt = document.createElement('option');
+                opt.value = o.i;
+                opt.innerText = `${o.c.title.trim()} - ${o.c.artist.trim()}`;
+                sel.appendChild(opt);
+            });
+            showSong(filt[0].i);
+        });
+    
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowDown'){ e.preventDefault(); sel.selectedIndex = Math.min(sel.options.length-1, sel.selectedIndex+1); sel.dispatchEvent(new Event('change')); }
+            if(e.key === 'ArrowUp'){ e.preventDefault(); sel.selectedIndex = Math.max(0, sel.selectedIndex-1); sel.dispatchEvent(new Event('change')); }
+        });
+    }
+    
+    // MOSTRA CANZONE
+    async function showSong(idx){
+        const entry = canzoni[idx];
+        if(!entry) return;
+        
+        const artista = (entry.artist || '').toUpperCase();
+        const anchor = (entry.testo_url || '').split('#')[1] || '';
+        const file = (entry.testo_url || '').split('#')[0] || `testi-${entry.artist.toLowerCase()}.html`;
+    
+        // Aggiorna UI Sinistra
+        document.getElementById('inOndaArtist').textContent = `${artista} • ${artista}`;
+        document.getElementById('titleSingle').textContent = entry.title;
+        document.getElementById('subtitleSingle').textContent = entry.sottotitolo || 'Il futuro è già qui';
+        document.getElementById('voceMeta').textContent = `${entry.artist} • voce originale`;
+        document.getElementById('testoSync').textContent = `${file}${anchor ? '#'+anchor : ''}`;
+        document.getElementById('atm').textContent = entry.atmosfera || 'Notte highway • Città blu';
+        document.getElementById('mood').textContent = entry.mood || 'Luce & pelle • Timidezza';
+        document.getElementById('feat').textContent = entry.featuring || entry.artist;
+    
+        // Video YouTube
+        const ytId = entry.youtube_id;
+        const iframe = document.getElementById('ytFrame');
+        const fallback = document.getElementById('coverFallback');
+        if(ytId){
+            fallback.style.display = 'none';
+            iframe.style.display = 'block';
+            iframe.src = youtubeEmbedUrl(ytId);
+        } else {
+            iframe.style.display = 'none';
+            fallback.style.display = 'grid';
+        }
+    
+        // Bottoni Azione
+        document.getElementById('btnYoutube').onclick = () => window.open(youtubeWatchUrl(ytId), '_blank');
+        document.getElementById('btnSito').onclick = () => window.open(siteUrlFromDb(entry), '_blank');
+        
+        const qrBtn = document.getElementById('btnQR');
+        const qrCont = document.getElementById('qrContainer');
+        const qrImg = document.getElementById('qrImg');
+        qrBtn.onclick = () => {
+            const show = qrCont.style.display === 'none';
+            qrCont.style.display = show ? 'block' : 'none';
+            if(show){
+                const url = encodeURIComponent(youtubeWatchUrl(ytId));
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${url}`;
+            }
+        };
+    
+        // Testi Destra
+        document.getElementById('lyricArtistId').textContent = `${artista} • ${anchor || ''}`.trim();
+        document.getElementById('lyricTitle').textContent = entry.title;
+        document.getElementById('linkTestoSite').href = testoSiteUrl(entry);
+        
+        const lyricEl = document.getElementById('lyricText');
+        lyricEl.textContent = ' Carico testo live da '+file+'...';
+        try {
+            const html = await fetchText(TESTI_BASE + file);
+            const testo = extractLyric(html, anchor);
+            lyricEl.textContent = testo;
+        } catch(err) {
+            lyricEl.textContent = 'Errore caricamento testo live: '+err.message;
+        }
+    }
+    
+    // AVVIO
+    document.addEventListener('DOMContentLoaded', loadDB);
+    </script>
+    <!-- FINE SCRIPT HOLLY & REX TV -->
 </body>
 </html>
