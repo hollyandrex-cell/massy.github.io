@@ -162,14 +162,53 @@ function playSong(idx) {
     const s = songs[idx];
     if(!s) return;
 
+    // 1. AVVIA IL VIDEO
     document.getElementById('ytPlayer').src = `https://www.youtube-nocookie.com/embed/${s.youtube_id}?autoplay=1&rel=0`;
-    document.getElementById('lyricPlaceholder').style.display = 'none';
-    document.getElementById('lyricText').textContent = "Caricamento testo in corso...";
     
-    setTimeout(() => {
-        document.getElementById('lyricText').textContent = s.testo_url ? "Testo sincronizzato pronto..." : "Testo non disponibile.";
-    }, 500);
+    // 2. NASCONDI IL PLACEHOLDER E PREPARA IL CONTENITORE TESTI
+    document.getElementById('lyricPlaceholder').style.display = 'none';
+    const lyricContainer = document.getElementById('lyricText');
+    lyricContainer.textContent = "Caricamento testo sacro... ";
+    lyricContainer.style.opacity = '0'; // Per l'animazione fade-in
 
+    // 3. CARICA IL TESTO DALLA PAGINA HTML (LA VERA MAGIA!)
+    if (s.testo_url && s.testo_url !== '') {
+        // Estraiamo base URL e ID dal formato "testi-luna.html#viadimezzo"
+        const parts = s.testo_url.split('#');
+        const htmlFile = parts[0]; 
+        const sectionId = parts[1]; 
+
+        fetch(htmlFile)
+            .then(response => {
+                if (!response.ok) throw new Error('File non trovato');
+                return response.text();
+            })
+            .then(htmlContent => {
+                // Parsiamo l'HTML per trovare solo il pezzo che ci serve
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                const textElement = doc.getElementById(sectionId);
+                
+                if (textElement) {
+                    // Inseriamo il testo vero!
+                    lyricContainer.innerHTML = textElement.innerHTML;
+                    lyricContainer.style.opacity = '1'; // Fade-in
+                } else {
+                    lyricContainer.textContent = "Ops! Il testo si è nascosto... ma la musica resta! 🎵";
+                    lyricContainer.style.opacity = '1';
+                }
+            })
+            .catch(err => {
+                console.error('Errore testo:', err);
+                lyricContainer.textContent = "Il testo sta arrivando... aspetta un battito! ❤️";
+                lyricContainer.style.opacity = '1';
+            });
+    } else {
+        lyricContainer.textContent = "Brano strumentale o testo in arrivo... goditi la melodia! 🎶";
+        lyricContainer.style.opacity = '1';
+    }
+
+    // 4. AGGIORNA I METADATI (QUESTA PARTE ERA GIÀ PERFETTA!)
     const meta = document.getElementById('songMeta');
     meta.classList.remove('active');
     setTimeout(() => {
@@ -181,16 +220,11 @@ function playSong(idx) {
         meta.classList.add('active');
     }, 100);
 
+    // 5. AGGIORNA LINK E QR
     document.getElementById('linkYt').href = `https://youtube.com/watch?v=${s.youtube_id}`;
     document.getElementById('linkSite').href = s.url || '#';
     document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;
 }
-
-function toggleQR() {
-    const box = document.getElementById('qrBox');
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-}
-
 // REGISTRAZIONE SERVICE WORKER BLINDATA v3
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
