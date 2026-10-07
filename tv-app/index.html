@@ -127,107 +127,126 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 </div>
 
 <script>
-// CONFIGURAZIONE SACRA
-const DB_PATH = 'https://hollyandrex-cell.github.io/massy.github.io/canzoni-db.json';
-let songs = [];
-
-function enterTV() {
-    document.getElementById('welcomeScreen').classList.add('hidden');
-    document.getElementById('mainInterface').classList.add('visible');
-    loadDB();
-}
-
-async function loadDB() {
-    try {
-        const res = await fetch(DB_PATH);
-        if (!res.ok) throw new Error('404');
-        songs = await res.json();
-        document.getElementById('totBrani').textContent = songs.length;
-        populateMenu();
-    } catch(e) { console.error('Errore DB:', e); }
-}
-
-function playSong(idx) {
-    const s = songs[idx];
-    if(!s) return;
-
-    // 1. AVVIA IL VIDEO
-    document.getElementById('ytPlayer').src = `https://www.youtube-nocookie.com/embed/${s.youtube_id}?autoplay=1&rel=0`;
+    // CONFIGURAZIONE SACRA
+    const DB_PATH = 'https://hollyandrex-cell.github.io/massy.github.io/canzoni-db.json';
+    let songs = [];
     
-    // 2. NASCONDI IL PLACEHOLDER E PREPARA IL CONTENITORE TESTI
-    document.getElementById('lyricPlaceholder').style.display = 'none';
-    const lyricContainer = document.getElementById('lyricText');
-    lyricContainer.textContent = "Caricamento testo sacro... ";
-    lyricContainer.style.opacity = '0'; 
-
-    // 3. CARICA IL TESTO DALLA PAGINA HTML (PERCORSO CORRETTO!)
-    if (s.testo_url && s.testo_url !== '') {
-        // Estraiamo base URL e ID dal formato "testi-luna.html#viadimezzo"
-        const parts = s.testo_url.split('#');
-        const htmlFile = parts[0]; 
-        const sectionId = parts[1]; 
-
-        // AGGIUNGIAMO "../" PER USCIRE DALLA CARTELLA tv-app E ANDARE NELLA ROOT!
-        fetch('../' + htmlFile) 
-            .then(response => {
-                if (!response.ok) throw new Error('File non trovato');
-                return response.text();
-            })
-            .then(htmlContent => {
-                // Parsiamo l'HTML per trovare solo il pezzo che ci serve
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const textElement = doc.getElementById(sectionId);
-                
-                if (textElement) {
-                    // Inseriamo il testo vero!
-                    lyricContainer.innerHTML = textElement.innerHTML;
-                    lyricContainer.style.opacity = '1'; // Fade-in
-                } else {
-                    lyricContainer.textContent = "Ops! Il testo si è nascosto... ma la musica resta! ";
-                    lyricContainer.style.opacity = '1';
-                }
-            })
-            .catch(err => {
-                console.error('Errore testo:', err);
-                lyricContainer.textContent = "Il testo sta arrivando... aspetta un battito! ❤️";
-                lyricContainer.style.opacity = '1';
-            });
-    } else {
-        lyricContainer.textContent = "Brano strumentale o testo in arrivo... goditi la melodia! 🎶";
-        lyricContainer.style.opacity = '1';
+    function enterTV() {
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('mainInterface').classList.add('visible');
+        loadDB();
     }
-
-    // 4. AGGIORNA I METADATI
-    const meta = document.getElementById('songMeta');
-    meta.classList.remove('active');
-    setTimeout(() => {
-        document.getElementById('metaArtist').textContent = `${s.artist.toUpperCase()} • ${s.title}`;
-        document.getElementById('metaTitle').textContent = s.title;
-        document.getElementById('metaAtm').textContent = s.atmosfera || '-';
-        document.getElementById('metaMood').textContent = s.mood || '-';
-        document.getElementById('metaFeat').textContent = s.featuring || s.artist;
-        meta.classList.add('active');
-    }, 100);
-
-    // 5. AGGIORNA LINK E QR
-    document.getElementById('linkYt').href = `https://youtube.com/watch?v=${s.youtube_id}`;
-    document.getElementById('linkSite').href = s.url || '#';
-    document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;
-}
-
-// REGISTRAZIONE SERVICE WORKER BLINDATA v3
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('✅ SW Registrato:', registration.scope);
-            })
-            .catch(error => {
-                console.error('❌ SW Fallito:', error);
-            });
-    });
-}
-</script>
+    
+    async function loadDB() {
+        try {
+            const res = await fetch(DB_PATH);
+            if (!res.ok) throw new Error('404');
+            songs = await res.json();
+            document.getElementById('totBrani').textContent = songs.length;
+            populateMenu(); // ORA QUESTA FUNZIONE ESISTE DI NUOVO!
+        } catch(e) { console.error('Errore DB:', e); }
+    }
+    
+    // FUNZIONE RIPRISTINATA PER POPOLARE IL MENU
+    function populateMenu() {
+        const sel = document.getElementById('songSelect');
+        // Pulisce opzioni vecchie tranne la prima
+        while (sel.options.length > 1) { sel.remove(1); }
+        
+        songs.forEach((s, i) => {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = `${s.title} - ${s.artist}`;
+            sel.appendChild(opt);
+        });
+        sel.onchange = (e) => playSong(parseInt(e.target.value));
+    }
+    
+    function playSong(idx) {
+        const s = songs[idx];
+        if(!s) return;
+    
+        // 1. AVVIA IL VIDEO
+        document.getElementById('ytPlayer').src = `https://www.youtube-nocookie.com/embed/${s.youtube_id}?autoplay=1&rel=0`;
+        
+        // 2. NASCONDI IL PLACEHOLDER E PREPARA IL CONTENITORE TESTI
+        document.getElementById('lyricPlaceholder').style.display = 'none';
+        const lyricContainer = document.getElementById('lyricText');
+        lyricContainer.textContent = "Caricamento testo sacro... ";
+        lyricContainer.style.opacity = '0'; 
+    
+        // 3. CARICA IL TESTO DALLA PAGINA HTML (URL ASSOLUTO BLINDATO!)
+        if (s.testo_url && s.testo_url !== '') {
+            const parts = s.testo_url.split('#');
+            const htmlFile = parts[0]; 
+            const sectionId = parts[1]; 
+    
+            // URL ASSOLUTO PER BYPASSARE CACHE E PROBLEMI DI PERCORSO
+            const absoluteUrl = `https://hollyandrex-cell.github.io/massy.github.io/${htmlFile}`;
+    
+            fetch(absoluteUrl) 
+                .then(response => {
+                    if (!response.ok) throw new Error('File non trovato');
+                    return response.text();
+                })
+                .then(htmlContent => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlContent, 'text/html');
+                    const textElement = doc.getElementById(sectionId);
+                    
+                    if (textElement) {
+                        lyricContainer.innerHTML = textElement.innerHTML;
+                        lyricContainer.style.opacity = '1';
+                    } else {
+                        lyricContainer.textContent = "Ops! Il testo si è nascosto... ma la musica resta! ";
+                        lyricContainer.style.opacity = '1';
+                    }
+                })
+                .catch(err => {
+                    console.error('Errore testo:', err);
+                    lyricContainer.textContent = "Il testo sta arrivando... aspetta un battito! ❤️";
+                    lyricContainer.style.opacity = '1';
+                });
+        } else {
+            lyricContainer.textContent = "Brano strumentale o testo in arrivo... goditi la melodia! 🎶";
+            lyricContainer.style.opacity = '1';
+        }
+    
+        // 4. AGGIORNA I METADATI
+        const meta = document.getElementById('songMeta');
+        meta.classList.remove('active');
+        setTimeout(() => {
+            document.getElementById('metaArtist').textContent = `${s.artist.toUpperCase()} • ${s.title}`;
+            document.getElementById('metaTitle').textContent = s.title;
+            document.getElementById('metaAtm').textContent = s.atmosfera || '-';
+            document.getElementById('metaMood').textContent = s.mood || '-';
+            document.getElementById('metaFeat').textContent = s.featuring || s.artist;
+            meta.classList.add('active');
+        }, 100);
+    
+        // 5. AGGIORNA LINK E QR
+        document.getElementById('linkYt').href = `https://youtube.com/watch?v=${s.youtube_id}`;
+        document.getElementById('linkSite').href = s.url || '#';
+        document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;
+    }
+    
+    function toggleQR() {
+        const box = document.getElementById('qrBox');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    // REGISTRAZIONE SERVICE WORKER BLINDATA v3
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('✅ SW Registrato:', registration.scope);
+                })
+                .catch(error => {
+                    console.error(' SW Fallito:', error);
+                });
+        });
+    }
+    </script>
 </body>
 </html>
