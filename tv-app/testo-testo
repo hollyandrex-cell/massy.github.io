@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Testo - Via di Mezzo</title>
+    <style>
+        body { background: #080a12; color: #d8d2c8; font-family: 'Cormorant Garamond', serif; padding: 40px; text-align: center; }
+        #risultato { border: 1px solid #333; padding: 20px; margin-top: 20px; white-space: pre-line; min-height: 100px; }
+        .ok { color: #22c55e; }
+        .err { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Caricamento Testo</h1>
+    <p>Sto provando a caricare: <code>https://hollyandrex-cell.github.io/massy.github.io/testi-luna.html#viadimezzo</code></p>
+    
+    <div id="risultato">In caricamento...</div>
+
+    <script>
+        const url = 'https://hollyandrex-cell.github.io/massy.github.io/testi-luna.html';
+        const id = 'viadimezzo';
+
+        console.log(' Inizio test fetch...');
+
+        fetch(url)
+            .then(res => {
+                console.log('📥 Risposta ricevuta. Status:', res.status);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.text();
+            })
+            .then(html => {
+                console.log('📄 HTML ricevuto. Lunghezza:', html.length);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const el = doc.getElementById(id);
+                
+                const box = document.getElementById('risultato');
+                
+                if (el) {
+                    console.log('✅ Elemento #' + id + ' TROVATO!');
+                    box.innerHTML = el.innerHTML;
+                    box.className = 'ok';
+                } else {
+                    console.warn('⚠️ Elemento #' + id + ' NON TROVATO nell\'HTML.');
+                    // Mostriamo un po' di contesto per capire cosa c'è nel file
+                    const allIds = Array.from(doc.body.querySelectorAll('[id]')).map(e => e.id);
+                    box.textContent = 'ID non trovato. ID presenti nel file: ' + allIds.join(', ');
+                    box.className = 'err';
+                }
+            })
+            .catch(err => {
+                console.error('❌ ERRORE FETCH:', err);
+                document.getElementById('risultato').textContent = 'ERRORE: ' + err.message;
+                document.getElementById('risultato').className = 'err';
+            });
+    </script>
+</body>
+</html>
