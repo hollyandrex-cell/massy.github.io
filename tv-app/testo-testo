@@ -2,29 +2,24 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Test Testo - Via di Mezzo</title>
-    <style>
-        body { background: #080a12; color: #d8d2c8; font-family: 'Cormorant Garamond', serif; padding: 40px; text-align: center; }
-        #risultato { border: 1px solid #333; padding: 20px; margin-top: 20px; white-space: pre-line; min-height: 100px; }
-        .ok { color: #22c55e; }
-        .err { color: #ef4444; }
-    </style>
+    <title>Test Testo Puro</title>
 </head>
-<body>
-    <h1>🧪 Test Caricamento Testo</h1>
-    <p>Sto provando a caricare: <code>https://hollyandrex-cell.github.io/massy.github.io/testi-luna.html#viadimezzo</code></p>
+<body style="background:#080a12; color:#d8d2c8; font-family:sans-serif; padding:40px;">
+    <h1>🧪 Test Fetch Testo - Via di Mezzo</h1>
+    <p>URL Target: <code>https://hollyandrex-cell.github.io/massy.github.io/testi-luna.html#viadimezzo</code></p>
     
-    <div id="risultato">In caricamento...</div>
+    <div id="risultato" style="border:1px solid #333; padding:20px; margin-top:20px; white-space:pre-line; min-height:50px; background:#111;">
+        In attesa...
+    </div>
 
     <script>
+        console.log('🚀 Inizio test fetch...');
         const url = 'https://hollyandrex-cell.github.io/massy.github.io/testi-luna.html';
         const id = 'viadimezzo';
 
-        console.log(' Inizio test fetch...');
-
         fetch(url)
             .then(res => {
-                console.log('📥 Risposta ricevuta. Status:', res.status);
+                console.log('📥 Risposta:', res.status);
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 return res.text();
             })
@@ -39,19 +34,18 @@
                 if (el) {
                     console.log('✅ Elemento #' + id + ' TROVATO!');
                     box.innerHTML = el.innerHTML;
-                    box.className = 'ok';
+                    box.style.color = '#22c55e';
                 } else {
-                    console.warn('⚠️ Elemento #' + id + ' NON TROVATO nell\'HTML.');
-                    // Mostriamo un po' di contesto per capire cosa c'è nel file
+                    console.warn('⚠️ Elemento #' + id + ' NON TROVATO.');
                     const allIds = Array.from(doc.body.querySelectorAll('[id]')).map(e => e.id);
-                    box.textContent = 'ID non trovato. ID presenti nel file: ' + allIds.join(', ');
-                    box.className = 'err';
+                    box.textContent = 'ID non trovato. ID presenti: ' + allIds.join(', ');
+                    box.style.color = '#ef4444';
                 }
             })
             .catch(err => {
-                console.error('❌ ERRORE FETCH:', err);
+                console.error('❌ ERRORE:', err);
                 document.getElementById('risultato').textContent = 'ERRORE: ' + err.message;
-                document.getElementById('risultato').className = 'err';
+                document.getElementById('risultato').style.color = '#ef4444';
             });
     </script>
 </body>
