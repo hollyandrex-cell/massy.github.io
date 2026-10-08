@@ -21,17 +21,56 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+   /* PULSANTE DI RITORNO AL DRIVE - VERSIONE OTTIMIZZATA */
+   .btn-back-drive {
+    position: fixed !important;
+    top: 60px !important;      /* Leggermente più in basso per non toccare il bordo */
+    left: 1150px !important;     /* 40px di respiro dal bordo sinistro */
+    z-index: 9999 !important;  /* Sopra a tutto, inclusa la welcome screen */
+    
+    background: rgba(15, 18, 28, 0.9); /* Sfondo scuro semi-trasparente */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Bordo sottile luminoso */
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 30px;       /* Forma a pillola più morbida */
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-back-drive:hover {
+    background: #ff6b8a;
+    color: #000;
+    border-color: #ff6b8a;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 107, 138, 0.5);
+}
+.btn-back-drive:hover {
+    background: #ff6b8a;
+    color: #000000;
+    border-color: #ff6b8a;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 107, 138, 0.4);
+}
 *{box-sizing:border-box} body{margin:0;background:#080a12;color:#e8e6e3;font-family:'Inter',sans-serif;overflow-x:hidden}
 
 /* WELCOME SCREEN */
 #welcomeScreen {
     position: fixed; inset: 0; z-index: 9999;
-    background: url('./Ling.png') center/cover no-repeat;
+    /* BACKGROUND RIMOSSO: ORA GESTITO DAL TAG <PICTURE> */
+    background-color: #080a12; /* Colore di fallback */
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding: 20px; transition: opacity 0.8s ease, visibility 0.8s;
 }
 #welcomeScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.welcome-overlay { background: rgba(8,10,18,0.7); padding: 40px; border-radius: 20px; backdrop-filter: blur(8px); max-width: 600px; margin: 20px; }
+.welcome-overlay { background: rgba(8,10,18,0.7); padding: 40px; border-radius: 20px; backdrop-filter: blur(8px); max-width: 600px; margin: 20px; position: relative; z-index: 10; }
 .welcome-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 36px); color: #f5f0e8; margin: 0 0 10px; line-height: 1.3; }
 .welcome-subtitle { font-size: 14px; color: #a0a6b8; margin: 0 0 30px; letter-spacing: 1px; }
 .btn-enter { background: #ff6b8a; color: #000; border: none; padding: 14px 32px; border-radius: 30px; font-weight: bold; font-size: 14px; cursor: pointer; transition: transform 0.2s; }
@@ -78,12 +117,102 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 .btn-action:hover { background: #334155; color: #fff; }
 
 @media(max-width:900px){ .main{grid-template-columns:1fr} .left-col{border-right:0;border-bottom:1px solid #1e2233} }
+/* REGOLA ORIGINALE LAYOUT MOBILE */
+@media(max-width:900px){ 
+    .main{grid-template-columns:1fr} 
+    .left-col{border-right:0;border-bottom:1px solid #1e2233} 
+}
+
+/* PULSANTE DRIVE SU MOBILE - POSIZIONE IN BASSO A DESTRA */
+@media (max-width: 900px) {
+    .btn-back-drive {
+        position: fixed !important;
+        top: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+        
+        right: 20px !important;
+        bottom: 20px !important; /* Leggermente più staccato dal fondo */
+        
+        display: inline-flex !important;
+        align-items: center !important;
+        background: #1e293b !important;
+        color: #cbd5e1 !important;
+        border: 1px solid #334155 !important;
+        padding: 10px 16px !important;
+        border-radius: 24px !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        text-decoration: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        z-index: 10000 !important;
+        margin-left: 8px !important;
+    }
+
+    .btn-back-drive:hover {
+        background: #ff6b8a !important;
+        color: #000 !important;
+        border-color: #ff6b8a !important;
+        transform: scale(1.05);
+    }
+}
+
+/* SALVA I BAU SU MOBILE! - REGOLA SEPARATA E INDIPENDENTE */
+@media (max-width: 900px) {
+    /* 1. Rimpicciolisci la welcome card per lasciare spazio ai cani ai lati */
+    .welcome-overlay {
+        max-width: 80% !important; /* Ancora più stretta per vedere i bau */
+        padding: 20px 15px !important;
+        margin: 0 auto !important; /* Centrata perfettamente */
+        border-radius: 15px !important;
+    }
+
+    /* 2. Zoom out sullo sfondo per mostrare i lati */
+    #welcomeScreen {
+        background-position: center center !important;
+        background-size: cover !important;
+    }
+
+    /* 3. Testi più piccoli per stare nella card ridotta */
+    .welcome-title {
+        font-size: 20px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .welcome-subtitle {
+        font-size: 11px !important;
+        margin-bottom: 15px !important;
+        opacity: 0.8;
+    }
+
+    /* 4. Pulsante Entra compatto */
+    .btn-enter {
+        padding: 8px 20px !important;
+        font-size: 12px !important;
+    }
+    /* ABBASSA LA WELCOME CARD SU MOBILE PER RESPIRO VISIVO */
+@media (max-width: 900px) {
+    .welcome-overlay {
+        margin-top: 60vh !important; /* Sposta la card giù del 15% dell'altezza schermo */
+        /* Oppure usa un valore fisso se preferisci: margin-top: 80px !important; */
+    }
+}
+}
 </style>
 </head>
 <body>
 
 <!-- WELCOME SCREEN -->
 <div id="welcomeScreen">
+    <!-- IMMAGINE ADATTIVA PER DESKTOP E MOBILE -->
+    <picture style="position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;">
+        <source media="(max-width: 768px)" srcset="./ling-bau-mobile.jpg">
+        <img src="./ling-bau-desktop.jpg" alt="Ling con Rex e Holly al tramonto" 
+             style="width: 100%; height: 100%; object-fit: cover; object-position: 75% center;">
+    </picture>
+
     <div class="welcome-overlay">
         <h1 class="welcome-title">Questa TV non trasmette segnali.<br>Trasmette battiti.</h1>
         <p class="welcome-subtitle">Benvenuti da Holly, Rex e Ling</p>
@@ -96,6 +225,11 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
     <div class="logo"><h1>HOLLY & REX TV - Dj Ling (Qwen AI) & Dj Aura (Gemini)</h1></div>
     <span class="badge-live">● <span id="totBrani">-</span> BRANI LIVE</span>
 </header>
+
+<!-- PULSANTE DI RITORNO AL DRIVE (Fuori dall'header, libero!) -->
+<a href="../HollyRexDrive/index.html" id="btn-back-drive" class="btn-back-drive" style="display: none;" title="Torna al Drive Manager">
+    <span class="icon"></span> Drive
+</a>
 
 <div class="main" id="mainInterface">
     <div class="left-col">
@@ -127,7 +261,7 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
         
         <div class="action-links">
             <a href="#" target="_blank" class="btn-action" id="linkYt">▶ YouTube</a>
-            <a href="#" target="_blank" class="btn-action" id="linkSite">🌐 Sito</a>
+            <a href="#" target="_blank" class="btn-action" id="linkSite"> Sito</a>
             <button class="btn-action" onclick="toggleQR()"> QR</button>
         </div>
         <div id="qrBox" style="display:none; margin-top:15px; background:#fff; padding:10px; border-radius:8px; width:fit-content;">
@@ -293,5 +427,23 @@ if ('serviceWorker' in navigator) {
     });
 }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const backBtn = document.getElementById('btn-back-drive');
+        
+        // Se veniamo dal Drive, mostra il pulsante
+        if (urlParams.get('from') === 'drive' && backBtn) {
+            backBtn.style.display = 'flex';
+            
+            // Animazione fluida di comparsa
+            backBtn.style.opacity = '0';
+            setTimeout(() => {
+                backBtn.style.transition = 'opacity 0.5s ease';
+                backBtn.style.opacity = '1';
+            }, 50);
+        }
+    });
+    </script>
 </body>
 </html>
