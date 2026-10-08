@@ -1,0 +1,8 @@
+# Credenziali Google Drive - MAI CARICARE SU GITHUB
+credentials.json
+token.json
+
+# File di sistema OS (opzionale ma consigliato)
+.DS_Store
+Thumbs.db
+desktop.ini
