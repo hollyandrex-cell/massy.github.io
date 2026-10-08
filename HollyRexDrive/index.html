@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holly & Rex - Multi Drive</title>
+    <style>
+        /* --- STILE GENERALE --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            /* Sfondo con overlay scuro ma più leggero al centro per far risaltare i volti */
+            background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%), 
+                        url('sfondo-bau.jpg'); 
+            background-size: cover;
+            background-position: center;
+            color: white;
+            overflow: hidden; /* Niente scrollbar se non serve */
+        }
+
+        /* --- CONTENITORE PRINCIPALE A GRIGLIA --- */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr; /* Sinistra - Centro (vuoto per foto) - Destra */
+            height: 100vh;
+            padding: 40px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        /* --- COLONNE LATERALI PER LE CARD --- */
+        .side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* --- CENTRO (TITOLO E SOTTOTITOLO) --- */
+        .center-content {
+            text-align: center;
+            /* Spostiamo il titolo più in basso rispetto a prima */
+            margin-top: 120px; 
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+        }
+
+        p.subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-top: 15px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* --- CARD GLASSMORPHISM (Più compatte) --- */
+        .drive-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .drive-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+        .drive-name { font-weight: bold; font-size: 1rem; display: block; margin-bottom: 4px; }
+        .drive-status { font-size: 0.75rem; opacity: 0.7; }
+
+        /* Colori icone */
+        .c1 .icon { color: #FFD700; }
+        .c2 .icon { color: #00BFFF; }
+        .c3 .icon { color: #FF69B4; }
+        .c4 .icon { color: #98FB98; }
+        .c5 .icon { color: #DDA0DD; }
+
+        /* --- PULSANTE IN BASSO AL CENTRO --- */
+        .action-btn {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 154, 158, 0.4);
+            transition: transform 0.2s;
+        }
+        .action-btn:hover { transform: translateX(-50%) scale(1.05); }
+
+        /* Responsive per cellulari */
+        @media (max-width: 768px) {
+            .main-layout { grid-template-columns: 1fr; height: auto; padding: 20px; }
+            .side-column { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .center-content { margin-top: 20px; order: -1; }
+            .drive-card { width: 45%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-layout">
+        
+        <!-- COLONNA SINISTRA (2 Card) -->
+        <div class="side-column left">
+            <div class="drive-card c1">
+                <span class="icon">📂</span>
+                <span class="drive-name">Drive Principale</span>
+                <span class="drive-status">12 GB liberi</span>
+            </div>
+            <div class="drive-card c2">
+                <span class="icon">📷</span>
+                <span class="drive-name">Foto & Video</span>
+                <span class="drive-status">Sincronizzato</span>
+            </div>
+        </div>
+
+        <!-- CENTRO (Titolo e Foto libera) -->
+        <div class="center-content">
+            <h1>Holly & Rex Drive Manager</h1>
+            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau </p>
+        </div>
+
+        <!-- COLONNA DESTRA (3 Card) -->
+        <div class="side-column right">
+            <div class="drive-card c3">
+                <span class="icon">📄</span>
+                <span class="drive-name">Documenti Lavoro</span>
+                <span class="drive-status">3 file nuovi</span>
+            </div>
+            <div class="drive-card music-tv-card" onclick="openTV()" style="cursor: pointer;">
+                <div class="card-icon">🎵</div>
+                <h3>Musica & TV</h3>
+                <p id="tv-status">Pronto</p>
+            </div>
+            <div class="drive-card c5">
+                <span class="icon">🐶</span>
+                <span class="drive-name">Holly & Rex</span>
+                <span class="drive-status">Backup Pet Diary</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Pulsante fluttuante in basso -->
+    <button class="action-btn">Cerca in tutti i Drive 🔍</button>
+    <script>
+        // Funzione per aprire la TV con effetto scenico
+        function openTV() {
+            const status = document.getElementById('tv-status');
+            if(status) {
+                status.innerText = "Accensione... ";
+                status.style.color = "#ff6b8a"; 
+            }
+            
+            // Salva il timestamp prima di aprire
+            localStorage.setItem('lastTVVisit', new Date().toISOString());
+            
+            // Apri la TV in nuova tab
+            setTimeout(() => {
+                window.open('./tv-app/index.html?from=drive', '_blank');
+                if(status) status.innerText = "In onda 🔴";
+            }, 600);
+        }
+        
+        // Al caricamento, controlla se la TV è stata visitata oggi
+        document.addEventListener('DOMContentLoaded', () => {
+            const tvStatus = document.getElementById('tv-status');
+            const lastVisit = localStorage.getItem('lastTVVisit');
+            
+            if (lastVisit && tvStatus) {
+                const visitDate = new Date(lastVisit);
+                const now = new Date();
+                // Se l'ultima visita è nelle ultime 24 ore
+                if ((now - visitDate) / (1000 * 60 * 60) < 24) {
+                    tvStatus.innerText = "Ultimo accesso: oggi";
+                    tvStatus.style.color = "#22c55e"; // Verde vivo
+                }
+            }
+        });
+        </script>
+</body>
+</html>
