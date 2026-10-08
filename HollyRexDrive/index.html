@@ -153,10 +153,11 @@
                 <span class="drive-name">Documenti Lavoro</span>
                 <span class="drive-status">3 file nuovi</span>
             </div>
+            <!-- CARD MUSICA & TV INTERATTIVA -->
             <div class="drive-card music-tv-card" onclick="openTV()" style="cursor: pointer;">
-                <div class="card-icon">🎵</div>
-                <h3>Musica & TV</h3>
-                <p id="tv-status">Pronto</p>
+            <div class="card-icon">🎵</div>
+            <h3>Musica & TV</h3>
+            <p id="tv-status">Pronto</p>
             </div>
             <div class="drive-card c5">
                 <span class="icon">🐶</span>
@@ -170,25 +171,27 @@
     <!-- Pulsante fluttuante in basso -->
     <button class="action-btn">Cerca in tutti i Drive 🔍</button>
     <script>
-        // Funzione per aprire la TV con effetto scenico
         function openTV() {
             const status = document.getElementById('tv-status');
+            
+            // Effetto visivo immediato
             if(status) {
                 status.innerText = "Accensione... ";
                 status.style.color = "#ff6b8a"; 
             }
             
-            // Salva il timestamp prima di aprire
+            // Salva timestamp per sincronizzazione futura
             localStorage.setItem('lastTVVisit', new Date().toISOString());
             
-            // Apri la TV in nuova tab
+            // Percorso RELATIVO TRA CARTELLE SEPARATE:
+            // .. = esce da HollyRexDrive -> / = root -> tv-app/ = entra nella TV
             setTimeout(() => {
-                window.open('./tv-app/index.html?from=drive', '_blank');
+                window.open('../tv-app/index.html?from=drive', '_blank');
                 if(status) status.innerText = "In onda 🔴";
             }, 600);
         }
         
-        // Al caricamento, controlla se la TV è stata visitata oggi
+        // Check stato all'avvio del Drive Manager
         document.addEventListener('DOMContentLoaded', () => {
             const tvStatus = document.getElementById('tv-status');
             const lastVisit = localStorage.getItem('lastTVVisit');
@@ -196,10 +199,9 @@
             if (lastVisit && tvStatus) {
                 const visitDate = new Date(lastVisit);
                 const now = new Date();
-                // Se l'ultima visita è nelle ultime 24 ore
                 if ((now - visitDate) / (1000 * 60 * 60) < 24) {
                     tvStatus.innerText = "Ultimo accesso: oggi";
-                    tvStatus.style.color = "#22c55e"; // Verde vivo
+                    tvStatus.style.color = "#22c55e";
                 }
             }
         });
