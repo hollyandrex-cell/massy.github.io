@@ -3,113 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holly & Rex - Multi Drive</title>
+   
+<!-- FAVICON E MANIFEST -->
+<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="shortcut icon" href="./icon-192.png">
+<link rel="stylesheet" href="drive-manager.mobile.css">
+    <title>Holly & Rex - Multi Drive Manager</title>
+    
+    <!-- META DESCRIPTION PER GOOGLE -->
+    <meta name="description" content="Holly & Rex Drive Manager: I tuoi 5 mondi digitali custoditi dai bau. Musica, Foto, Documenti e Pet Diary in un unico posto sicuro.">
+    <meta name="keywords" content="Holly Rex, Drive Manager, Musica, Foto, Backup, Pet Diary">
+    <meta name="author" content="Massy & Ling">
+    <meta name="theme-color" content="#ff6b8a">
+
     <style>
         /* --- STILE GENERALE --- */
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            /* Sfondo con overlay scuro ma più leggero al centro per far risaltare i volti */
             background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%), 
                         url('sfondo-bau.jpg'); 
-            background-size: cover;
-            background-position: center;
-            color: white;
-            overflow: hidden; /* Niente scrollbar se non serve */
+            background-size: cover; background-position: center;
+            color: white; overflow-x: hidden;
         }
 
         /* --- CONTENITORE PRINCIPALE A GRIGLIA --- */
         .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr; /* Sinistra - Centro (vuoto per foto) - Destra */
-            height: 100vh;
-            padding: 40px;
-            box-sizing: border-box;
-            align-items: center;
+            display: grid; grid-template-columns: 1fr 2fr 1fr;
+            height: 100vh; padding: 40px; box-sizing: border-box; align-items: center;
         }
 
         /* --- COLONNE LATERALI PER LE CARD --- */
-        .side-column {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: center;
-        }
+        .side-column { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
 
         /* --- CENTRO (TITOLO E SOTTOTITOLO) --- */
-        .center-content {
-            text-align: center;
-            /* Spostiamo il titolo più in basso rispetto a prima */
-            margin-top: 120px; 
-            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
-        }
-
+        .center-content { text-align: center; margin-top: 120px; text-shadow: 0 4px 20px rgba(0,0,0,0.9); }
         h1 {
-            font-size: 3rem;
-            margin: 0;
+            font-size: 3rem; margin: 0;
             background: linear-gradient(to right, #ffecd2, #fcb69f);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
         }
+        p.subtitle { font-size: 1.3rem; opacity: 0.95; margin-top: 440px; font-weight: 300; letter-spacing: 1px; }
 
-        p.subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            margin-top: 15px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        /* --- CARD GLASSMORPHISM (Più compatte) --- */
+        /* --- CARD GLASSMORPHISM --- */
         .drive-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px; padding: 20px; text-align: center; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
-
-        .drive-card:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
+        .drive-card:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.4); }
+        
         .icon { font-size: 2rem; margin-bottom: 8px; display: block; }
         .drive-name { font-weight: bold; font-size: 1rem; display: block; margin-bottom: 4px; }
         .drive-status { font-size: 0.75rem; opacity: 0.7; }
+        
+        /* Stili specifici per la card TV */
+        .music-tv-card .card-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+        .music-tv-card h3 { font-size: 1rem; margin: 0 0 4px; font-weight: bold; }
+        .music-tv-card p { font-size: 0.75rem; opacity: 0.7; margin: 0; }
 
         /* Colori icone */
-        .c1 .icon { color: #FFD700; }
-        .c2 .icon { color: #00BFFF; }
-        .c3 .icon { color: #FF69B4; }
-        .c4 .icon { color: #98FB98; }
-        .c5 .icon { color: #DDA0DD; }
+        .c1 .icon { color: #FFD700; } .c2 .icon { color: #00BFFF; }
+        .c3 .icon { color: #FF69B4; } .c4 .icon { color: #98FB98; } .c5 .icon { color: #DDA0DD; }
+        .music-tv-card .card-icon { color: #ff6b8a; } /* Rosa per la TV */
 
         /* --- PULSANTE IN BASSO AL CENTRO --- */
         .action-btn {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
-            border: none;
-            padding: 12px 35px;
-            border-radius: 50px;
-            color: #333;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 154, 158, 0.4);
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4); border: none;
+            padding: 12px 35px; border-radius: 50px; color: #333; font-weight: bold;
+            font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 154, 158, 0.4);
             transition: transform 0.2s;
         }
         .action-btn:hover { transform: translateX(-50%) scale(1.05); }
@@ -117,13 +86,28 @@
         /* Responsive per cellulari */
         @media (max-width: 768px) {
             .main-layout { grid-template-columns: 1fr; height: auto; padding: 20px; }
-            .side-column { flex-direction: row; flex-wrap: wrap; justify-content: center; }
-            .center-content { margin-top: 20px; order: -1; }
-            .drive-card { width: 45%; }
+            .side-column { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .center-content { margin-top: 20px; order: -1; margin-bottom: 30px; }
+            
+            /* OTTIMIZZAZIONE CARD SU MOBILE */
+            .drive-card { width: 45%; min-width: 140px; padding: 15px !important; }
+            
+            /* Evidenzia la card TV su mobile */
+            .music-tv-card {
+                border-color: rgba(255, 107, 138, 0.6) !important;
+                background: rgba(255, 107, 138, 0.1) !important;
+            }
         }
     </style>
 </head>
 <body>
+    <body>
+        <!-- PULSANTE MENU HAMBURGER (Mobile) -->
+        <div class="hamburger-menu">
+            <span></span><span></span><span></span>
+        </div>
+    
+        <!-- ...qui c'è tutto il resto del tuo codice esistente... -->
     <div class="main-layout">
         
         <!-- COLONNA SINISTRA (2 Card) -->
@@ -143,7 +127,7 @@
         <!-- CENTRO (Titolo e Foto libera) -->
         <div class="center-content">
             <h1>Holly & Rex Drive Manager</h1>
-            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau </p>
+            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau 🐾</p>
         </div>
 
         <!-- COLONNA DESTRA (3 Card) -->
@@ -154,10 +138,10 @@
                 <span class="drive-status">3 file nuovi</span>
             </div>
             <!-- CARD MUSICA & TV INTERATTIVA -->
-            <div class="drive-card music-tv-card" onclick="openTV()" style="cursor: pointer;">
-            <div class="card-icon">🎵</div>
-            <h3>Musica & TV</h3>
-            <p id="tv-status">Pronto</p>
+            <div class="drive-card music-tv-card" onclick="openTV()">
+                <span class="card-icon">🎵</span>
+                <h3>Musica & TV</h3>
+                <p id="tv-status">Pronto</p>
             </div>
             <div class="drive-card c5">
                 <span class="icon">🐶</span>
@@ -170,32 +154,25 @@
 
     <!-- Pulsante fluttuante in basso -->
     <button class="action-btn">Cerca in tutti i Drive 🔍</button>
+
     <script>
         function openTV() {
             const status = document.getElementById('tv-status');
-            
-            // Effetto visivo immediato
             if(status) {
                 status.innerText = "Accensione... ";
                 status.style.color = "#ff6b8a"; 
             }
-            
-            // Salva timestamp per sincronizzazione futura
             localStorage.setItem('lastTVVisit', new Date().toISOString());
             
-            // Percorso RELATIVO TRA CARTELLE SEPARATE:
-            // .. = esce da HollyRexDrive -> / = root -> tv-app/ = entra nella TV
             setTimeout(() => {
                 window.open('../tv-app/index.html?from=drive', '_blank');
                 if(status) status.innerText = "In onda 🔴";
             }, 600);
         }
         
-        // Check stato all'avvio del Drive Manager
         document.addEventListener('DOMContentLoaded', () => {
             const tvStatus = document.getElementById('tv-status');
             const lastVisit = localStorage.getItem('lastTVVisit');
-            
             if (lastVisit && tvStatus) {
                 const visitDate = new Date(lastVisit);
                 const now = new Date();
@@ -205,6 +182,40 @@
                 }
             }
         });
+    </script>
+        <!-- MENU A SCOMPARSA (MOBILE) -->
+        <nav id="mobile-nav" class="mobile-nav">
+            <a href="#drive-principale">📂 Drive Principale</a>
+            <a href="#foto-video"> Foto & Video</a>
+            <a href="#" onclick="openTV()" class="music-tv-link"> Musica & TV</a>
+            <a href="#documenti"> Documenti Lavoro</a>
+            <a href="#pet-diary"> Holly & Rex</a>
+        </nav>
+    
+        <!-- SCRIPT PER GESTIRE IL MENU MOBILE -->
+        <script>
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.getElementById('mobile-nav');
+            
+            if(hamburger && mobileNav) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    mobileNav.classList.toggle('active');
+                    document.body.classList.toggle('no-scroll');
+                });
+                
+                // Chiudi menu quando si clicca su un link
+                mobileNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        mobileNav.classList.remove('active');
+                        document.body.classList.remove('no-scroll');
+                    });
+                });
+            }
         </script>
+    
+    </body>
+    </html>
 </body>
 </html>

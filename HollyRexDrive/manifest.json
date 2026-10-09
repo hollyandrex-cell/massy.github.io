@@ -1,0 +1,22 @@
+{
+  "name": "Assistente Vocale - Holly & Rex",
+  "short_name": "Assistente",
+  "start_url": "/massy.github.io/Telefono/assistente-vocale.html",
+  "scope": "/massy.github.io/Telefono/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#1f1f1f",
+  "description": "Assistente Vocale intelligente per la crew di Holly & Rex",
+  "icons": [
+    {
+      "src": "/massy.github.io/bau-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/massy.github.io/bau-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
