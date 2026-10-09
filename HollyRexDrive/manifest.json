@@ -9,12 +9,12 @@
   "description": "Drive intelligente con collegamento cellulare pc",
   "icons": [
     {
-      "src": "/massy.github.io/bau-192x192.png",
+      "src": "/massy.github.io/HollyRexDrive/bau-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/massy.github.io/bau-512x512.png",
+      "src": "/massy.github.io/HollyRexDrive/bau-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
