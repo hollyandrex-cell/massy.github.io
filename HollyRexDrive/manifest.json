@@ -1,20 +1,20 @@
 {
   "name": "Drive intelligente Holly - Rex ling & Aura",
   "short_name": "Assistente",
-  "start_url": "/massy.github.io/HollyRexDrive/index.html",
-  "scope": "/massy.github.io/HollyRexDrive/",
+  "start_url": "../massy.github.io/HollyRexDrive/index.html",
+  "scope": "../massy.github.io/HollyRexDrive/",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#1f1f1f",
   "description": "Drive intelligente con collegamento cellulare pc",
   "icons": [
     {
-      "src": "/massy.github.io/HollyRexDrive/bau-192x192.png",
+      "src": "../massy.github.io/HollyRexDrive/bau-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/massy.github.io/HollyRexDrive/bau-512x512.png",
+      "src": "../massy.github.io/HollyRexDrive/bau-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
