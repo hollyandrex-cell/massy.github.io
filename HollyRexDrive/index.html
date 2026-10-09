@@ -10,9 +10,6 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/bau-512x512.png">
     <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/bau-192x192.png">
-    
-    <!-- NOTA: Per ora NON carichiamo drive-manager.mobile.css esterno per evitare conflitti. 
-         Tutto il CSS necessario è incluso qui sotto nello style tag. -->
 
     <title>Holly & Rex - Multi Drive Manager</title>
     
@@ -79,9 +76,9 @@
         }
         .action-btn:hover { transform: translateX(-50%) scale(1.05); }
 
-        /* === STILI MOBILE (UNICO BLOCO SICURO) === */
+        /* === MOBILE: REGOLE BLINDATE E UNICHE === */
         @media (max-width: 768px) {
-            /* Nascondi radicalmente le colonne laterali e il pulsante cerca */
+            /* 1. NASCONDI RADICALMENTE LE CARD E IL PULSANTE CERCA */
             .side-column, .action-btn {
                 display: none !important;
                 visibility: hidden !important;
@@ -91,7 +88,7 @@
                 flex: none !important;
             }
 
-            /* Reset layout principale */
+            /* 2. RESETTA IL LAYOUT PRINCIPALE */
             .main-layout {
                 display: flex !important;
                 flex-direction: column !important;
@@ -109,7 +106,7 @@
             h1 { font-size: 2rem !important; }
             p.subtitle { font-size: 1rem !important; margin-top: 10px !important; }
 
-            /* Hamburger Menu */
+            /* 3. HAMBURGER MENU */
             .hamburger-menu {
                 display: flex !important; position: fixed; top: 20px; left: 20px;
                 z-index: 1001; width: 35px; height: 30px;
@@ -127,7 +124,7 @@
             .hamburger-menu.active span:nth-child(2) { opacity: 0; }
             .hamburger-menu.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-            /* Menu a scomparsa */
+            /* 4. MENU A SCOMPARSA */
             .mobile-nav {
                 display: flex; position: fixed; top: 0; left: -100%;
                 width: 100%; height: 100vh; background: rgba(10, 12, 20, 0.95);
@@ -176,7 +173,7 @@
                 <span class="drive-status">12 GB liberi</span>
             </div>
             <div class="drive-card c2">
-                <span class="icon"></span>
+                <span class="icon">📷</span>
                 <span class="drive-name">Foto & Video</span>
                 <span class="drive-status">Sincronizzato</span>
             </div>
@@ -185,13 +182,13 @@
         <!-- CENTRO (Titolo e Foto libera) -->
         <div class="center-content">
             <h1>Holly & Rex Drive Manager</h1>
-            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau 🐾</p>
+            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau </p>
         </div>
 
         <!-- COLONNA DESTRA (3 Card) -->
         <div class="side-column right">
             <div class="drive-card c3">
-                <span class="icon"></span>
+                <span class="icon">📄</span>
                 <span class="drive-name">Documenti Lavoro</span>
                 <span class="drive-status">3 file nuovi</span>
             </div>
@@ -202,7 +199,7 @@
                 <p id="tv-status">Pronto</p>
             </div>
             <div class="drive-card c5">
-                <span class="icon">🐶</span>
+                <span class="icon"></span>
                 <span class="drive-name">Holly & Rex</span>
                 <span class="drive-status">Backup Pet Diary</span>
             </div>
@@ -210,7 +207,7 @@
     </div>
 
     <!-- Pulsante fluttuante in basso -->
-    <button class="action-btn">Cerca in tutti i Drive </button>
+    <button class="action-btn">Cerca in tutti i Drive 🔍</button>
 
     <!-- MENU A SCOMPARSA (MOBILE) -->
     <nav id="mobile-nav" class="mobile-nav">
