@@ -1,12 +1,12 @@
 {
-  "name": "Assistente Vocale - Holly & Rex",
+  "name": "Drive intelligente Holly - Rex ling & Aura",
   "short_name": "Assistente",
-  "start_url": "/massy.github.io/Telefono/assistente-vocale.html",
-  "scope": "/massy.github.io/Telefono/",
+  "start_url": "/massy.github.io/HollyRexDrive/index.html",
+  "scope": "/massy.github.io/HollyRexDrive/",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#1f1f1f",
-  "description": "Assistente Vocale intelligente per la crew di Holly & Rex",
+  "description": "Drive intelligente con collegamento cellulare pc",
   "icons": [
     {
       "src": "/massy.github.io/bau-192x192.png",
