@@ -358,8 +358,8 @@ controlloBackupIntelligente();
 function chiudiPopup() {
     const popup = document.getElementById('welcomePopup');
     if (popup) {
-        popup.classList.add('hidden');
-        // Salva in locale che l'utente ha già visto il popup in questa sessione
+        // MODIFICA: Usiamo display:none invece di aggiungere una classe CSS inesistente
+        popup.style.display = 'none'; 
         sessionStorage.setItem('popupBilancioVisto', 'true');
     }
 }
@@ -373,6 +373,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if (urlParams.get('from') === 'drive' && 
         !sessionStorage.getItem('popupBilancioVisto') && 
         popup) {
-        popup.classList.remove('hidden');
-    }
+        
+        }
 });
