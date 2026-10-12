@@ -360,9 +360,7 @@ controlloBackupIntelligente();
 window.chiudiPopup = function() {
     const popup = document.getElementById('welcomePopup');
     if (popup) {
-        // Nascondiamo direttamente via stile inline
         popup.style.display = 'none'; 
-        // Salviamo che l'utente ha visto il popup
         sessionStorage.setItem('popupBilancioVisto', 'true');
         console.log("✅ Popup chiuso correttamente!");
     }
@@ -373,15 +371,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const popup = document.getElementById('welcomePopup');
     
+    if (!popup) return;
+
     // Mostra SOLO se arriva da drive E non l'ha già visto in questa sessione
-    if (urlParams.get('from') === 'drive' && 
-        !sessionStorage.getItem('popupBilancioVisto') && 
-        popup) {
-        // Assicuriamoci che sia visibile all'avvio forzando lo stile
+    if (urlParams.get('from') === 'drive' && !sessionStorage.getItem('popupBilancioVisto')) {
         popup.style.display = 'flex'; 
         console.log("🎉 Popup mostrato!");
-    } else if (popup) {
-        // Se non deve essere mostrato, assicurati che sia nascosto
+    } else {
         popup.style.display = 'none';
     }
 });
