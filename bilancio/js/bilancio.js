@@ -348,6 +348,10 @@ const btnStampa = document.getElementById('btn-stampa');
 if (btnStampa) {
     btnStampa.addEventListener('click', generaReportStampabile);
 }
+
+// Avvio finale
+aggiornaConsole();
+controlloBackupIntelligente();
 // ========================================================
 // POPUP DI BENVENUTO HOLLY TESORIERA
 // ========================================================
@@ -355,7 +359,7 @@ function chiudiPopup() {
     const popup = document.getElementById('welcomePopup');
     if (popup) {
         popup.classList.add('hidden');
-        // Salva in locale che l'utente ha già visto il popup (opzionale)
+        // Salva in locale che l'utente ha già visto il popup in questa sessione
         sessionStorage.setItem('popupBilancioVisto', 'true');
     }
 }
@@ -372,6 +376,3 @@ window.addEventListener('DOMContentLoaded', () => {
         popup.classList.remove('hidden');
     }
 });
-// Avvio finale
-aggiornaConsole();
-controlloBackupIntelligente();
