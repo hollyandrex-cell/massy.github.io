@@ -348,7 +348,30 @@ const btnStampa = document.getElementById('btn-stampa');
 if (btnStampa) {
     btnStampa.addEventListener('click', generaReportStampabile);
 }
+// ========================================================
+// POPUP DI BENVENUTO HOLLY TESORIERA
+// ========================================================
+function chiudiPopup() {
+    const popup = document.getElementById('welcomePopup');
+    if (popup) {
+        popup.classList.add('hidden');
+        // Salva in locale che l'utente ha già visto il popup (opzionale)
+        sessionStorage.setItem('popupBilancioVisto', 'true');
+    }
+}
 
+// Controlla all'avvio se mostrare il popup
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const popup = document.getElementById('welcomePopup');
+    
+    // Mostra SOLO se arriva da drive E non l'ha già visto in questa sessione
+    if (urlParams.get('from') === 'drive' && 
+        !sessionStorage.getItem('popupBilancioVisto') && 
+        popup) {
+        popup.classList.remove('hidden');
+    }
+});
 // Avvio finale
 aggiornaConsole();
 controlloBackupIntelligente();
