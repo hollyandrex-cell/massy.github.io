@@ -48,6 +48,90 @@
         @media (max-width: 768px) {.backup-zone { flex-direction: column; } }
         .site-footer { margin-top: 40px; border-top: 1px solid #334155; padding-top: 20px; text-align: center; font-size: 0.75rem; color: #64748b; }
         .site-footer a { color: #94a3b8; text-decoration: none; margin: 0 10px; }
+    
+/* ========================================== */
+/* STILE POPUP HOLLY TESORIERA                */
+/* ========================================== */
+.popup-overlay {
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.85); /* Sfondo scuro semi-trasparente */
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    z-index: 10000; /* Sopra a TUTTO */
+    opacity: 1; 
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(5px); /* Effetto vetro smerigliato */
+}
+
+/* Questa classe NASCONDE il popup quando non serve */
+.popup-overlay.hidden { 
+    opacity: 0; 
+    pointer-events: none; 
+    visibility: hidden; 
+}
+
+.popup-card {
+    background: #fff9f5; /* Crema caldo */
+    color: #1e293b;
+    padding: 40px 30px; 
+    border-radius: 24px; 
+    text-align: center;
+    max-width: 420px; 
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    animation: popPaw 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid #ffd700; /* Bordo oro sacchetto */
+}
+
+.holly-img {
+    width: 160px; 
+    height: 160px; 
+    object-fit: cover;
+    border-radius: 50%; 
+    margin-bottom: 20px; 
+    border: 4px solid #ffd700; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.popup-card h2 { 
+    margin: 0 0 15px; 
+    font-size: 1.5rem; 
+    color: #1e293b; 
+}
+
+.popup-card p { 
+    margin: 0 0 25px; 
+    line-height: 1.6; 
+    color: #475569; 
+    font-size: 1rem; 
+}
+
+.btn-popup-primary {
+    background: linear-gradient(135deg, #ff6b8a, #ff8fa3);
+    color: white; 
+    border: none; 
+    padding: 14px 32px;
+    border-radius: 30px; 
+    font-weight: bold; 
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 138, 0.4);
+}
+
+.btn-popup-primary:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(255, 107, 138, 0.6); 
+}
+
+@keyframes popPaw {
+    from { transform: scale(0.8) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
     </style>
 </head>
 <body>
