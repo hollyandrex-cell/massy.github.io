@@ -353,16 +353,20 @@ if (btnStampa) {
 aggiornaConsole();
 controlloBackupIntelligente();
 // ========================================================
-// POPUP DI BENVENUTO HOLLY TESORIERA
+// POPUP DI BENVENUTO HOLLY TESORIERA - VERSIONE BLINDATA
 // ========================================================
-function chiudiPopup() {
+
+// Rendi la funzione globale in modo che l'HTML la trovi sempre
+window.chiudiPopup = function() {
     const popup = document.getElementById('welcomePopup');
     if (popup) {
-        // MODIFICA: Usiamo display:none invece di aggiungere una classe CSS inesistente
+        // Nascondiamo direttamente via stile inline (nessuna classe CSS necessaria)
         popup.style.display = 'none'; 
+        // Salviamo che l'utente ha visto il popup
         sessionStorage.setItem('popupBilancioVisto', 'true');
+        console.log("Popup chiuso correttamente!");
     }
-}
+};
 
 // Controlla all'avvio se mostrare il popup
 window.addEventListener('DOMContentLoaded', () => {
@@ -373,6 +377,10 @@ window.addEventListener('DOMContentLoaded', () => {
     if (urlParams.get('from') === 'drive' && 
         !sessionStorage.getItem('popupBilancioVisto') && 
         popup) {
-        
-        }
+        // Assicuriamoci che sia visibile all'avvio
+        popup.style.display = 'flex'; 
+    } else if (popup) {
+        // Se non deve essere mostrato, nascondilo subito
+        popup.style.display = 'none';
+    }
 });
