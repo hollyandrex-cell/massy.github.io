@@ -360,11 +360,11 @@ controlloBackupIntelligente();
 window.chiudiPopup = function() {
     const popup = document.getElementById('welcomePopup');
     if (popup) {
-        // Nascondiamo direttamente via stile inline (nessuna classe CSS necessaria)
+        // Nascondiamo direttamente via stile inline
         popup.style.display = 'none'; 
         // Salviamo che l'utente ha visto il popup
         sessionStorage.setItem('popupBilancioVisto', 'true');
-        console.log("Popup chiuso correttamente!");
+        console.log("✅ Popup chiuso correttamente!");
     }
 };
 
@@ -377,10 +377,11 @@ window.addEventListener('DOMContentLoaded', () => {
     if (urlParams.get('from') === 'drive' && 
         !sessionStorage.getItem('popupBilancioVisto') && 
         popup) {
-        // Assicuriamoci che sia visibile all'avvio
+        // Assicuriamoci che sia visibile all'avvio forzando lo stile
         popup.style.display = 'flex'; 
+        console.log("🎉 Popup mostrato!");
     } else if (popup) {
-        // Se non deve essere mostrato, nascondilo subito
+        // Se non deve essere mostrato, assicurati che sia nascosto
         popup.style.display = 'none';
     }
 });
