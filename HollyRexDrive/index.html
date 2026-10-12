@@ -6,10 +6,10 @@
    
     <!-- FAVICON E MANIFEST -->
     <link rel="apple-touch-icon" sizes="192x192" href="./bau-192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./bau-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="./bau-512x512.png">
-<link rel="manifest" href="./manifest.json">
-<link rel="shortcut icon" href="./bau-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./bau-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./bau-512x512.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="shortcut icon" href="./bau-192x192.png">
     <title>Holly & Rex - Multi Drive Manager</title>
     
     <!-- META DESCRIPTION PER GOOGLE -->
@@ -118,7 +118,7 @@
                 display: flex; 
                 position: fixed; 
                 top: 0; 
-                left: -100%; /* Nascosto fuori schermo a sinistra */
+                left: -115%; /* Nascosto fuori schermo a sinistra */
                 width: 100%; 
                 height: 100vh; 
                 background: rgba(10, 12, 20, 0.95);
@@ -188,6 +188,10 @@
     <!-- MENU A SCOMPARSA (MOBILE) -->
     <nav id="mobile-nav" class="mobile-nav">
         <a href="#" onclick="openTV()">🎵 Musica & TV</a>
+           <!-- NUOVO LINK BILANCIO -->
+    <a href="#" onclick="apriBilancio()">💰 Bilancio Familiare</a>
+</nav>
+
         <!-- Altri link verranno aggiunti qui uno alla volta -->
     </nav>
 
@@ -214,11 +218,13 @@
 
         <!-- COLONNA DESTRA (3 Card) -->
         <div class="side-column right">
-            <div class="drive-card c3">
-                <span class="icon"></span>
-                <span class="drive-name">Documenti Lavoro</span>
-                <span class="drive-status">3 file nuovi</span>
+            <div class="drive-card c3" onclick="apriBilancio()">
+                <span class="icon">💰</span>
+                <span class="drive-name">Bilancio Familiare</span>
+                <span class="drive-status">Gestione spese semplice</span>
+                <span>
             </div>
+           
             <!-- CARD MUSICA & TV INTERATTIVA -->
             <div class="drive-card music-tv-card" onclick="openTV()">
                 <span class="card-icon">🎵</span>
@@ -243,6 +249,13 @@
             localStorage.setItem('tornaAlDrive', 'true');
             window.location.href = '../tv-app/index.html?from=drive';
         }
+        function apriBilancio() {
+    // Imposta il flag per tornare indietro (opzionale, ma utile se vuoi uniformità)
+    localStorage.setItem('tornaAlDrive', 'true');
+    
+    // Apre il Bilancio in una NUOVA SCHEDA (fondamentale per domini esterni!)
+    window.open('https://hollyandrex-cell.github.io/massy.github.io/bilancio/bilancio.html?from=drive', '_blank');
+}
 
         // Gestione Menu Mobile
         const hamburger = document.querySelector('.hamburger-menu');
