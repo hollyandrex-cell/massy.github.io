@@ -166,7 +166,7 @@
             </div>
         </section>
         <section class="trends-box">
-            <h3>📊 Analisi Trend Crew</h3>
+            <h3> Analisi Trend Crew</h3>
             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 200px;">
                     <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 0.2rem;">Mese Corrente vs Mese Precedente (Uscite)</span>
@@ -203,7 +203,7 @@
                                 <option value="Animali">🐾 Animali Domestici</option>
                             </optgroup>
                             <optgroup label=" Vita & Svago">
-                                <option value="Ristoranti / Uscite">🍕 Ristoranti</option>
+                                <option value="Ristoranti / Uscite"> Ristoranti</option>
                                 <option value="Abbigliamento / Persona">👗 Abbigliamento & Cura Personale</option>
                                 <option value="Hobby / Cultura">🎬 Cinema, Libri & Hobby</option>
                                 <option value="Regali">🎁 Regali & Ricorrenze</option>
@@ -274,13 +274,13 @@
                     <select id="filtro-categoria">
                         <option value="tutte">Tutte le Categorie</option>
                         <option value="Casa / Affitto">🏠 Casa / Affitto</option>
-                        <option value="Bollette / Utenze">💡 Bollette</option>
+                        <option value="Bollette / Utenze"> Bollette</option>
                         <option value="Telefono / Internet">📱 Telefono</option>
-                        <option value="Spesa / Cibo">🛒 Spesa</option>
+                        <option value="Spesa / Cibo"> Spesa</option>
                         <option value="Auto / Trasporti">🚗 Auto</option>
                         <option value="Salute / Farmacia"> Salute</option>
                         <option value="Scuola / Istruzione">🎓 Scuola</option>
-                        <option value="Animali">🐾 Animali</option>
+                        <option value="Animali"> Animali</option>
                         <option value="Ristoranti / Uscite"> Ristoranti</option>
                         <option value="Abbigliamento / Persona">👗 Abbigliamento</option>
                         <option value="Hobby / Cultura">🎬 Hobby</option>
@@ -320,216 +320,18 @@
         <p>&copy; 2026 Holly & Rex Group. Fatto con amore e trasparenza.</p>
         <p><a href="/massy.github.io/privacy-policy.html">privacy policy</a> | <a href="/massy.github.io/cookie-policy.html">cookie policy</a></p>
     </div>
-<script>
-const STORAGE_KEY = 'hollyRexBilancio_v3';
-const STORAGE_KEY_FISSE = 'hollyRexSpeseFisse_v1';
-let movimenti = [];
-let speseFisse = JSON.parse(localStorage.getItem(STORAGE_KEY_FISSE)) || [];
-function salvaDati() {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(movimenti));
-    } catch(e) {
-        alert('❌ Errore salvataggio! Usa GitHub Pages.');
-    }
-}
-function caricaDati() {
-    try {
-        const dati = localStorage.getItem(STORAGE_KEY);
-        if (dati) movimenti = JSON.parse(dati);
-    } catch(e) { movimenti = []; }
-    aggiornaTutto();
-}
-function aggiornaTutto() {
-    const tbody = document.getElementById('registro-movimenti');
-    tbody.innerHTML = '';
-    let totaleEntrate = 0;
-    let totaleUscite = 0;
-    movimenti.forEach((mov, index) => {
-        const isEntrata = mov.tipo === 'entrata';
-        const valore = parseFloat(mov.importo);
-        if (isEntrata) totaleEntrate += valore;
-        else totaleUscite += valore;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${new Date(mov.data).toLocaleDateString('it-IT')}</td><td>${mov.categoria}</td><td>${mov.descrizione}</td><td class="${isEntrata? 'valore-pos' : 'valore-neg'}">${isEntrata? '+' : '-'}${valore.toFixed(2)} €</td><td><button class="btn-del" onclick="eliminaMovimento(${index})">X</button></td>`;
-        tbody.appendChild(tr);
-    });
-    document.getElementById('totale-entrate').textContent = totaleEntrate.toFixed(2) + ' €';
-    document.getElementById('totale-uscite').textContent = totaleUscite.toFixed(2) + ' €';
-    document.getElementById('saldo-totale').textContent = (totaleEntrate - totaleUscite).toFixed(2) + ' €';
-    aggiornaTrend(totaleUscite);
-}
-function aggiornaTrend(usciteMeseCorrente) {
-    const oggi = new Date();
-    const meseScorso = new Date(oggi.getFullYear(), oggi.getMonth() - 1, 1);
-    const usciteMeseScorso = movimenti.filter(m => {
-            const d = new Date(m.data);
-            return m.tipo === 'uscita' && d.getMonth() === meseScorso.getMonth() && d.getFullYear() === meseScorso.getFullYear();
-        }).reduce((sum, m) => sum + parseFloat(m.importo), 0);
-    const trendEl = document.getElementById('trend-mese');
-    const feedbackEl = document.getElementById('feedback-crew');
-    if (usciteMeseScorso === 0) {
-        trendEl.textContent = 'Primo mese di dati';
-        feedbackEl.textContent = 'Dj Luna: "Iniziamo a raccogliere i dati storici, la rotta è tracciata!"';
-    } else {
-        const diff = usciteMeseCorrente - usciteMeseScorso;
-        const perc = ((diff / usciteMeseScorso) * 100).toFixed(1);
-        if (diff > 0) {
-            trendEl.innerHTML = `<span style="color: #ef4444;">+${perc}%</span> vs mese scorso`;
-            feedbackEl.textContent = 'Dj Aura: "Spese in aumento. Controlliamo la rotta, Captain!"';
-        } else {
-            trendEl.innerHTML = `<span style="color: #22c55e;">${perc}%</span> vs mese scorso`;
-            feedbackEl.textContent = 'Dj Nova: "Ottimo! Risparmio attivo. Holly approva ★"';
-        }
-    }
-}
-const checkboxRipeti = document.getElementById('ripeti-mese');
-const campoGiorno = document.getElementById('campo-giorno');
-if (checkboxRipeti && campoGiorno) {
-    checkboxRipeti.addEventListener('change', function() {
-        if (this.checked) {
-            campoGiorno.style.display = 'block';
-            document.getElementById('giorno-ricorrenza').setAttribute('required', 'true');
-        } else {
-            campoGiorno.style.display = 'none';
-            document.getElementById('giorno-ricorrenza').removeAttribute('required');
-            document.getElementById('giorno-ricorrenza').value = ''; 
-        }
-    });
-}
-function controllaSpeseFisseAutomatiche() {
-    const oggi = new Date();
-    const giornoOggi = oggi.getDate();
-    const meseOggi = oggi.getMonth(); 
-    const annoOggi = oggi.getFullYear();
-    let aggiunte = 0;
-    speseFisse.forEach(spesa => {
-        if (spesa.giorno === giornoOggi) {
-            const esisteGia = movimenti.some(m => 
-                m.categoria === spesa.categoria && 
-                m.descrizione.includes('(Auto)') && 
-                new Date(m.data).getMonth() === meseOggi &&
-                new Date(m.data).getFullYear() === annoOggi
-            );
-            if (!esisteGia) {
-                movimenti.unshift({
-                    id: Date.now() + Math.random(),
-                    data: new Date().toISOString(),
-                    tipo: 'uscita', 
-                    categoria: spesa.categoria,
-                    importo: spesa.importo,
-                    descrizione: `(Auto) ${spesa.descrizione}`
-                });
-                aggiunte++;
-            }
-        }
-    });
-    if (aggiunte > 0) {
-        salvaDati();
-        aggiornaTutto();
-        alert(`✅ Buongiorno! Ho aggiunto automaticamente ${aggiunte} spesa/e fissa/e per oggi.`);
-    }
-}
-document.getElementById('form-movimento').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const tipo = document.getElementById('tipo').value;
-    const categoria = document.getElementById('categoria').value;
-    const importo = parseFloat(document.getElementById('importo').value);
-    const descrizione = document.getElementById('descrizione').value;
-    const isRipeti = document.getElementById('ripeti-mese').checked;
-    const giorno = parseInt(document.getElementById('giorno-ricorrenza').value);
-    const nuovoMov = {
-        id: Date.now(),
-        data: new Date().toISOString(),
-        tipo: tipo,
-        categoria: categoria,
-        importo: importo,
-        descrizione: descrizione
-    };
-    movimenti.unshift(nuovoMov);
-    if (isRipeti && !isNaN(giorno)) {
-        const nuovaSpesaFissa = {
-            categoria: categoria,
-            importo: importo,
-            descrizione: descrizione,
-            giorno: giorno
-        };
-        const esisteConfig = speseFisse.some(s => s.categoria === categoria && s.descrizione === descrizione && s.importo === importo);
-        if (!esisteConfig) {
-            speseFisse.push(nuovaSpesaFissa);
-            localStorage.setItem(STORAGE_KEY_FISSE, JSON.stringify(speseFisse));
-            alert(`✅ Movimento registrato! Ho impostato la ripetizione automatica ogni giorno ${giorno}.`);
-        }
-    }
-    salvaDati();
-    aggiornaTutto();
-    e.target.reset();
-    if (campoGiorno) campoGiorno.style.display = 'none';
-    if (checkboxRipeti) checkboxRipeti.checked = false;
-});
-window.eliminaMovimento = (index) => {
-    if (confirm('Vuoi eliminare questo movimento?')) {
-        movimenti.splice(index, 1);
-        salvaDati();
-        aggiornaTutto();
-    }
-};
-document.getElementById('btn-export').addEventListener('click', () => {
-    if (movimenti.length === 0) { alert('Nessun dato da esportare!'); return; }
-    const dataStr = JSON.stringify(movimenti, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const data = new Date().toISOString().split('T')[0];
-    a.href = url;
-    a.download = `backup_bilancio_crew_${data}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
-document.getElementById('btn-import-trigger').addEventListener('click', () => {
-    document.getElementById('file-import').click();
-});
-document.getElementById('file-import').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        try {
-            const dati = JSON.parse(event.target.result);
-            if (!Array.isArray(dati)) throw new Error('File non valido');
-            if (confirm(`Trovati ${dati.length} movimenti. Vuoi SOSTITUIRE i dati attuali?`)) {
-                movimenti = dati;
-                salvaDati();
-                aggiornaTutto();
-            }
-        } catch (err) {
-            alert('❌ Errore: File backup non valido.');
-        }
-    };
-    reader.readAsText(file);
-    e.target.value = ''; 
-});
-document.getElementById('btn-stampa').addEventListener('click', () => { window.print(); });
-window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.protocol === 'file:') {
-        document.getElementById('warning-file').style.display = 'block';
-    }
-    caricaDati();
-    controllaSpeseFisseAutomatiche();
-});
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/massy.github.io/sw.js').then(()=>console.log('SW Group v1 root ok')).catch(e=>console.log('SW fail',e));
-}
-</script>
-<!-- POPUP DI BENVENUTO HOLLY TESORIERA -->
-<div id="welcomePopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
-    <div style="background: #1e293b; padding: 2rem; border-radius: 1rem; max-width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); border: 1px solid #334155;">
-        <img src="https://hollyandrex-cell.github.io/massy.github.io/bilancio/img/holly-tesoriere.jpg" alt="Holly Tesoriere" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 1rem; border: 3px solid #60a5fa;">
-        <h3 style="color: #fbbf24; margin-bottom: 0.5rem;">Benvenuto/a nel Bilancio Familiare!</h3>
-        <p style="color: #cbd5e1; margin-bottom: 1.5rem;">Stai esplorando le app Holly & Rex.<br>Per tua sicurezza, i tuoi dati restano solo su questo dispositivo.<br>Tutte le funzioni sono attive e gratuite.</p>
-        <button onclick="chiudiPopup()" style="background: #60a5fa; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; cursor: pointer; font-weight: bold; transition: all 0.2s;">Ho capito, inizia!</button>
+
+    <!-- QUI HO INSERITO IL TUO JS CORRETTO -->
+    <script src="js/bilancio.js"></script>
+
+    <!-- POPUP DI BENVENUTO HOLLY TESORIERA (CORRETTO E PRONTO) -->
+    <div id="welcomePopup" class="popup-overlay hidden">
+        <div class="popup-card">
+            <img src="https://hollyandrex-cell.github.io/massy.github.io/bilancio/img/holly-tesoriere.jpg" alt="Holly Tesoriere" class="holly-img">
+            <h2>Benvenuto/a nel Bilancio Familiare!</h2>
+            <p>Stai esplorando le app Holly & Rex.<br>Per tua sicurezza, i tuoi dati restano solo su questo dispositivo.<br>Tutte le funzioni sono attive e gratuite.</p>
+            <button onclick="window.chiudiPopup()" class="btn-popup-primary">Ho capito, inizia!</button>
+        </div>
     </div>
-</div>
 </body>
 </html>
