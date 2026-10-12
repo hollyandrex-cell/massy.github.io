@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#ff6b8a">
 
     <style>
-        /* --- STILE GENERALE DESKTOP --- */
+        /* --- STILE GENERALE DESKTOP PURIFICATO --- */
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -76,83 +76,103 @@
         }
         .action-btn:hover { transform: translateX(-50%) scale(1.05); }
 
-        /* === MOBILE: REGOLE BLINDATE E UNICHE === */
-        @media (max-width: 768px) {
-            /* 1. NASCONDI RADICALMENTE LE CARD E IL PULSANTE CERCA */
-            .side-column, .action-btn {
-                display: none !important;
-                visibility: hidden !important;
-                height: 0 !important; width: 0 !important;
-                margin: 0 !important; padding: 0 !important;
-                border: none !important; overflow: hidden !important;
-                flex: none !important;
-            }
+        /* === MOBILE: TUTTE LE REGOLE QUI DENTRO === */
+        @media (max-width: 768px) { 
+            /* Nascondi elementi desktop */
+            .c1, .c2, .c3, .music-tv-card, .c5, .action-btn { display: none !important; }
+            
+            /* Abbassa titolo e sottotitolo */
+            .center-content { margin-top: 37vh !important; } 
 
-            /* 2. RESETTA IL LAYOUT PRINCIPALE */
-            .main-layout {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: flex-start !important;
-                padding: 100px 20px 40px !important;
-                height: auto !important; min-height: 100vh !important;
-                gap: 0 !important;
-            }
-
-            .center-content {
-                order: 0 !important; margin: 20px 0 0 0 !important;
-                width: 90% !important; text-align: center !important;
-            }
-            h1 { font-size: 2rem !important; }
-            p.subtitle { font-size: 1rem !important; margin-top: 10px !important; }
-
-            /* 3. HAMBURGER MENU */
+            /* Hamburger Menu - Stile Base */
             .hamburger-menu {
-                display: flex !important; position: fixed; top: 20px; left: 20px;
-                z-index: 1001; width: 35px; height: 30px;
-                flex-direction: column; justify-content: space-between;
-                cursor: pointer; padding: 6px;
-                background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 8px;
+                display: flex !important; 
+                position: fixed; 
+                top: 20px; 
+                left: 20px;
+                z-index: 1001; 
+                width: 40px; 
+                height: 30px;
+                flex-direction: column; 
+                justify-content: space-between;
+                cursor: pointer; 
+                padding: 0;
+                background: rgba(255, 255, 255, 0.15); 
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3); 
+                border-radius: 8px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             }
+            
+            /* Le tre linee dell'hamburger */
             .hamburger-menu span {
-                display: block; height: 3px; width: 100%;
-                background-color: #ffffff; border-radius: 3px; transition: all 0.3s ease;
-            }
-            .hamburger-menu.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-            .hamburger-menu.active span:nth-child(2) { opacity: 0; }
-            .hamburger-menu.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-            /* 4. MENU A SCOMPARSA */
-            .mobile-nav {
-                display: flex; position: fixed; top: 0; left: -100%;
-                width: 100%; height: 100vh; background: rgba(10, 12, 20, 0.95);
-                backdrop-filter: blur(20px); flex-direction: column;
-                justify-content: center; align-items: center;
-                z-index: 1000; padding: 20px;
-                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto;
-            }
-            .mobile-nav.active { left: 0; }
-
-            .mobile-nav a {
-                color: #ffffff; text-decoration: none;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                font-size: 1.2rem; font-weight: 600; margin: 12px 0;
-                padding: 15px 30px; background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px;
-                width: 80%; max-width: 300px; text-align: center;
-                display: flex; align-items: center; justify-content: center; gap: 10px;
+                display: block; 
+                height: 3px; 
+                width: 100%;
+                background-color: #ffffff; 
+                border-radius: 3px; 
                 transition: all 0.3s ease;
             }
-            .mobile-nav a:hover, .mobile-nav a:active {
-                background: rgba(255, 107, 138, 0.2); border-color: #ff6b8a; transform: scale(1.02);
+
+            /* === MENU A SCOMPARSA (CSS MANCANTE AGGIUNTO ORA) === */
+            .mobile-nav {
+                display: flex; 
+                position: fixed; 
+                top: 0; 
+                left: -100%; /* Nascosto fuori schermo a sinistra */
+                width: 100%; 
+                height: 100vh; 
+                background: rgba(10, 12, 20, 0.95);
+                backdrop-filter: blur(20px); 
+                flex-direction: column;
+                justify-content: center; 
+                align-items: center;
+                z-index: 1000; 
+                padding: 20px;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animazione fluida */
+                overflow-y: auto;
+            }
+            
+            /* Quando attivo, entra nello schermo */
+            .mobile-nav.active { 
+                left: 0; 
             }
 
-            body.no-scroll { overflow: hidden; }
+            /* Stile dei link nel menu */
+            .mobile-nav a {
+                color: #ffffff; 
+                text-decoration: none;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 1.2rem; 
+                font-weight: 600; 
+                margin: 12px 0;
+                padding: 15px 30px; 
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.15); 
+                border-radius: 16px;
+                width: 80%; 
+                max-width: 300px; 
+                text-align: center;
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                gap: 10px;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-nav a:hover, .mobile-nav a:active {
+                background: rgba(255, 107, 138, 0.2); 
+                border-color: #ff6b8a; 
+                transform: scale(1.02);
+            }
+
+            /* Blocca lo scroll del body quando il menu è aperto */
+            body.no-scroll { 
+                overflow: hidden; 
+            }
         }
 
-        /* Desktop: nascondi elementi mobile */
+        /* Desktop: nascondi hamburger e menu mobile */
         @media (min-width: 769px) {
             .hamburger-menu, .mobile-nav { display: none !important; }
         }
@@ -161,19 +181,27 @@
 <body>
     <!-- PULSANTE MENU HAMBURGER (Mobile) -->
     <div class="hamburger-menu">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
+
+    <!-- MENU A SCOMPARSA (MOBILE) -->
+    <nav id="mobile-nav" class="mobile-nav">
+        <a href="#" onclick="openTV()">🎵 Musica & TV</a>
+        <!-- Altri link verranno aggiunti qui uno alla volta -->
+    </nav>
 
     <div class="main-layout">
         <!-- COLONNA SINISTRA (2 Card) -->
         <div class="side-column left">
             <div class="drive-card c1">
-                <span class="icon">📂</span>
+                <span class="icon"></span>
                 <span class="drive-name">Drive Principale</span>
                 <span class="drive-status">12 GB liberi</span>
             </div>
             <div class="drive-card c2">
-                <span class="icon">📷</span>
+                <span class="icon"></span>
                 <span class="drive-name">Foto & Video</span>
                 <span class="drive-status">Sincronizzato</span>
             </div>
@@ -182,13 +210,13 @@
         <!-- CENTRO (Titolo e Foto libera) -->
         <div class="center-content">
             <h1>Holly & Rex Drive Manager</h1>
-            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau </p>
+            <p class="subtitle">I tuoi 5 mondi digitali, custoditi dai bau 🐾</p>
         </div>
 
         <!-- COLONNA DESTRA (3 Card) -->
         <div class="side-column right">
             <div class="drive-card c3">
-                <span class="icon">📄</span>
+                <span class="icon"></span>
                 <span class="drive-name">Documenti Lavoro</span>
                 <span class="drive-status">3 file nuovi</span>
             </div>
@@ -209,57 +237,26 @@
     <!-- Pulsante fluttuante in basso -->
     <button class="action-btn">Cerca in tutti i Drive 🔍</button>
 
-    <!-- MENU A SCOMPARSA (MOBILE) -->
-    <nav id="mobile-nav" class="mobile-nav">
-        <a href="#drive-principale">📂 Drive Principale</a>
-        <a href="#foto-video"> Foto & Video</a>
-        <a href="#" onclick="openTV()">🎵 Musica & TV</a>
-        <a href="#documenti"> Documenti Lavoro</a>
-        <a href="#pet-diary"> Holly & Rex</a>
-    </nav>
-
     <!-- SCRIPT UNIFICATI -->
     <script>
-        // Funzione Apri TV
+        // Funzione Apri TV (Intelligente)
         function openTV() {
-            const status = document.getElementById('tv-status');
-            if(status) {
-                status.innerText = "Accensione... ";
-                status.style.color = "#ff6b8a"; 
-            }
-            localStorage.setItem('lastTVVisit', new Date().toISOString());
-            
-            setTimeout(() => {
-                window.open('../tv-app/index.html?from=drive', '_blank');
-                if(status) status.innerText = "In onda 🔴";
-            }, 600);
+            localStorage.setItem('tornaAlDrive', 'true');
+            window.location.href = '../tv-app/index.html?from=drive';
         }
-        
-        // Check stato all'avvio
-        document.addEventListener('DOMContentLoaded', () => {
-            const tvStatus = document.getElementById('tv-status');
-            const lastVisit = localStorage.getItem('lastTVVisit');
-            if (lastVisit && tvStatus) {
-                const visitDate = new Date(lastVisit);
-                const now = new Date();
-                if ((now - visitDate) / (1000 * 60 * 60) < 24) {
-                    tvStatus.innerText = "Ultimo accesso: oggi";
-                    tvStatus.style.color = "#22c55e";
-                }
-            }
-        });
 
         // Gestione Menu Mobile
         const hamburger = document.querySelector('.hamburger-menu');
         const mobileNav = document.getElementById('mobile-nav');
-        
+
         if(hamburger && mobileNav) {
             hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                mobileNav.classList.toggle('active');
-                document.body.classList.toggle('no-scroll');
+                hamburger.classList.toggle('active'); 
+                mobileNav.classList.toggle('active'); 
+                document.body.classList.toggle('no-scroll'); 
             });
             
+            // Chiudi il menu quando si clicca su un link
             mobileNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
