@@ -24,14 +24,14 @@
     "nome": "Luna 🌙",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
     "stato": "Lavora con Massy a Byte e Pelle",
-    "attivo": true,
+    "attivo": false,
     "link": "artists-announce.html"
   },
   {
     "nome": "Nova ⭐",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "stato": "Nova oggi riposa 💤",
-    "attivo": false,
+    "stato": "Sta finendo Noi Tre",
+    "attivo": true,
     "link": "artists-announce.html"
   }
 ]
