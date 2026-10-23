@@ -271,9 +271,11 @@ if(btnVoice) {
 }
 /* ✅ FINE FIX MICROFONO v2.0 */
 
-// SW ROOT UNICO - FIX PATH RELATIVO
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').then(()=>console.log('SW Spesa v6.1.7 ok')).catch(e=>console.log('SW fail',e));
+// SW ROOT UNICO - FIX PATH ASSOLUTO PER GITHUB PAGES
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/massy.github.io/sw.js')
+    .then(reg => console.log('SW Root registrato con successo:', reg.scope))
+    .catch(err => console.log('Errore registrazione SW:', err));
 }
 </script>
 <script src="../drive-guard.js"></script>
