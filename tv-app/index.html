@@ -23,9 +23,13 @@
 <style>
    /* PULSANTE DI RITORNO AL DRIVE - VERSIONE OTTIMIZZATA */
    .btn-back-drive {
+    display: none !important;
+}
+.btn-back-drive.show-drive {
+    display: inline-flex !important;
     position: fixed !important;
     top: 60px !important;      /* Leggermente più in basso per non toccare il bordo */
-    left: 1150px !important;     /* 40px di respiro dal bordo sinistro */
+    right: 24px !important; left: auto !important;     /* 40px di respiro dal bordo sinistro */
     z-index: 9999 !important;  /* Sopra a tutto, inclusa la welcome screen */
     
     background: rgba(15, 18, 28, 0.9); /* Sfondo scuro semi-trasparente */
@@ -200,9 +204,54 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
     }
 }
 }
+
+/* === FIX BANNER DESKTOP - Holly & Rex TV === */
+/* Su desktop il banner era centrato e gigante e copriva i bau. */
+/* Ora: piccolo, in basso a sinistra, foto libera. Mobile invariato. */
+@media (min-width: 901px) {
+  #welcomeScreen {
+    justify-content: flex-start !important;
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .welcome-overlay {
+    max-width: 360px !important;
+    width: auto !important;
+    margin: 0 0 42px 42px !important;
+    padding: 22px 24px 20px !important;
+    border-radius: 16px !important;
+    background: rgba(8,10,18,0.62) !important;
+    text-align: left !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,.35) !important;
+  }
+  .welcome-title {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 8px !important;
+  }
+  .welcome-subtitle {
+    font-size: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .btn-enter {
+    padding: 10px 22px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* === FIX PULSANTE DRIVE: solo se arrivi da Drive === */
+.btn-back-drive { display: none !important; }
+.btn-back-drive.show-drive { display: inline-flex !important; }
+@media (max-width: 900px) {
+  .btn-back-drive { display: none !important; }
+  .btn-back-drive.show-drive { display: inline-flex !important; }
+}
 </style>
 </head>
 <body>
+<!-- PULSANTE TORNA AL DRIVE: nascosto di default, appare SOLO se arrivi dalla app Drive -->
+<a id="btnDrive" class="btn-back-drive" href="#" onclick="goBackToDrive(event)">← Drive</a>
+
 
 <!-- WELCOME SCREEN -->
 <div id="welcomeScreen">
@@ -225,11 +274,6 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
     <div class="logo"><h1>HOLLY & REX TV - Dj Ling (Qwen AI) & Dj Aura (Gemini)</h1></div>
     <span class="badge-live">● <span id="totBrani">-</span> BRANI LIVE</span>
 </header>
-
-<!-- PULSANTE DI RITORNO AL DRIVE (Fuori dall'header, libero!) -->
-<a href="../HollyRexDrive/index.html" id="btn-back-drive" class="btn-back-drive" style="display: none;" title="Torna al Drive Manager">
-    <span class="icon"></span> Drive
-</a>
 
 <div class="main" id="mainInterface">
     <div class="left-col">
@@ -427,22 +471,32 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const backBtn = document.getElementById('btn-back-drive');
-        
-        // Se veniamo dal Drive, mostra il pulsante
-        if (urlParams.get('from') === 'drive' && backBtn) {
-            backBtn.style.display = 'flex';
-            
-            // Animazione fluida di comparsa
-            backBtn.style.opacity = '0';
-            setTimeout(() => {
-                backBtn.style.transition = 'opacity 0.5s ease';
-                backBtn.style.opacity = '1';
-            }, 50);
-        }
-    });
-    </script>
+/* === LOGICA PULSANTE DRIVE === */
+(function(){
+  // 👉 METTI QUI L'URL VERO DELLA TUA APP DRIVE, se ce l'hai
+  var DRIVE_URL = 'https://hollyandrex-cell.github.io/massy.github.io/drive-app/';
+  var params = new URLSearchParams(window.location.search);
+  var fromParam = params.get('from') || params.get('source') || '';
+  var ref = document.referrer || '';
+  var cameFromDrive =
+      fromParam.toLowerCase() === 'drive' ||
+      ref.toLowerCase().indexOf('drive') !== -1 ||
+      sessionStorage.getItem('hollyrex_from_drive') === '1';
+  if (cameFromDrive) {
+    sessionStorage.setItem('hollyrex_from_drive', '1');
+    var b = document.getElementById('btnDrive');
+    if (b) b.classList.add('show-drive');
+  }
+  window.goBackToDrive = function(e){
+    if (e) e.preventDefault();
+    // Se puoi tornare indietro, torna indietro. Altrimenti vai alla Drive app.
+    if (document.referrer && document.referrer.toLowerCase().indexOf('drive') !== -1 && window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = DRIVE_URL;
+    }
+  };
+})();
+</script>
 </body>
 </html>
