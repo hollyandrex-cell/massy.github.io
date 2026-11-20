@@ -246,6 +246,45 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
   .btn-back-drive { display: none !important; }
   .btn-back-drive.show-drive { display: inline-flex !important; }
 }
+
+/* === FIX VIDEO FISSO + SOLO TESTO CHE SCORRE (desktop) === */
+/* Prima scorreva tutta la pagina e il video scappava in alto. */
+/* Ora: video fermo a sinistra, scorre SOLO la colonna destra con il testo. */
+@media (min-width: 901px) {
+  html, body { height: 100%; overflow: hidden !important; }
+  header { position: sticky; top: 0; }
+  .main {
+    height: calc(100vh - 41px) !important;
+    height: calc(100dvh - 41px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    align-items: stretch !important;
+  }
+  .left-col {
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+  .video-wrap { flex-shrink: 0 !important; }
+  .right-col {
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+    scrollbar-width: thin !important;
+    padding-bottom: 40px !important;
+  }
+  .right-col::-webkit-scrollbar { width: 6px; }
+  .right-col::-webkit-scrollbar-thumb { background: #2a3045; border-radius: 10px; }
+}
+@media (max-width: 900px) {
+  /* Mobile: resta come ora, scorre la pagina intera */
+  html, body { overflow-x: hidden !important; overflow-y: auto !important; }
+  .main { height: auto !important; overflow: visible !important; }
+  .right-col { overflow: visible !important; }
+}
 </style>
 </head>
 <body>
