@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Holly & Rex - V9 NovaAmore - FIX WhatsApp come Spesa - 29/09/2026 07:38 - Noi Tre + Aura + Live Spesa + Risposta Vocale - Noi Tre + Aura + Live Spesa + Risposta Vocale</title>
+<title>Holly & Rex - V9 NovaAmore - Ponte Unico - Live Spesa + Risposta Vocale</title>
 <link rel="icon" href="./bau-192x192.png" type="image/png">
 <link rel="apple-touch-icon" href="./bau-192x192.png">
 <link rel="manifest" href="./manifest.json">
@@ -399,7 +399,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if(data.letto === true && data.deviceIdDestinatario !== 'tutti') { /* permetti broadcast anche se letto */ }
             // Fallback se FCM dorme: leggiamo da notifiche_reali
             const titolo = data.titolo || data.title || "WhatsApp da " + (data.mittente||"Holly");
-            const corpo = data.corpo || data.body || data.message || "";
+            const corpo = data.corpo || data.body || data.message || data.messaggio || ""; // FIX: legge anche 'messaggio' del vecchio servizio
             const mitt = data.mittente || data.da || "Holly";
             const personaggio = data.personaggio || "Aura";
             window.ultimoMittenteWhatsApp = mitt;
@@ -608,7 +608,7 @@ function simulaArrivoNotifica(){
           } else {
             // se la funzione esiste già nella pagina
             const coll = collection(dbRef, 'risposte_pending');
-            await addDoc(coll, { mittente: window._rispostaTemp.mitt, testo: window._rispostaTemp.testo, timestamp: serverTimestamp(), inviatoDa: 'Aura-V5-RISPONDI-INVIA' });
+            await addDoc(coll, { mittente: window._rispostaTemp.mitt, testo: window._rispostaTemp.testo, risposta: window._rispostaTemp.testo, deviceIdDestinatario: localStorage.getItem('crew_device_id') || 'NovaAmore', deviceId: localStorage.getItem('crew_device_id') || 'NovaAmore', timestamp: serverTimestamp(), creato: serverTimestamp(), inviato: false, inviatoDa: 'Aura-V5-RISPONDI-INVIA' }); // FIX: APK legge 'risposta' + 'deviceIdDestinatario', prima scriveva solo 'testo' -> risposta persa
           }
           parlaConCrew(`Messaggio inviato a ${window._rispostaTemp.mitt}: ${window._rispostaTemp.testo}`, "Aura");
           document.getElementById('rispostaVocaleStatus').innerHTML = `✅ Inviato a <b>${window._rispostaTemp.mitt}</b>: "${window._rispostaTemp.testo}"`;
@@ -673,7 +673,8 @@ window.avviaRispostaVocale = function(){
           da: window.ultimoMittenteWhatsApp || "Holly",
           messaggioOriginale: window.ultimoMessaggioWhatsApp || "",
           risposta: risposta,
-          deviceId: localStorage.getItem('crew_device_id'),
+          deviceIdDestinatario: localStorage.getItem('crew_device_id') || 'NovaAmore',
+          deviceId: localStorage.getItem('crew_device_id'), // legacy, tenuto per compatibilita
           creato: serverTimestamp(),
           inviato: false,
           tipo: "whatsapp"
