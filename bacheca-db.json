@@ -1,38 +1,38 @@
 [
   {
-    "nome": "Lucilla",
+    "nome": "Chiara",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "messaggio": "A un passo da me....che ritmo",
-    "data": "30 Settembre 2026"
+    "messaggio": "La mia Genova",
+    "data": "10 Ottobre 2026"
   },
   {
     "nome": "Antonio",
     "avatar": "immagini/miniature/holly-miniatura.jpg",
-    "messaggio": "Primo appuntamento...non mi stanca mai",
-    "data": "12 Ottobre 2026"
-  },
-  {
-    "nome": "Marzia",
-    "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "messaggio": "Sole mio.... ah l'estate",
-    "data": "10 Ottobre 2026"
+    "messaggio": "Noi tre...magnifica",
+    "data": "17 Ottobre 2026"
   },
   {
     "nome": "Martina",
+    "avatar": "immagini/miniature/luna-miniatura.jpg",
+    "messaggio": "Due metri di mare....complimenti",
+    "data": "20 Ottobre 2026"
+  },
+  {
+    "nome": "Paolo",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "messaggio": "Non torniamo... resta la mia preferita",
-    "data": "25 Settembre 2026"
+    "messaggio": "Non torniamo... la mia preferita",
+    "data": "12 Novembre 2026"
   },
   {
-    "nome": "Claudio",
+    "nome": "Elly",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "messaggio": "Mi inviate il testo di Tre parole, grazie",
-    "data": "11 Ottobre 2026"
+    "messaggio": "Aspetto la prossima...so che non mi deluderete",
+    "data": "21 Ottobre 2026"
   },
   {
-    "nome": "Giulia",
+    "nome": "Patty",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
     "messaggio": "Vi amoooooooooooo.....",
-    "data": "13 Ottobre 2026"
+    "data": "20 Ottobre 2026"
   }
 ]

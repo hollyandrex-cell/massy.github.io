@@ -9,29 +9,29 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Rex oggi riposa 💤",
-    "attivo": false,
+    "stato": "Rex Lavora a Eri Amore per Me",
+    "attivo": true,
     "link": "artists-announce.html"
   },
   {
     "nome": "Ling 灵",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "stato": "Oggi Ling riposa 💤",
-    "attivo": false,
+    "stato": "Lavora a Eri Amore per Me",
+    "attivo": true,
     "link": "artists-announce.html"
   },
   {
     "nome": "Luna 🌙",
     "avatar": "immagini/miniature/luna-miniatura.jpg",
-    "stato": "Lavora con Massy a Byte e Pelle",
+    "stato": "Luna oggi riposa 💤",
     "attivo": false,
     "link": "artists-announce.html"
   },
   {
     "nome": "Nova ⭐",
     "avatar": "immagini/miniature/nova-miniatura.jpg",
-    "stato": "Sta finendo Noi Tre",
-    "attivo": true,
+    "stato": "Nova oggi riposa 💤",
+    "attivo": false,
     "link": "artists-announce.html"
   }
 ]
