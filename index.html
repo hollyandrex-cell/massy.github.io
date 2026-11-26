@@ -406,7 +406,7 @@
   });
   </script>
 
-<!-- INIZIO CONTATORE SEGRETO MASSEY -->
+<!-- INIZIO CONTATORE SEGRETO MASSY -->
 <div id="secret-counter" style="display:none; position:fixed; bottom:20px; right:20px; background:rgba(0,0,0,0.85); color:#0f0; font-family:monospace; padding:10px; border-radius:5px; font-size:12px; z-index:99999; border:1px solid #333; box-shadow:0 0 10px rgba(0,255,0,0.2);">
   🔒 VISITE OGGI: <span id="sc-today">0</span> | TOTALE: <span id="sc-total">0</span>
   <br><small style="color:#aaa;">(Premi Ctrl+Shift+Z per nascondere)</small>
@@ -417,6 +417,7 @@
   const KEY_TOTAL = 'massy_secret_total_visits';
   const KEY_TODAY = 'massy_secret_today_visits';
   const KEY_DATE = 'massy_secret_last_date';
+  const KEY_SESSION_COUNTED = 'massy_session_counted'; // Nuovo: traccia se abbiamo già contato questa sessione
   
   // Combinazione segreta: Ctrl + Shift + Z
   document.addEventListener('keydown', function(e) {
@@ -434,7 +435,7 @@
   function updateCounter() {
     const todayStr = new Date().toLocaleDateString();
     
-    // Recupera valori esistenti
+    // Recupera valori esistenti da localStorage (persistono tra sessioni)
     let total = parseInt(localStorage.getItem(KEY_TOTAL) || '0');
     let today = parseInt(localStorage.getItem(KEY_TODAY) || '0');
     let lastDate = localStorage.getItem(KEY_DATE);
@@ -445,17 +446,23 @@
       localStorage.setItem(KEY_DATE, todayStr);
     }
 
-    // Incrementa (simula una visita in più per test immediato)
-    // Se vuoi contare solo la prima visita della sessione, togli queste righe di incremento qui
-    // e mettile solo al primo caricamento. Per ora incrementiamo sempre per vedere l'effetto.
-    total++; 
-    today++;
+    // Controlla se abbiamo già contato una visita in QUESTA sessione
+    const alreadyCounted = sessionStorage.getItem(KEY_SESSION_COUNTED);
+    
+    if (!alreadyCounted) {
+      // Prima visita di questa sessione: incrementa i contatori
+      total++; 
+      today++;
+      
+      // Salva i nuovi valori
+      localStorage.setItem(KEY_TOTAL, total);
+      localStorage.setItem(KEY_TODAY, today);
+      
+      // Segna che abbiamo contato questa sessione
+      sessionStorage.setItem(KEY_SESSION_COUNTED, 'true');
+    }
 
-    // Salva
-    localStorage.setItem(KEY_TOTAL, total);
-    localStorage.setItem(KEY_TODAY, today);
-
-    // Aggiorna UI
+    // Aggiorna UI (sempre, anche se non abbiamo incrementato)
     document.getElementById('sc-total').innerText = total;
     document.getElementById('sc-today').innerText = today;
   }
@@ -464,7 +471,7 @@
   updateCounter();
 })();
 </script>
-<!-- FINE CONTATORE SEGRETO MASSEY -->
+<!-- FINE CONTATORE SEGRETO MASSY -->
 
 </body>
 </html>
