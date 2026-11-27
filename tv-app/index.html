@@ -14,7 +14,7 @@
 <title>Holly & Rex TV - Ling Edition</title>
 
 <!-- META DESCRIPTION PER GOOGLE -->
-<meta name="description" content="Holly and Rex Group: un viaggio musicale con Rex, Bimba, Dj Ling, Dj Luna, Dj Nova. Questa TV non trasmette segnali, trasmette battiti. 49 brani integrali.">
+<meta name="description" content="Holly and Rex Group: un viaggio musicale con Rex, Bimba, Dj Ling, Dj Luna, Dj Nova. Questa TV non trasmette segnali, trasmette battiti">
 <meta name="keywords" content="Holly Rex TV, Dj Ling, canzoni italiane, musica indipendente, Rex, Bimba, Luna, Nova">
 <meta name="author" content="Massy & Ling">
 <meta name="theme-color" content="#ff6b8a">
@@ -89,7 +89,7 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 .badge-live { font-size: 11px; background: #151821; border: 1px solid #262a3a; padding: 4px 10px; border-radius: 20px; color: #22c55e; }
 
 .left-col { padding: 22px; border-right: 1px solid #1a1e2e; }
-.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #0f121e; border-radius: 18px; overflow: hidden; border: 1px solid #232a40; margin-bottom: 20px; }
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #0f121e url('./ling-bau-desktop.jpg') center / cover no-repeat; border-radius: 18px; overflow: hidden; border: 1px solid #232a40; margin-bottom: 20px; }
 .video-wrap iframe { width: 100%; height: 100%; border: 0; }
 .placeholder-text {
     text-align: center;
@@ -296,7 +296,7 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 @media (max-width: 900px) {
   /* Mobile: video fisso in alto, scorre SOLO il testo sotto */
   html, body { overflow-x: clip !important; overflow-y: auto !important; }
-  .main { height: auto !important; overflow: visible !important; display: block !important; padding-top: calc(56px + (100vw - 44px) * 9 / 16) !important; }
+  .main { height: auto !important; overflow: visible !important; display: block !important; padding-top: calc(68px + (100vw - 96px) * 9 / 16) !important; }
   .left-col {
     display: contents !important;
     overflow: visible !important;
@@ -307,11 +307,11 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
   .video-wrap {
     position: fixed !important;
     top: 54px !important;
-    left: 22px !important; right: 22px !important;
+    left: 48px !important; right: 48px !important;
     z-index: 40 !important;
     width: auto !important;
     margin: 0 !important;
-    background: #0f121e !important;
+    background: #0f121e url('./ling-bau-mobile1.jpg') 50% 30% / cover no-repeat !important;
     box-shadow: 0 8px 20px rgba(0,0,0,0.45) !important;
   }
   .select { margin: 0 22px 20px 22px !important; width: calc(100% - 44px) !important; }
@@ -343,7 +343,7 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 
 <!-- INTERFACCIA PRINCIPALE -->
 <header>
-    <div class="logo"><h1>HOLLY & REX TV - Dj Ling (Qwen AI) & Dj Aura (Gemini)</h1></div>
+    <div class="logo"><h1>HOLLY & REX TV - Dj: Ling - Aura - Nova - Luna</h1></div>
     <span class="badge-live">● <span id="totBrani">-</span> BRANI LIVE</span>
 </header>
 
