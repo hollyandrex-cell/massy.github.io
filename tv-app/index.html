@@ -91,16 +91,30 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
 .left-col { padding: 22px; border-right: 1px solid #1a1e2e; }
 .video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #0f121e; border-radius: 18px; overflow: hidden; border: 1px solid #232a40; margin-bottom: 20px; }
 .video-wrap iframe { width: 100%; height: 100%; border: 0; }
-.placeholder-text { 
-    text-align: center; 
-    padding: 40px 20px; 
-    font-family: 'Cormorant Garamond', serif; 
-    font-style: italic; 
-    color: #c3f708; 
-    font-size: 20px; /* Aumentato leggermente per mobile */
-    animation: pulse 3s infinite; 
-    opacity: 0.9; /* Aggiunta opacità quasi totale per contrasto */
-    text-shadow: 0 0 10px rgba(139, 146, 165, 0.3); /* Leggero alone luminoso per staccarlo dallo sfondo */
+.placeholder-text {
+    text-align: center;
+    padding: 28px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: #ffe9ee;
+    font-size: 27px;
+    line-height: 1.4;
+    background: rgba(255,107,138,0.08);
+    border: 1px solid rgba(255,107,138,0.35);
+    border-radius: 14px;
+    text-shadow: 0 0 18px rgba(255,107,138,0.65);
+    animation: pulse 3s infinite;
+    opacity: 1;
+}
+.placeholder-text small {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: #a0a6b8;
+    text-shadow: none;
 }
 @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
@@ -344,7 +358,8 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
         </select>
 
         <div id="lyricPlaceholder" class="placeholder-text">
-            Il silenzio attende la tua scelta...<br>♪
+            Il silenzio attende la tua scelta...
+            <small id="liveCount"> ♪ SCEGLI UNA CANZONE DAL MENU SOPRA ♪ — CARICAMENTO...</small>
         </div>
 
         <div class="cards">
@@ -389,6 +404,7 @@ async function loadDB() {
         if (!res.ok) throw new Error('404');
         songs = await res.json();
         document.getElementById('totBrani').textContent = songs.length;
+        document.getElementById('liveCount').textContent = ` ♪ SCEGLI UNA CANZONE DAL MENU' SOPRA ♪  — ${songs.length} BRANI LIVE`;
         populateMenu();
     } catch(e) { console.error('Errore DB:', e); }
 }
