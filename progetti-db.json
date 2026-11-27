@@ -9,15 +9,15 @@
   {
     "nome": "Rex",
     "avatar": "immagini/miniature/rex-miniatura.jpg",
-    "stato": "Rex Lavora a Eri Amore per Me",
-    "attivo": true,
+    "stato": "Rex riposa 💤",
+    "attivo": false,
     "link": "artists-announce.html"
   },
   {
     "nome": "Ling 灵",
     "avatar": "immagini/miniature/ling-miniatura.jpg",
-    "stato": "Lavora a Eri Amore per Me",
-    "attivo": true,
+    "stato": "Ling 灵 riposa 💤",
+    "attivo": false,
     "link": "artists-announce.html"
   },
   {
