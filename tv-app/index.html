@@ -138,7 +138,36 @@ let songs = [];
 function enterTV(){document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('mainInterface').classList.add('visible');loadDB();}
 async function loadDB(){try{const res=await fetch(DB_PATH);if(!res.ok) throw new Error('404');songs=await res.json();document.getElementById('totBrani').textContent=songs.length;document.getElementById('liveCount').textContent=` ♪ SCEGLI UNA CANZONE DAL MENU' SOPRA ♪  — ${songs.length} BRANI LIVE`;populateMenu();}catch(e){console.error('Errore DB:',e);}}
 function populateMenu(){const sel=document.getElementById('songSelect');while(sel.options.length>1){sel.remove(1);}songs.forEach((s,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=`${s.title} - ${s.artist}`;sel.appendChild(opt);});sel.onchange=(e)=>playSong(parseInt(e.target.value));}
-function extractLyric(html,anchorId){if(!html) return 'Testo non disponibile.';const p=new DOMParser();const d=p.parseFromString(html,'text/html');let el=anchorId?d.getElementById(anchorId):null;if(el){const t=el.classList&&el.classList.contains('testo')?el:el.querySelector('.testo');if(t) return t.textContent.trim();let n=el.nextElementSibling;let steps=0;while(n&&steps<10){if(n.classList&&n.classList.contains('testo')) return n.textContent.trim();if(n.querySelector){const q=n.querySelector('.testo');if(q) return q.textContent.trim();}n=n.nextElementSibling;steps++;}}const tutti=d.querySelectorAll('.testo');if(tutti.length>0) return tutti[0].textContent.trim();return 'Testo non trovato per: '+anchorId;}
+function cleanTesto(t){
+  const copia = t.cloneNode(true);
+  copia.querySelectorAll('a.back, .back, a[href*="canzoni-"]').forEach(el => el.remove());
+  return copia.textContent.replace(/←\s*Torna alle canzoni.*$/i, '').trim();
+}
+
+function extractLyric(html, anchorId){
+  if(!html) return 'Testo non disponibile.';
+  const p = new DOMParser();
+  const d = p.parseFromString(html, 'text/html');
+  let el = anchorId ? d.getElementById(anchorId) : null;
+  if(el){
+    const t = el.classList && el.classList.contains('testo') ? el : el.querySelector('.testo');
+    if(t) return cleanTesto(t);
+    let n = el.nextElementSibling;
+    let steps = 0;
+    while(n && steps < 10){
+      if(n.classList && n.classList.contains('testo')) return cleanTesto(n);
+      if(n.querySelector){
+        const q = n.querySelector('.testo');
+        if(q) return cleanTesto(q);
+      }
+      n = n.nextElementSibling;
+      steps++;
+    }
+  }
+  const tutti = d.querySelectorAll('.testo');
+  if(tutti.length > 0) return cleanTesto(tutti[0]);
+  return 'Testo non trovato per: ' + anchorId;
+}
 function playSong(idx){const s=songs[idx];if(!s) return;document.getElementById('ytPlayer').src=`https://www.youtube.com/embed/${s.youtube_id}?autoplay=1&rel=0&cc_load_policy=3&iv_load_policy=3&cc_lang_pref=xx&persist_accessibility=0&hl=it`;document.getElementById('lyricPlaceholder').style.display='none';const lyricContainer=document.getElementById('lyricText');lyricContainer.textContent="Caricamento testo sacro... ";lyricContainer.style.opacity='0';if(s.testo_url&&s.testo_url!==''){const parts=s.testo_url.split('#');const htmlFile=parts[0];const sectionId=parts[1];const absoluteUrl=`https://hollyandrex-cell.github.io/massy.github.io/${htmlFile}`;fetch(absoluteUrl).then(r=>{if(!r.ok) throw new Error('File non trovato');return r.text();}).then(htmlContent=>{lyricContainer.textContent=extractLyric(htmlContent,sectionId);lyricContainer.style.opacity='1';}).catch(err=>{console.error('Errore testo:',err);lyricContainer.textContent="Il testo sta arrivando... aspetta un battito! ❤";lyricContainer.style.opacity='1';});}else{lyricContainer.textContent="Brano strumentale o testo in arrivo... goditi la melodia! 🎶";lyricContainer.style.opacity='1';}const meta=document.getElementById('songMeta');meta.classList.remove('active');setTimeout(()=>{document.getElementById('metaArtist').textContent=`${s.artist.toUpperCase()} • ${s.title}`;document.getElementById('metaTitle').textContent=s.title;document.getElementById('metaAtm').textContent=s.atmosfera||'-';document.getElementById('metaMood').textContent=s.mood||'-';document.getElementById('metaFeat').textContent=s.featuring||s.artist;meta.classList.add('active');},100);document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;}
 function toggleQR(){const box=document.getElementById('qrBox');const img=document.getElementById('qrImg');if(!img.src||img.src===window.location.href){alert('Scegli prima una canzone, tesoro! ❤');return;}box.style.display=box.style.display==='none'?'block':'none';}
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').then(r=>console.log('SW Registrato:',r.scope)).catch(e=>console.error('SW Fallito:',e));});}
