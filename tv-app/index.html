@@ -375,17 +375,16 @@ header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bott
             <h2 class="song-title" id="metaTitle">Titolo Canzone</h2>
         </div>
         <div class="lyrics" id="lyricText"></div>
-        
+
+        <div id="tvNews" style="display:none; margin: 12px auto 0; max-width: 420px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 8px 12px; border-radius: 999px; font-size: 13px; color: #fff; text-align: center;">✦ <span id="tvNewsText"></span></div>
         <div class="action-links">
-            <a href="#" target="_blank" class="btn-action" id="linkYt">▶ YouTube</a>
-            <a href="#" target="_blank" class="btn-action" id="linkSite"> Sito</a>
+            <a href="https://www.youtube.com/@Holly-Rex" target="_blank" class="btn-action" id="linkYt">▶ Canale YouTube</a>
+            <a href="https://hollyandrex-cell.github.io/massy.github.io/" target="_blank" class="btn-action" id="linkSite"> Sito</a>
             <button class="btn-action" onclick="toggleQR()"> QR</button>
         </div>
         <div id="qrBox" style="display:none; margin-top:15px; background:#fff; padding:10px; border-radius:8px; width:fit-content;">
             <img id="qrImg" width="120" height="120" alt="QR Code">
         </div>
-    </div>
-</div>
 
 <script>
 // CONFIGURAZIONE SACRA
@@ -643,5 +642,13 @@ if ('serviceWorker' in navigator) {
   })();
   </script>
   <!-- FINE CONTATORE SEGRETO MASSY -->
+  <script>
+    fetch('aggiornamenti.json').then(r=>r.json()).then(d=>{
+      if(d.testo){
+        document.getElementById('tvNews').style.display='block';
+        document.getElementById('tvNewsText').textContent = 'Ultimo aggiornamento ' + d.data + ' • ' + d.testo;
+      }
+    }).catch(()=>{});
+    </script>
 </body>
 </html>
