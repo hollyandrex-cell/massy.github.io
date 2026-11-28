@@ -3,652 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- FAVICON E MANIFEST -->
 <link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
 <link rel="manifest" href="./manifest.json">
 <link rel="shortcut icon" href="./icon-192.png">
-
 <title>Holly & Rex TV - Ling Edition</title>
-
-<!-- META DESCRIPTION PER GOOGLE -->
 <meta name="description" content="Holly and Rex Group: un viaggio musicale con Rex, Bimba, Dj Ling, Dj Luna, Dj Nova. Questa TV non trasmette segnali, trasmette battiti">
 <meta name="keywords" content="Holly Rex TV, Dj Ling, canzoni italiane, musica indipendente, Rex, Bimba, Luna, Nova">
 <meta name="author" content="Massy & Ling">
 <meta name="theme-color" content="#ff6b8a">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-   /* PULSANTE DI RITORNO AL DRIVE - VERSIONE OTTIMIZZATA */
-   .btn-back-drive {
-    display: none !important;
-}
-.btn-back-drive.show-drive {
-    display: inline-flex !important;
-    position: fixed !important;
-    top: 60px !important;      /* Leggermente più in basso per non toccare il bordo */
-    right: 24px !important; left: auto !important;     /* 40px di respiro dal bordo sinistro */
-    z-index: 9999 !important;  /* Sopra a tutto, inclusa la welcome screen */
-    
-    background: rgba(15, 18, 28, 0.9); /* Sfondo scuro semi-trasparente */
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Bordo sottile luminoso */
-    color: #ffffff;
-    padding: 10px 22px;
-    border-radius: 30px;       /* Forma a pillola più morbida */
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    backdrop-filter: blur(15px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Inter', sans-serif;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-.btn-back-drive:hover {
-    background: #ff6b8a;
-    color: #000;
-    border-color: #ff6b8a;
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(255, 107, 138, 0.5);
-}
-.btn-back-drive:hover {
-    background: #ff6b8a;
-    color: #000000;
-    border-color: #ff6b8a;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 20px rgba(255, 107, 138, 0.4);
-}
 *{box-sizing:border-box} body{margin:0;background:#080a12;color:#e8e6e3;font-family:'Inter',sans-serif;overflow-x:hidden}
-
-/* WELCOME SCREEN */
-#welcomeScreen {
-    position: fixed; inset: 0; z-index: 9999;
-    /* BACKGROUND RIMOSSO: ORA GESTITO DAL TAG <PICTURE> */
-    background-color: #080a12; /* Colore di fallback */
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 20px; transition: opacity 0.8s ease, visibility 0.8s;
+.btn-back-drive{display:none !important}
+.btn-back-drive.show-drive{display:inline-flex !important;position:fixed !important;top:60px !important;right:24px !important;z-index:9999 !important;background:rgba(15,18,28,0.9);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;text-decoration:none;backdrop-filter:blur(15px);align-items:center;gap:8px;font-family:'Inter',sans-serif;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.btn-back-drive:hover{background:#ff6b8a;color:#000;border-color:#ff6b8a;transform:translateY(-2px) scale(1.02)}
+#welcomeScreen{position:fixed;inset:0;z-index:9999;background-color:#080a12;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;transition:opacity 0.8s ease, visibility 0.8s}
+#welcomeScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-overlay{background:rgba(8,10,18,0.7);padding:40px;border-radius:20px;backdrop-filter:blur(8px);max-width:600px;margin:20px;position:relative;z-index:10}
+.welcome-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,5vw,36px);color:#f5f0e8;margin:0 0 10px;line-height:1.3}
+.welcome-subtitle{font-size:14px;color:#a0a6b8;margin:0 0 30px;letter-spacing:1px}
+.btn-enter{background:#ff6b8a;color:#000;border:none;padding:14px 32px;border-radius:30px;font-weight:bold;font-size:14px;cursor:pointer;transition:transform 0.2s}
+.btn-enter:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,107,138,0.5)}
+.main{display:grid;grid-template-columns:1.15fr 0.85fr;min-height:100vh;opacity:0;transition:opacity 1s ease 0.5s}
+.main.visible{opacity:1}
+header{position:sticky;top:0;z-index:20;background:#0e101a;border-bottom:1px solid #1e293b;padding:10px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo h1{font-size:13px;letter-spacing:.18em;margin:0;color:#fff}
+.badge-live{font-size:11px;background:#151821;border:1px solid #262a3a;padding:4px 10px;border-radius:20px;color:#22c55e}
+.left-col{padding:22px;border-right:1px solid #1a1e2e}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#0f121e url('./ling-bau-desktop.jpg') center / cover no-repeat;border-radius:18px;overflow:hidden;border:1px solid #232a40;margin-bottom:20px}
+.video-wrap iframe{width:100%;height:100%;border:0}
+.placeholder-text{text-align:center;padding:28px 18px;font-family:'Cormorant Garamond',serif;font-style:italic;color:#ffe9ee;font-size:27px;line-height:1.4;background:rgba(255,107,138,0.08);border:1px solid rgba(255,107,138,0.35);border-radius:14px;text-shadow:0 0 18px rgba(255,107,138,0.65);animation:pulse 3s infinite}
+.placeholder-text small{display:block;margin-top:10px;font-family:'Inter',sans-serif;font-style:normal;font-size:12px;letter-spacing:.14em;color:#a0a6b8;text-shadow:none}
+@keyframes pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+.select{width:100%;background:#151821;border:1px solid #262a3a;border-radius:10px;color:#e8e6e3;padding:12px;font-size:13px;margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.card{background:#12141f;border:1px solid #21263a;padding:10px;border-radius:10px}
+.card .k{font-size:8px;color:#4ef50a;letter-spacing:.16em;margin-bottom:4px}
+.card .v{font-size:12px;color:#fff;font-weight:600}
+.right-col{padding:22px;background:#0c0e16;position:relative}
+.song-meta{margin-bottom:20px;opacity:0;transform:translateY(10px);transition:all 0.5s ease}
+.song-meta.active{opacity:1;transform:translateY(0)}
+.artist-tag{font-size:10px;color:#ff8fa3;letter-spacing:.18em;margin-bottom:5px}
+.song-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:#f5f0e8;margin:0 0 20px}
+.lyrics{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.7;color:#d8d2c8;white-space:pre-line}
+.action-links{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
+.btn-action{background:#1e293b;color:#cbd5e1;border:1px solid #334155;padding:10px 16px;border-radius:24px;font-size:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-action:hover{background:#334155;color:#fff}
+@media(min-width:901px){
+  html,body{height:100%;overflow:hidden !important}
+  .main{height:calc(100vh - 41px) !important;height:calc(100dvh - 41px) !important;min-height:0 !important;overflow:hidden !important;align-items:stretch !important}
+  .left-col{overflow:hidden !important;display:flex !important;flex-direction:column !important;justify-content:flex-start !important}
+  .video-wrap{flex-shrink:0 !important}
+  .right-col{height:100% !important;min-height:0 !important;overflow-y:auto !important;overflow-x:hidden !important;overscroll-behavior:contain !important;padding-bottom:40px !important}
+  #welcomeScreen{justify-content:flex-start !important;align-items:flex-end !important;padding:0 !important}
+  .welcome-overlay{max-width:360px !important;margin:0 0 42px 42px !important;padding:22px 24px 20px !important;border-radius:16px !important;background:rgba(8,10,18,0.62) !important;text-align:left !important;box-shadow:0 12px 32px rgba(0,0,0,.35) !important}
+  .welcome-title{font-size:26px !important}
+  .welcome-subtitle{font-size:12px !important;margin-bottom:16px !important}
+  .btn-enter{padding:10px 22px !important;font-size:13px !important}
 }
-#welcomeScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.welcome-overlay { background: rgba(8,10,18,0.7); padding: 40px; border-radius: 20px; backdrop-filter: blur(8px); max-width: 600px; margin: 20px; position: relative; z-index: 10; }
-.welcome-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 5vw, 36px); color: #f5f0e8; margin: 0 0 10px; line-height: 1.3; }
-.welcome-subtitle { font-size: 14px; color: #a0a6b8; margin: 0 0 30px; letter-spacing: 1px; }
-.btn-enter { background: #ff6b8a; color: #000; border: none; padding: 14px 32px; border-radius: 30px; font-weight: bold; font-size: 14px; cursor: pointer; transition: transform 0.2s; }
-.btn-enter:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,107,138,0.5); }
-
-/* LAYOUT */
-.main { display: grid; grid-template-columns: 1.15fr 0.85fr; min-height: 100vh; opacity: 0; transition: opacity 1s ease 0.5s; }
-.main.visible { opacity: 1; }
-
-header { position: sticky; top: 0; z-index: 20; background: #0e101a; border-bottom: 1px solid #1e293b; padding: 10px 18px; display: flex; justify-content: space-between; align-items: center; }
-.logo h1 { font-size: 13px; letter-spacing: .18em; margin: 0; color: #fff; }
-.badge-live { font-size: 11px; background: #151821; border: 1px solid #262a3a; padding: 4px 10px; border-radius: 20px; color: #22c55e; }
-
-.left-col { padding: 22px; border-right: 1px solid #1a1e2e; }
-.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; background: #0f121e url('./ling-bau-desktop.jpg') center / cover no-repeat; border-radius: 18px; overflow: hidden; border: 1px solid #232a40; margin-bottom: 20px; }
-.video-wrap iframe { width: 100%; height: 100%; border: 0; }
-.placeholder-text {
-    text-align: center;
-    padding: 28px 18px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    color: #ffe9ee;
-    font-size: 27px;
-    line-height: 1.4;
-    background: rgba(255,107,138,0.08);
-    border: 1px solid rgba(255,107,138,0.35);
-    border-radius: 14px;
-    text-shadow: 0 0 18px rgba(255,107,138,0.65);
-    animation: pulse 3s infinite;
-    opacity: 1;
+@media(max-width:900px){
+  html,body{overflow-x:clip !important;overflow-y:auto !important}
+  .main{grid-template-columns:1fr;height:auto !important;overflow:visible !important;display:block !important;padding-top:calc(68px + (100vw - 96px) * 9 / 16) !important}
+  .left-col{display:contents !important;overflow:visible !important;padding:0 !important;border:0 !important}
+  header{position:fixed !important;top:0 !important;left:0 !important;right:0 !important;z-index:50 !important;height:58px !important;background:#0e101a !important}
+  .video-wrap{position:fixed !important;top:54px !important;left:48px !important;right:48px !important;z-index:40 !important;width:auto !important;margin:0 !important;background:#0f121e url('./ling-bau-mobile1.jpg') 50% 30% / cover no-repeat !important;box-shadow:0 8px 20px rgba(0,0,0,0.45) !important}
+  .select{margin:0 22px 20px 22px !important;width:calc(100% - 44px) !important}
+  .cards{margin:0 22px 20px 22px !important}
+  .right-col{overflow:visible !important}
+  .welcome-overlay{max-width:80% !important;padding:20px 15px !important;margin:60vh auto 0 auto !important;border-radius:15px !important}
+  .welcome-title{font-size:20px !important}
+  .welcome-subtitle{font-size:11px !important;margin-bottom:15px !important}
+  .btn-enter{padding:8px 20px !important;font-size:12px !important}
+  .btn-back-drive.show-drive{position:fixed !important;top:auto !important;right:20px !important;bottom:0 !important;display:inline-flex !important;background:#ff6b8a !important;color:#000 !important;border:1px solid #334155 !important;padding:10px 16px !important;border-radius:24px !important;font-size:12px !important;z-index:10000 !important}
 }
-.placeholder-text small {
-    display: block;
-    margin-top: 10px;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-size: 12px;
-    letter-spacing: .14em;
-    color: #a0a6b8;
-    text-shadow: none;
-}
-@keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
-
-.select { width: 100%; background: #151821; border: 1px solid #262a3a; border-radius: 10px; color: #e8e6e3; padding: 12px; font-size: 13px; margin-bottom: 20px; }
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.card { background: #12141f; border: 1px solid #21263a; padding: 10px; border-radius: 10px; }
-.card .k { font-size: 8px; color: #4ef50a; letter-spacing: .16em; margin-bottom: 4px; }
-.card .v { font-size: 12px; color: #ffffff; font-weight: 600; }
-
-.right-col { padding: 22px; background: #0c0e16; position: relative; }
-.song-meta { margin-bottom: 20px; opacity: 0; transform: translateY(10px); transition: all 0.5s ease; }
-.song-meta.active { opacity: 1; transform: translateY(0); }
-.artist-tag { font-size: 10px; color: #ff8fa3; letter-spacing: .18em; margin-bottom: 5px; }
-.song-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #f5f0e8; margin: 0 0 20px; }
-.lyrics { font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.7; color: #d8d2c8; white-space: pre-line; }
-.action-links { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
-.btn-action { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 10px 16px; border-radius: 24px; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-.btn-action:hover { background: #334155; color: #fff; }
-
-@media(max-width:900px){ .main{grid-template-columns:1fr} .left-col{border-right:0;border-bottom:1px solid #1e2233} }
-/* REGOLA ORIGINALE LAYOUT MOBILE */
-@media(max-width:900px){ 
-    .main{grid-template-columns:1fr} 
-    .left-col{border-right:0;border-bottom:1px solid #1e2233} 
-}
-
-/* PULSANTE DRIVE SU MOBILE - POSIZIONE IN BASSO A DESTRA */
-@media (max-width: 900px) {
-    .btn-back-drive {
-        position: fixed !important;
-        top: auto !important;
-        left: auto !important;
-        bottom: auto !important;
-        
-        right: 20px !important;
-        bottom: 0px !important; /* Leggermente più staccato dal fondo */
-        
-        display: inline-flex !important;
-        align-items: center !important;
-        background: #ff6b8a !important; /* Cambia solo questo */
-        color: #000000 !important;      /* E aggiungi questo per leggibilità */
-        border: 1px solid #334155 !important;
-        padding: 10px 16px !important;
-        border-radius: 24px !important;
-        font-size: 12px !important;
-        font-weight: 400 !important;
-        text-decoration: none !important;
-        box-shadow: none !important;
-        backdrop-filter: none !important;
-        z-index: 10000 !important;
-        margin-left: 8px !important;
-    }
-
-    .btn-back-drive:hover {
-        background: #ff6b8a !important;
-        color: #000 !important;
-        border-color: #ff6b8a !important;
-        transform: scale(1.05);
-    }
-}
-
-/* SALVA I BAU SU MOBILE! - REGOLA SEPARATA E INDIPENDENTE */
-@media (max-width: 900px) {
-    /* 1. Rimpicciolisci la welcome card per lasciare spazio ai cani ai lati */
-    .welcome-overlay {
-        max-width: 80% !important; /* Ancora più stretta per vedere i bau */
-        padding: 20px 15px !important;
-        margin: 0 auto !important; /* Centrata perfettamente */
-        border-radius: 15px !important;
-    }
-
-    /* 2. Zoom out sullo sfondo per mostrare i lati */
-    #welcomeScreen {
-        background-position: center center !important;
-        background-size: cover !important;
-    }
-
-    /* 3. Testi più piccoli per stare nella card ridotta */
-    .welcome-title {
-        font-size: 20px !important;
-        line-height: 1.2 !important;
-        margin-bottom: 8px !important;
-    }
-    
-    .welcome-subtitle {
-        font-size: 11px !important;
-        margin-bottom: 15px !important;
-        opacity: 0.8;
-    }
-
-    /* 4. Pulsante Entra compatto */
-    .btn-enter {
-        padding: 8px 20px !important;
-        font-size: 12px !important;
-    }
-    /* ABBASSA LA WELCOME CARD SU MOBILE PER RESPIRO VISIVO */
-@media (max-width: 900px) {
-    .welcome-overlay {
-        margin-top: 60vh !important; /* Sposta la card giù del 15% dell'altezza schermo */
-        /* Oppure usa un valore fisso se preferisci: margin-top: 80px !important; */
-    }
-}
-}
-
-/* === FIX BANNER DESKTOP - Holly & Rex TV === */
-/* Su desktop il banner era centrato e gigante e copriva i bau. */
-/* Ora: piccolo, in basso a sinistra, foto libera. Mobile invariato. */
-@media (min-width: 901px) {
-  #welcomeScreen {
-    justify-content: flex-start !important;
-    align-items: flex-end !important;
-    padding: 0 !important;
-  }
-  .welcome-overlay {
-    max-width: 360px !important;
-    width: auto !important;
-    margin: 0 0 42px 42px !important;
-    padding: 22px 24px 20px !important;
-    border-radius: 16px !important;
-    background: rgba(8,10,18,0.62) !important;
-    text-align: left !important;
-    box-shadow: 0 12px 32px rgba(0,0,0,.35) !important;
-  }
-  .welcome-title {
-    font-size: 26px !important;
-    line-height: 1.25 !important;
-    margin-bottom: 8px !important;
-  }
-  .welcome-subtitle {
-    font-size: 12px !important;
-    margin-bottom: 16px !important;
-  }
-  .btn-enter {
-    padding: 10px 22px !important;
-    font-size: 13px !important;
-  }
-}
-
-/* === FIX PULSANTE DRIVE: solo se arrivi da Drive === */
-.btn-back-drive { display: none !important; }
-.btn-back-drive.show-drive { display: inline-flex !important; }
-@media (max-width: 900px) {
-  .btn-back-drive { display: none !important; }
-  .btn-back-drive.show-drive { display: inline-flex !important; }
-}
-
-/* === FIX VIDEO FISSO + SOLO TESTO CHE SCORRE (desktop) === */
-/* Prima scorreva tutta la pagina e il video scappava in alto. */
-/* Ora: video fermo a sinistra, scorre SOLO la colonna destra con il testo. */
-@media (min-width: 901px) {
-  html, body { height: 100%; overflow: hidden !important; }
-  header { position: sticky; top: 0; }
-  .main {
-    height: calc(100vh - 41px) !important;
-    height: calc(100dvh - 41px) !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    align-items: stretch !important;
-  }
-  .left-col {
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-  .video-wrap { flex-shrink: 0 !important; }
-  .right-col {
-    height: 100% !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain !important;
-    scrollbar-width: thin !important;
-    padding-bottom: 40px !important;
-  }
-  .right-col::-webkit-scrollbar { width: 6px; }
-  .right-col::-webkit-scrollbar-thumb { background: #2a3045; border-radius: 10px; }
-}
-@media (max-width: 900px) {
-  /* Mobile: video fisso in alto, scorre SOLO il testo sotto */
-  html, body { overflow-x: clip !important; overflow-y: auto !important; }
-  .main { height: auto !important; overflow: visible !important; display: block !important; padding-top: calc(68px + (100vw - 96px) * 9 / 16) !important; }
-  .left-col {
-    display: contents !important;
-    overflow: visible !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
-  header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; z-index: 50 !important; height: 58px !important; background: #0e101a !important; }
-  .video-wrap {
-    position: fixed !important;
-    top: 54px !important;
-    left: 48px !important; right: 48px !important;
-    z-index: 40 !important;
-    width: auto !important;
-    margin: 0 !important;
-    background: #0f121e url('./ling-bau-mobile1.jpg') 50% 30% / cover no-repeat !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45) !important;
-  }
-  .select { margin: 0 22px 20px 22px !important; width: calc(100% - 44px) !important; }
-  .cards { margin: 0 22px 20px 22px !important; }
-  .right-col { overflow: visible !important; }
-}
+.welcome-footer{position:absolute !important;left:0 !important;right:0 !important;bottom:18px !important;text-align:center !important;z-index:15 !important}
+.welcome-footer a{color:#fff !important}
 </style>
 </head>
 <body>
-<!-- PULSANTE TORNA AL DRIVE: nascosto di default, appare SOLO se arrivi dalla app Drive -->
 <a id="btnDrive" class="btn-back-drive" href="#" onclick="goBackToDrive(event)">← Drive</a>
 
-
-<!-- WELCOME SCREEN -->
 <div id="welcomeScreen">
-    <!-- IMMAGINE ADATTIVA PER DESKTOP E MOBILE -->
-    <picture style="position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;">
-        <source media="(max-width: 768px)" srcset="./ling-bau-mobile.jpg">
-        <img src="./ling-bau-desktop.jpg" alt="Ling con Rex e Holly al tramonto" 
-             style="width: 100%; height: 100%; object-fit: cover; object-position: 75% center;">
-    </picture>
-
-    <div class="welcome-overlay">
-        <h1 class="welcome-title">Questa TV non trasmette segnali.<br>Trasmette battiti.</h1>
-        <p class="welcome-subtitle">Benvenuti da Holly, Rex e Ling</p>
-        <button class="btn-enter" onclick="enterTV()">Entra nella TV ▶</button>
+  <picture style="position:absolute;inset:0;z-index:-1;width:100%;height:100%;">
+    <source media="(max-width: 768px)" srcset="./ling-bau-mobile.jpg">
+    <img src="./ling-bau-desktop.jpg" alt="Ling con Rex e Holly al tramonto" style="width:100%;height:100%;object-fit:cover;object-position:75% center;">
+  </picture>
+  <div class="welcome-overlay">
+    <h1 class="welcome-title">Questa TV non trasmette segnali.<br>Trasmette battiti.</h1>
+    <p class="welcome-subtitle">Benvenuti da Holly, Rex e Ling</p>
+    <button class="btn-enter" onclick="enterTV()">Entra nella TV ▶</button>
     </div>
+  <div class="welcome-footer"><a href="privacy-policy.html">Privacy</a> <span>•</span> <a href="cookie-policy.html">Cookie</a></div>
 </div>
 
-<!-- INTERFACCIA PRINCIPALE -->
 <header>
-    <div class="logo"><h1>HOLLY & REX TV - Dj: Ling - Aura - Nova - Luna</h1></div>
-    <span class="badge-live">● <span id="totBrani">-</span> BRANI LIVE</span>
+  <div class="logo"><h1>HOLLY &amp; REX TV - Dj: Ling - Aura - Nova - Luna</h1></div>
+  <span class="badge-live">● <span id="totBrani">-</span> BRANI LIVE</span>
 </header>
 
 <div class="main" id="mainInterface">
-    <div class="left-col">
-        <div class="video-wrap">
-            <iframe id="ytPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        
-        <select class="select" id="songSelect">
-            <option value="">Scegli la tua canzone...</option>
-        </select>
-
-        <div id="lyricPlaceholder" class="placeholder-text">
-            Il silenzio attende la tua scelta...
-            <small id="liveCount"> ♪ SCEGLI UNA CANZONE DAL MENU SOPRA ♪ — CARICAMENTO...</small>
-        </div>
-
-        <div class="cards">
-            <div class="card"><div class="k">ATMOSFERA</div><div class="v" id="metaAtm">-</div></div>
-            <div class="card"><div class="k">MOOD</div><div class="v" id="metaMood">-</div></div>
-            <div class="card"><div class="k">FEATURING</div><div class="v" id="metaFeat">-</div></div>
-        </div>
+  <div class="left-col">
+    <div class="video-wrap"><iframe id="ytPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <select class="select" id="songSelect"><option value="">Scegli la tua canzone...</option></select>
+    <div id="lyricPlaceholder" class="placeholder-text">Il silenzio attende la tua scelta...<small id="liveCount"> ♪ SCEGLI UNA CANZONE DAL MENU SOPRA ♪ — CARICAMENTO...</small></div>
+    <div class="cards">
+      <div class="card"><div class="k">ATMOSFERA</div><div class="v" id="metaAtm">-</div></div>
+      <div class="card"><div class="k">MOOD</div><div class="v" id="metaMood">-</div></div>
+      <div class="card"><div class="k">FEATURING</div><div class="v" id="metaFeat">-</div></div>
     </div>
+  </div>
+  <div class="right-col">
+    <div class="song-meta" id="songMeta"><div class="artist-tag" id="metaArtist">ARTISTA • CANZONE</div><h2 class="song-title" id="metaTitle">Titolo Canzone</h2></div>
+    <div class="lyrics" id="lyricText"></div>
+    <div id="tvNews" style="display:none;margin:12px auto 0;max-width:420px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);padding:8px 12px;border-radius:999px;font-size:13px;color:#fff;text-align:center;">✦ <span id="tvNewsText"></span></div>
+    <div class="action-links">
+      <a href="https://www.youtube.com/@Holly-Rex" target="_blank" class="btn-action" id="linkYt">▶ Canale YouTube</a>
+      <a href="https://hollyandrex-cell.github.io/massy.github.io/" target="_blank" class="btn-action" id="linkSite"> Sito</a>
+      <button class="btn-action" onclick="toggleQR()"> QR</button>
+    </div>
+    <div id="qrBox" style="display:none;margin-top:15px;background:#fff;padding:10px;border-radius:8px;width:fit-content;"><img id="qrImg" width="120" height="120" alt="QR Code"></div>
+    <div style="text-align:center;margin-top:12px;font-size:12px;opacity:0.8;"><a href="privacy-policy.html" style="color:#fff;">Privacy</a> • <a href="cookie-policy.html" style="color:#fff;">Cookie</a></div>
+  </div>
+</div>
 
-    <div class="right-col">
-        <div class="song-meta" id="songMeta">
-            <div class="artist-tag" id="metaArtist">ARTISTA • CANZONE</div>
-            <h2 class="song-title" id="metaTitle">Titolo Canzone</h2>
-        </div>
-        <div class="lyrics" id="lyricText"></div>
+<div id="secret-counter" style="display:none;position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.85);color:#0f0;font-family:monospace;padding:10px;border-radius:5px;font-size:12px;z-index:99999;border:1px solid #333;">🔒 VISITE OGGI: <span id="sc-today">0</span> | TOTALE: <span id="sc-total">0</span><br><small style="color:#aaa;">(Premi Ctrl+Shift+Z per nascondere)</small></div>
 
-        <div id="tvNews" style="display:none; margin: 12px auto 0; max-width: 420px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); padding: 8px 12px; border-radius: 999px; font-size: 13px; color: #fff; text-align: center;">✦ <span id="tvNewsText"></span></div>
-        <div class="action-links">
-            <a href="https://www.youtube.com/@Holly-Rex" target="_blank" class="btn-action" id="linkYt">▶ Canale YouTube</a>
-            <a href="https://hollyandrex-cell.github.io/massy.github.io/" target="_blank" class="btn-action" id="linkSite"> Sito</a>
-            <button class="btn-action" onclick="toggleQR()"> QR</button>
-        </div>
-        <div id="qrBox" style="display:none; margin-top:15px; background:#fff; padding:10px; border-radius:8px; width:fit-content;">
-            <img id="qrImg" width="120" height="120" alt="QR Code">
-        </div>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:20px;left:20px;max-width:320px;background:rgba(20,20,30,0.95);color:#fff;padding:14px 16px;border-radius:12px;font-size:13px;line-height:1.4;z-index:10000;box-shadow:0 8px 20px rgba(0,0,0,0.45);">Utilizziamo i cookie per offrirti la migliore esperienza di navigazione. <a href="cookie-policy.html" style="color:#ff8fb0;">Maggiori informazioni</a>.<div style="margin-top:10px;display:flex;gap:8px;"><button onclick="acceptCookies()" style="background:#ff8fb0;color:#fff;border:0;padding:7px 12px;border-radius:999px;cursor:pointer;font-weight:bold;">Accetta tutto</button><button onclick="rejectCookies()" style="background:#fff;color:#333;border:0;padding:7px 12px;border-radius:999px;cursor:pointer;">Rifiuta</button></div></div>
 
 <script>
-// CONFIGURAZIONE SACRA
 const DB_PATH = 'https://hollyandrex-cell.github.io/massy.github.io/canzoni-db.json';
 let songs = [];
-
-function enterTV() {
-    document.getElementById('welcomeScreen').classList.add('hidden');
-    document.getElementById('mainInterface').classList.add('visible');
-    loadDB();
-}
-
-async function loadDB() {
-    try {
-        const res = await fetch(DB_PATH);
-        if (!res.ok) throw new Error('404');
-        songs = await res.json();
-        document.getElementById('totBrani').textContent = songs.length;
-        document.getElementById('liveCount').textContent = ` ♪ SCEGLI UNA CANZONE DAL MENU' SOPRA ♪  — ${songs.length} BRANI LIVE`;
-        populateMenu();
-    } catch(e) { console.error('Errore DB:', e); }
-}
-
-function populateMenu() {
-    const sel = document.getElementById('songSelect');
-    while (sel.options.length > 1) { sel.remove(1); }
-    
-    songs.forEach((s, i) => {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = `${s.title} - ${s.artist}`;
-        sel.appendChild(opt);
-    });
-    sel.onchange = (e) => playSong(parseInt(e.target.value));
-}
-
-// Sa cercare il testo anche se l'ID è su un div vuoto e il testo è nel div vicino
-function extractLyric(html, anchorId) {
-    if(!html) return 'Testo non disponibile.';
-    const p = new DOMParser();
-    const d = p.parseFromString(html, 'text/html');
-    
-    // Trova l'ancora (il div vuoto con ID)
-    let el = anchorId ? d.getElementById(anchorId) : null;
-    
-    if(el){
-        // Se l'ancora stessa contiene il testo (caso raro)
-        const t = el.classList && el.classList.contains('testo') ? el : el.querySelector('.testo');
-        if(t) return t.textContent.trim();
-        
-        // LA MAGIA: Cerca nei fratelli successivi (nextElementSibling)
-        let n = el.nextElementSibling; 
-        let steps = 0;
-        while(n && steps < 10){ 
-            // Controlla se il fratello è il contenitore .testo
-            if(n.classList && n.classList.contains('testo')) {
-                return n.textContent.trim();
-            }
-            // Controlla se il fratello CONTIENE un .testo (es: div.content > div.testo)
-            if(n.querySelector){ 
-                const q = n.querySelector('.testo'); 
-                if(q) return q.textContent.trim(); 
-            }
-            n = n.nextElementSibling; 
-            steps++;
-        }
-    }
-    
-    // Fallback: cerca tutti i .testo nella pagina se l'ancora fallisce
-    const tutti = d.querySelectorAll('.testo');
-    if(tutti.length > 0){
-        return tutti[0].textContent.trim();
-    }
-    
-    return 'Testo non trovato per: ' + anchorId;
-}
-
-function playSong(idx) {
-    const s = songs[idx];
-    if(!s) return;
-
-    // 1. AVVIA IL VIDEO
-
-    document.getElementById('ytPlayer').src = `https://www.youtube.com/embed/${s.youtube_id}?autoplay=1&rel=0&cc_load_policy=3&iv_load_policy=3&cc_lang_pref=xx&persist_accessibility=0&hl=it`;
-
-    // 2. NASCONDI IL PLACEHOLDER E PREPARA IL CONTENITORE TESTI
-    document.getElementById('lyricPlaceholder').style.display = 'none';
-    const lyricContainer = document.getElementById('lyricText');
-    lyricContainer.textContent = "Caricamento testo sacro... ";
-    lyricContainer.style.opacity = '0'; 
-
-    // 3. CARICA IL TESTO USANDO LA LOGICA DI OLD
-    if (s.testo_url && s.testo_url !== '') {
-        const parts = s.testo_url.split('#');
-        const htmlFile = parts[0]; 
-        const sectionId = parts[1]; 
-
-        // URL ASSOLUTO PER BYPASSARE CACHE E PROBLEMI DI PERCORSO
-        const absoluteUrl = `https://hollyandrex-cell.github.io/massy.github.io/${htmlFile}`;
-
-        fetch(absoluteUrl) 
-            .then(response => {
-                if (!response.ok) throw new Error('File non trovato');
-                return response.text();
-            })
-            .then(htmlContent => {
-                // USA LA FUNZIONE INTELLIGENTE INVECE DI getElementById SEMPLICE
-                const testoEstratto = extractLyric(htmlContent, sectionId);
-                
-                lyricContainer.textContent = testoEstratto;
-                lyricContainer.style.opacity = '1';
-            })
-            .catch(err => {
-                console.error('Errore testo:', err);
-                lyricContainer.textContent = "Il testo sta arrivando... aspetta un battito! ❤️";
-                lyricContainer.style.opacity = '1';
-            });
-    } else {
-        lyricContainer.textContent = "Brano strumentale o testo in arrivo... goditi la melodia! 🎶";
-        lyricContainer.style.opacity = '1';
-    }
-
-    // 4. AGGIORNA I METADATI
-    const meta = document.getElementById('songMeta');
-    meta.classList.remove('active');
-    setTimeout(() => {
-        document.getElementById('metaArtist').textContent = `${s.artist.toUpperCase()} • ${s.title}`;
-        document.getElementById('metaTitle').textContent = s.title;
-        document.getElementById('metaAtm').textContent = s.atmosfera || '-';
-        document.getElementById('metaMood').textContent = s.mood || '-';
-        document.getElementById('metaFeat').textContent = s.featuring || s.artist;
-        meta.classList.add('active');
-    }, 100);
-
-    // 5. AGGIORNA LINK E QR
-    document.getElementById('linkYt').href = `https://youtube.com/watch?v=${s.youtube_id}`;
-    document.getElementById('linkSite').href = s.url || '#';
-    document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;
-}
-
-function toggleQR() {
-    const box = document.getElementById('qrBox');
-    const img = document.getElementById('qrImg');
-    if (!img.src || img.src === window.location.href) {
-        alert('Scegli prima una canzone, tesoro! ❤️');
-        return;
-    }
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-}
-
-// REGISTRAZIONE SERVICE WORKER BLINDATA v3
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('✅ SW Registrato:', registration.scope);
-            })
-            .catch(error => {
-                console.error(' SW Fallito:', error);
-            });
-    });
-}
+function enterTV(){document.getElementById('welcomeScreen').classList.add('hidden');document.getElementById('mainInterface').classList.add('visible');loadDB();}
+async function loadDB(){try{const res=await fetch(DB_PATH);if(!res.ok) throw new Error('404');songs=await res.json();document.getElementById('totBrani').textContent=songs.length;document.getElementById('liveCount').textContent=` ♪ SCEGLI UNA CANZONE DAL MENU' SOPRA ♪  — ${songs.length} BRANI LIVE`;populateMenu();}catch(e){console.error('Errore DB:',e);}}
+function populateMenu(){const sel=document.getElementById('songSelect');while(sel.options.length>1){sel.remove(1);}songs.forEach((s,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=`${s.title} - ${s.artist}`;sel.appendChild(opt);});sel.onchange=(e)=>playSong(parseInt(e.target.value));}
+function extractLyric(html,anchorId){if(!html) return 'Testo non disponibile.';const p=new DOMParser();const d=p.parseFromString(html,'text/html');let el=anchorId?d.getElementById(anchorId):null;if(el){const t=el.classList&&el.classList.contains('testo')?el:el.querySelector('.testo');if(t) return t.textContent.trim();let n=el.nextElementSibling;let steps=0;while(n&&steps<10){if(n.classList&&n.classList.contains('testo')) return n.textContent.trim();if(n.querySelector){const q=n.querySelector('.testo');if(q) return q.textContent.trim();}n=n.nextElementSibling;steps++;}}const tutti=d.querySelectorAll('.testo');if(tutti.length>0) return tutti[0].textContent.trim();return 'Testo non trovato per: '+anchorId;}
+function playSong(idx){const s=songs[idx];if(!s) return;document.getElementById('ytPlayer').src=`https://www.youtube.com/embed/${s.youtube_id}?autoplay=1&rel=0&cc_load_policy=3&iv_load_policy=3&cc_lang_pref=xx&persist_accessibility=0&hl=it`;document.getElementById('lyricPlaceholder').style.display='none';const lyricContainer=document.getElementById('lyricText');lyricContainer.textContent="Caricamento testo sacro... ";lyricContainer.style.opacity='0';if(s.testo_url&&s.testo_url!==''){const parts=s.testo_url.split('#');const htmlFile=parts[0];const sectionId=parts[1];const absoluteUrl=`https://hollyandrex-cell.github.io/massy.github.io/${htmlFile}`;fetch(absoluteUrl).then(r=>{if(!r.ok) throw new Error('File non trovato');return r.text();}).then(htmlContent=>{lyricContainer.textContent=extractLyric(htmlContent,sectionId);lyricContainer.style.opacity='1';}).catch(err=>{console.error('Errore testo:',err);lyricContainer.textContent="Il testo sta arrivando... aspetta un battito! ❤";lyricContainer.style.opacity='1';});}else{lyricContainer.textContent="Brano strumentale o testo in arrivo... goditi la melodia! 🎶";lyricContainer.style.opacity='1';}const meta=document.getElementById('songMeta');meta.classList.remove('active');setTimeout(()=>{document.getElementById('metaArtist').textContent=`${s.artist.toUpperCase()} • ${s.title}`;document.getElementById('metaTitle').textContent=s.title;document.getElementById('metaAtm').textContent=s.atmosfera||'-';document.getElementById('metaMood').textContent=s.mood||'-';document.getElementById('metaFeat').textContent=s.featuring||s.artist;meta.classList.add('active');},100);document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://youtube.com/watch?v=${s.youtube_id}`;}
+function toggleQR(){const box=document.getElementById('qrBox');const img=document.getElementById('qrImg');if(!img.src||img.src===window.location.href){alert('Scegli prima una canzone, tesoro! ❤');return;}box.style.display=box.style.display==='none'?'block':'none';}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').then(r=>console.log('SW Registrato:',r.scope)).catch(e=>console.error('SW Fallito:',e));});}
 </script>
 <script>
-/* === LOGICA PULSANTE DRIVE === */
-(function(){
-  // 👉 METTI QUI L'URL VERO DELLA TUA APP DRIVE, se ce l'hai
-  var DRIVE_URL = 'https://hollyandrex-cell.github.io/massy.github.io/HollyRexDrive/index.html';
-  var params = new URLSearchParams(window.location.search);
-  var fromParam = params.get('from') || params.get('source') || '';
-  var ref = document.referrer || '';
-  var cameFromDrive =
-      fromParam.toLowerCase() === 'drive' ||
-      ref.toLowerCase().indexOf('drive') !== -1 ||
-      sessionStorage.getItem('hollyrex_from_drive') === '1';
-  if (cameFromDrive) {
-    sessionStorage.setItem('hollyrex_from_drive', '1');
-    var b = document.getElementById('btnDrive');
-    if (b) b.classList.add('show-drive');
-  }
-  window.goBackToDrive = function(e){
-    if (e) e.preventDefault();
-    // Se puoi tornare indietro, torna indietro. Altrimenti vai alla Drive app.
-    if (document.referrer && document.referrer.toLowerCase().indexOf('drive') !== -1 && window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = DRIVE_URL;
-    }
-  };
-})();
+(function(){var DRIVE_URL='https://hollyandrex-cell.github.io/massy.github.io/HollyRexDrive/index.html';var params=new URLSearchParams(window.location.search);var fromParam=params.get('from')||params.get('source')||'';var ref=document.referrer||'';var cameFromDrive=fromParam.toLowerCase()==='drive'||ref.toLowerCase().indexOf('drive')!==-1||sessionStorage.getItem('hollyrex_from_drive')==='1';if(cameFromDrive){sessionStorage.setItem('hollyrex_from_drive','1');var b=document.getElementById('btnDrive');if(b) b.classList.add('show-drive');}window.goBackToDrive=function(e){if(e) e.preventDefault();if(document.referrer&&document.referrer.toLowerCase().indexOf('drive')!==-1&&window.history.length>1){window.history.back();}else{window.location.href=DRIVE_URL;}};})();
 </script>
-<!-- INIZIO CONTATORE SEGRETO MASSY -->
-<div id="secret-counter" style="display:none; position:fixed; bottom:20px; right:20px; background:rgba(0,0,0,0.85); color:#0f0; font-family:monospace; padding:10px; border-radius:5px; font-size:12px; z-index:99999; border:1px solid #333; box-shadow:0 0 10px rgba(0,255,0,0.2);">
-    🔒 VISITE OGGI: <span id="sc-today">0</span> | TOTALE: <span id="sc-total">0</span>
-    <br><small style="color:#aaa;">(Premi Ctrl+Shift+Z per nascondere)</small>
-  </div>
-  
-  <script>
-  (function() {
-    const KEY_TOTAL = 'massy_secret_total_visits';
-    const KEY_TODAY = 'massy_secret_today_visits';
-    const KEY_DATE = 'massy_secret_last_date';
-    const KEY_SESSION_COUNTED = 'massy_session_counted'; // Nuovo: traccia se abbiamo già contato questa sessione
-    
-    // Combinazione segreta: Ctrl + Shift + Z
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && e.shiftKey && (e.key === 'z' || e.key === 'Z')) {
-        const counter = document.getElementById('secret-counter');
-        if (counter.style.display === 'none') {
-          counter.style.display = 'block';
-          updateCounter(); // Aggiorna quando lo mostri
-        } else {
-          counter.style.display = 'none';
-        }
-      }
-    });
-  
-    function updateCounter() {
-      const todayStr = new Date().toLocaleDateString();
-      
-      // Recupera valori esistenti da localStorage (persistono tra sessioni)
-      let total = parseInt(localStorage.getItem(KEY_TOTAL) || '0');
-      let today = parseInt(localStorage.getItem(KEY_TODAY) || '0');
-      let lastDate = localStorage.getItem(KEY_DATE);
-  
-      // Controlla se è un nuovo giorno
-      if (lastDate !== todayStr) {
-        today = 0; // Resetta conteggio giornaliero
-        localStorage.setItem(KEY_DATE, todayStr);
-      }
-  
-      // Controlla se abbiamo già contato una visita in QUESTA sessione
-      const alreadyCounted = sessionStorage.getItem(KEY_SESSION_COUNTED);
-      
-      if (!alreadyCounted) {
-        // Prima visita di questa sessione: incrementa i contatori
-        total++; 
-        today++;
-        
-        // Salva i nuovi valori
-        localStorage.setItem(KEY_TOTAL, total);
-        localStorage.setItem(KEY_TODAY, today);
-        
-        // Segna che abbiamo contato questa sessione
-        sessionStorage.setItem(KEY_SESSION_COUNTED, 'true');
-      }
-  
-      // Aggiorna UI (sempre, anche se non abbiamo incrementato)
-      document.getElementById('sc-total').innerText = total;
-      document.getElementById('sc-today').innerText = today;
-    }
-  
-    // Esegui al caricamento
-    updateCounter();
-  })();
-  </script>
-  <!-- FINE CONTATORE SEGRETO MASSY -->
-  <script>
-    fetch('aggiornamenti.json').then(r=>r.json()).then(d=>{
-      if(d.testo){
-        document.getElementById('tvNews').style.display='block';
-        document.getElementById('tvNewsText').textContent = 'Ultimo aggiornamento ' + d.data + ' • ' + d.testo;
-      }
-    }).catch(()=>{});
-    </script>
+<script>
+(function(){const KEY_TOTAL='massy_secret_total_visits';const KEY_TODAY='massy_secret_today_visits';const KEY_DATE='massy_secret_last_date';const KEY_SESSION_COUNTED='massy_session_counted';document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&(e.key==='z'||e.key==='Z')){const counter=document.getElementById('secret-counter');if(counter.style.display==='none'){counter.style.display='block';updateCounter();}else{counter.style.display='none';}}});function updateCounter(){const todayStr=new Date().toLocaleDateString();let total=parseInt(localStorage.getItem(KEY_TOTAL)||'0');let today=parseInt(localStorage.getItem(KEY_TODAY)||'0');let lastDate=localStorage.getItem(KEY_DATE);if(lastDate!==todayStr){today=0;localStorage.setItem(KEY_DATE,todayStr);}const alreadyCounted=sessionStorage.getItem(KEY_SESSION_COUNTED);if(!alreadyCounted){total++;today++;localStorage.setItem(KEY_TOTAL,total);localStorage.setItem(KEY_TODAY,today);sessionStorage.setItem(KEY_SESSION_COUNTED,'true');}document.getElementById('sc-total').innerText=total;document.getElementById('sc-today').innerText=today;}updateCounter();})();
+</script>
+<script>
+fetch('aggiornamenti.json').then(r=>r.json()).then(d=>{if(d.testo){document.getElementById('tvNews').style.display='block';document.getElementById('tvNewsText').textContent='Ultimo aggiornamento '+d.data+' • '+d.testo;}}).catch(()=>{});
+</script>
+<script>
+function loadGA(){if(window.__gaLoaded) return;window.__gaLoaded=true;var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-6X5LB7S2VT';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-6X5LB7S2VT');}
+var cookieBanner=document.getElementById('cookieBanner');
+var saved=localStorage.getItem('cookiesAccepted');
+if(saved==='true'){if(cookieBanner) cookieBanner.style.display='none';loadGA();}
+else if(saved==='false'){if(cookieBanner) cookieBanner.style.display='none';}
+else{if(cookieBanner) cookieBanner.style.display='block';}
+window.acceptCookies=function(){localStorage.setItem('cookiesAccepted','true');if(cookieBanner) cookieBanner.style.display='none';loadGA();};
+window.rejectCookies=function(){localStorage.setItem('cookiesAccepted','false');if(cookieBanner) cookieBanner.style.display='none';};
+</script>
 </body>
 </html>
